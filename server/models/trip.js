@@ -6,19 +6,29 @@ const tripSchema = new Schema({
     required: true,
     unique: true,
   },
+  description:{
+    type: String,
+  },
+
   location: {
     type: String,
     required: true,
     trim: true,
   },
-  dates: {
-    type: String,
+  startDate:{
+    type:Date,
     required: true,
   },
-  description: {
+
+  endDate: {
+    type: Date,
+    required: true,
+  },
+  user: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+
 });
 
 const Trip = model("Trip", tripSchema);

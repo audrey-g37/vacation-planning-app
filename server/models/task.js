@@ -6,20 +6,26 @@ const taskSchema = new Schema({
     required: true,
   },
   details: {
-    type: Text,
+    type: String,
   },
   dueDate: {
     type: Date,
     required: true,
   },
   status: {
-    type: String,
+    type: Boolean,
     required: true,
   },
   assignee: {
     type: String,
     required: true,
   },
+
+  trip: {
+  type: Schema.Types.ObjectId,
+  ref: "Trip",
+    
+  }
   //   member: {
   //     type: Schema.Types.ObjectId,
   //     ref: "Member",
