@@ -58,7 +58,13 @@ type Mutation {
     addTask(title: String!, details: String, dueDate: Date!, status: Boolean!, assignee: String!, tripId: ID!): Task
     addBudget(title: String!, value: Number!, purchaseDate: Date!, purchasedBy: Date!, tripId: ID!): Budget
     
+    editTrip(title: String!, description: String, location: String!, startDate: Date!, endDate: Date!):
+    editTask(title: String!, details: String, dueDate: Date!, status: Boolean!, assignee: String!):
+    editBudget(title: String!, value: Number!, purchaseDate: Date!, purchasedBy: Date!):
     
+    removeTrip(title: String!, description: String, location: String!, startDate: Date!, endDate: Date!):
+    removeTask(title: String!, details: String, dueDate: Date!, status: Boolean!, assignee: String!):
+    removeBudget(title: String!, value: Number!, purchaseDate: Date!, purchasedBy: Date!):
     
 
 }

@@ -23,10 +23,14 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Trip",
   },
+  
+},
+{
   toJSON: {
     virtuals: true,
   },
-});
+}
+);
 
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {

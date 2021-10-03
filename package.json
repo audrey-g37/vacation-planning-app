@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Korbin-Sargent/vacation-planning-app/issues"
   },
-  "homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme"
+  "homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme",
+  "dependencies": {
+    "concurrently": "^6.3.0"
+  }
 }
