@@ -1,8 +1,8 @@
 import React from "react";
-import "./NewBudget.css";
+import "./ViewBudget.css";
 
-const NewBudget = () => {
+const ViewBudget = () => {
   return <h1>This is the Budget Page</h1>;
 };
 
-export default Budget;
+export default ViewBudget;

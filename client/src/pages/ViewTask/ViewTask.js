@@ -1,5 +1,5 @@
 import React from "react";
-import "./ViewTasks.css";
+import "./ViewTask.css";
 
 const ViewTasks = () => {
   return <h1>This is a ViewTasks</h1>;

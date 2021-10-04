@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 const taskSchema = new Schema({
   title: {
@@ -11,6 +12,7 @@ const taskSchema = new Schema({
   dueDate: {
     type: Date,
     required: true,
+    get: (timestamp) => dateFormat(timestamp),
   },
   status: {
     type: Boolean,
@@ -22,10 +24,9 @@ const taskSchema = new Schema({
   },
 
   trip: {
-  type: Schema.Types.ObjectId,
-  ref: "Trip",
-    
-  }
+    type: Schema.Types.ObjectId,
+    ref: "Trip",
+  },
   //   member: {
   //     type: Schema.Types.ObjectId,
   //     ref: "Member",
