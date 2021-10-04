@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 const tripSchema = new Schema({
   title: {
@@ -6,7 +7,7 @@ const tripSchema = new Schema({
     required: true,
     unique: true,
   },
-  description:{
+  description: {
     type: String,
   },
 
@@ -15,20 +16,22 @@ const tripSchema = new Schema({
     required: true,
     trim: true,
   },
-  startDate:{
+
+  startDate: {
     type: Date,
     required: true,
+    get: (timestamp) => dateFormat(timestamp),
   },
 
   endDate: {
     type: Date,
     required: true,
+    get: (timestamp) => dateFormat(timestamp),
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-
 });
 
 const Trip = model("Trip", tripSchema);

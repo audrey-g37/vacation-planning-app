@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 const budgetSchema = new Schema({
   title: {
@@ -12,6 +13,7 @@ const budgetSchema = new Schema({
   purchaseDate: {
     type: Date,
     required: true,
+    get: (timestamp) => dateFormat(timestamp),
   },
   purchasedBy: {
     type: String,
