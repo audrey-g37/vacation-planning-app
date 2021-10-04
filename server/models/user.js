@@ -25,11 +25,11 @@ const userSchema = new Schema(
       ref: "Trip",
     },
   },
-  {
-    toJSON: {
-      virtuals: true,
-    },
-  }
+{
+  toJSON: {
+    virtuals: true,
+  },
+}
 );
 
 userSchema.pre("save", async function (next) {
