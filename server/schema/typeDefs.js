@@ -15,6 +15,8 @@ const typeDefs = gql`
     startDate: String!
     endDate: String!
     description: String
+    tasks: [Task]
+    budget: [Budget]
   }
 
   type Task {
@@ -32,7 +34,6 @@ const typeDefs = gql`
     value: Int!
     purchaseDate: String!
     purchasedBy: String!
-    trip: [Trip]!
   }
 
   type Auth {
@@ -42,9 +43,9 @@ const typeDefs = gql`
 
   type Query {
     user: [User]!
-    trip: [Trip]
-    task: [Task]
-    budget: [Budget]
+    trip: [Trip]!
+    task: [Task]!
+    budget: [Budget]!
   }
 
   type Mutation {
@@ -57,7 +58,6 @@ const typeDefs = gql`
       location: String!
       startDate: String!
       endDate: String!
-      userId: ID!
     ): Trip
     addTask(
       title: String!
@@ -65,17 +65,14 @@ const typeDefs = gql`
       dueDate: String!
       status: Boolean!
       assignee: String!
-      tripId: ID!
     ): Task
     addBudget(
       title: String!
       value: Int!
       purchaseDate: String!
       purchasedBy: String!
-      tripId: ID!
     ): Budget
   }
 `;
 
 module.exports = typeDefs;
-

@@ -28,10 +28,10 @@ const tripSchema = new Schema({
     required: true,
     get: (timestamp) => dateFormat(timestamp),
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
+  // user: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "User",
+  // },
   tasks: [
     {
       type: Schema.Types.ObjectId,

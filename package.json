@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme",
   "dependencies": {
+    "@apollo/client": "^3.4.16",
     "concurrently": "^6.3.0"
   }
 }
