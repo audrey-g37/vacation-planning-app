@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Bahamas Baby",
+    "description": "come on lil mamma",
+    "location": "Bahamas",
+    "startDate": 20210810,
+    "endDate": 20210820
+  },
+  {
+    "title": "Bachelorette For Stacy",
+    "description": "Finally not for her mom",
+    "location": "Steamboat",
+    "startDate": 20220206,
+    "endDate": 20220212
+  },
+  {
+    "title": "Ireland Family Reunion",
+    "description": "visit Aunt Mimi",
+    "location": "Dublin",
+    "startDate": 20211004,
+    "endDate": 20211016
+  },
+  {
+    "title": "Dirty Thirty",
+    "description": "Gettin down",
+    "location": "China Town",
+    "startDate": 20220412,
+    "endDate": 20220420
+  },
+  {
+    "title": "Bar Hopping Out of Country",
+    "description": "Drinkin whiskey and getting frisky",
+    "location": "Amsterdam",
+    "startDate": 20211222,
+    "endDate": 20220106
+  }
+]
