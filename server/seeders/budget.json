@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Tix",
+    "value": 20000,
+    "purchaseDate": 20221112,
+    "purchasedBy": "Sarah"
+  },
+  {
+    "title": "Dinner",
+    "value": 400,
+    "purchaseDate": 20220208,
+    "purchasedBy": "Lacy"
+  },
+  {
+    "title": "Beers",
+    "value": 100,
+    "purchaseDate": 20211228,
+    "purchasedBy": "Billy"
+  },
+  {
+    "title": "Got lost, hired Uber",
+    "value": 75,
+    "purchaseDate": 20220101,
+    "purchasedBy": "Joe"
+  },
+  {
+    "title": "Bailed out...",
+    "value": 800,
+    "purchaseDate": 20220102,
+    "purchasedBy": "Madison"
+  }
+]

@@ -20,16 +20,18 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    trip: {
-      type: Schema.Types.ObjectId,
-      ref: "Trip",
+    trip: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Trip",
+      },
+    ],
+  },
+  {
+    toJSON: {
+      virtuals: true,
     },
-  },
-{
-  toJSON: {
-    virtuals: true,
-  },
-}
+  }
 );
 
 userSchema.pre("save", async function (next) {

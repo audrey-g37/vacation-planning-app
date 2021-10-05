@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Plane tickets",
+    "details": "13 people",
+    "dueDate": 20210610,
+    "status": true,
+    "assignee": "Audrey"
+  },
+  {
+    "title": "Decorations for hotel room",
+    "dueDate": 20210710,
+    "status": false,
+    "assignee": "Gina"
+  },
+  {
+    "title": "Tanks for 'bride tribe'",
+    "details": "13 people",
+    "dueDate": 20210410,
+    "status": false,
+    "assignee": "Adrian"
+  },
+  {
+    "title": "Plane tickets",
+    "details": "28 people",
+    "dueDate": 20211010,
+    "status": true,
+    "assignee": "Eddy"
+  },
+  {
+    "title": "Book Hotel",
+    "details": "7 rooms",
+    "dueDate": 20211010,
+    "status": false,
+    "assignee": "Korbin"
+  },
+  {
+    "title": "Google Fun Bars",
+    "dueDate": 20211118,
+    "status": false,
+    "assignee": "Jim"
+  },
+  {
+    "title": "Double Check Passport Expiration",
+    "details": "You know Jim never renews his passport...",
+    "dueDate": 20210710,
+    "status": true,
+    "assignee": "Jane"
+  },
+  {
+    "title": "Find Babysitter",
+    "details": "kids can't be going to the bars with us!",
+    "dueDate": 20211020,
+    "status": true,
+    "assignee": "Jimmy"
+  }
+]
