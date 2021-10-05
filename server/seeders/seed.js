@@ -11,9 +11,6 @@ db.once("open", async () => {
     await User.deleteMany({});
     await User.create(userSeeds);
 
-    const allUsers = User.find({});
-    console.log(allUsers);
-
     await Trip.deleteMany({});
     await Task.deleteMany({});
     await Budget.deleteMany({});
@@ -34,6 +31,43 @@ db.once("open", async () => {
       );
     }
 
+    const user1 = await User.findOne({ username: "user1" })
+      .populate("trip")
+      .lean();
+
+    for (let i = 0; i < taskSeeds.length; i++) {
+      const { _id, tripId } = await Task.create(taskSeeds[i]);
+      const trip = await Trip.updateMany(
+        { trip: tripId },
+        {
+          $addToSet: {
+            tasks: { _id },
+          },
+        }
+      );
+    }
+
+    const trip1 = await Trip.findOne({ title: "Bahamas Baby" })
+      .populate("tasks")
+      .lean();
+
+    for (let i = 0; i < budgetSeeds.length; i++) {
+      const { _id, tripId } = await Budget.create(budgetSeeds[i]);
+      const trip = await Trip.updateMany(
+        { trip: tripId },
+        {
+          $addToSet: {
+            budget: { _id },
+          },
+        }
+      );
+    }
+
+    const budget1 = await Trip.findOne({ title: "Bahamas Baby" })
+      .populate("budget")
+      .lean();
+
+    console.log(trip1);
     console.log("Seeding Complete!");
     process.exit(0);
   } catch (err) {

@@ -3,35 +3,35 @@
     "title": "Bahamas Baby",
     "description": "come on lil mamma",
     "location": "Bahamas",
-    "startDate": 20210810,
-    "endDate": 20210820
+    "startDate": "2021-08-10",
+    "endDate": "2021-08-20"
   },
   {
     "title": "Bachelorette For Stacy",
     "description": "Finally not for her mom",
     "location": "Steamboat",
-    "startDate": 20220206,
-    "endDate": 20220212
+    "startDate": "2022-02-06",
+    "endDate": "2022-02-12"
   },
   {
     "title": "Ireland Family Reunion",
     "description": "visit Aunt Mimi",
     "location": "Dublin",
-    "startDate": 20211004,
-    "endDate": 20211016
+    "startDate": "2021-10-04",
+    "endDate": "2021-10-16"
   },
   {
     "title": "Dirty Thirty",
     "description": "Gettin down",
     "location": "China Town",
-    "startDate": 20220412,
-    "endDate": 20220420
+    "startDate": "2022-04-12",
+    "endDate": "2022-04-20"
   },
   {
     "title": "Bar Hopping Out of Country",
     "description": "Drinkin whiskey and getting frisky",
     "location": "Amsterdam",
-    "startDate": 20211222,
-    "endDate": 20220106
+    "startDate": "2021-12-22",
+    "endDate": "2022-01-06"
   }
 ]

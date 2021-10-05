@@ -32,6 +32,18 @@ const tripSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  tasks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
+  budget: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Budget",
+    },
+  ],
 });
 
 const Trip = model("Trip", tripSchema);
