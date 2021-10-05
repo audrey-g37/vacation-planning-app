@@ -2,31 +2,31 @@
   {
     "title": "Tix",
     "value": 20000,
-    "purchaseDate": 20221112,
+    "purchaseDate": "2022-11-12",
     "purchasedBy": "Sarah"
   },
   {
     "title": "Dinner",
     "value": 400,
-    "purchaseDate": 20220208,
+    "purchaseDate": "2022-02-08",
     "purchasedBy": "Lacy"
   },
   {
     "title": "Beers",
     "value": 100,
-    "purchaseDate": 20211228,
+    "purchaseDate": "2021-12-28",
     "purchasedBy": "Billy"
   },
   {
     "title": "Got lost, hired Uber",
     "value": 75,
-    "purchaseDate": 20220101,
+    "purchaseDate": "2022-01-01",
     "purchasedBy": "Joe"
   },
   {
     "title": "Bailed out...",
     "value": 800,
-    "purchaseDate": 20220102,
+    "purchaseDate": "2022-01-02",
     "purchasedBy": "Madison"
   }
 ]

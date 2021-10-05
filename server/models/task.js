@@ -22,11 +22,6 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
-
-  trip: {
-    type: Schema.Types.ObjectId,
-    ref: "Trip",
-  },
   //   member: {
   //     type: Schema.Types.ObjectId,
   //     ref: "Member",
