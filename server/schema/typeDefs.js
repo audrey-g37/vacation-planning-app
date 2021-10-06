@@ -43,7 +43,9 @@ const typeDefs = gql`
 
   type Query {
     user(username: String!): User
+    users: [User]!
     trip(tripId: ID!): Trip
+    trips: [Trip]!
     tasks: [Task]!
     task(taskId: ID!): Task
     budgets: [Budget]!
