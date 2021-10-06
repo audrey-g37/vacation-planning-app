@@ -25,7 +25,7 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_TRIP = gql`
- muation addTrip($title: String!, $description: String, $location: String!, $startDate: String!, $endDate: String!){
+ mutation addTrip($title: String!, $description: String, $location: String!, $startDate: String!, $endDate: String!){
      addTrip(title: $title, description: $description, location, $location, startDate: $startDate, endDate: $endDate){
          _id
          title

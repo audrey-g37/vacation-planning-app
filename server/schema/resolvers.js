@@ -6,28 +6,51 @@ const resolvers = {
   Query: {
     user: async (parent, { username }, context) => {
       // if (context.user) {
-      console.log(username);
       return await User.findOne({ username: username }).populate("trip");
       // }
       // throw new AuthenticationError("You need to be logged in!");
     },
-    trip: async (parent, args, context) => {
-      if (context.user) {
-        return Trip.findOne({ _id: context.user._id });
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    users: async (parent, args, context) => {
+      // if (context.user) {
+      return await User.find({}).populate("trip");
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
     },
-    task: async (parent, args, context) => {
-      if (context.trip) {
-        return Task.findOne({ _id: context.trip._id });
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    trip: async (parent, { tripId }, context) => {
+      // if (context.user) {
+      return await Trip.findOne({ _id: tripId }).populate("tasks", "budget");
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
     },
-    budget: async (parent, args, context) => {
-      if (context.trip) {
-        return Budget.findOne({ _id: context.trip._id });
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    trips: async (parent, args, context) => {
+      // if (context.user) {
+      return await Trip.find({}).populate("tasks", "budget");
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    task: async (parent, { taskId }, context) => {
+      // if (context.trip) {
+      return await Task.findOne({ _id: taskId });
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    tasks: async (parent, args, context) => {
+      // if (context.trip) {
+      return await Task.find({});
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    budget: async (parent, { budgetId }, context) => {
+      // if (context.trip) {
+      return await Budget.findOne({ _id: budgetId });
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    budgets: async (parent, args, context) => {
+      // if (context.trip) {
+      return await Budget.find({});
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
     },
   },
   Mutation: {
