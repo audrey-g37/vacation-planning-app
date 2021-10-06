@@ -54,43 +54,50 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, { username, password }) => {
-      const User = await User.create({ username, password });
-      const token = signToken(User);
-      return { token, User };
+    addUser: async (parent, { username, password }, context) => {
+      const user = await User.create({ username, password });
+      // const token = await signToken(User);
+      // return await { token, User };
+      return await { user };
     },
 
-    login: async (parent, { username, password }) => {
-      const User = await User.findOne({ username });
-      if (!User) {
-        throw new AuthenticationError("No profile with this email found!");
-      }
-      const correctPw = await User.isCorrectPassword(password);
-      if (!correctPw) {
-        throw new AuthenticationError("Incorrect password!");
-      }
-      const token = signToken(User);
-      return { token, User };
-    },
+    // login: async (parent, { username, password }) => {
+    //   const User = await User.findOne({ username });
+    //   if (!User) {
+    //     throw new AuthenticationError("No profile with this email found!");
+    //   }
+    //   const correctPw = await User.isCorrectPassword(password);
+    //   if (!correctPw) {
+    //     throw new AuthenticationError("Incorrect password!");
+    //   }
+    //   const token = signToken(User);
+    //   return { token, User };
+    // },
+   
+    addTrip: async (parent, { tripData, userId }, context) => {
+      console.log({ tripData });
+      console.log({ userId });
 
-    addTrip: async (parent, { tripData }, context) => {
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       const newTrip = await Trip.create(tripData);
-      if (context.user) {
-        return await User.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $push: { trip: newTrip },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-      }
-      // If user attempts to execute this mutation and isn’t logged in, throw an error
-      throw new AuthenticationError("You need to be logged in!");
+      console.log(newTrip);
+
+      // if (context.user) {
+      return await User.findOneAndUpdate(
+        { _id: { userId } },
+        {
+          $push: { trip: trip._id },
+        },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
+      // }
+      // // If user attempts to execute this mutation and isn’t logged in, throw an error
+      // throw new AuthenticationError("You need to be logged in!");
     },
+   
   },
 };
 

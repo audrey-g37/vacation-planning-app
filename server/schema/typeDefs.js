@@ -53,28 +53,28 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, password: String!): Auth
+    addUser(username: String!, password: String!): User
     login(username: String!, password: String!): Auth
 
     addTrip(
-      title: String!
-      description: String
-      location: String!
-      startDate: String!
-      endDate: String!
+      title: String!,
+      description: String,
+      location: String!,
+      startDate: String!,
+      endDate: String!,
     ): Trip
     addTask(
-      title: String!
-      details: String
-      dueDate: String!
-      status: Boolean!
-      assignee: String!
+      title: String!,
+      details: String,
+      dueDate: String!,
+      status: Boolean!,
+      assignee: String!,
     ): Task
     addBudget(
-      title: String!
-      value: Int!
-      purchaseDate: String!
-      purchasedBy: String!
+      title: String!,
+      value: Int!,
+      purchaseDate: String!,
+      purchasedBy: String!,
     ): Budget
   }
 `;
