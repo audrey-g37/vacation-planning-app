@@ -42,10 +42,12 @@ const typeDefs = gql`
   }
 
   type Query {
-    user: [User]!
-    trip: [Trip]!
-    task: [Task]!
-    budget: [Budget]!
+    user: user(username: String!): User
+    trip(tripId: ID!): Trip
+    tasks: [Task]!
+    task(taskId: ID!): Task
+    budgets: [Budget]!
+    budget(budgetId: ID!): Budget
   }
 
   type Mutation {
