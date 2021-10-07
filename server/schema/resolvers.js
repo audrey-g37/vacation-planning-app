@@ -79,25 +79,31 @@ const resolvers = {
       { userId, title, description, location, startDate, endDate },
       context
     ) => {
+      // const testUser = await User.find({_id: userId})
+      // console.log(testUser)
       // console.log({ tripData });
       const tripData = { title, description, location, startDate, endDate };
-      console.log({ userId });
+      console.log( userId );
 
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       const newTrip = await Trip.create(tripData);
       console.log(newTrip);
 
       // if (context.user) {
-      return await User.findOneAndUpdate(
-        { _id: { userId } },
+      await User.findOneAndUpdate(
+        { _id:  userId  },
         {
           $push: { trip: newTrip._id },
         },
         {
           new: true,
+
           // runValidators: true,
         }
-      );
+        
+      )
+      
+      return newTrip;
       // }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
       // throw new AuthenticationError("You need to be logged in!");
