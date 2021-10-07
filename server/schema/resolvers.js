@@ -79,9 +79,6 @@ const resolvers = {
       { userId, title, description, location, startDate, endDate },
       context
     ) => {
-      // const testUser = await User.find({_id: userId})
-      // console.log(testUser)
-      // console.log({ tripData });
       const tripData = { title, description, location, startDate, endDate };
       console.log(userId);
 
@@ -112,9 +109,6 @@ const resolvers = {
       { tripId, title, details, dueDate, status, assignee },
       context
     ) => {
-      // const testUser = await User.find({_id: userId})
-      // console.log(testUser)
-      // console.log({ tripData });
       const taskData = { tripId, title, details, dueDate, status, assignee };
       console.log(tripId);
 
@@ -146,9 +140,6 @@ const resolvers = {
       { tripId, title, value, purchaseDate, purchasedBy },
       context
     ) => {
-      // const testUser = await User.find({_id: userId})
-      // console.log(testUser)
-      // console.log({ tripData });
       const budgetData = { tripId, title, value, purchaseDate, purchasedBy };
       console.log(tripId);
 
@@ -173,23 +164,49 @@ const resolvers = {
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
       // throw new AuthenticationError("You need to be logged in!");
     },
-
-    removeTask: async (
+    updateTrip: async (
       parent,
-      { tripId, taskId, title, details, dueDate, status, assignee },
+      { tripId, title, description, location, startDate, endDate },
       context
     ) => {
-      // const testUser = await User.find({_id: userId})
-      // console.log(testUser)
-      // console.log({ tripData });
-      // const taskData = { taskId, title, details, dueDate, status, assignee };
-      // console.log(taskData);
-
-      const removeTask = await Task.findOneAndDelete(
-        { _id: taskId },
-        // {
-        //   title: title, details: details, dueDate: dueDate, status: status, assignee: assignee
-        // },
+      const updatedTrip = await Trip.findOneAndUpdate(
+        { _id: tripId },
+        {
+          title: title,
+          description: description, 
+          location: location, 
+          startDate: startDate, 
+          endDate: endDate
+        },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
+      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      // await Trip.findOneAndUpdate(
+      //   { _id: tripId },
+      //   {
+      //     $addToSet: { tasks: updatedTask },
+      //   },
+      //   {
+      //     new: true,
+      //     // runValidators: true,
+      //   }
+      // );
+      console.log(updatedTrip);
+      return updatedTrip;
+      // }
+      // // If user attempts to execute this mutation and isn’t logged in, throw an error
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    removeTrip: async (
+      parent,
+      { tripId },
+      context
+    ) => {
+      const removeTrip = await Trip.findOneAndDelete(
+        { _id: tripId },
         {
           new: true,
 
@@ -197,11 +214,59 @@ const resolvers = {
         }
       );
 
+      // // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      
+      console.log(removeTrip);
+      return removeTrip;
+      // }
+      // // If user attempts to execute this mutation and isn’t logged in, throw an error
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    updateTask: async (
+      parent,
+      { tripId, taskId, title, details, dueDate, status, assignee },
+      context
+    ) => {
+      const taskToUpdate = await Task.findOneAndUpdate(
+        { _id: taskId },
+        {
+          title: title,
+          details: details,
+          dueDate: dueDate,
+          status: status,
+          assignee: assignee,
+        },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       await Trip.findOneAndUpdate(
         { _id: tripId },
         {
-          $pull: { tasks: { _id: taskId } },
+          $addToSet: { tasks: taskToUpdate },
+        },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
+      console.log(taskToUpdate);
+      return taskToUpdate;
+      // }
+      // // If user attempts to execute this mutation and isn’t logged in, throw an error
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    removeTask: async (
+      parent,
+      { tripId, taskId, title, details, dueDate, status, assignee },
+      context
+    ) => {
+      const toUpdateWithDelete = await Trip.findOneAndUpdate(
+        { _id: tripId },
+        {
+          $pull: { tasks: taskId },
         },
         {
           new: true,
@@ -209,8 +274,93 @@ const resolvers = {
           // runValidators: true,
         }
       );
-      console.log(removeTask);
-      return removeTask;
+
+      console.log(toUpdateWithDelete);
+
+      const removeTask = await Task.findOneAndDelete(
+        { _id: taskId },
+        {
+          new: true,
+
+          // runValidators: true,
+        }
+      );
+
+      // // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      
+      // console.log(removeTask);
+      return toUpdateWithDelete;
+      // }
+      // // If user attempts to execute this mutation and isn’t logged in, throw an error
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    updateBudget: async (
+      parent,
+      { tripId, budgetId, title, value, purchaseDate, purchasedBy },
+      context
+    ) => {
+      const budgetToUpdate = await Budget.findOneAndUpdate(
+        { _id: budgetId },
+        {
+          title: title, 
+          value: value, 
+          purchaseDate: purchaseDate, 
+          purchasedBy: purchasedBy
+        },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
+      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      await Trip.findOneAndUpdate(
+        { _id: tripId },
+        {
+          $addToSet: { budget: budgetToUpdate },
+        },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
+      console.log(budgetToUpdate);
+      return budgetToUpdate;
+      // }
+      // // If user attempts to execute this mutation and isn’t logged in, throw an error
+      // throw new AuthenticationError("You need to be logged in!");
+    },
+    removeBudget: async (
+      parent,
+      { tripId, budgetId, title, value, purchaseDate, purchasedBy },
+      context
+    ) => {
+      const toUpdateWithDelete = await Trip.findOneAndUpdate(
+        { _id: tripId },
+        {
+          $pull: { budget: budgetId },
+        },
+        {
+          new: true,
+
+          // runValidators: true,
+        }
+      );
+
+      console.log(toUpdateWithDelete);
+
+      const removeBudget = await Budget.findOneAndDelete(
+        { _id: budgetId },
+        {
+          new: true,
+
+          // runValidators: true,
+        }
+      );
+
+      // // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      
+      // console.log(removeTask);
+      return toUpdateWithDelete;
       // }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
       // throw new AuthenticationError("You need to be logged in!");
