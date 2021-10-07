@@ -58,6 +58,8 @@ const typeDefs = gql`
     addTrip(userId: ID!, title: String!, description: String, location: String!, startDate: String!, endDate: String!): Trip
     addTask(tripId: ID!, title: String!, details: String, dueDate: String!, status: Boolean!, assignee: String!): Task
     addBudget(tripId: ID!, title: String!, value: Int!, purchaseDate: String!, purchasedBy: String!): Budget
+    updateTask(tripId: ID!, taskId: ID!, title: String, details: String, dueDate: String, status: Boolean, assignee: String): Task
+    removeTask(taskId: ID!): Task
   }
 `;
 
