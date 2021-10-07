@@ -174,8 +174,7 @@ const resolvers = {
       // throw new AuthenticationError("You need to be logged in!");
     },
 
-
-      updateTask: async (
+    removeTask: async (
       parent,
       { tripId, taskId, title, details, dueDate, status, assignee },
       context
@@ -186,11 +185,11 @@ const resolvers = {
       // const taskData = { taskId, title, details, dueDate, status, assignee };
       // console.log(taskData);
 
-      const updatedTask = await Task.findOneAndUpdate(
+      const removeTask = await Task.findOneAndDelete(
         { _id: taskId },
-        {
-          title: title, details: details, dueDate: dueDate, status: status, assignee: assignee
-        },
+        // {
+        //   title: title, details: details, dueDate: dueDate, status: status, assignee: assignee
+        // },
         {
           new: true,
 
@@ -199,10 +198,10 @@ const resolvers = {
       );
 
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
-     await Trip.findOneAndUpdate(
+      await Trip.findOneAndUpdate(
         { _id: tripId },
         {
-          $addToSet: {tasks: updatedTask},
+          $pull: { tasks: { _id: taskId } },
         },
         {
           new: true,
@@ -210,14 +209,13 @@ const resolvers = {
           // runValidators: true,
         }
       );
-    console.log(updatedTask);
-      return updatedTask;
+      console.log(removeTask);
+      return removeTask;
       // }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
       // throw new AuthenticationError("You need to be logged in!");
     },
   },
-
 };
 
 module.exports = resolvers;
