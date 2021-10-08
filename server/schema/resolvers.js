@@ -56,23 +56,23 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, { username, password }, context) => {
       const user = await User.create({ username, password });
-      // const token = await signToken(User);
-      // return await { token, User };
-      return await { user };
+      const token = await signToken(User);
+      return { token, user };
     },
 
-    // login: async (parent, { username, password }) => {
-    //   const User = await User.findOne({ username });
-    //   if (!User) {
-    //     throw new AuthenticationError("No profile with this email found!");
-    //   }
-    //   const correctPw = await User.isCorrectPassword(password);
-    //   if (!correctPw) {
-    //     throw new AuthenticationError("Incorrect password!");
-    //   }
-    //   const token = signToken(User);
-    //   return { token, User };
-    // },
+    login: async (parent, { username, password }) => {
+      const loggedInUser = await User.findOne({ username: username });
+      console.log (loggedInUser)
+      if (!User) {
+        throw new AuthenticationError("No profile with this email found!");
+      }
+      const correctPw = await loggedInUser.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect password!");
+      }
+      const token = await signToken(loggedInUser);
+      return { token, user: loggedInUser };
+    },
 
     addTrip: async (
       parent,

@@ -25,15 +25,15 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_TRIP = gql`
- mutation addTrip($userId: ID!, $title: String!, $description: String, $location: String!, $startDate: String!, $endDate: String!){
-     addTrip(userId: $userId, title: $title, description: $description, location, $location, startDate: $startDate, endDate: $endDate){
-         title
-         description
-         location
-         startDate
-         endDate
-     }
- }
+  mutation addTrip($userId: ID!, $title: String!, $description: String, $location: String!, $startDate: String!, $endDate: String!){
+    addTrip(userId: $userId, title: $title, description: $description, location: $location, startDate: $startDate, endDate: $endDate){
+        title
+        description
+        location
+        startDate
+        endDate
+    }
+  }
 `;
 
 export const ADD_TASK = gql`
@@ -64,7 +64,7 @@ export const ADD_BUDGET = gql`
 
 export const UPDATE_TRIP = gql`
  mutation updateTrip($tripId: ID!, $title: String!, $description: String, $location: String!, $startDate: String!, $endDate: String!){
-     updateTrip(tripId: $tripId, title: $title, description: $description, location, $location, startDate: $startDate, endDate: $endDate){
+     updateTrip(tripId: $tripId, title: $title, description: $description, location: $location, startDate: $startDate, endDate: $endDate){
          _id
          title
          description
