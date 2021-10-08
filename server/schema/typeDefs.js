@@ -53,7 +53,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, password: String!): User
+    addUser(username: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
     addTrip(userId: ID!, title: String!, description: String, location: String!, startDate: String!, endDate: String!): Trip
     addTask(tripId: ID!, title: String!, details: String, dueDate: String!, status: Boolean!, assignee: String!): Task
