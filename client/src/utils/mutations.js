@@ -98,3 +98,26 @@ export const UPDATE_BUDGET = gql`
     }
   }
 `;
+
+
+
+export const REMOVE_TRIP = gql`
+mutation removeTrip($tripId: ID!){
+  removeTrip(tripId: $tripId)
+}
+`;
+export const REMOVE_TASK = gql`
+mutation removeTask($tripId: ID!, $taskId: ID!){
+  removeTask(tripId: $tripId, taskId: $taskId)
+}
+`;
+
+export const REMOVE_BUDGET = gql`
+mutation removeBudget($tripId: ID!, $budgetId: ID!){
+  removeTrip(tripId:$tripId, budgetId:$budgetId)
+}
+`;
+
+
+
+
