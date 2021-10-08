@@ -1,7 +1,6 @@
 const { Budget, Task, Trip, User } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
-const { useAccordionButton } = require("react-bootstrap");
 
 const resolvers = {
   Query: {
