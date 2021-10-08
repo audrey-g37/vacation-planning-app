@@ -7,33 +7,22 @@ export const QUERY_USER = gql`
       username
       trip {
         _id
-        title
-        location
-        startDate
-        endDate
-        description
-        tasks {
-          _id
-          title
-          details
-          dueDate
-          status
-          assignee
-        }
-        budget {
-          _id
-          title
-          value
-          purchaseDate
-          purchasedBy
-        }
       }
     }
   }
 `;
+
+export const QUERY_USERS = gql `
+query users {
+  _id
+  username
+  password
+}
+`;
+
 export const QUERY_TRIP = gql`
-  query getTrip {
-    trip {
+  query getTrip($tripId: ID!) {
+    trip (tripId:$tripId) {
       _id
       title
       location
@@ -43,6 +32,18 @@ export const QUERY_TRIP = gql`
     }
   }
 `;
+
+export const QUERY_TRIPS = gql`
+query trips {
+  _id
+  title
+  location
+  startDate
+  endDate
+  description
+}
+`
+
 export const QUERY_TASK = gql`
   query getTask($taskId: ID!) {
     task(taskId: $taskId) {
