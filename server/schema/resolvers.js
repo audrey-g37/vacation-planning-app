@@ -1,6 +1,7 @@
 const { Budget, Task, Trip, User } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
+const { useAccordionButton } = require("react-bootstrap");
 
 const resolvers = {
   Query: {
@@ -166,10 +167,10 @@ const resolvers = {
     },
     updateTrip: async (
       parent,
-      { tripId, title, description, location, startDate, endDate },
+      { userId, tripId, title, description, location, startDate, endDate },
       context
     ) => {
-      const updatedTrip = await Trip.findOneAndUpdate(
+      const tripToUpdate = await Trip.findOneAndUpdate(
         { _id: tripId },
         {
           title: title,
@@ -184,27 +185,36 @@ const resolvers = {
         }
       );
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
-      // await Trip.findOneAndUpdate(
-      //   { _id: tripId },
-      //   {
-      //     $addToSet: { tasks: updatedTask },
-      //   },
-      //   {
-      //     new: true,
-      //     // runValidators: true,
-      //   }
-      // );
-      console.log(updatedTrip);
-      return updatedTrip;
+      await User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $addToSet: { trip: tripToUpdate },
+        },
+        {
+          new: true,
+          // runValidators: true,
+        }
+      );
+   
+      return tripToUpdate;
       // }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
       // throw new AuthenticationError("You need to be logged in!");
     },
     removeTrip: async (
       parent,
-      { tripId },
+      { userId ,tripId },
       context
     ) => {
+      const toUpdateWithDelete = await User.findOneAndUpdate(
+        {_id: userId},
+        {
+          $pull: {trip: tripId}
+        },
+        {
+          new:true,
+        }
+      )
       const removeTrip = await Trip.findOneAndDelete(
         { _id: tripId },
         {
@@ -216,8 +226,8 @@ const resolvers = {
 
       // // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       
-      console.log(removeTrip);
-      return removeTrip;
+      
+      return toUpdateWithDelete;
       // }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
       // throw new AuthenticationError("You need to be logged in!");
@@ -260,7 +270,7 @@ const resolvers = {
     },
     removeTask: async (
       parent,
-      { tripId, taskId, title, details, dueDate, status, assignee },
+      { tripId, taskId },
       context
     ) => {
       const toUpdateWithDelete = await Trip.findOneAndUpdate(
