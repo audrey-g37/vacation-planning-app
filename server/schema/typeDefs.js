@@ -61,7 +61,7 @@ const typeDefs = gql`
     updateTrip(tripId: ID!, title: String, description: String, location: String, startDate: String, endDate: String): Trip
     updateTask(tripId: ID!, taskId: ID!, title: String, details: String, dueDate: String, status: Boolean, assignee: String): Task
     updateBudget(tripId: ID!, budgetId: ID!, title: String, value: Int, purchaseDate: String, purchasedBy: String): Budget
-    removeTrip(tripId: ID!): Trip
+    removeTrip(userId:ID!, tripId: ID!): User
     removeTask(tripId: ID!, taskId: ID!): Trip
     removeBudget(tripId: ID!, budgetId: ID!): Trip
   }
