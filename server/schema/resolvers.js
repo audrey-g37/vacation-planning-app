@@ -5,52 +5,52 @@ const { signToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     user: async (parent, { username }, context) => {
-      // if (context.user) {
+      if (context.user) {
       return await User.findOne({ username: username }).populate("trip");
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     users: async (parent, args, context) => {
-      // if (context.user) {
+      if (context.user) {
       return await User.find({}).populate("trip");
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     trip: async (parent, { tripId }, context) => {
-      // if (context.user) {
+      if (context.user) {
       return await Trip.findOne({ _id: tripId }).populate("tasks", "budget");
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     trips: async (parent, args, context) => {
-      // if (context.user) {
+      if (context.user) {
       return await Trip.find({}).populate("tasks", "budget");
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     task: async (parent, { taskId }, context) => {
-      // if (context.trip) {
+      if (context.trip) {
       return await Task.findOne({ _id: taskId });
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     tasks: async (parent, args, context) => {
-      // if (context.trip) {
+      if (context.trip) {
       return await Task.find({});
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     budget: async (parent, { budgetId }, context) => {
-      // if (context.trip) {
+      if (context.trip) {
       return await Budget.findOne({ _id: budgetId });
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
     budgets: async (parent, args, context) => {
-      // if (context.trip) {
+      if (context.trip) {
       return await Budget.find({});
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
   Mutation: {
@@ -64,7 +64,7 @@ const resolvers = {
       const loggedInUser = await User.findOne({ username: username });
       console.log (loggedInUser)
       if (!User) {
-        throw new AuthenticationError("No profile with this email found!");
+        throw new AuthenticationError("No profile with this username found!");
       }
       const correctPw = await loggedInUser.isCorrectPassword(password);
       if (!correctPw) {
@@ -80,13 +80,11 @@ const resolvers = {
       context
     ) => {
       const tripData = { title, description, location, startDate, endDate };
-      console.log(userId);
-
+  
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       const newTrip = await Trip.create(tripData);
-      console.log(newTrip);
 
-      // if (context.user) {
+      if (context.user) {
       await User.findOneAndUpdate(
         { _id: userId },
         {
@@ -95,14 +93,14 @@ const resolvers = {
         {
           new: true,
 
-          // runValidators: true,
+          runValidators: true,
         }
       );
 
       return newTrip;
-      // }
+      }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
-      // throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You need to be logged in!");
     },
     addTask: async (
       parent,
@@ -110,13 +108,11 @@ const resolvers = {
       context
     ) => {
       const taskData = { tripId, title, details, dueDate, status, assignee };
-      console.log(tripId);
 
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       const newTask = await Task.create(taskData);
-      console.log(newTask);
 
-      // if (context.user) {
+      if (context.user) {
       await Trip.findOneAndUpdate(
         { _id: tripId },
         {
@@ -125,14 +121,14 @@ const resolvers = {
         {
           new: true,
 
-          // runValidators: true,
+          runValidators: true,
         }
       );
 
       return newTask;
-      // }
+      }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
-      // throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You need to be logged in!");
     },
 
     addBudget: async (
@@ -141,13 +137,11 @@ const resolvers = {
       context
     ) => {
       const budgetData = { tripId, title, value, purchaseDate, purchasedBy };
-      console.log(tripId);
 
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       const newBudget = await Budget.create(budgetData);
-      console.log(newBudget);
 
-      // if (context.user) {
+      if (context.user) {
       await Trip.findOneAndUpdate(
         { _id: tripId },
         {
@@ -156,13 +150,13 @@ const resolvers = {
         {
           new: true,
 
-          // runValidators: true,
+          runValidators: true,
         }
       );
       return newBudget;
-      // }
+      }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
-      // throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You need to be logged in!");
     },
     updateTrip: async (
       parent,
@@ -180,7 +174,7 @@ const resolvers = {
         },
         {
           new: true,
-          // runValidators: true,
+          runValidators: true,
         }
       );
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
@@ -194,11 +188,11 @@ const resolvers = {
           // runValidators: true,
         }
       );
-   
       return tripToUpdate;
+   
+      // throw new AuthenticationError("You need to be logged in!")
       // }
-      // // If user attempts to execute this mutation and isn’t logged in, throw an error
-      // throw new AuthenticationError("You need to be logged in!");
+      // If user attempts to execute this mutation and isn’t logged in, throw an error
     },
     removeTrip: async (
       parent,
@@ -223,7 +217,7 @@ const resolvers = {
         }
       );
 
-      // // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       
       
       return toUpdateWithDelete;
