@@ -36,8 +36,11 @@ function App() {
         <Route exact path="/dashboard">
           <Dashboard />
         </Route>
-        <Route exact path="/trip/:id">
+        <Route exact path="/view-trip/:id">
           <ViewTrip />
+        </Route>
+        <Route exact path="/view-trips/">
+          <ViewTrips />
         </Route>
 
         <Route exact path="/view-tasks">
