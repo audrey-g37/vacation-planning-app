@@ -18,6 +18,7 @@ import ViewAllTrips from "./pages/ViewTrip(s)/ViewAllTrips";
 import ViewSingleTrip from "./pages/ViewTrip(s)/ViewSingleTrip";
 import ViewTask from "./pages/ViewTask/ViewTask";
 import ViewBudget from "./pages/ViewBudget/ViewBudget";
+import Signup from "./pages/signup/signup";
 
 const client = new ApolloClient({
   uri: "/graphql",
@@ -32,6 +33,9 @@ function App() {
 
         <Route exact path="/">
           <Login />
+        </Route>
+        <Route exact path="/signup">
+          <Signup />
         </Route>
 
         <Route exact path="/dashboard">
