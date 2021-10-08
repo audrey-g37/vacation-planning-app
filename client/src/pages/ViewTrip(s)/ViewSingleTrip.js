@@ -1,5 +1,5 @@
 import React from "react";
-import "./ViewTrip.css";
+import "./ViewSingleTrip.css";
 
 const ViewTrip = () => {
   return <h1>This is the view SINGLE trip page</h1>;

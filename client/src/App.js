@@ -14,7 +14,8 @@ import Footer from "./components/Footer/Footer";
 import NavBar from "./components/NavBar/NavBar";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import ViewTrip from "./pages/ViewTrip/ViewTrip";
+import ViewAllTrips from "./pages/ViewTrip(s)/ViewAllTrips";
+import ViewSingleTrip from "./pages/ViewTrip(s)/ViewSingleTrip";
 import ViewTask from "./pages/ViewTask/ViewTask";
 import ViewBudget from "./pages/ViewBudget/ViewBudget";
 
@@ -37,10 +38,10 @@ function App() {
           <Dashboard />
         </Route>
         <Route exact path="/view-trip/:id">
-          <ViewTrip />
+          <ViewSingleTrip />
         </Route>
         <Route exact path="/view-trips/">
-          <ViewTrips />
+          <ViewAllTrips />
         </Route>
 
         <Route exact path="/view-tasks">
