@@ -34,7 +34,8 @@ export const QUERY_TRIP = gql`
 `;
 
 export const QUERY_TRIPS = gql`
-  query trips {
+query {
+  trips {
     _id
     title
     location
@@ -42,6 +43,7 @@ export const QUERY_TRIPS = gql`
     endDate
     description
   }
+}
 `;
 
 export const QUERY_TASK = gql`

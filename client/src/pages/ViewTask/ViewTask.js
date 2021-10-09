@@ -1,14 +1,15 @@
 import React from "react";
 import "./ViewTask.css";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_TASKS } from "../../utils/queries";
+import { QUERY_TASKS} from "../../utils/queries";
 import { REMOVE_TASK } from "../../utils/mutations";
+
 const ViewTask = () => {
   // const [removeTask, { error }] = useMutation(REMOVE_TASK, {
   //   update(cache, { data: { removeTask } }) {
   //     try {
   //       cache.writeQuery({
-  //         query: QUERY_ME,
+  //         // query: QUERY_ME,
   //         data: { me: removeTask },
   //       });
   //     } catch (e) {
@@ -25,7 +26,7 @@ const ViewTask = () => {
       console.error(err);
     }
   };
-  // const { tripId } = useParams();
+  
   const { loading, data } = useQuery(QUERY_TASKS);
   const tasks = data?.tasks || [];
   console.log(tasks);

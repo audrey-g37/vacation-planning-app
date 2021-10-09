@@ -14,32 +14,37 @@ const Dashboard = () => {
 const {loading, data} = useQuery(QUERY_TRIPS);
 const allTrips = data?.trips || [];
 
-// console.log (allTrips);
+console.log (allTrips);
 
 return(
   <>
- <Table responsive>
+ <Table className="Table" responsive>
   <thead>
     <tr>
-      <th>#</th>
-      {Array.from({ length: 5 }).map((_, index) => (
-        <th key={index}>
-          {/* {{QUERY_TRIP}} */}
-          </th>
-      ))}
+      <th>Title</th>
+      <th>Location</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      {Array.from({ length:5 }).map((_, index) => (
-        <td key={index} 
+
+    
+      {allTrips.length>0?  allTrips.map((trip, index) => (
+        <tr>
+        <td>{trip.title}</td>
+        <td ey={index} 
         // {{QUERY_TRIP}} {index}
         >
-this is the text that shows on page
+       {trip.location}
+        
         </td>
-      ))}
-    </tr>
+        <td>{trip.startDate}</td>
+        <td>{trip.endDate}</td>
+        </tr>
+      )):<tr><td></td><td></td><td></td><td></td></tr>}
+   
   </tbody>
 </Table>
 </>
