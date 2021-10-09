@@ -1,18 +1,34 @@
 import React from "react";
 import "./ViewTask.css";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_TASKS } from "../../utils/queries";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import IconButton from "@mui/material/IconButton";
-import { DataGrid } from "@mui/x-data-grid";
-
-
+import { REMOVE_TASK } from "../../utils/mutations";
 const ViewTask = () => {
+  const [removeTask, { error }] = useMutation(REMOVE_TASK, {
+    update(cache, { data: { removeTask } }) {
+      try {
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: { me: removeTask },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
+  const handleRemoveTask = async (task) => {
+    try {
+      const { data } = await REMOVE_TASK({
+        variables: { task },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
   // const { tripId } = useParams();
   const { loading, data } = useQuery(QUERY_TASKS);
   const tasks = data?.tasks || [];
   console.log(tasks);
-
   const columns = [
     { field: "title", headerName: "Title", width: 150 },
     { field: "details", headerName: "Details", width: 150 },
@@ -20,7 +36,6 @@ const ViewTask = () => {
     { field: "status", headerName: "Status", width: 150 },
     { field: "assignee", headerName: "Assignee", width: 150 },
   ];
-
   const rows = tasks.map((task) => ({
     title: task.title,
     details: task.details,
@@ -28,20 +43,16 @@ const ViewTask = () => {
     status: task.status,
     assignee: task.assignee,
   }));
-
   console.log(rows);
-
   return (
     <main>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
+      <button
+        className="btn btn-sm btn-danger ml-auto"
+        onClick={() => handleRemoveSkill(skill)}
+      >
+        X
+      </button>
     </main>
   );
 };
-
-export default ViewTask;
+export default ViewTask
