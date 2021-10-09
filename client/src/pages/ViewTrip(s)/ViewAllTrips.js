@@ -7,16 +7,16 @@ import { QUERY_USER, QUERY_USERS, QUERY_TRIP, QUERY_TRIPS, QUERY_TASK, QUERY_TAS
 
 const ViewAllTrips = () => {
 
-const {data} = useQuery(QUERY_TRIPS);
-const allTrips = data?.trips || [];
-console.log (allTrips);
+// const {data} = useQuery(QUERY_TRIPS);
+// const allTrips = data?.trips || [];
+// console.log (allTrips);
 
-// const singleTripData = useQuery(QUERY_TRIP);
-// const singleTrip = singleTripData?.trip || [];
+// const {data} = useQuery(QUERY_TRIP);
+// const singleTrip = data?.trip || [];
 // console.log (singleTrip);
 
-// const allTaskData = useQuery(QUERY_TASKS);
-// const allTasks= allTaskData?.tasks || [];
+// const {data} = useQuery(QUERY_TASKS);
+// const allTasks= data?.tasks || [];
 // console.log (allTasks);
 
 // const singleTaskData = useQuery(QUERY_TASK);
