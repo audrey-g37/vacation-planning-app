@@ -30,11 +30,12 @@ const resolvers = {
     },
     task: async (parent, { taskId }, context) => {
       if (
-        (context.const[(state, dispatch)] = useReducer(
-          reducer,
-          initialState,
-          init
-        ))
+        context.user
+        // (context.const[(state, dispatch)] = useReducer(
+        //   reducer,
+        //   initialState,
+        //   init
+        // ))
       ) {
         return await Task.findOne({ _id: taskId });
       }
