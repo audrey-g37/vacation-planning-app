@@ -13,9 +13,9 @@ moment().format();
 const {loading, data} = useQuery(QUERY_TRIPS);
 let allTrips = data?.trips || [];
 
-allTrips = allTrips.map((trip)=> {
+// allTrips = allTrips.map((trip)=> {
 
-})
+// })
 
 // allTrips.sort(function ())
 console.log (allTrips);
