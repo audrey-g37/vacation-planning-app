@@ -18,7 +18,7 @@ console.log (allTrips);
 
 return(
   <>
- <Table responsive>
+ <Table className="Table" responsive>
   <thead>
     <tr>
       <th>Title</th>
