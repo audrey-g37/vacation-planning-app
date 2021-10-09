@@ -1,7 +1,7 @@
 import React from "react";
 import "./ViewTask.css";
 import { useQuery } from "@apollo/client";
-import { QUERY_TASKS, QUERY_TRIP } from "../../utils/queries";
+import { QUERY_TASKS, QUERY_TASK } from "../../utils/queries";
 import { Table, Form, Button } from "react-bootstrap";
 import { REMOVE_TASK } from "../../utils/mutations";
 
@@ -10,7 +10,7 @@ const ViewTask = () => {
   //   update(cache, { data: { removeTask } }) {
   //     try {
   //       cache.writeQuery({
-  //         query: QUERY_ME,
+  //         query: QUERY_USER,
   //         data: { me: removeTask },
   //       });
   //     } catch (e) {
@@ -58,7 +58,7 @@ const ViewTask = () => {
                   {" "}
                   <button
                     className="btn btn-sm btn-danger ml-auto"
-                    onClick={() => handleRemoveTask(task)}
+                    // onClick={() => handleRemoveTask(task)}
                   >
                     X
                   </button>
