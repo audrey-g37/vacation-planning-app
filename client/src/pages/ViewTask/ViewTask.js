@@ -4,18 +4,18 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_TASKS } from "../../utils/queries";
 import { REMOVE_TASK } from "../../utils/mutations";
 const ViewTask = () => {
-  const [removeTask, { error }] = useMutation(REMOVE_TASK, {
-    update(cache, { data: { removeTask } }) {
-      try {
-        cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: removeTask },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    },
-  });
+  // const [removeTask, { error }] = useMutation(REMOVE_TASK, {
+  //   update(cache, { data: { removeTask } }) {
+  //     try {
+  //       cache.writeQuery({
+  //         query: QUERY_ME,
+  //         data: { me: removeTask },
+  //       });
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   },
+  // });
   const handleRemoveTask = async (task) => {
     try {
       const { data } = await REMOVE_TASK({
@@ -46,12 +46,12 @@ const ViewTask = () => {
   console.log(rows);
   return (
     <main>
-      <button
+      {/* <button
         className="btn btn-sm btn-danger ml-auto"
         onClick={() => handleRemoveSkill(skill)}
       >
         X
-      </button>
+      </button> */}
     </main>
   );
 };
