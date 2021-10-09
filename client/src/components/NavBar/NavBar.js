@@ -31,6 +31,9 @@ const NavBar = () => {
             <Nav.Link href="">View Budget</Nav.Link>
             <Nav.Link href="">View Tasks</Nav.Link>
           </Nav>
+          <Nav className="Justify-content-end">
+            <Nav.Link eventKey="logout" href="/logout">Logout</Nav.Link>
+          </Nav>
         </Container>
       </Navbar>
     </>
