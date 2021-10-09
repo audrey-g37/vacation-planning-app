@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_TASKS } from "../../utils/queries";
 // import DeleteIcon from "@mui/icons-material/Delete";
 // import IconButton from "@mui/material/IconButton";
-import { DataGrid } from "@mui/x-data-grid";
+// import { DataGrid } from "@mui/x-data-grid";
 
 const ViewTasks = () => {
   const { loading, data } = useQuery(QUERY_TASKS);
@@ -26,17 +26,17 @@ const ViewTasks = () => {
     assignee: task.assignee,
   }));
 
-  return (
-    <main>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
-    </main>
-  );
+  // return (
+  //   <main>
+  //     <DataGrid
+  //       rows={rows}
+  //       columns={columns}
+  //       pageSize={5}
+  //       rowsPerPageOptions={[5]}
+  //       checkboxSelection
+  //     />
+  //   </main>
+  // );
 };
 
 export default ViewTasks;
