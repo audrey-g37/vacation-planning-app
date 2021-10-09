@@ -6,7 +6,7 @@ import { QUERY_TRIPS } from '../../utils/queries';
 
 
 const ViewAllTrips = () => {
-const {loading,data} = useQuery(QUERY_TRIPS);
+const {loading, data} = useQuery(QUERY_TRIPS);
 const trips = data?.trips || [];
 
 console.log (trips);
