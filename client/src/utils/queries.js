@@ -13,16 +13,16 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_USERS = gql`
-query users {
-  _id
-  username
-  password
-}
+  query users {
+    _id
+    username
+    password
+  }
 `;
 
 export const QUERY_TRIP = gql`
   query getTrip($tripId: ID!) {
-    trip (tripId:$tripId) {
+    trip(tripId: $tripId) {
       _id
       title
       location
@@ -34,15 +34,15 @@ export const QUERY_TRIP = gql`
 `;
 
 export const QUERY_TRIPS = gql`
-query trips {
-  _id
-  title
-  location
-  startDate
-  endDate
-  description
-}
-`
+  query trips {
+    _id
+    title
+    location
+    startDate
+    endDate
+    description
+  }
+`;
 
 export const QUERY_TASK = gql`
   query getTask($taskId: ID!) {
