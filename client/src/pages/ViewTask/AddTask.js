@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ViewTask.css";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -17,11 +17,19 @@ const AddTask = () => {
   const [dueDate, setDueDate] = useState("");
   const [assignee, setAssignee] = useState("");
 
-  if (name === "title") {
-    setTitle(value);
-  } else if (name === "details") {
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
+    if (name === "title") {
+      setTitle(value);
+    } else if (name === "details") {
+      setDetails(value);
+    } else if (name === "dueDate") {
+      setDueDate(value);
+    } else if (name === "assignee") {
+      setAssignee(value);
+    }
+  };
   //   const [formState, setFormState] = useState({
   //     title: "",
   //     details: "",
@@ -32,9 +40,8 @@ const AddTask = () => {
   //   if (loading) return "Submitting...";
   //   if (error) return `Submission error! ${error.message}`;
 
-  // submit form
-  const handleFormSubmit = async (event) => {
-    useMutation(ADD_TASK, {
+  const handleFormSubmit = async () => {
+    await addTask({
       variables: {
         title: title,
         details: details,
@@ -42,7 +49,18 @@ const AddTask = () => {
         assignee: assignee,
       },
     });
+    // useMutation(ADD_TASK, {
+    //   variables: {
+    //     title: title,
+    //     details: details,
+    //     dueDate: dueDate,
+    //     assignee: assignee,
+    //   },
+    // });
     await setTitle("");
+    await setDetails("");
+    await setDueDate("");
+    await setAssignee("");
   };
 
   return (
@@ -63,21 +81,44 @@ const AddTask = () => {
       <h2>Add A New Task</h2>
       <Form.Group className="mb-3">
         <Form.Label>Title*</Form.Label>
-        <Form.Control type="text" name="title" value={title} />
+        <Form.Control
+          type="text"
+          name="title"
+          value={title}
+          onChange={handleInputChange()}
+        />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Details</Form.Label>
+        <Form.Control
+          type="text"
+          name="title"
+          value={title}
+          onChange={handleInputChange()}
+        />
         <Form.Control type="text" name="details" value={details} />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Due Date*</Form.Label>
+        <Form.Control
+          type="text"
+          name="title"
+          value={title}
+          onChange={handleInputChange()}
+        />
         <Form.Control type="date" name="dueDate" value={dueDate} />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Assignee*</Form.Label>
+        <Form.Control
+          type="text"
+          name="title"
+          value={title}
+          onChange={handleInputChange()}
+        />
         <Form.Control type="text" name="assignee" value={assignee} />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" onClick={handleFormSubmit()}>
         Add Task
       </Button>
     </Form>
