@@ -14,7 +14,7 @@ const Dashboard = () => {
 const {loading, data} = useQuery(QUERY_TRIPS);
 const allTrips = data?.trips || [];
 
-// console.log (allTrips);
+console.log (allTrips);
 
 return(
   <>
