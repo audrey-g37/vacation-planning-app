@@ -1,32 +1,24 @@
 import React from "react";
 import "./ViewTask.css";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_TASKS, QUERY_TASK } from "../../utils/queries";
-import { Table, Form, Button } from "react-bootstrap";
-import { REMOVE_TASK } from "../../utils/mutations";
+import { Table, Form, Button, DropdownButton, Dropdown } from "react-bootstrap";
+import { REMOVE_TASK, ADD_TASK } from "../../utils/mutations";
+import { useParams } from "react-router-dom";
+import AddTask from "./AddTask";
 
 const ViewTask = () => {
-  // const [removeTask, { error }] = useMutation(REMOVE_TASK, {
-  //   update(cache, { data: { removeTask } }) {
-  //     try {
-  //       cache.writeQuery({
-  //         query: QUERY_USER,
-  //         data: { me: removeTask },
-  //       });
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   },
+  // const handleRemoveTask = (taskId) => {
+  // }
+  // const remove = () =>{
+  //   if (deleting) return;
+  //   deleteTodo({
+  //     variables: {taskId: task._id}
+  //   })
+  // }
+  // const [removeTask, { data, loading, error }] = useMutation(REMOVE_TASK, {
+  //   variables: { _id: taskId },
   // });
-  // const handleRemoveTask = async (task) => {
-  //   try {
-  //     const { data } = await REMOVE_TASK({
-  //       variables: { task },
-  //     });
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
 
   const { loading, data } = useQuery(QUERY_TASKS);
   const allTasks = data?.tasks || [];
@@ -40,7 +32,7 @@ const ViewTask = () => {
             <th>Title</th>
             <th>Details</th>
             <th>Due Date</th>
-            <th>Status Date</th>
+            <th>Status</th>
             <th>Assignee</th>
             <th>Delete Task</th>
           </tr>
@@ -58,7 +50,8 @@ const ViewTask = () => {
                   {" "}
                   <button
                     className="btn btn-sm btn-danger ml-auto"
-                    // onClick={() => handleRemoveTask(task)}
+                    value={task.taskId}
+                    // onClick={(taskId) => removeTask(taskId)}
                   >
                     X
                   </button>
@@ -76,6 +69,7 @@ const ViewTask = () => {
           )}
         </tbody>
       </Table>
+      {/* <AddTask /> */}
     </main>
   );
 };
