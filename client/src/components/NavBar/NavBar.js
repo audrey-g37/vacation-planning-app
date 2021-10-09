@@ -29,7 +29,7 @@ const NavBar = () => {
             <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             <Nav.Link href="">View Trips</Nav.Link>
             <Nav.Link href="">View Budget</Nav.Link>
-            <Nav.Link href="">Resume</Nav.Link>
+            <Nav.Link href="">View Tasks</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
