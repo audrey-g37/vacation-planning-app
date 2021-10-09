@@ -4,11 +4,13 @@ import { useQuery } from "@apollo/client";
 import { QUERY_TASKS } from "../../utils/queries";
 // import DeleteIcon from "@mui/icons-material/Delete";
 // import IconButton from "@mui/material/IconButton";
+// import { DataGrid } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
+import { useParams } from "react-router-dom";
 
 
 const ViewTask = () => {
-  // const { tripId } = useParams();
+  const { tripId } = useParams();
   const { loading, data } = useQuery(QUERY_TASKS);
   const tasks = data?.tasks || [];
   console.log(tasks);
@@ -29,6 +31,8 @@ const ViewTask = () => {
     assignee: task.assignee,
   }));
 
+
+
   console.log(rows);
 
   return (
@@ -42,6 +46,7 @@ const ViewTask = () => {
       />
     </main>
   );
+
 };
 
 export default ViewTask;

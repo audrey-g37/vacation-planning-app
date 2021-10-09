@@ -1,0 +1,10 @@
+.all-trips {
+    background-color: var(--accent1a);
+    padding: 5px;
+    text-align: center;
+}
+
+.list-of-trips {
+    font-size: 18px;
+    list-style-type: none;
+}
