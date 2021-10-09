@@ -5,7 +5,6 @@ import { QUERY_TASKS } from "../../utils/queries";
 // import DeleteIcon from "@mui/icons-material/Delete";
 // import IconButton from "@mui/material/IconButton";
 import { DataGrid } from "@mui/x-data-grid";
-import { useParams } from "react-router-dom";
 
 const ViewTask = () => {
   const { tripId } = useParams();
