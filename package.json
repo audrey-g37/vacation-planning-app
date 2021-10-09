@@ -23,8 +23,6 @@
   },
   "homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme",
   "dependencies": {
-    "bootstrap": "^5.1.1",
-    "concurrently": "^6.3.0",
-    "react-bootstrap": "^2.0.0-rc.0"
+    "concurrently": "^6.3.0"
   }
 }
