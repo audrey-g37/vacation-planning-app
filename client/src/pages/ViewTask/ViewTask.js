@@ -69,7 +69,7 @@ const ViewTask = () => {
           )}
         </tbody>
       </Table>
-      <AddTask />
+      {/* <AddTask /> */}
     </main>
   );
 };
