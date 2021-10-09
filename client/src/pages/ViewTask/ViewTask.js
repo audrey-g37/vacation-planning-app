@@ -6,8 +6,9 @@ import { QUERY_TASKS } from "../../utils/queries";
 // import IconButton from "@mui/material/IconButton";
 import { DataGrid } from "@mui/x-data-grid";
 
+
 const ViewTask = () => {
-  const { tripId } = useParams();
+  // const { tripId } = useParams();
   const { loading, data } = useQuery(QUERY_TASKS);
   const tasks = data?.tasks || [];
   console.log(tasks);
