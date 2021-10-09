@@ -1,17 +1,15 @@
 import React from "react";
 import "./ViewBudget.css";
 import { useQuery } from "@apollo/client";
-import { QUERY_BUDGET, QUERY_BUDGETS } from "../../utils/queries";
+import {  QUERY_BUDGETS } from "../../utils/queries";
 import Table from 'react-bootstrap/Table'
-import { REMOVE_BUDGET, UPDATE_BUDGET, ADD_BUDGET } from "../../utils/mutations";
 import { BsTrashFill } from "react-icons/bs";
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
-import InputGroup from 'react-bootstrap/InputGroup'
+import BudgetForm from "./budgetForm";
+
 
 
 
@@ -21,8 +19,6 @@ const ViewBudget = () => {
   const {loading, data} = useQuery(QUERY_BUDGETS);
   const allExpenses = data?.budgets || []
   console.log(allExpenses)
-
-
 
   return (
     <main>
@@ -73,32 +69,8 @@ const ViewBudget = () => {
 <Col>
 <>
  <h2>Add A New Expense</h2>
- <Form>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label>Expense</Form.Label>
-    <Form.Control type="email" placeholder="Expense Name" />
-  </Form.Group>
-  <Form.Group>
-  <Form.Label htmlFor="inlineFormInputGroupUsername" visuallyHidden>
-        Amount
-      </Form.Label>
-      <InputGroup>
-        <InputGroup.Text>$</InputGroup.Text>
-        <FormControl id="inlineFormInputGroupUsername" placeholder="Amount" />
-      </InputGroup>
-      </Form.Group>
-  <Form.Group className="mb-3" controlId="formBasicPassword">
-    <Form.Label>Purchased Date</Form.Label>
-    <Form.Control type="date" placeholder="MM/DD/YYYY" />
-  </Form.Group>
-  <Form.Group className="mb-3" controlId="formBasicPassword">
-    <Form.Label>Purchased By</Form.Label>
-    <Form.Control type="input" placeholder="Name" />
-  </Form.Group>
-  <Button variant="primary" type="submit">
-    Submit
-  </Button>
-</Form>
+ <BudgetForm/>
+  
 </>
 </Col>
 </Row>
