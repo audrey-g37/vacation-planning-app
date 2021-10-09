@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_TASKS } from "../../utils/queries";
 // import DeleteIcon from "@mui/icons-material/Delete";
 // import IconButton from "@mui/material/IconButton";
-// import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 
 const ViewTask = () => {
   const { tripId } = useParams();

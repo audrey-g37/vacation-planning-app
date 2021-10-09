@@ -4,19 +4,13 @@ import {useQuery} from '@apollo/client';
 import "./Dashboard.css";
 import {Row, Col, Container, Table} from 'react-bootstrap'
 import { QUERY_TRIP } from "../../utils/queries";
-import Auth from '../utils/auth';
+// import Auth from '../utils/auth';
 
 const Dashboard = () => {
 
 const { userId } = useParams();
-
-const {loading, data} = useQuery(
-  userId? QUERY_TRIP
-
-
-
-
-
+const { loading, data } = useQuery(QUERY_TRIP);
+const trip = data?.trips || [];
 
 
 return(
