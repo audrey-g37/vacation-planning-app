@@ -107,7 +107,7 @@ mutation removeTrip($tripId: ID!){
 }
 `;
 export const REMOVE_TASK = gql`
-mutation removeTask($tripId: ID!, $taskId: ID!){
+mutation ($tripId: ID!, $taskId: ID!){
   removeTask(tripId: $tripId, taskId: $taskId)
 }
 `;
