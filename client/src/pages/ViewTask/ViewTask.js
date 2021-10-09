@@ -7,8 +7,6 @@ import { REMOVE_TASK, ADD_TASK } from "../../utils/mutations";
 import { useParams } from "react-router-dom";
 import AddTask from "./AddTask";
 
-//for each task.status if status ===true, etc
-
 const ViewTask = () => {
   // const handleRemoveTask = (taskId) => {
   // }
@@ -71,7 +69,7 @@ const ViewTask = () => {
           )}
         </tbody>
       </Table>
-      {/* <AddTask /> */}
+      <AddTask />
     </main>
   );
 };
