@@ -8,7 +8,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 
 const ViewTask = () => {
-  const { tripId } = useParams();
+  // const { tripId } = useParams();
   const { loading, data } = useQuery(QUERY_TASKS);
   const tasks = data?.tasks || [];
   console.log(tasks);
