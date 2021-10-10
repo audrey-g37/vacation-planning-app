@@ -1,0 +1,14 @@
+.login{
+display:flex;
+align-items: center;
+margin:225px;
+margin-right: 33px;
+
+}
+
+
+
+.card{
+    display:flex;
+    flex-wrap:wrap;
+}
