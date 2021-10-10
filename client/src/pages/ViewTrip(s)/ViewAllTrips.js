@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import "./ViewAllTrips.css";
 import { Container, Row, Col } from "react-bootstrap";
 
-import moment from "moment";
+// import moment from "moment";
 
 import { useQuery } from "@apollo/client";
 import { QUERY_TRIPS } from "../../utils/queries";
 
 const ViewAllTrips = () => {
-  const now = moment();
+  // const now = moment();
 
   const { loading, data } = useQuery(QUERY_TRIPS);
   const allTrips = data?.trips || [];

@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme",
   "dependencies": {
     "concurrently": "^6.3.0",
+    "moment": "^2.29.1",
     "react-icons": "^4.3.1"
   }
 }

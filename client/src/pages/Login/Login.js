@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import './Login.css'
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ username: '', password: '' });
@@ -41,7 +42,8 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    
+    <main className="login">
       <div className="col-12 col-lg-10">
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Login</h4>
@@ -68,9 +70,9 @@ const Login = (props) => {
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
-                />
+                />Username
                 <button
-                  className="btn btn-block btn-info"
+                  className="Button"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >
