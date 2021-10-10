@@ -53,8 +53,8 @@ query {
 `;
 
 export const QUERY_TASK = gql`
-query task ($taskId: ID!){
-  task (taskId:$taskId) {
+query ($taskId: ID!) {
+  task (taskId: $taskId) {
     _id
     title
     details

@@ -102,11 +102,11 @@ export const ADD_BUDGET = gql`
 export const UPDATE_TRIP = gql`
   mutation updateTrip(
     $tripId: ID!
-    $title: String!
+    $title: String
     $description: String
-    $location: String!
-    $startDate: String!
-    $endDate: String!
+    $location: String
+    $startDate: String
+    $endDate: String
   ) {
     updateTrip(
       tripId: $tripId
@@ -130,11 +130,11 @@ export const UPDATE_TASK = gql`
   mutation updateTask(
     $tripId: ID!
     $taskId: ID!
-    $title: String!
+    $title: String
     $details: String
-    $dueDate: String!
-    $status: Boolean!
-    $assignee: String!
+    $dueDate: String
+    $status: Boolean
+    $assignee: String
   ) {
     updateTask(
       tripId: $tripId
@@ -145,6 +145,7 @@ export const UPDATE_TASK = gql`
       status: $status
       assignee: $assignee
     ) {
+      _id
       title
       details
       dueDate
@@ -158,10 +159,10 @@ export const UPDATE_BUDGET = gql`
   mutation updateBudget(
     $tripId: ID!
     $budgetId: ID!
-    $title: String!
-    $value: Int!
-    $purchaseDate: String!
-    $purchasedBy: String!
+    $title: String
+    $value: Int
+    $purchaseDate: String
+    $purchasedBy: String
   ) {
     addBudget(
       tripId: $tripId
