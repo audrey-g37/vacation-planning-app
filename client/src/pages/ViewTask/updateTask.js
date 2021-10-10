@@ -11,40 +11,53 @@ import moment from "moment";
 const EditTask = () => {
   const taskIdVar = useParams();
   const taskIdToUse = taskIdVar.id;
-  console.log(taskIdToUse);
+//   console.log(taskIdToUse);
 
-  const TripIdToUse = AuthService.getTripId;
+  const TripIdToUse = AuthService.getTripId();
+
+  const [title, setTitle] = useState("");
+  const [details, setDetails] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [assignee, setAssignee] = useState("");
+  const [status, setStatus] = useState("");
 
   const { loading, data } = useQuery(QUERY_TASK, {
       variables: {taskId: taskIdToUse}
   });
 
-  const taskData = data?.task || [];
-//   console.log(taskData);
-  const dateToChange = taskData.dueDate;
-
   const [updateTask] = useMutation(UPDATE_TASK);
 
-const [title, setTitle] = useState(taskData.title);
-  const [details, setDetails] = useState(taskData.details);
-  const [dueDate, setDueDate] = useState((moment(dateToChange, "MMM, Do, YYYY").format("yyyy-MM-dd")));
-  const [assignee, setAssignee] = useState(taskData.assignee);
-  const [status, setStatus] = useState(taskData.status);
+  const taskData = data?.task || [];
+//   console.log(taskData);
 
   const handleInputChange = (event) => {
     event.preventDefault();
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
 
-    if (name === "title") {
-      setTitle(value);
-    } else if (name === "details") {
-      setDetails(value);
-    } else if (name === "dueDate") {
-      setDueDate(value);
-    } else if (name === "assignee") {
-      setAssignee(value);
+    if (name === "title" ) {
+    setTitle(value);
     } else {
-      setStatus(value);
+        setTitle (taskData.title)
+    }
+    if (name === "details") {
+        setDetails(value)
+    } else {
+        setDetails(taskData.details)
+    }
+    if (name==="dueDate") {
+        setDueDate(value)
+    } else {
+        setDueDate((moment(taskData.dueDate, "MMM, Do, YYYY").format("MM-DD-YYYY")))
+    }
+    if (name === "status") {
+        setStatus(value)
+    } else {
+        setStatus(taskData.status)
+    }
+    if (name==="assignee") {
+        setAssignee(value)
+    } else {
+        setAssignee(taskData.assignee)
     }
 
     console.log({title, details, dueDate, status, assignee})
@@ -87,7 +100,6 @@ const [title, setTitle] = useState(taskData.title);
                     {taskData.details? (<li>Details: {taskData.details}</li>
                     ) :("")
                      }
-                    
                 </Card.Text>
             </Card.Body>
             </Card>
@@ -109,7 +121,9 @@ const [title, setTitle] = useState(taskData.title);
             <Form.Check
               type="checkbox"
               name="status"
+              value={status}
               label="Check to mark this task is complete!"
+              onChange={handleInputChange}
             ></Form.Check>
         </Form.Group>
         <Form.Group className="mb-3">
