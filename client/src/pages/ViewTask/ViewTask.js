@@ -6,6 +6,7 @@ import { Table, Form, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import { REMOVE_TASK, ADD_TASK } from "../../utils/mutations";
 import { useParams } from "react-router-dom";
 import AddTask from "./AddTask";
+import AuthService from "../../utils/auth";
 
 const ViewTask = () => {
   // const handleRemoveTask = (taskId) => {
@@ -23,6 +24,25 @@ const ViewTask = () => {
   const { loading, data } = useQuery(QUERY_TASKS);
   const allTasks = data?.tasks || [];
   console.log(allTasks);
+
+  const [removeTask, { error }] = useMutation(REMOVE_TASK);
+  const tripIdVar = useParams();
+  const TripIdToUse = tripIdVar.id;
+
+  const deleteTask = (event) => {
+    event.preventDefault();
+    const {value} = event.target;
+    console.log(value);
+    console.log(TripIdToUse);
+     removeTask({
+      variables: {
+        tripId: TripIdToUse,
+        taskId: value
+      }
+    }).then((data) => {
+      window.location.reload()
+    })
+  }
 
   return (
     <main className="page">
@@ -54,8 +74,8 @@ const ViewTask = () => {
                   {" "}
                   <button
                     className="btn btn-sm btn-danger ml-auto"
-                    value={task.taskId}
-                    // onClick={(taskId) => removeTask(taskId)}
+                    value={task._id}
+                    onClick={deleteTask}
                   >
                     X
                   </button>

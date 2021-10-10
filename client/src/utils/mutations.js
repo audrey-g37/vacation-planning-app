@@ -87,6 +87,7 @@ export const ADD_BUDGET = gql`
     addBudget(
       tripId: $tripId
       title: $title
+      value: $value
       purcahseDate: $purchaseDate
       purchasedBy: $purchasedBy
     ) {
@@ -179,17 +180,23 @@ export const UPDATE_BUDGET = gql`
 
 export const REMOVE_TRIP = gql`
   mutation removeTrip($tripId: ID!) {
-    removeTrip(tripId: $tripId)
+    removeTrip(tripId: $tripId) {
+      _id
+    }
   }
 `;
 export const REMOVE_TASK = gql`
   mutation removeTask($tripId: ID!, $taskId: ID!) {
-    removeTask(tripId: $tripId, taskId: $taskId)
+    removeTask(tripId: $tripId, taskId: $taskId) {
+      _id
+    }
   }
 `;
 
 export const REMOVE_BUDGET = gql`
   mutation removeBudget($tripId: ID!, $budgetId: ID!) {
-    removeBudget(tripId: $tripId, budgetId: $budgetId)
+    removeBudget(tripId: $tripId, budgetId: $budgetId) {
+      _id
+    }
   }
 `;
