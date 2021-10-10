@@ -20,12 +20,10 @@ const BudgetForm = () => {
 
     const [title, setTitle] = useState('')
     const [value, setValue] = useState('')
-    const [purchaseDate, setPurchasedDate] = useState('')
+    const [purchaseDate, setPurchaseDate] = useState('')
     const [purchasedBy, setPurchasedBy] = useState('')
 
 
-    const [addBudget, {error}] = useMutation(ADD_BUDGET)
-    // 
     const handleInputChange = (event) => {
       event.preventDefault();
       const {name, value} =event.target;
@@ -35,12 +33,14 @@ const BudgetForm = () => {
       }else if (name==="value"){
         setValue(value)
       }else if (name==="purchaseDate"){
-        setPurchasedDate(value)
+        setPurchaseDate(value)
       }else if (name ==="purchasedBy"){
         setPurchasedBy(value)
       }
       console.log(title)
     }
+
+    const [addBudget, {error}] = useMutation(ADD_BUDGET)
 
     // const newBudget= {title, value, purchaseDate, purchasedBy}
 
@@ -59,7 +59,7 @@ const BudgetForm = () => {
         console.log(data)
         setTitle("");
         setValue("");
-        setPurchasedDate("");
+        setPurchaseDate("");
         setPurchasedBy("");
     })
       
@@ -73,7 +73,12 @@ const BudgetForm = () => {
         <Form>
  <Form.Group className="mb-3" controlId="formBasicEmail">
    <Form.Label>Expense</Form.Label>
-   <Form.Control  type="text" name="title" value={title} onChange={handleInputChange} placeholder="Expense Name" />
+   <Form.Control  
+   type="text" 
+   name="title" 
+   value={title} 
+   onChange={handleInputChange} 
+   placeholder="Expense Name" />
  </Form.Group>
  <Form.Group>
  <Form.Label htmlFor="inlineFormInputGroupUsername" visuallyHidden>
@@ -81,16 +86,32 @@ const BudgetForm = () => {
      </Form.Label>
      <InputGroup>
        <InputGroup.Text>$</InputGroup.Text>
-       <FormControl id="inlineFormInputGroupUsername" placeholder="Amount" type="text" name="value" value={value} onChange={handleInputChange}/>
+       <FormControl 
+        id="inlineFormInputGroupUsername" 
+        placeholder="Amount" 
+        type="text" 
+        name="value" 
+        value={value} 
+        onChange={handleInputChange}/>
      </InputGroup>
      </Form.Group>
  <Form.Group className="mb-3" controlId="formBasicPassword">
    <Form.Label>Purchased Date</Form.Label>
-   <Form.Control type="date" placeholder="MM/DD/YYYY" name="purchaseDate" value={purchaseDate} onChange={handleInputChange} />
+   <Form.Control 
+   type="date" 
+   placeholder="MM/DD/YYYY" 
+   name="purchaseDate" 
+   value={purchaseDate} 
+   onChange={handleInputChange} />
  </Form.Group>
  <Form.Group className="mb-3" controlId="formBasicPassword">
    <Form.Label>Purchased By</Form.Label>
-   <Form.Control type="text" placeholder="Name" name="purchasedBy" value={purchasedBy} onChange={handleInputChange} />
+   <Form.Control 
+   type="text" 
+   placeholder="Name" 
+   name="purchasedBy" 
+   value={purchasedBy} 
+   onChange={handleInputChange} />
  </Form.Group>
  <Button variant="dark" onClick={handleFormSubmit}>
    Add New Expense
