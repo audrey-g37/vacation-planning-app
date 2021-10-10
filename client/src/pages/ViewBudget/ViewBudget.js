@@ -10,10 +10,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import BudgetForm from "./budgetForm";
 
-
-
-
-
 const ViewBudget = () => {
   // JS 
   const {loading, data} = useQuery(QUERY_BUDGETS);
@@ -45,7 +41,7 @@ const ViewBudget = () => {
       <td>{budget.purchasedBy}</td>
       <td>
         {" "}
-        <Button variant="outline-danger" class="tashbtn">
+        <Button variant="outline-danger" className="tashbtn">
           <BsTrashFill/>
           {/* logic for delete */}
         </Button>
