@@ -7,30 +7,53 @@ import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const Signup = () => {
-  const [formState, setFormState] = useState({
-    username: '',
-    password: '',
-  });
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleInputChange = (event) =>{
+    event.preventDefault()
+    const {name,value} = event.target;
+
+    if (name==="username"){
+      setUsername(value)
+    }else if (name === "password"){
+      setPassword(value)
+    }
+  }
+
+  // const [addUser, {error}] = useMutation(ADD_USER)
+
+
+  // const [formState, setFormState] = useState({
+  //   username: '',
+  //   password: '',
+  // });
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
-  // update state based on form input changes
-  const handleChange = (event) => {
-    const { username, value } = event.target;
+  // // update state based on form input changes
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
 
-    setFormState({
-      ...formState,
-      [username]: value,
-    });
-  };
+  //   setFormState({
+  //     ...formState,
+  //     [name]: value,
+  //   });
+  // };
 
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
 
     try {
-      const { data } = await addUser({
-        variables: { ...formState },
+       await addUser({
+        variables: { 
+          username: username,
+          password:password
+        },
+      }).then((data)=>{
+        setUsername("")
+        setPassword("")
+        console.log(data)
       });
       
       Auth.login(data.addUser.token);
@@ -52,27 +75,28 @@ const Signup = () => {
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
+              <form>
                 <input
                   className="form-input"
                   placeholder="Your username"
-                  name="name"
+                  name="username"
                   type="text"
-                  value={formState.name}
-                  onChange={handleChange}
+                  value={username}
+                  onChange={handleInputChange}
                 />
                 <input
                   className="form-input"
                   placeholder="******"
                   name="password"
                   type="password"
-                  value={formState.password}
-                  onChange={handleChange}
+                  value={password}
+                  onChange={handleInputChange}
                 />
                 <button
                   className="btn btn-block btn-info"
                   style={{ cursor: 'pointer' }}
                   type="submit"
+                  onClick={handleFormSubmit}
                 >
                   Submit
                 </button>

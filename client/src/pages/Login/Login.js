@@ -70,7 +70,6 @@ const Login = (props) => {
                   value={formState.password}
                   onChange={handleChange}
                 />
-                Username
                 <button
                   className="Button"
                   style={{ cursor: "pointer" }}
