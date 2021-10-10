@@ -43,11 +43,10 @@ const Login = (props) => {
   };
 
   return (
+    <body className="body">
     <main className="login">
-      <div className="col-12 col-lg-10">
-        <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
+          <div className="card">
             {data ? (
               <p>
                 Success! You may now head{" "}
@@ -88,9 +87,8 @@ const Login = (props) => {
               </div>
             )}
           </div>
-        </div>
-      </div>
     </main>
+    </body>
   );
 };
 

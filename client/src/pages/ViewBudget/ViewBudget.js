@@ -18,8 +18,6 @@ const ViewBudget = () => {
   const allExpenses = data?.budgets || [];
   console.log(allExpenses);
 
-  // const [budgetState, setBudgetState] = useState("");
-
   const [removeBudget, { error }] = useMutation(REMOVE_BUDGET);
   const tripIdToRemove = AuthService.getTripId();
 
@@ -38,7 +36,7 @@ const ViewBudget = () => {
   };
 
   return (
-    <main>
+    <main className="budget-form-1">
       <Container>
         <Row xs={1} md={2}>
           <Col>

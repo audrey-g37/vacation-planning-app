@@ -48,7 +48,7 @@ const BudgetForm = ({ allExpenses }) => {
         purchasedBy: purchasedBy,
       },
     }).then((data) => {
-      console.log(data);
+     console.log(data);
       setTitle("");
       setValue("");
       setPurchaseDate("");
@@ -58,7 +58,7 @@ const BudgetForm = ({ allExpenses }) => {
 
   return (
     <>
-      <Form>
+      <Form className="budget-form->
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Expense</Form.Label>
           <Form.Control
