@@ -30,33 +30,41 @@ const EditTask = () => {
   const taskData = data?.task || [];
 //   console.log(taskData);
 
+
   const handleInputChange = (event) => {
     event.preventDefault();
     const { name, value, checked } = event.target;
 
     if (name === "title" ) {
     setTitle(value);
-    } else {
+    } 
+    else {
         setTitle (taskData.title)
     }
     if (name === "details") {
         setDetails(value)
-    } else {
+    } 
+    else {
         setDetails(taskData.details)
     }
     if (name==="dueDate") {
         setDueDate(value)
-    } else {
-        setDueDate((moment(taskData.dueDate, "MMM, Do, YYYY").format("MM-DD-YYYY")))
+    } 
+    else {
+        setDueDate(
+            (moment(taskData.dueDate, "MMM, Do, YYYY").format("MM-DD-YYYY"))
+            )
     }
     if (name === "status") {
         setStatus(value)
-    } else {
+    } 
+    else {
         setStatus(taskData.status)
     }
     if (name==="assignee") {
         setAssignee(value)
-    } else {
+    } 
+    else {
         setAssignee(taskData.assignee)
     }
 
@@ -117,7 +125,7 @@ const EditTask = () => {
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3">
+        {/* <Form.Group className="mb-3">
             <Form.Check
               type="checkbox"
               name="status"
@@ -125,7 +133,7 @@ const EditTask = () => {
               label="Check to mark this task is complete!"
               onChange={handleInputChange}
             ></Form.Check>
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group className="mb-3">
           <Form.Label>Due Date</Form.Label>
           <Form.Control
@@ -141,7 +149,7 @@ const EditTask = () => {
           <Form.Control
             type="text"
             name="assignee"
-            placeholder = {taskData.assignee}
+            placeholder={taskData.assignee}
             value={assignee}
             onChange={handleInputChange}
           />

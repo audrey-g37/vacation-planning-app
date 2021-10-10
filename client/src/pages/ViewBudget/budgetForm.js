@@ -27,14 +27,13 @@ const BudgetForm = () => {
     if (name === "title") {
       setTitle(value);
     } else if (name === "value") {
-      let currentValue = value;
-      currentValue = parseFloat(currentValue);
       setValue(value);
     } else if (name === "purchaseDate") {
       setPurchaseDate(value);
     } else {
       setPurchasedBy(value);
     }
+    console.log({title, value, purchaseDate, purchasedBy})
   };
 
   const handleFormSubmit = (event) => {
@@ -43,7 +42,7 @@ const BudgetForm = () => {
       variables: {
         tripId: idToUse,
         title: title,
-        value: value,
+        value: parseInt(value),
         purchaseDate: purchaseDate,
         purchasedBy: purchasedBy,
       },
