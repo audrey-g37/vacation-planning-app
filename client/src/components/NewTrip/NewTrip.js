@@ -13,7 +13,6 @@ const NewTrip = () => {
     variables: { username: currentUser },
   });
   const userData = data?.user || [];
-  console.log(userData);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -38,7 +37,6 @@ const NewTrip = () => {
     } else if (name === "endDate") {
       setEndDate(value);
     }
-    console.log(title);
   };
 
   const handleFormSubmit = (event) => {
