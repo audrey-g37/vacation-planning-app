@@ -1,5 +1,46 @@
-.dashboard{
+.Home{
+background-image: url(https://cdn.shopify.com/s/files/1/0043/8471/8938/products/154516875564915737.jpg?v=1555128185);
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+
+.Dashboard{
     display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+
+.Table{
+background-color:var(--white);
+opacity: .9;
+padding: 20px;
+border-radius: 10px;
+margin-top:200px;
+height: 300px;
+}
+
+.Form{
+
+background-color:var(--white);
+opacity: .9;
+padding: 15px;;
+border-radius: 10px;
+width: 550px;
+margin: 100px;
+}
+
+.Title{
+color:white;
+display:flex;
+margin:30px;
+
+}
+.all-trips-button{
+margin:15px;
+}
+.add-trip-button{
+margin:15px;
 }
