@@ -58,7 +58,7 @@ const BudgetForm = ({ allExpenses }) => {
 
   return (
     <>
-      <Form className="budget-form->
+      <Form className="budget-form-1">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Expense</Form.Label>
           <Form.Control
