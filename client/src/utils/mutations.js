@@ -135,7 +135,7 @@ export const UPDATE_TASK = gql`
     $dueDate: String
     $status: Boolean
     $assignee: String
-  ) {
+    ) {
     updateTask(
       tripId: $tripId
       taskId: $taskId
@@ -144,7 +144,7 @@ export const UPDATE_TASK = gql`
       dueDate: $dueDate
       status: $status
       assignee: $assignee
-    ) {
+      ) {
       _id
       title
       details

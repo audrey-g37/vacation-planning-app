@@ -33,20 +33,24 @@ const ViewSingleTrip = () => {
               <li className="details">{tripData.details}</li>
             </Card.Text>
             {tripData.tasks ? (
-              <Button variant="outline-dark" className="btn">
+              
                 <Link className="link" to={`/${tripData._id}/view-tasks`}>
+                  <Button variant="outline-dark" className="btn">
                   Click to view tasks for this trip!
-                </Link>
+               
               </Button>
+               </Link>
             ) : (
               <h4>No Tasks have been created for this trip yet!</h4>
             )}
             {tripData.budget ? (
-              <Button variant="outline-dark" className="btn">
+             
                 <Link className="link" to={`/${tripData._id}/view-budget`}>
+                   <Button variant="outline-dark" className="btn">
                   Click to view the budget items for this trip!
+                  </Button>
                 </Link>
-              </Button>
+          
             ) : (
               <h4>No expenditures have been stored for this trip yet!</h4>
             )}
