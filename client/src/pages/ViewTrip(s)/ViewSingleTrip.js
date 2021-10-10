@@ -4,7 +4,7 @@ import "./ViewSingleTrip.css";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router";
 import { QUERY_TRIP } from "../../utils/queries";
-import { Container, Card } from "react-bootstrap";
+import { Container, Card, Button } from "react-bootstrap";
 
 const ViewSingleTrip = () => {
   const tripIdVar = useParams();
@@ -18,35 +18,40 @@ const ViewSingleTrip = () => {
   console.log(tripData);
 
   return (
+    <main className="Hero">
+
     <Container fluid className="single-trip">
-      <Card>
-        <Card.Body className="single-trip-details">
-          <Card.Title>{tripData.title}</Card.Title>
-          <li className="trip-location">Location: {tripData.location}</li>
-          <li className="trip-start">Trip starts on: {tripData.startDate}</li>
-          <li className="trip-end">Trip ends on: {tripData.endDate}</li>
-          <li className="trip-details">{tripData.details}</li>
-          {tripData.tasks ? (
-            <li>
-              <Link to={`/${tripData._id}/view-tasks`}>
+      <Card className="text-center">
+  <Card.Header className="header">{tripData.title}</Card.Header>
+  <Card.Body>
+    <Card.Title>Location: {tripData.location}</Card.Title>
+    <Card.Text>
+    <li className="details">Trip starts on: {tripData.startDate}</li>
+          <li className="details">Trip ends on: {tripData.endDate}</li>
+          <li className="details">{tripData.details}</li>
+    </Card.Text>
+    {tripData.tasks ? (
+            <Button variant="outline-dark" className="btn" >
+              <Link className="link" to={`/${tripData._id}/view-tasks`}>
                 Click to view tasks for this trip!
               </Link>
-            </li>
+            </Button>
           ) : (
             <h4>No Tasks have been created for this trip yet!</h4>
           )}
           {tripData.budget ? (
-            <li>
-              <Link to={`/${tripData._id}/view-budget`}>
+            <Button variant="outline-dark" className="btn" >
+              <Link className="link"to={`/${tripData._id}/view-budget`}>
                 Click to view the budget items for this trip!
               </Link>
-            </li>
+            </Button>
           ) : (
             <h4>No expenditures have been stored for this trip yet!</h4>
           )}
-        </Card.Body>
-      </Card>
+  </Card.Body>
+</Card>
     </Container>
+    </main>
   );
 };
 
