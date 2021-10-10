@@ -1,70 +1,74 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import { Table, Form, Button } from "react-bootstrap";
-import { QUERY_TRIP, QUERY_TRIPS } from "../../utils/queries";
-import {ADD_TRIP} from "../../utils/mutations"
-
-
+import { QUERY_TRIPS, QUERY_USER } from "../../utils/queries";
+import { ADD_TRIP } from "../../utils/mutations";
 
 const Dashboard = () => {
-  // const { userId } = useParams();
-  // const { loading, data } = useQuery(QUERY_TRIP);
-  // const trip = data?.trips || [];
-
   const { loading, data } = useQuery(QUERY_TRIPS);
   const allTrips = data?.trips || [];
 
-  console.log(allTrips);
-
+  // const currentUserId = Auth.getUsername();
+  // const { data, loading } = useQuery(QUERY_USER, {
+  //   variables: { username: currentUserId },
+  // });
+  // const userData = data?.user || [];
 
   const [title, setTitle] = useState("");
-  const [description, setDescription] =useState("");
+  const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const [addTrip, { error}] =useMutation(ADD_TRIP);
+  const [addTrip, { error }] = useMutation(ADD_TRIP);
 
   const handleInputChange = (event) => {
     event.preventDefault();
-  const { name, value} =event.target;
-  
+    const { name, value } = event.target;
 
-  if(name ==="title"){
-    setTitle(value);
-  } else if(name==="description"){
-    setDescription(value);
-  } else if(name==="location") {
-    setLocation(value);
-  }else if(name==="startDate"){
-    setStartDate(value);
-  } else if (name==="endDate"){
-    setEndDate(value);
-  } 
-  console.log(title)
-};
-
-
-  const newTrip= {title, description, location, startDate, endDate}  
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    const {data}= await addTrip({
-      variables:{
-        "title":title,
-        "description":description,
-        "location":location,
-        "startDate":startDate,
-        "endDate":endDate
-      }
+    if (name === "title") {
+      setTitle(value);
+    } else if (name === "description") {
+      setDescription(value);
+    } else if (name === "location") {
+      setLocation(value);
+    } else if (name === "startDate") {
+      setStartDate(value);
+    } else if (name === "endDate") {
+      setEndDate(value);
     }
-    )
-    console.log([title,description,location,startDate,endDate])
-  }
+    console.log(title);
+    console.log(location);
+    console.log(startDate);
+    console.log(endDate);
+    console.log(description);
+  };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    // addTrip({
+    //   variables: {
+    //     userId: userData._id,
+    //     title: title,
+    //     description: description,
+    //     location: location,
+    //     startDate: startDate,
+    //     endDate: endDate,
+    //   },
+    // }).then((data) => {
+    //   console.log(data);
+
+    setTitle("");
+    setLocation("");
+    setStartDate("");
+    setEndDate("");
+    setDescription("");
+    // });
+  };
 
   return (
     <div className="Home">
@@ -72,7 +76,7 @@ const Dashboard = () => {
       <section className="Dashboard">
         <Table className="Table" responsive>
           <thead>
-          <h2>Recent Trips</h2>
+            <h2>Recent Trips</h2>
             <tr>
               <th>Title</th>
               <th>Location</th>
@@ -103,7 +107,9 @@ const Dashboard = () => {
                 <td></td>
               </tr>
             )}
-          <Button className="all-trips-button" variant="dark"  type="submit">View More</Button>{' '}
+            <Button className="all-trips-button" variant="dark" type="submit">
+              View More
+            </Button>{" "}
           </tbody>
         </Table>
 
@@ -112,52 +118,61 @@ const Dashboard = () => {
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Title*</Form.Label>
             <Form.Control
-            type="text"
-            name="title"
-            value={title}
-            onChange={handleInputChange}/>
+              type="text"
+              name="title"
+              value={title}
+              onChange={handleInputChange}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Location*</Form.Label>
             <Form.Control
-            type="text"
-            name="location"
-            value={location}
-            onChange={handleInputChange}/>
+              type="text"
+              name="location"
+              value={location}
+              onChange={handleInputChange}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Start Date*</Form.Label>
             <Form.Control
-            type="date"
-            name="startDate"
-            value={startDate}
-            onChange={handleInputChange}/>
+              type="date"
+              name="startDate"
+              value={startDate}
+              onChange={handleInputChange}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>End Date*</Form.Label>
-            <Form.Control 
-            type="date"
-            name="endDate"
-            value={endDate}
-            onChange={handleInputChange}/>
+            <Form.Control
+              type="date"
+              name="endDate"
+              value={endDate}
+              onChange={handleInputChange}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="name">
             <Form.Label> Trip Description</Form.Label>
             <Form.Control
-            type="text" 
-            name="description"
-            value={description}
-            onChange={handleInputChange}
-              />
+              type="text"
+              name="description"
+              value={description}
+              onChange={handleInputChange}
+            />
           </Form.Group>
           {Auth.loggedIn() && (
-          <Button className="add-trip-button" 
-          variant="dark" onClick={handleFormSubmit}
-          type="submit">Add New Trip</Button>
+            <Button
+              className="add-trip-button"
+              variant="dark"
+              onClick={handleFormSubmit}
+              type="submit"
+            >
+              Add New Trip
+            </Button>
           )}
         </Form>
       </section>
-      </div>
+    </div>
   );
 };
 

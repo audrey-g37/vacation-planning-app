@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../../utils/mutations';
-import Auth from '../../utils/auth';
-import './Login.css'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
+import "./Login.css";
 
 const Login = (props) => {
-  const [formState, setFormState] = useState({ username: '', password: '' });
+  const [formState, setFormState] = useState({ username: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
@@ -29,6 +29,7 @@ const Login = (props) => {
       });
 
       Auth.login(data.login.token);
+      Auth.storeUsername(formState.username);
       window.location.replace("/dashboard");
     } catch (e) {
       console.error(e);
@@ -36,13 +37,12 @@ const Login = (props) => {
 
     // clear form values
     setFormState({
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     });
   };
 
   return (
-    
     <main className="login">
       <div className="col-12 col-lg-10">
         <div className="card">
@@ -50,7 +50,7 @@ const Login = (props) => {
           <div className="card-body">
             {data ? (
               <p>
-                Success! You may now head{' '}
+                Success! You may now head{" "}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
@@ -70,10 +70,11 @@ const Login = (props) => {
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
-                />Username
+                />
+                Username
                 <button
                   className="Button"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   type="submit"
                 >
                   Submit
