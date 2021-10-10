@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState} from "react";
 import { useParams, Redirect } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
+import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import { Table, Form, Button } from "react-bootstrap";
 import { QUERY_TRIP, QUERY_TRIPS } from "../../utils/queries";
-// import Auth from '../utils/auth';
+import {ADD_TRIP} from "../../utils/mutations"
+
+
 
 const Dashboard = () => {
   // const { userId } = useParams();
@@ -16,11 +20,59 @@ const Dashboard = () => {
 
   console.log(allTrips);
 
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] =useState("");
+  const [location, setLocation] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const [addTrip, { error}] =useMutation(ADD_TRIP);
+
+  const handleInputChange = (event) => {
+    event.preventDefault();
+  const { name, value} =event.target;
+  
+
+  if(name ==="title"){
+    setTitle(value);
+  } else if(name==="description"){
+    setDescription(value);
+  } else if(name==="location") {
+    setLocation(value);
+  }else if(name==="startDate"){
+    setStartDate(value);
+  } else if (name==="endDate"){
+    setEndDate(value);
+  } 
+  console.log(title)
+};
+
+
+  const newTrip= {title, description, location, startDate, endDate}  
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const {data}= await addTrip({
+      variables:{
+        "title":title,
+        "description":description,
+        "location":location,
+        "startDate":startDate,
+        "endDate":endDate
+      }
+    }
+    )
+    console.log([title,description,location,startDate,endDate])
+  }
+
+
   return (
-    <>
-      <div className="dashboard">
+    <div className="Home">
+      <h2 className="Title">Welcome, Grip Member!</h2>
+      <section className="Dashboard">
         <Table className="Table" responsive>
           <thead>
+          <h2>Recent Trips</h2>
             <tr>
               <th>Title</th>
               <th>Location</th>
@@ -51,42 +103,61 @@ const Dashboard = () => {
                 <td></td>
               </tr>
             )}
+          <Button className="all-trips-button" variant="dark"  type="submit">View More</Button>{' '}
           </tbody>
         </Table>
 
-        <Form>
+        <Form className="Form">
           <h2>New Trip Details</h2>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="name">
             <Form.Label>Title*</Form.Label>
-            <Form.Control type="text" />
+            <Form.Control
+            type="text"
+            name="title"
+            value={title}
+            onChange={handleInputChange}/>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="name">
             <Form.Label>Location*</Form.Label>
-            <Form.Control type="text" />
+            <Form.Control
+            type="text"
+            name="location"
+            value={location}
+            onChange={handleInputChange}/>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3" controlId="name">
             <Form.Label>Start Date*</Form.Label>
-            <Form.Control type="date" />
+            <Form.Control
+            type="date"
+            name="startDate"
+            value={startDate}
+            onChange={handleInputChange}/>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3" controlId="name">
             <Form.Label>End Date*</Form.Label>
-            <Form.Control type="date" />
+            <Form.Control 
+            type="date"
+            name="endDate"
+            value={endDate}
+            onChange={handleInputChange}/>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label> Trip Description*</Form.Label>
-            <Form.Control type="text" />
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label> Trip Description</Form.Label>
+            <Form.Control
+            type="text" 
+            name="description"
+            value={description}
+            onChange={handleInputChange}
+              />
           </Form.Group>
-
-          <Button variant="primary" type="submit">
-            Add Trip
-          </Button>
-
-          <Button variant="primary" type="submit">
-            View Trips
-          </Button>
+          {Auth.loggedIn() && (
+          <Button className="add-trip-button" 
+          variant="dark" onClick={handleFormSubmit}
+          type="submit">Add New Trip</Button>
+          )}
         </Form>
+      </section>
       </div>
-    </>
   );
 };
 
