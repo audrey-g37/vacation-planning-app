@@ -3,7 +3,6 @@ import "./ViewBudget.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_BUDGETS } from "../../utils/queries";
 import Table from "react-bootstrap/Table";
-import { BsTrashFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -21,18 +20,37 @@ const ViewBudget = () => {
   const [removeBudget, { error }] = useMutation(REMOVE_BUDGET);
   const tripIdToRemove = AuthService.getTripId();
 
+const spending = allExpenses.map((expense)=> {
+  return parseInt(expense.value)
+});
+console.log(spending)
+
+
+const sumBudget = (array) => {
+  let total =0;
+   for (let i=0; i<array.length; i++) {
+    total += array[i];
+    console.log(total)}
+   return total}
+   
+   let weSpent = sumBudget(spending)
+
+   console.log(weSpent)
+
+
   const assignBudget = async (event) => {
     event.preventDefault();
     const { value } = event.target;
     console.log(value);
-    // await removeBudget({
-    //   variables: {
-    //     tripId: tripIdToRemove,
-    //     budgetId: value,
-    //   },
-    // }).then((data) => {
-    //   console.log(data);
-    // });
+    await removeBudget({
+      variables: {
+        tripId: tripIdToRemove,
+        budgetId: value,
+      },
+    }).then((data) => {
+      console.log(data);
+      window.location.reload();
+    });
   };
 
   return (
@@ -83,14 +101,14 @@ const ViewBudget = () => {
                 )}
               </tbody>
             </Table>
-            <p>Trip Total:</p>
+            <p>Trip Total: ${weSpent}</p>
           </Col>
-          <Col>
+          {/* <Col>
             <>
               <h2>Add A New Expense</h2>
               <BudgetForm />
             </>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </main>
