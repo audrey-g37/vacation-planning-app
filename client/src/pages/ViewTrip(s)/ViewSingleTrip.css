@@ -1,3 +1,17 @@
-.single-trip-details {
+.Home{
+  background-image: url(https://cdn.shopify.com/s/files/1/0043/8471/8938/products/154516875564915737.jpg?v=1555128185);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
+.details {
   list-style-type: none;
+}
+.link {
+  text-decoration: none;
+  color: black;
+
+}
+.header{
+  font-size: 2rem;
 }
