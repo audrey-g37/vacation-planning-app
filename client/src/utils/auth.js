@@ -38,6 +38,14 @@ class AuthService {
     localStorage.removeItem("id_token");
     window.location.replace("/");
   }
+
+  storeUsername(username) {
+    localStorage.setItem("username", username);
+  }
+
+  getUsername() {
+    return localStorage.getItem("username");
+  }
 }
 
 export default new AuthService();
