@@ -46,6 +46,13 @@ class AuthService {
   getUsername() {
     return localStorage.getItem("username");
   }
+  storeTripId(id) {
+    localStorage.setItem("tripId", id);
+  }
+
+  getTripId() {
+    return localStorage.getItem("tripId");
+  }
 }
 
 export default new AuthService();
