@@ -9,7 +9,7 @@ import { ADD_BUDGET } from "../../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_BUDGETS } from "../../utils/queries";
 
-const BudgetForm = ({ allExpenses }) => {
+const BudgetForm = () => {
   const tripIdVar = useParams();
   const idToUse = tripIdVar.id;
 
@@ -29,7 +29,7 @@ const BudgetForm = ({ allExpenses }) => {
     } else if (name === "value") {
       let currentValue = value;
       currentValue = parseFloat(currentValue);
-      setValue(currentValue);
+      setValue(value);
     } else if (name === "purchaseDate") {
       setPurchaseDate(value);
     } else {
