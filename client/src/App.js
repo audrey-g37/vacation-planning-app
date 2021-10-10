@@ -20,19 +20,18 @@ import ViewTask from "./pages/ViewTask/ViewTask";
 import ViewBudget from "./pages/ViewBudget/ViewBudget";
 import Signup from "./pages/signup/signup";
 
-
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
+  const token = localStorage.getItem("id_token");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
@@ -48,31 +47,29 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <NavBar />
-
         <Route exact path="/">
           <Login />
         </Route>
         <Route exact path="/signup">
           <Signup />
         </Route>
-
-        <Route exact path="/dashboard">
-          <Dashboard />
-        </Route>
-        <Route exact path="/view-trip/:id">
-          <ViewSingleTrip />
-        </Route>
-        <Route exact path="/view-trips/">
-          <ViewAllTrips />
-        </Route>
-
-        <Route exact path="/view-tasks">
-          <ViewTask />
-        </Route>
-        <Route exact path="/view-budget">
-          <ViewBudget />
-        </Route>
-
+        <Switch>
+          <Route exact path="/dashboard">
+            <Dashboard />
+          </Route>
+          <Route exact path="/view-trip/:id">
+            <ViewSingleTrip />
+          </Route>
+          <Route exact path="/view-trips/">
+            <ViewAllTrips />
+          </Route>
+          <Route exact path="/:id/view-tasks">
+            <ViewTask />
+          </Route>
+          <Route exact path="/:id/view-budget">
+            <ViewBudget />
+          </Route>
+        </Switch>
         <Footer />
       </Router>
     </ApolloProvider>
