@@ -32,14 +32,15 @@ const Signup = () => {
       const { data } = await addUser({
         variables: { ...formState },
       });
-
+      
       Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
   };
-
+  
   return (
+    <body className="body">
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div className="card">
@@ -87,6 +88,7 @@ const Signup = () => {
         </div>
       </div>
     </main>
+    </body>
   );
 };
 

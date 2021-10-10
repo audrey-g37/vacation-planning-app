@@ -17,7 +17,7 @@ const ViewBudget = () => {
   console.log(allExpenses)
 
   return (
-    <main>
+    <main className="budget-form-1">
       <Container>
       <Row xs={1} md={2}>
         <Col>

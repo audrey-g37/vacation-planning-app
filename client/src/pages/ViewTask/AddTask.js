@@ -5,6 +5,7 @@ import { Container, Row, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router";
 import { REMOVE_TASK, ADD_TASK } from "../../utils/mutations";
 
+
 const AddTask = () => {
   const tripIdVar = useParams();
   const idToUse = tripIdVar.id;
@@ -57,7 +58,7 @@ const AddTask = () => {
   };
 
   return (
-    <Container fluid="md" className="taskForm mb-5">
+    <Container className="add-task" fluid="md">
       <Row>
         <Form>
           <h2>Add A New Task</h2>
