@@ -25,7 +25,10 @@ const ViewTask = () => {
   console.log(allTasks);
 
   return (
-    <main>
+    <main className="page">
+      <div className="margin-auto">
+        <h1>Your Trip Tasks</h1>
+      </div>
       <Table className="Table" responsive>
         <thead>
           <tr>
@@ -37,6 +40,7 @@ const ViewTask = () => {
             <th>Delete Task</th>
           </tr>
         </thead>
+
         <tbody>
           {allTasks.length > 0 ? (
             allTasks.map((task) => (
@@ -69,7 +73,7 @@ const ViewTask = () => {
           )}
         </tbody>
       </Table>
-      {/* <AddTask /> */}
+      <AddTask />
     </main>
   );
 };
