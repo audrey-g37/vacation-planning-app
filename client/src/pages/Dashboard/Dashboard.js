@@ -51,7 +51,7 @@ const Dashboard = () => {
                 <td></td>
               </tr>
             )}
-            <Button className="all-trips-button" variant="dark" type="submit">
+            <Button className="all-trips-button" variant="dark" type="submit" href="/view-trips">
               View More
             </Button>{" "}
           </tbody>
