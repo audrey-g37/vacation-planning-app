@@ -58,8 +58,8 @@ const AddTask = () => {
   };
 
   return (
-    <body className="add-task">
-      <Row>
+    < >
+      <div className="add-task">
         <Form>
           <h2>Add A New Task</h2>
           <Form.Group className="mb-3">
@@ -113,8 +113,8 @@ const AddTask = () => {
             Add Task
           </Button>
         </Form>
-      </Row>
-    </body>
+      </div>
+    </>
   );
 };
 
