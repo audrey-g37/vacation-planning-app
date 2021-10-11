@@ -7,6 +7,7 @@ import { UPDATE_TASK } from "../../utils/mutations";
 import { Container, Card, Row, Button, Form } from "react-bootstrap";
 import AuthService from "../../utils/auth";
 import moment from "moment";
+import "./updateTask.css"
 
 const EditTask = () => {
   const taskIdVar = useParams();
@@ -97,13 +98,13 @@ const EditTask = () => {
     <Container className="add-task" fluid="md">
         <Row>
             <Card className = "text-center">
-            <Card.Header>{taskData.title}</Card.Header>
+            <Card.Header className="current-task-title">{taskData.title}</Card.Header>
             <Card.Body>
-                <Card.Title>Status: {
+                <Card.Title className="task-list-items completion">Status: {
                   taskData.status===true? "Completed" : "Incomplete"
                 }</Card.Title>
-                <Card.Text>
-                    <li>Should be completed by: {taskData.dueDate}</li>
+                <Card.Text className ="task-list-items">
+                    <li>Due On: {taskData.dueDate}</li>
                     <li>Assigned To: {taskData.assignee}</li>
                     {taskData.details? (<li>Details: {taskData.details}</li>
                     ) :("")
@@ -113,11 +114,12 @@ const EditTask = () => {
             </Card>
         </Row>
     <Row>
-      <Form>
-        <h2>Edit Task Below</h2>
+      <Form className = "task-mutation">
+        <h2 className="edit-task-text">Edit Task Below:</h2>
         <Form.Group className="mb-3">
-          <Form.Label>Title</Form.Label>
+          <Form.Label>Title:</Form.Label>
           <Form.Control
+            className = "task-mutation-input"
             type="text"
             name="title"
             value={title}
@@ -135,8 +137,9 @@ const EditTask = () => {
             ></Form.Check>
         </Form.Group> */}
         <Form.Group className="mb-3">
-          <Form.Label>Due Date</Form.Label>
+          <Form.Label>Due Date:</Form.Label>
           <Form.Control
+           className = "task-mutation-input"
             type="date"
             name="dueDate"
             placeholder = {taskData.dueDate}
@@ -145,8 +148,9 @@ const EditTask = () => {
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Assignee</Form.Label>
+          <Form.Label>Assignee:</Form.Label>
           <Form.Control
+           className = "task-mutation-input"
             type="text"
             name="assignee"
             placeholder={taskData.assignee}
@@ -155,8 +159,9 @@ const EditTask = () => {
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Details</Form.Label>
+          <Form.Label>Details:</Form.Label>
           <Form.Control
+           className = "task-mutation-input"
             type="text"
             name="details"
             placeholder = {taskData.details}

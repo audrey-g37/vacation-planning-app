@@ -1,19 +1,36 @@
-.d-board{
-display:flex;
-justify-content: center;
-align-items:flex-start;
+.d-board {
+    display: flex
+}
+.dash-title{
+    background-color: var(--white);
+    text-align: center;
+    opacity: .9;
+    padding: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    width: fit-content;  
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.recent-trips{
+background-color: var(--white);
+padding: 30px;
+/* border-radius: 10px; */
+border-style: solid;
+border-color: var(--black);
+opacity: .9;
+margin: 0 20px 10px 20px;
+width: fit-content;
+}
+.recent-trips-title {
+   justify-content: auto;
 }
 
-
-
-.Table{
-background-color:var(--white);
-margin-top:50px;
-opacity:.9;
-padding: 20px;
+.recent-trips-table-header {
+    text-align: center;
+    font-size: 20px;
 }
-
-
 .all-trips-button{
 margin:15px;
 }
@@ -21,12 +38,3 @@ margin:15px;
 margin:15px;
 }
 
-.Title{
-    background-color:var(--white);
-    opacity: .9;
-    padding: 15px;
-    border-radius: 10px;
-    border-style:solid;
-    width: 300px;
-    margin-top:10px;
-}

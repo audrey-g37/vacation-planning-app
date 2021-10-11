@@ -46,9 +46,9 @@ const ViewTask = () => {
     <body className="full">
     <main className="task">
       <div className="margin-auto">
-        <h1 className="Title">Trip Tasks</h1>
+        <h1 className="all-tasks-title">Trip Tasks</h1>
       </div>
-      <Table className="Table" responsive>
+      <Table className="all-tasks-table" responsive>
         <thead>
           <tr>
             <th>Title</th>
@@ -71,15 +71,15 @@ const ViewTask = () => {
                   task.status===true? "Completed" : "Incomplete"
                 }</td>
                 <td>{task.assignee}</td>
-                <td>
+                <td className="task-buttons-mutations">
                 {" "}
                   <button
-                    className="btn btn-sm btn-warning ml-auto" value={task._id} onClick={viewEditTask}>
+                    className="task-btn btn btn-sm btn-warning ml-auto" value={task._id} onClick={viewEditTask}>
                     Edit
                   </button>
                   {" "}
                   <button
-                    className="btn btn-sm btn-danger ml-auto"
+                    className="task-btn btn btn-sm btn-danger ml-auto"
                     value={task._id}
                     onClick={deleteTask}
                   >

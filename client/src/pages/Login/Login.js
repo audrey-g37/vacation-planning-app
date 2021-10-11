@@ -44,9 +44,9 @@ const Login = (props) => {
   };
 
   return (
-    <main className="login">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card">
+    <div className="login">
+          <h4 className="login-main-text card-header bg-dark text-light p-2">Login</h4>
+          <div className="login-card card">
             {data ? (
               <p>
                 Success! You may now head{" "}
@@ -55,7 +55,7 @@ const Login = (props) => {
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <input
-                  className="form-input"
+                  className= "login-form-input form-input"
                   placeholder="Username"
                   name="username"
                   type="text"
@@ -63,7 +63,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="login-form-input  form-input"
                   placeholder="******"
                   name="password"
                   type="password"
@@ -71,6 +71,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
                 <Button
+                  className="login-btn"
                   variant="dark"
                   onClick={handleFormSubmit}
                   >
@@ -85,7 +86,7 @@ const Login = (props) => {
               </div>
             )}
           </div>
-    </main>
+    </div>
   );
 };
 

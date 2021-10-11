@@ -21,7 +21,7 @@ const ViewSingleTrip = () => {
   console.log(tripData);
 
   return (
-    <main className="single-task">
+    <main className="single-trip-whole">
       <section className="single-trip">
         <Card className="text-center">
           <h1 className="header">{tripData.title}</h1>
@@ -33,24 +33,20 @@ const ViewSingleTrip = () => {
               <li className="details">{tripData.details}</li>
             </Card.Text>
             {tripData.tasks ? (
-              
                 <Link className="link" to={`/${tripData._id}/view-tasks`}>
-                  <Button variant="dark" className="button">
+                  <Button variant="dark" className="single-trip-btn button">
                   Trip Tasks
-               
               </Button>
                </Link>
             ) : (
               <h4>No Tasks have been created for this trip yet!</h4>
             )}
             {tripData.budget ? (
-             
                 <Link className="link" to={`/${tripData._id}/view-budget`}>
-                   <Button variant="dark" className="button">
+                   <Button variant="dark" className="single-trip-btn button">
                   Budget Items
                   </Button>
                 </Link>
-          
             ) : (
               <h4>No expenditures have been stored for this trip yet!</h4>
             )}

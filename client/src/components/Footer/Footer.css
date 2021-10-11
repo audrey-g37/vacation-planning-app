@@ -1,9 +1,7 @@
-.footer {
-  position: absolute;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  bottom: 0;
-  viewport-fit: 0px;
-  width: 100%;
+.constant-footer {
+  margin-top: 200px;
+}
+
+.names {
+  padding: 8px;
 }

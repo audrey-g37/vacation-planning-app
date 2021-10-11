@@ -1,21 +1,27 @@
-.single-task{
+.single-trip-whole {
+  display:flex;
+  justify-content: center;
+}
+.single-trip{
   display:inline-block;
   width: 600px;
-margin-left: 400px;
-margin-top: 200px;
-margin-bottom: 250px;
-border-style:solid;
-border-radius: 10px;
+  border-style:solid;
+  border-radius: 10px;
+  margin-top: 80px;
 }
 .details {
   list-style-type: none;
 }
 .link {
   text-decoration: none;
-  color: black;
+  color: var(--black);
 
 }
 .header{
   font-size: 2rem;
+}
+
+.single-trip-btn {
+  margin: 10px;
 }
 

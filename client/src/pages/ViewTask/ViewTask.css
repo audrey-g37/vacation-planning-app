@@ -5,10 +5,24 @@
   
 
 }
-.Table{
+.all-tasks-table{
   margin-left:10px;
   border-style:solid;
   border-radius: 10px;
+  background-color: var(--white);
+  opacity: .9;
+}
+.all-tasks-title {
+  background-color: var(--white);
+  text-align: center;
+  opacity: .9;
+  padding: 20px;
+  border-radius: 10px;
+  border-style: solid;
+  width: fit-content;  
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 .page h1 {
@@ -21,8 +35,18 @@
   border-radius: 10px;
   border-style:solid;
   margin: 50px;
-  
   width: 500px;
   padding: 30px;
+}
+.task-buttons-mutations {
+ display: flex; 
+ align-items: flex-end;
+ border-bottom: none;
+ margin-top: 8px;
+}
+
+.task-btn {
+  margin: 10px;
+
 }
 
