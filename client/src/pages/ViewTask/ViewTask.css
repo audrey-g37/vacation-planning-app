@@ -1,10 +1,8 @@
-
 .full{
   display:flex;
   background-color: transparent;
-  
-
 }
+
 .all-tasks-table{
   margin-left:10px;
   border-style:solid;
@@ -49,6 +47,5 @@
 
 .task-btn {
   margin: 10px;
-
 }
 

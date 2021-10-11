@@ -46,14 +46,14 @@ const Login = (props) => {
   return (
     <div className="login">
           <h4 className="login-main-text card-header bg-dark text-light p-2">Login</h4>
-          <div className="login-card card">
+          <div className="login-card text-center card">
             {data ? (
               <p>
                 Success! You may now head{" "}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
+              <form className = "login-form" onSubmit={handleFormSubmit}>
                 <input
                   className= "login-form-input form-input"
                   placeholder="Username"
@@ -63,7 +63,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
                 <input
-                  className="login-form-input  form-input"
+                  className="login-form-input form-input"
                   placeholder="******"
                   name="password"
                   type="password"

@@ -49,7 +49,7 @@ const ViewTask = () => {
     <div>
       
       <Link className="link" to={`/view-trip/${TripIdToUse}`}>
-        <Button variant="dark" className="btn">
+        <Button variant="dark" className="back-btn">
           Back to Trip Details
         </Button>
       </Link>
