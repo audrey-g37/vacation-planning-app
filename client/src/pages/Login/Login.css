@@ -1,6 +1,4 @@
 .login{
-    flex-wrap: wrap;
-    justify-content: space-around;
     opacity: 0.95;
     margin: auto;
     margin-top: 30px;
@@ -18,15 +16,24 @@
     background-color: var(--white);
     opacity: 0.9;
     border-radius: 5px;
-    align-content: center;
+    padding-bottom: 100px;
 }
+.login-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .login-form-input {
     padding: 10px;
     display: block;
-    margin:10px;
+    margin: 10px;
+    position: relative;
 }
 .login-btn {
-margin-left: 10px
+margin-left: 10px;
+margin-top: 200px;
+position: absolute;
 }
 
 

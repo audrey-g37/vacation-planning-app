@@ -65,16 +65,16 @@ const Signup = () => {
   
   return (
 
-    <main className="signup">
+    <div className="signup">
           <h4 className="signup-main-text card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="signup-card card">
+          <div className="signup-card text-center card">
             {data ? (
               <p>
                 Success! You may now head{' '}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form>
+              <form className="signup-form">
                 <input
                   className="signup-form-input form-input"
                   placeholder="Your username"
@@ -108,7 +108,7 @@ const Signup = () => {
               </div>
             )}
           </div>
-    </main>
+    </div>
   );
 };
 

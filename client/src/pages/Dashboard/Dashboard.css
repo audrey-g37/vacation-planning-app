@@ -6,7 +6,7 @@
     text-align: center;
     opacity: .9;
     padding: 20px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     border-style: solid;
     width: fit-content;  
     margin: auto;
@@ -32,9 +32,9 @@ width: fit-content;
     font-size: 20px;
 }
 .all-trips-button{
-margin:15px;
+margin: 15px;
 }
 .add-trip-button{
-margin:15px;
+margin: 15px;
 }
 
