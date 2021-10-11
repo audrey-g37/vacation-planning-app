@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./ViewAllTrips.css";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col,Button } from "react-bootstrap";
 
 // import moment from "moment";
 
@@ -54,7 +54,7 @@ const ViewAllTrips = () => {
   // console.log(sortedTrips)
 
   return (
-    <Container fluid className="all-trips">
+    <body fluid className="all-trips">
       <Row>
         <h1>All Stored Trips</h1>
         <ul className="list-of-trips">
@@ -62,7 +62,13 @@ const ViewAllTrips = () => {
             allTrips.map((trip) => (
               <li className="trip-title">
                 {trip.title}
-                <Link to={`view-trip/${trip._id}`}>View Trip Details</Link>
+                <div>
+                <Link  className="link" to={`view-trip/${trip._id}`}>
+                <Button variant="dark" size="small" className="button">
+                  Details
+              </Button>
+              </Link>
+              </div>
               </li>
             ))
           ) : (
@@ -70,7 +76,7 @@ const ViewAllTrips = () => {
           )}
         </ul>
       </Row>
-    </Container>
+    </body>
   );
 };
 

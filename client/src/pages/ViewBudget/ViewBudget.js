@@ -54,7 +54,7 @@ const sumBudget = (array) => {
   };
 
   return (
-    <main className="budget-form-1">
+    <main className="budget">
       <Container>
         <Row xs={1} md={2}>
           <Col>

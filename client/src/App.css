@@ -21,4 +21,11 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+
+  h1{
+    background-color:var(--white);
+    opacity: .9;
+    border-style:solid;
+    border-radius:10px;
+  }
   

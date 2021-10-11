@@ -1,0 +1,10 @@
+.add-trip-form{
+    background-color: var(--white);
+    opacity: 0.9;
+    border-radius: 10px;
+    border-style:solid;
+    margin: 50px;
+    width: 500px;
+    height:600px;
+    padding: 30px;
+}

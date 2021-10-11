@@ -2,12 +2,19 @@
     background-color: var(--white);
     opacity: 0.9;
     padding: 50px;
-    margin:150px;
+    margin:200px;
     text-align: center;
     border-radius: 10px;
+    border-style:solid;
 }
 
 .list-of-trips {
-    font-size: 18px;
+    justify-content: space-around;
+    font-size: 25px;
     list-style-type: none;
+}
+
+.button{
+    border-radius: 15px;
+    align-items: center;
 }
