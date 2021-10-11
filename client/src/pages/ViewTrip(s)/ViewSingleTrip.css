@@ -1,5 +1,11 @@
-.Hero{
-  margin:150px;
+.single-task{
+  display:inline-block;
+  width: 600px;
+margin-left: 400px;
+margin-top: 200px;
+margin-bottom: 250px;
+border-style:solid;
+border-radius: 10px;
 }
 .details {
   list-style-type: none;
@@ -12,3 +18,4 @@
 .header{
   font-size: 2rem;
 }
+

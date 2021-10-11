@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import "./Login.css";
+import { Button } from "react-bootstrap";
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ username: "", password: "" });
@@ -43,7 +44,6 @@ const Login = (props) => {
   };
 
   return (
-    <body className="body">
     <main className="login">
           <h4 className="card-header bg-dark text-light p-2">Login</h4>
           <div className="card">
@@ -70,13 +70,12 @@ const Login = (props) => {
                   value={formState.password}
                   onChange={handleChange}
                 />
-                <button
-                  className="Button"
-                  style={{ cursor: "pointer" }}
-                  type="submit"
-                >
-                  Submit
-                </button>
+                <Button
+                  variant="dark"
+                  onClick={handleFormSubmit}
+                  >
+                  Login
+                </Button>{''}
               </form>
             )}
 
@@ -87,7 +86,6 @@ const Login = (props) => {
             )}
           </div>
     </main>
-    </body>
   );
 };
 

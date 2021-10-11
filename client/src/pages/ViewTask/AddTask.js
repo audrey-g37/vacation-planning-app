@@ -58,7 +58,7 @@ const AddTask = () => {
   };
 
   return (
-    <Container className="add-task" fluid="md">
+    <body className="add-task">
       <Row>
         <Form>
           <h2>Add A New Task</h2>
@@ -114,7 +114,7 @@ const AddTask = () => {
           </Button>
         </Form>
       </Row>
-    </Container>
+    </body>
   );
 };
 

@@ -60,7 +60,7 @@ const NewTrip = () => {
     });
   };
   return (
-    <Form className="Form">
+    <Form className="add-trip-form">
       <h2>New Trip Details</h2>
       <Form.Group className="mb-3" controlId="name">
         <Form.Label>Title*</Form.Label>

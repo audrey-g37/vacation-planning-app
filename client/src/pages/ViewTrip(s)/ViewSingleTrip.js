@@ -21,10 +21,10 @@ const ViewSingleTrip = () => {
   console.log(tripData);
 
   return (
-    <main className="Hero">
-      <Container fluid className="single-trip">
+    <main className="single-task">
+      <section className="single-trip">
         <Card className="text-center">
-          <Card.Header className="header">{tripData.title}</Card.Header>
+          <h1 className="header">{tripData.title}</h1>
           <Card.Body>
             <Card.Title>Location: {tripData.location}</Card.Title>
             <Card.Text>
@@ -35,8 +35,8 @@ const ViewSingleTrip = () => {
             {tripData.tasks ? (
               
                 <Link className="link" to={`/${tripData._id}/view-tasks`}>
-                  <Button variant="outline-dark" className="btn">
-                  Click to view tasks for this trip!
+                  <Button variant="dark" className="button">
+                  Trip Tasks
                
               </Button>
                </Link>
@@ -46,8 +46,8 @@ const ViewSingleTrip = () => {
             {tripData.budget ? (
              
                 <Link className="link" to={`/${tripData._id}/view-budget`}>
-                   <Button variant="outline-dark" className="btn">
-                  Click to view the budget items for this trip!
+                   <Button variant="dark" className="button">
+                  Budget Items
                   </Button>
                 </Link>
           
@@ -56,7 +56,7 @@ const ViewSingleTrip = () => {
             )}
           </Card.Body>
         </Card>
-      </Container>
+      </section>
     </main>
   );
 };

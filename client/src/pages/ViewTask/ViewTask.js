@@ -43,9 +43,10 @@ const ViewTask = () => {
   }
 
   return (
-    <main className="page">
+    <body className="full">
+    <main className="task">
       <div className="margin-auto">
-        <h1>Your Trip Tasks</h1>
+        <h1 className="Title">Trip Tasks</h1>
       </div>
       <Table className="Table" responsive>
         <thead>
@@ -100,8 +101,9 @@ const ViewTask = () => {
           )}
         </tbody>
       </Table>
-      <AddTask />
     </main>
+      <AddTask />
+      </body>
   );
 };
 

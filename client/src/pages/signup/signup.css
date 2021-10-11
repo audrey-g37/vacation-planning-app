@@ -4,13 +4,20 @@
     
     }
     .card{
-        background-color: var(--white);
-        opacity: 0.9;
         display:flex;
         flex-wrap:wrap;
+        background-color: var(--white);
+        opacity: 0.9;
         padding:30px;
     }
     
-    .login{
-        margin-right:100px;
+    .signup{
+    align-items: center;
+    margin: 200px;
+    margin-left:500px;
+    margin-bottom:300px;
+    width: 500px;
+    border-radius: 5px;
+    background-color:var(--white);
+    opacity: 0.95;
     }

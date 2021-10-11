@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
-
 import Auth from '../../utils/auth';
+import "./signup.css"
+import {Button} from "react-bootstrap";
+
 
 const Signup = () => {
   const [username, setUsername] = useState("")
@@ -63,12 +64,10 @@ const Signup = () => {
   };
   
   return (
-    <body className="body">
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
+
+    <main className="signup">
           <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
+          <div className="card">
             {data ? (
               <p>
                 Success! You may now head{' '}
@@ -92,14 +91,13 @@ const Signup = () => {
                   value={password}
                   onChange={handleInputChange}
                 />
-                <button
-                  className="btn btn-block btn-info"
+                <Button
                   style={{ cursor: 'pointer' }}
-                  type="submit"
+                  variant = "dark"
                   onClick={handleFormSubmit}
                 >
-                  Submit
-                </button>
+                  SignUp
+                </Button>
               </form>
             )}
 
@@ -109,10 +107,7 @@ const Signup = () => {
               </div>
             )}
           </div>
-        </div>
-      </div>
     </main>
-    </body>
   );
 };
 
