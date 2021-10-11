@@ -29,7 +29,7 @@ const NavBar = () => {
     <>
       <Navbar bg="dark" variant="dark">
         <Container className="justify-content-center">
-          <Navbar.Brand>GRIP</Navbar.Brand>
+          <Navbar.Brand className = "app-title">GRIP</Navbar.Brand>
           <Nav className="me-auto">
             {Auth.loggedIn() ? (
               <>

@@ -5,8 +5,8 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 const Footer = () => {
   return (
     <>
-      <Navbar bg="dark" variant="dark" className="footer">
-        <Container className="justify-content-center">
+      <Navbar bg="dark" variant="dark" className="constant-footer">
+        <Container className="space-around">
           <Navbar.Brand
             href="https://github.com/Korbin-Sargent/vacation-planning-app"
             target="_blank"
@@ -19,7 +19,7 @@ const Footer = () => {
               className="d-inline-block align-top"
             />
           </Navbar.Brand>
-          <Nav>
+          <Nav className="names">
             <Nav.Link href="https://github.com/audrey-g37" target="_blank">
               Audrey Gillies
             </Nav.Link>

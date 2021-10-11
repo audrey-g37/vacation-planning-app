@@ -3,7 +3,7 @@ import { useParams, Redirect } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
-import { Table, Button, Row} from "react-bootstrap";
+import { Table, Button, Row, Container} from "react-bootstrap";
 import { QUERY_TRIP, QUERY_TRIPS } from "../../utils/queries";
 import NewTrip from "../../components/NewTrip/NewTrip";
 
@@ -15,15 +15,13 @@ const Dashboard = () => {
   console.log(allTrips);
 
   return (
-    <>
-      <h2 className="Title">Welcome, {currentUser}</h2>
-      <div className="d-board">
-
-
-        <Table className="Table" responsive>
-          <thead>
-            <h2>Recent Trips</h2>
-            <tr>
+    <div className="whole-dash">
+      <h2 className="dash-title">Welcome {currentUser}!</h2>
+      < div className="d-board">
+       <Table className="recent-trips" >
+          <thead className="recent-trips-title">
+            <h2 >Recent Trips</h2>
+            <tr className="recent-trips-table-header">
               <th>Title</th>
               <th>Location</th>
               <th>Start Date</th>
@@ -60,7 +58,7 @@ const Dashboard = () => {
         </Table>
       <NewTrip />
       </div>
-      </>
+      </div>
   );
 };
 

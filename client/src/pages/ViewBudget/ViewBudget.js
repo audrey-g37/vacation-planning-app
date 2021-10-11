@@ -57,7 +57,7 @@ const sumBudget = (array) => {
     <main className="budget">
       <Container>
         <Row xs={1} md={2}>
-          <Col>
+          <Col className="current-expenses">
             <h2>Trip Expenses</h2>
             <Table striped bordered hover>
               <thead>
@@ -66,6 +66,7 @@ const sumBudget = (array) => {
                   <th>Amount</th>
                   <th>Purchased Date</th>
                   <th>Purchased By</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,7 +102,7 @@ const sumBudget = (array) => {
                 )}
               </tbody>
             </Table>
-            <p>Trip Total: ${weSpent}</p>
+            <h4>Trip Total: ${weSpent}</h4>
           </Col>
           <Col>
             <>

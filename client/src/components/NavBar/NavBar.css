@@ -1,9 +1,6 @@
-.footer {
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  bottom: 0;
-  width: 100%;
+.app-title {
+  font-weight: 600;
+}
+.me-auto {
+  justify-content: center;
 }

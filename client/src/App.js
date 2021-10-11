@@ -45,9 +45,11 @@ const client = new ApolloClient({
 
 function App() {
   return (
+    <>
     <ApolloProvider client={client}>
       <Router>
         <NavBar />
+        <div className="whole">
         <Route exact path="/">
           <Login />
         </Route>
@@ -74,9 +76,11 @@ function App() {
             <ViewBudget />
           </Route>
         </Switch>
+        </div>
         <Footer />
       </Router>
     </ApolloProvider>
+    </>
   );
 }
 

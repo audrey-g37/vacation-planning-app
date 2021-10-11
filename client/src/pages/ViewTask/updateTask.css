@@ -1,0 +1,30 @@
+.add-task {
+    width: 80%
+}
+.current-task-title {
+    font-size: 35px;
+    font-weight: 700;
+    color: var(--black);
+}
+.completion {
+    text-decoration: underline solid;
+}
+.edit-task-text {
+    font-size: 25px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.task-list-items {
+    list-style: none;
+    color: var(--black);
+    font-size: 20px;
+    font-weight: 600;
+}
+.task-mutation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.task-mutation-input {
+    width: max-content;
+}
