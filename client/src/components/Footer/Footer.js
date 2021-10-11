@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark" className="constant-footer">
-        <Container className="space-around">
+        <Container className="justify-content-center">
           <Navbar.Brand
             href="https://github.com/Korbin-Sargent/vacation-planning-app"
             target="_blank"
