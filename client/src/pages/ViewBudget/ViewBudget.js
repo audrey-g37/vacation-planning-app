@@ -103,12 +103,12 @@ const sumBudget = (array) => {
             </Table>
             <p>Trip Total: ${weSpent}</p>
           </Col>
-          {/* <Col>
+          <Col>
             <>
               <h2>Add A New Expense</h2>
               <BudgetForm />
             </>
-          </Col> */}
+          </Col>
         </Row>
       </Container>
     </main>
