@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router";
 import "./ViewBudget.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_BUDGETS } from "../../utils/queries";
@@ -10,12 +11,17 @@ import Col from "react-bootstrap/Col";
 import BudgetForm from "./budgetForm";
 import { REMOVE_BUDGET } from "../../utils/mutations";
 import AuthService from "../../utils/auth";
+import { Link } from "react-router-dom";
+
 
 const ViewBudget = () => {
   // JS
   const { loading, data } = useQuery(QUERY_BUDGETS);
   const allExpenses = data?.budgets || [];
   console.log(allExpenses);
+
+  const tripIdVar = useParams();
+  const idToUse = tripIdVar.id;
 
   const [removeBudget, { error }] = useMutation(REMOVE_BUDGET);
   const tripIdToRemove = AuthService.getTripId();
@@ -56,6 +62,11 @@ const sumBudget = (array) => {
   return (
     <main className="budget">
       <Container>
+      <Link className="link" to={`/view-trip/${idToUse}`}>
+                   <Button variant="outline-dark" className="btn">
+                  Back to Trip Details
+                  </Button>
+                </Link>
         <Row xs={1} md={2}>
           <Col className="current-expenses">
             <h2>Trip Expenses</h2>

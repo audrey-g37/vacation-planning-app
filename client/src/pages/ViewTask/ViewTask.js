@@ -1,4 +1,5 @@
-import React, {Link} from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import "./ViewTask.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_TASKS, QUERY_TASK } from "../../utils/queries";
@@ -45,6 +46,14 @@ const ViewTask = () => {
   return (
     <body className="full">
     <main className="task">
+    <div>
+      
+      <Link className="link" to={`/view-trip/${TripIdToUse}`}>
+        <Button variant="dark" className="btn">
+          Back to Trip Details
+        </Button>
+      </Link>
+      </div>
       <div className="margin-auto">
         <h1 className="all-tasks-title">Trip Tasks</h1>
       </div>
