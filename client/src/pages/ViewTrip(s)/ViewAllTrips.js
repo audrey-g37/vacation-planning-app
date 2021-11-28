@@ -1,20 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Auth from "../../utils/auth";
 
 import "./ViewAllTrips.css";
 import { Container, Row, Col,Button } from "react-bootstrap";
 
-// import moment from "moment";
-
 import { useQuery } from "@apollo/client";
 import { QUERY_TRIPS } from "../../utils/queries";
 
+// import moment from "moment";
+
 const ViewAllTrips = () => {
   // const now = moment();
-
-  const { loading, data } = useQuery(QUERY_TRIPS);
-  const allTrips = data?.trips || [];
-
+const userId = Auth.getUserId()
+  const { data: data2 } = useQuery(QUERY_TRIPS, { variables: {userId: userId }
+  });
+  const allTrips = data2?.trips || [];
   console.log(allTrips);
   // const tripDates = allTrips.map((trip) => {
   //   let date = trip.startDate;

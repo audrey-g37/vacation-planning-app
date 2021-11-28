@@ -28,10 +28,6 @@ const tripSchema = new Schema({
     required: true,
     get: (timestamp) => dateFormat(timestamp),
   },
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
   tasks: [
     {
       type: Schema.Types.ObjectId,
@@ -44,6 +40,11 @@ const tripSchema = new Schema({
       ref: "Budget",
     },
   ],
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 const Trip = model("Trip", tripSchema);

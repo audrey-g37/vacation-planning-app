@@ -4,8 +4,8 @@ export const QUERY_USER = gql`
 query ($username: String!) {
   user (username: $username) {
 	_id
-    username
-    password
+  username
+  password
   }
 }
 `;
@@ -13,16 +13,16 @@ query ($username: String!) {
 export const QUERY_USERS = gql`
 query {
   users {
-    _id
-    username
-    password
+  _id
+  username
+  password
   }
 }
 `;
 
 export const QUERY_TRIP = gql`
-query ($tripId: ID!) {
-  trip (tripId: $tripId) {
+query ($tripId: ID!, $userId: ID!) {
+  trip (tripId: $tripId, userId: $userId) {
     _id
     title
     location
@@ -40,8 +40,8 @@ query ($tripId: ID!) {
 `;
 
 export const QUERY_TRIPS = gql`
-query {
-  trips {
+query ($userId: ID!) {
+  trips (userId: $userId) {
     _id
     title
     location
@@ -66,8 +66,8 @@ query ($taskId: ID!) {
 `;
 
 export const QUERY_TASKS = gql`
-query {
-  tasks {
+query ($tripId: ID!) {
+  tasks (tripId: $tripId) {
     _id
     title
     details
@@ -79,8 +79,8 @@ query {
 `;
 
 export const QUERY_BUDGETS = gql`
-query {
-  budgets {
+query ($tripId: ID!) {
+  budgets (tripId: $tripId) {
     _id
     title
  		value

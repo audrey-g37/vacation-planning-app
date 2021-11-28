@@ -2,20 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ViewTask.css";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_TASKS, QUERY_TASK } from "../../utils/queries";
+import { QUERY_TRIP, QUERY_TASKS, QUERY_TASK } from "../../utils/queries";
 import { Table, Form, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import { REMOVE_TASK, ADD_TASK, UPDATE_TASK } from "../../utils/mutations";
 import { useParams } from "react-router-dom";
 import AddTask from "./AddTask";
-import AuthService from "../../utils/auth";
+import Auth from "../../utils/auth";
 
 const ViewTask = () => {
-  const { loading, data } = useQuery(QUERY_TASKS);
-  const allTasks = data?.tasks || [];
-  console.log(allTasks);
+  const tripId = Auth.getTripId();
+  const userId = Auth.getUserId();
+  const { data: data1 } = useQuery(QUERY_TRIP, {
+    variables: { tripId: tripId, userId: userId },
+  });
+  const tripData = data1?.trip || [];
+  console.log(tripData);
 
-  const tripIdVar = useParams();
-  const TripIdToUse = tripIdVar.id;
+  const { loading, data } = useQuery(QUERY_TASKS, {variables: {tripId: tripId }});
+  const allTasks = data?.tasks || [];
+  // console.log(allTasks);
 
   const [removeTask, { error }] = useMutation(REMOVE_TASK);
   const [updateTask] = useMutation(UPDATE_TASK);
@@ -24,18 +29,18 @@ const ViewTask = () => {
     event.preventDefault();
     const {value} = event.target;
 
-    window.location.replace(`/${TripIdToUse}/view-tasks/${value}`)
+    window.location.replace(`/${tripId}/view-tasks/${value}`)
 
   }
 
   const deleteTask = (event) => {
     event.preventDefault();
     const {value} = event.target;
-    console.log(value);
-    console.log(TripIdToUse);
+    // console.log(value);
+    // console.log(TripIdToUse);
      removeTask({
       variables: {
-        tripId: TripIdToUse,
+        tripId: tripId,
         taskId: value
       }
     }).then((data) => {
@@ -48,14 +53,14 @@ const ViewTask = () => {
     <main className="task">
     <div>
       
-      <Link className="link" to={`/view-trip/${TripIdToUse}`}>
+      <Link className="link" to={`/view-trip/${tripId}`}>
         <Button variant="dark" className="back-btn">
           Back to Trip Details
         </Button>
       </Link>
       </div>
       <div className="margin-auto">
-        <h1 className="all-tasks-title">Trip Tasks</h1>
+        <h1 className="all-tasks-title">Tasks: {tripData.title}</h1>
       </div>
       <Table className="all-tasks-table" responsive>
         <thead>

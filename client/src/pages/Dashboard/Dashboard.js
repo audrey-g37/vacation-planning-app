@@ -4,23 +4,30 @@ import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import { Table, Button, Row, Container} from "react-bootstrap";
-import { QUERY_TRIP, QUERY_TRIPS } from "../../utils/queries";
+import { QUERY_USER, QUERY_TRIPS } from "../../utils/queries";
 import NewTrip from "../../components/NewTrip/NewTrip";
 
 const Dashboard = () => {
-  const { loading, data } = useQuery(QUERY_TRIPS);
-  const allTrips = data?.trips || [];
-  const currentUser = Auth.getUsername();
+const currentUser = Auth.getUsername();
+const { data: data1 } = useQuery(QUERY_USER, {
+  variables: { username : currentUser },
+});
+const userData = data1?.user || [];
+console.log(userData);
+Auth.storeUserId(userData._id);
 
-  console.log(allTrips);
+const { data: data2 } = useQuery(QUERY_TRIPS, { variables: {userId: userData._id }
+});
+const allTrips = data2?.trips || [];
+console.log(allTrips);
 
   return (
     <div className="whole-dash">
       <h2 className="dash-title">Welcome {currentUser}!</h2>
-      < div className="d-board">
+      <div className="d-board">
+      <h2>Recent Trips</h2>
        <Table className="recent-trips" >
           <thead className="recent-trips-title">
-            <h2 >Recent Trips</h2>
             <tr className="recent-trips-table-header">
               <th>Title</th>
               <th>Location</th>
@@ -35,7 +42,6 @@ const Dashboard = () => {
                   <td>{trip.title}</td>
                   <td
                     ey={index}
-                    // {{QUERY_TRIP}} {index}
                   >
                     {trip.location}
                   </td>
@@ -51,11 +57,11 @@ const Dashboard = () => {
                 <td></td>
               </tr>
             )}
+            </tbody>
+        </Table>
             <Button className="all-trips-button" variant="dark" type="submit" href="/view-trips">
               View More
-            </Button>{" "}
-          </tbody>
-        </Table>
+            </Button>
       <NewTrip />
       </div>
       </div>

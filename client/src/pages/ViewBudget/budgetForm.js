@@ -33,7 +33,7 @@ const BudgetForm = () => {
     } else {
       setPurchasedBy(value);
     }
-    console.log({title, value, purchaseDate, purchasedBy})
+    // console.log({title, value, purchaseDate, purchasedBy})
   };
 
   const handleFormSubmit = (event) => {

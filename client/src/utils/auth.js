@@ -35,7 +35,10 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem("id_token");
+    let itemsToRemove = ["id_token", "username", "userId", "tripId"]
+    itemsToRemove.forEach(item => {
+      localStorage.removeItem(item);
+    })
     window.location.replace("/");
   }
 
@@ -45,6 +48,13 @@ class AuthService {
 
   getUsername() {
     return localStorage.getItem("username");
+  }
+  storeUserId(userId) {
+    localStorage.setItem("userId", userId);
+  }
+
+  getUserId() {
+    return localStorage.getItem("userId");
   }
   storeTripId(id) {
     localStorage.setItem("tripId", id);

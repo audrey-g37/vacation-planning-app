@@ -18,7 +18,7 @@ const ViewBudget = () => {
   // JS
   const { loading, data } = useQuery(QUERY_BUDGETS);
   const allExpenses = data?.budgets || [];
-  console.log(allExpenses);
+  // console.log(allExpenses);
 
   const tripIdVar = useParams();
   const idToUse = tripIdVar.id;
@@ -29,32 +29,33 @@ const ViewBudget = () => {
 const spending = allExpenses.map((expense)=> {
   return parseInt(expense.value)
 });
-console.log(spending)
+// console.log(spending)
 
 
 const sumBudget = (array) => {
   let total =0;
    for (let i=0; i<array.length; i++) {
     total += array[i];
-    console.log(total)}
+    // console.log(total)
+  }
    return total}
    
    let weSpent = sumBudget(spending)
 
-   console.log(weSpent)
+  //  console.log(weSpent)
 
 
   const assignBudget = async (event) => {
     event.preventDefault();
     const { value } = event.target;
-    console.log(value);
+    // console.log(value);
     await removeBudget({
       variables: {
         tripId: tripIdToRemove,
         budgetId: value,
       },
     }).then((data) => {
-      console.log(data);
+      // console.log(data);
       window.location.reload();
     });
   };

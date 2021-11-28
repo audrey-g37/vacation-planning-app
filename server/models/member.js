@@ -1,3 +1,5 @@
+// NOT IN USE
+
 const { Schema, model } = require("mongoose");
 
 const memberSchema = new Schema({
