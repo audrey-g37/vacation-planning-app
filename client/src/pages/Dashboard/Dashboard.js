@@ -13,20 +13,30 @@ const { data: data1 } = useQuery(QUERY_USER, {
   variables: { username : currentUser },
 });
 const userData = data1?.user || [];
-console.log(userData);
+// console.log(userData);
 Auth.storeUserId(userData._id);
 
 const { data: data2 } = useQuery(QUERY_TRIPS, { variables: {userId: userData._id }
 });
 const allTrips = data2?.trips || [];
-console.log(allTrips);
+
+let recentEightTrips = [];
+const storedTripLength = allTrips.length
+if (storedTripLength > 8) {
+  for (let i=storedTripLength - 8; i<storedTripLength; i++) {
+  recentEightTrips.push(allTrips[i])
+  } }else {
+    recentEightTrips.push(allTrips)
+  }
+
 
   return (
     <div className="whole-dash">
       <h2 className="dash-title">Welcome {currentUser}!</h2>
       <div className="d-board">
+        <div className="recent-trips">
       <h2>Recent Trips</h2>
-       <Table className="recent-trips" >
+       <Table className="trips-table" >
           <thead className="recent-trips-title">
             <tr className="recent-trips-table-header">
               <th>Title</th>
@@ -36,12 +46,11 @@ console.log(allTrips);
             </tr>
           </thead>
           <tbody>
-            {allTrips.length > 0 ? (
-              allTrips.map((trip, index) => (
+            {recentEightTrips.length > 0 ? (
+              recentEightTrips.map((trip) => (
                 <tr>
                   <td>{trip.title}</td>
                   <td
-                    ey={index}
                   >
                     {trip.location}
                   </td>
@@ -62,6 +71,7 @@ console.log(allTrips);
             <Button className="all-trips-button" variant="dark" type="submit" href="/view-trips">
               View More
             </Button>
+            </div>
       <NewTrip />
       </div>
       </div>

@@ -52,10 +52,11 @@ const NewTrip = () => {
       setEndDate("");
       setDescription("");
     });
+    window.location.reload();
   };
   return (
     <Form className="add-trip-form">
-      <h2>New Trip Details</h2>
+      <h2>Add a New Trip:</h2>
       <Form.Group className="mb-3" controlId="name">
         <Form.Label>Title*</Form.Label>
         <Form.Control
@@ -108,7 +109,7 @@ const NewTrip = () => {
           onClick={handleFormSubmit}
           type="submit"
         >
-          Add New Trip
+          Save
         </Button>
       )}
     </Form>
