@@ -55,7 +55,13 @@ const ViewTask = () => {
           Back to Trip Details
         </Button>
       </Link>
+      <div id="task-info">
       <h2 className="all-tasks-title">Tasks: {tripData.title}</h2>
+      <ul className="trip-details-list">
+        <li>Start Date: {tripData.startDate}</li>
+        <li>End Date: {tripData.endDate}</li>
+        </ul>
+        </div>
       <div className="task-tables">
       <div className="current-tasks">
       <Table className="all-tasks-table" >
