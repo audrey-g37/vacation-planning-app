@@ -20,13 +20,15 @@ const { data: data2 } = useQuery(QUERY_TRIPS, { variables: {userId: userData._id
 });
 const allTrips = data2?.trips || [];
 
-let recentEightTrips = [];
+let recentEightTrips;
 const storedTripLength = allTrips.length
 if (storedTripLength > 8) {
+  recentEightTrips = [];
   for (let i=storedTripLength - 8; i<storedTripLength; i++) {
   recentEightTrips.push(allTrips[i])
-  } }else {
-    recentEightTrips.push(allTrips)
+  } 
+}else {
+    recentEightTrips=allTrips
   }
 
 
@@ -69,7 +71,7 @@ if (storedTripLength > 8) {
             </tbody>
         </Table>
             <Button className="all-trips-button" variant="dark" type="submit" href="/view-trips">
-              View More
+              View All
             </Button>
             </div>
       <NewTrip />

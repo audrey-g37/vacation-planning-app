@@ -24,7 +24,7 @@ const resolvers = {
     },
     trips: async (parent, {userId}, context) => {
       if (context.user) {
-        return await Trip.find( {userId: userId}).populate("tasks", "budget");
+        return await Trip.find({userId: userId}).populate("tasks", "budget");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -53,7 +53,7 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    budgets: async (parent, tripId, context) => {
+    budgets: async (parent, {tripId}, context) => {
       if (context.user) {
         return await Budget.find({tripId: tripId});
       }

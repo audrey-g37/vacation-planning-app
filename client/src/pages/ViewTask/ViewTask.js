@@ -51,7 +51,7 @@ const ViewTask = () => {
   return (
     <main className="task">
       <Link to={`/view-trip/${tripId}`}>
-        <Button id="back-to-trip-details" className="back-btn">
+        <Button id="back-to-trip-details" >
           Back to Trip Details
         </Button>
       </Link>

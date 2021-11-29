@@ -1,30 +1,28 @@
 import React, { useState } from "react";
-import { useParams } from "react-router";
 import "./ViewBudget.css";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_BUDGETS } from "../../utils/queries";
+import { QUERY_BUDGETS, QUERY_TRIP } from "../../utils/queries";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import BudgetForm from "./budgetForm";
 import { REMOVE_BUDGET } from "../../utils/mutations";
-import AuthService from "../../utils/auth";
+import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 
 
 const ViewBudget = () => {
-  // JS
-  const { loading, data } = useQuery(QUERY_BUDGETS);
+  const tripId = Auth.getTripId();
+  const userId = Auth.getUserId();
+  const { data: data1 } = useQuery(QUERY_TRIP, {
+    variables: { tripId: tripId, userId: userId },
+  });
+  const tripData = data1?.trip || [];
+  const { loading, data } = useQuery(QUERY_BUDGETS, {variables: {tripId: tripId}});
   const allExpenses = data?.budgets || [];
   // console.log(allExpenses);
 
-  const tripIdVar = useParams();
-  const idToUse = tripIdVar.id;
-
   const [removeBudget, { error }] = useMutation(REMOVE_BUDGET);
-  const tripIdToRemove = AuthService.getTripId();
+  const tripIdToRemove = Auth.getTripId();
 
 const spending = allExpenses.map((expense)=> {
   return parseInt(expense.value)
@@ -62,68 +60,61 @@ const sumBudget = (array) => {
 
   return (
     <main className="budget">
-      <Container>
-      <Link className="link" to={`/view-trip/${idToUse}`}>
-                   <Button variant="outline-dark" className="btn">
-                  Back to Trip Details
-                  </Button>
-                </Link>
-        <Row xs={1} md={2}>
-          <Col className="current-expenses">
-            <h2>Trip Expenses</h2>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Expense Name</th>
-                  <th>Amount</th>
-                  <th>Purchased Date</th>
-                  <th>Purchased By</th>
-                  <th>Delete</th>
+   <Link to={`/view-trip/${tripId}`}>
+    <Button id="back-to-trip-details">
+  Back to Trip Details
+      </Button>
+      </Link>
+      <h2 className="all-tasks-title">Budget: {tripData.title}</h2>
+      <div className="task-tables">
+      <div className="current-tasks">
+        <Table className="all-tasks-table">
+          <thead>
+            <tr>
+              <th>Expense Name</th>
+              <th>Amount</th>
+              <th>Purchased Date</th>
+              <th>Purchased By</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allExpenses.length > 0 ? (
+              allExpenses.map((budget) => (
+                <tr >
+                  <td>{budget.title}</td>
+                  <td>${budget.value}</td>
+                  <td>{budget.purchaseDate}</td>
+                  <td>{budget.purchasedBy}</td>
+                  <td >
+                    {" "}
+                    <Button
+                    value={budget._id}
+                      id="delete-button"
+                      variant="danger"
+                      className="tashbtn"
+                      onClick={assignBudget}
+                    >X
+                      {/* <BsTrashFill /> */}
+                    </Button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {allExpenses.length > 0 ? (
-                  allExpenses.map((budget) => (
-                    <tr >
-                      <td>{budget.title}</td>
-                      <td>${budget.value}</td>
-                      <td>{budget.purchaseDate}</td>
-                      <td>{budget.purchasedBy}</td>
-                      <td >
-                        {" "}
-                        <Button
-                        value={budget._id}
-                          id="delete-button"
-                          variant="danger"
-                          className="tashbtn"
-                          onClick={assignBudget}
-                        >X
-                          {/* <BsTrashFill /> */}
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-            <h4>Trip Total: ${weSpent}</h4>
-          </Col>
-          <Col>
-            <>
-              <h2>Add A New Expense</h2>
-              <BudgetForm />
-            </>
-          </Col>
-        </Row>
-      </Container>
+              ))
+            ) : (
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+            <h4 id="current-sum"> Total: ${weSpent}</h4>
+            </div>
+          <BudgetForm />
+      </div>
     </main>
   );
 };

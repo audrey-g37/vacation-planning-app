@@ -19,7 +19,7 @@ const ViewSingleTrip = () => {
   });
   const tripData = data?.trip || [];
 
-  console.log(tripData);
+  // console.log(tripData);
 
   return (
     <main className="single-trip-whole">
