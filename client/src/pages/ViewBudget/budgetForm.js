@@ -77,7 +77,7 @@ const handleInputChange = (event) => {
             />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Purchased Date</Form.Label>
+          <Form.Label>Purchased Date*</Form.Label>
           <Form.Control
             type="date"
             name="purchaseDate"

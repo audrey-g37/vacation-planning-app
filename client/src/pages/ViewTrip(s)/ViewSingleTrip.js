@@ -26,12 +26,12 @@ const ViewSingleTrip = () => {
       <section className="single-trip">
         <Card className="text-center">
           <h1 className="header">{tripData.title}</h1>
+          <h5 className="details">{tripData.description}</h5>
           <Card.Body>
             <Card.Title>Location: {tripData.location}</Card.Title>
             <Card.Text>
               <li className="details">Trip starts on: {tripData.startDate}</li>
               <li className="details">Trip ends on: {tripData.endDate}</li>
-              <li className="details">{tripData.details}</li>
             </Card.Text>
             {tripData.tasks ? (
                 <Link className="link" to={`/${tripData._id}/view-tasks`}>

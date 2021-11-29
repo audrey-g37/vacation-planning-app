@@ -12,7 +12,6 @@
 }
 #task-info {
   background-color: var(--white);
-  opacity: .9;
   margin: 15px auto;
   border: solid var(--black);
   border-radius: 10px;
@@ -22,8 +21,7 @@
 .all-tasks-title {
   background-color: var(--white);
   text-align: center;
-  margin: 0 auto;
-  opacity: .9;
+  margin: 0 auto 15px;
   width: fit-content;
   padding: 10px;
   border-radius: 10px;
@@ -33,7 +31,8 @@
   background-color: none;
   padding: 0;
   border-radius: none;
-  border:none;
+  border: none;
+  opacity: none;
 }
 .trip-details-list {
   list-style: none;
