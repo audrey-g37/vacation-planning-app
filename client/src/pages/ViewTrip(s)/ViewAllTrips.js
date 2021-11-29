@@ -55,9 +55,9 @@ const userId = Auth.getUserId()
   // console.log(sortedTrips)
 
   return (
-    <body fluid className="all-trips">
-      <Row>
-        <h1>All Stored Trips</h1>
+    <body id="all-trips-whole">
+    <h1>All Stored Trips</h1>
+      <div className="all-trips">
         <ul className="list-of-trips">
           {allTrips.length > 0 ? (
             allTrips.map((trip) => (
@@ -76,7 +76,7 @@ const userId = Auth.getUserId()
             <h4> No trips created yet! </h4>
           )}
         </ul>
-      </Row>
+      </div>
     </body>
   );
 };

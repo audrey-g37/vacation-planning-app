@@ -16,7 +16,7 @@ const ViewTask = () => {
     variables: { tripId: tripId, userId: userId },
   });
   const tripData = data1?.trip || [];
-  console.log(tripData);
+  // console.log(tripData);
 
   const { loading, data } = useQuery(QUERY_TASKS, {variables: {tripId: tripId }});
   const allTasks = data?.tasks || [];
@@ -49,43 +49,38 @@ const ViewTask = () => {
   }
 
   return (
-    <body className="full">
     <main className="task">
-    <div>
-      
-      <Link className="link" to={`/view-trip/${tripId}`}>
-        <Button variant="dark" className="back-btn">
+      <Link to={`/view-trip/${tripId}`}>
+        <Button id="back-to-trip-details" className="back-btn">
           Back to Trip Details
         </Button>
       </Link>
-      </div>
-      <div className="margin-auto">
-        <h1 className="all-tasks-title">Tasks: {tripData.title}</h1>
-      </div>
-      <Table className="all-tasks-table" responsive>
+      <h2 className="all-tasks-title">Tasks: {tripData.title}</h2>
+      <div className="task-tables">
+      <div className="current-tasks">
+      <Table className="all-tasks-table" >
         <thead>
           <tr>
             <th>Title</th>
-            <th>Details</th>
             <th>Due Date</th>
             <th>Status</th>
             <th>Assignee</th>
-            <th>Delete Task</th>
+            <th>Details</th>
+            <th></th>
           </tr>
         </thead>
-
         <tbody>
           {allTasks.length > 0 ? (
             allTasks.map((task) => (
               <tr>
                 <td>{task.title}</td>
-                <td>{task.details}</td>
                 <td>{task.dueDate}</td>
                 <td>{
                   task.status===true? "Completed" : "Incomplete"
                 }</td>
                 <td>{task.assignee}</td>
-                <td className="task-buttons-mutations">
+                <td>{task.details}</td>
+                <td className="task-mutations">
                 {" "}
                   <button
                     className="task-btn btn btn-sm btn-warning ml-auto" value={task._id} onClick={viewEditTask}>
@@ -99,8 +94,6 @@ const ViewTask = () => {
                   >
                     X
                   </button>
-
-               
                 </td>
               </tr>
             ))
@@ -115,9 +108,10 @@ const ViewTask = () => {
           )}
         </tbody>
       </Table>
-    </main>
+      </div>
       <AddTask />
-      </body>
+      </div>
+    </main>
   );
 };
 

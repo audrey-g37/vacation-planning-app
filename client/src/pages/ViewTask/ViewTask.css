@@ -1,50 +1,58 @@
-.full{
-  display:flex;
+.task{
   background-color: transparent;
+  margin: 15px;
+}
+#back-to-trip-details {
+  background-color: var(--white);
+  color: var(--black);
+  border: solid 1px var(--black);
+}
+#back-to-trip-details:hover {
+  background-color: var(--greyDark);
 }
 
-.all-tasks-table{
-  margin-left:10px;
-  border-style:solid;
-  border-radius: 10px;
-  background-color: var(--white);
-  opacity: .9;
-}
 .all-tasks-title {
   background-color: var(--white);
   text-align: center;
+  margin: 0 auto 40px;
   opacity: .9;
-  padding: 20px;
+  width: fit-content;
+  padding: 10px;
   border-radius: 10px;
-  border-style: solid;
-  width: fit-content;  
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  border: solid var(--black);
 }
-
-.page h1 {
-  color: aliceblue;
+.task-tables {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
-
-.add-task{
+.current-tasks {
+  border: solid 2px var(--black);
+  border-radius: 10px;
   background-color: var(--white);
-  opacity: 0.9;
-  border-radius: 10px;
-  border-style:solid;
-  margin: 50px;
-  margin-top: 140px;
-  padding: 30px;
-  height: 80%;
-  
+  opacity: .9;
 }
-.task-buttons-mutations {
+.all-tasks-table{
+  text-align: center;
+}
+
+.task-mutations {
  display: flex; 
  align-items: flex-end;
  border-bottom: none;
  margin-top: 8px;
 }
-
+.add-task{
+  background-color: var(--white);
+  opacity: 0.9;
+  border-radius: 10px;
+  border: solid 2px var(--black);
+  padding: 30px;
+  max-width: 40%;
+}
+.add-task #checkbox {
+margin: 20px 0;
+}
 .task-btn {
   margin: 10px;
 }

@@ -1,5 +1,4 @@
 import React, { lazy, useState } from "react";
-import "./ViewTask.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { Container, Row, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router";
@@ -13,7 +12,7 @@ const AddTask = () => {
   const [details, setDetails] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [assignee, setAssignee] = useState("");
-  const checkboxEl = document.getElementById("checkbox");
+  const checkboxEl = document.getElementById("assign-checkbox");
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -58,22 +57,13 @@ const AddTask = () => {
   return (
       <div className="add-task">
         <Form>
-          <h2>Add A New Task</h2>
+          <h3>Add A New Task</h3>
           <Form.Group className="mb-3">
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
               name="title"
               value={title}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Details</Form.Label>
-            <Form.Control
-              type="text"
-              name="details"
-              value={details}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -85,9 +75,9 @@ const AddTask = () => {
               value={dueDate}
               onChange={handleInputChange}
             />
-            <Form.Group className="mb-3">
+            <Form.Group id="checkbox"className="mb-3">
               <Form.Check
-                id="checkbox"
+              id="assign-checkbox"
                 type="checkbox"
                 name="status"
                 label="Check if already completed!"
@@ -101,6 +91,15 @@ const AddTask = () => {
               type="text"
               name="assignee"
               value={assignee}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Details</Form.Label>
+            <Form.Control
+              type="text"
+              name="details"
+              value={details}
               onChange={handleInputChange}
             />
           </Form.Group>

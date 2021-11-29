@@ -36,7 +36,7 @@ const ViewSingleTrip = () => {
             {tripData.tasks ? (
                 <Link className="link" to={`/${tripData._id}/view-tasks`}>
                   <Button variant="dark" className="single-trip-btn button">
-                  Trip Tasks
+                  Task Items
               </Button>
                </Link>
             ) : (
