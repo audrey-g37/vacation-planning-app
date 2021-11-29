@@ -16,7 +16,7 @@ const userId = Auth.getUserId()
   const { data: data2 } = useQuery(QUERY_TRIPS, { variables: {userId: userId }
   });
   const allTrips = data2?.trips || [];
-  console.log(allTrips);
+  // console.log(allTrips);
   // const tripDates = allTrips.map((trip) => {
   //   let date = trip.startDate;
   //   date = Date.parse((moment(date, "MMM, Do, YYYY").format("MM-DD-YYYY"))
@@ -61,9 +61,9 @@ const userId = Auth.getUserId()
         <ul className="list-of-trips">
           {allTrips.length > 0 ? (
             allTrips.map((trip) => (
-              <li className="trip-title">
+              <li className="trip">
                 {trip.title}
-                <div>
+                <div className="view-details">
                 <Link  className="link" to={`view-trip/${trip._id}`}>
                 <Button variant="dark" size="small" className="button">
                   Details

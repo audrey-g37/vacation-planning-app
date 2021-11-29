@@ -9,9 +9,17 @@
 }
 
 .list-of-trips {
-    justify-content: space-around;
     font-size: 25px;
     list-style-type: none;
+}
+.trip {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: solid 1px var(--black);
+}
+.view-details {
+    margin-left: 40px;
 }
 
 .button{
