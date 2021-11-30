@@ -9,6 +9,24 @@
   <a href="https://github.com/Korbin-Sargent/vacation-planning-app">
     <img src="client/public/images/logo.png" alt="Logo">
   </a>
+<<<<<<< HEAD
+=======
+  <h3 align="center">GRIP</h3>
+  <p align="center">
+    Get A GRIP ON YOUR NEXT GROUP TRIP
+    <br />
+    <a href="#about-the-project"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://grip-your-trip.herokuapp.com/">View Demo</a>
+    ·
+    <a href="hhttps://github.com/Korbin-Sargent/vacation-planning-app/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Korbin-Sargent/vacation-planning-app/issues">Request Feature</a>
+  </p>
+</p>
+
+>>>>>>> main
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
