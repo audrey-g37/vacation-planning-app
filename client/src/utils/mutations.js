@@ -77,26 +77,14 @@ export const ADD_TASK = gql`
 `;
 
 export const ADD_BUDGET = gql`
-  mutation addBudget(
-    $tripId: ID!
-    $title: String!
-    $value: Int!
-    $purchaseDate: String!
-    $purchasedBy: String!
-  ) {
-    addBudget(
-      tripId: $tripId
-      title: $title
-      value: $value
-      purcahseDate: $purchaseDate
-      purchasedBy: $purchasedBy
-    ) {
-      title
-      value
-      purchaseDate
-      purchasedBy
-    }
+mutation addBudget ($title:String!, $value:Int!, $purchaseDate:String!, $purchasedBy: String!, $tripId: ID!) {
+  addBudget(title: $title, value: $value, purchaseDate: $purchaseDate, purchasedBy: $purchasedBy, tripId: $tripId) {
+    title
+    value
+    purchaseDate
+    purchasedBy
   }
+}
 `;
 
 export const UPDATE_TRIP = gql`

@@ -7,13 +7,6 @@ import Auth from "../../utils/auth";
 import { QUERY_USER } from "../../utils/queries";
 
 const NewTrip = () => {
-  const currentUser = Auth.getUsername();
-
-  const { loading, data } = useQuery(QUERY_USER, {
-    variables: { username: currentUser },
-  });
-  const userData = data?.user || [];
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -41,27 +34,29 @@ const NewTrip = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    const userId = Auth.getUserId();
     addTrip({
       variables: {
-        userId: userData._id,
         title: title,
         description: description,
         location: location,
         startDate: startDate,
         endDate: endDate,
+        userId: userId,
       },
     }).then((data) => {
-      console.log(data);
+      // console.log(data);
       setTitle("");
       setLocation("");
       setStartDate("");
       setEndDate("");
       setDescription("");
     });
+    window.location.reload();
   };
   return (
     <Form className="add-trip-form">
-      <h2>New Trip Details</h2>
+      <h2>Add a New Trip:</h2>
       <Form.Group className="mb-3" controlId="name">
         <Form.Label>Title*</Form.Label>
         <Form.Control
@@ -114,7 +109,7 @@ const NewTrip = () => {
           onClick={handleFormSubmit}
           type="submit"
         >
-          Add New Trip
+          Save
         </Button>
       )}
     </Form>

@@ -49,15 +49,14 @@ const Signup = () => {
        await addUser({
         variables: { 
           username: username,
-          password:password
+          password: password
         },
       }).then((data)=>{
         setUsername("")
         setPassword("")
-        console.log(data)
+        // console.log(data)
       });
       
-      Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
@@ -70,8 +69,9 @@ const Signup = () => {
           <div className="signup-card text-center card">
             {data ? (
               <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
+                Success! You may now {' '}
+                <Link to="/">login</Link>{' '}
+                 to get started!
               </p>
             ) : (
               <form className="signup-form">

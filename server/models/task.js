@@ -22,10 +22,11 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
-  //   member: {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "Member",
-  //   },
+    tripId: {
+      type: Schema.Types.ObjectId,
+      ref: "Trip",
+      required: true,
+    },
 });
 
 const Task = model("Task", taskSchema);

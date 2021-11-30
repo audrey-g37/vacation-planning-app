@@ -69,7 +69,7 @@ const EditTask = () => {
         setAssignee(taskData.assignee)
     }
 
-    console.log({title, details, dueDate, status, assignee})
+    // console.log({title, details, dueDate, status, assignee})
   };
 
   const handleFormSubmit = (event) => {
@@ -85,7 +85,7 @@ const EditTask = () => {
         assignee: assignee
       },
     }).then((data) => {
-      console.log(data);
+      // console.log(data);
       setTitle("");
       setDetails("");
       setDueDate("");

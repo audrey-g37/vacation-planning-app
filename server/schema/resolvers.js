@@ -16,15 +16,15 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    trip: async (parent, { tripId }, context) => {
+    trip: async (parent, { userId, tripId }, context) => {
       if (context.user) {
-        return await Trip.findOne({ _id: tripId }).populate("tasks", "budget");
+        return await Trip.findOne({ _id: tripId, userId: userId, }).populate("tasks", "budget");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    trips: async (parent, args, context) => {
+    trips: async (parent, {userId}, context) => {
       if (context.user) {
-        return await Trip.find({}).populate("tasks", "budget");
+        return await Trip.find({userId: userId}).populate("tasks", "budget");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -41,9 +41,9 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    tasks: async (parent, args, context) => {
+    tasks: async (parent, {tripId}, context) => {
       if (context.user) {
-        return await Task.find({});
+        return await Task.find({tripId: tripId});
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -53,9 +53,9 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    budgets: async (parent, args, context) => {
+    budgets: async (parent, {tripId}, context) => {
       if (context.user) {
-        return await Budget.find({});
+        return await Budget.find({tripId: tripId});
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -69,7 +69,7 @@ const resolvers = {
 
     login: async (parent, { username, password }) => {
       const loggedInUser = await User.findOne({ username: username });
-      console.log(loggedInUser);
+      // console.log(loggedInUser);
       if (!User) {
         throw new AuthenticationError("No profile with this username found!");
       }
@@ -86,7 +86,7 @@ const resolvers = {
       { userId, title, description, location, startDate, endDate },
       context
     ) => {
-      const tripData = { title, description, location, startDate, endDate };
+      const tripData = { title, description, location, startDate, endDate, userId };
 
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       const newTrip = await Trip.create(tripData);
@@ -257,7 +257,7 @@ const resolvers = {
           // runValidators: true,
         }
       );
-      console.log(taskToUpdate);
+      // console.log(taskToUpdate);
       return taskToUpdate;
       // }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
@@ -276,7 +276,7 @@ const resolvers = {
         }
       );
 
-      console.log(toUpdateWithDelete);
+      // console.log(toUpdateWithDelete);
 
       const removeTask = await Task.findOneAndDelete(
         { _id: taskId },
@@ -324,7 +324,7 @@ const resolvers = {
           // runValidators: true,
         }
       );
-      console.log(budgetToUpdate);
+      // console.log(budgetToUpdate);
       return budgetToUpdate;
       // }
       // // If user attempts to execute this mutation and isn’t logged in, throw an error
@@ -347,7 +347,7 @@ const resolvers = {
         }
       );
 
-      console.log(toUpdateWithDelete);
+      // console.log(toUpdateWithDelete);
 
       const removeBudget = await Budget.findOneAndDelete(
         { _id: budgetId },

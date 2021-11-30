@@ -1,17 +1,38 @@
+#all-trips-whole {
+    background-color: transparent;
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#all-trips-whole h1 {
+    background-color: var(--white);
+    padding: 15px;
+    border: solid var(--black);
+    border-radius: 10px;
+    margin: 0 0 40px;
+}
 .all-trips {
     background-color: var(--white);
     opacity: 0.9;
-    padding: 50px;
-    margin:200px;
-    text-align: center;
     border-radius: 10px;
-    border-style:solid;
+    border-style: solid;
+    width: fit-content;
 }
 
 .list-of-trips {
-    justify-content: space-around;
     font-size: 25px;
-    list-style-type: none;
+    list-style-type: none
+}
+.trip {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: solid 1px var(--black);
+}
+.view-details {
+    margin-left: 40px;
 }
 
 .button{

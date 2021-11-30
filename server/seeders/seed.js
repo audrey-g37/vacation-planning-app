@@ -10,7 +10,6 @@ db.once("open", async () => {
   try {
     await User.deleteMany({});
     await User.create(userSeeds);
-
     await Trip.deleteMany({});
     await Task.deleteMany({});
     await Budget.deleteMany({});
@@ -67,7 +66,7 @@ db.once("open", async () => {
       .populate("budget")
       .lean();
 
-    console.log(trip1);
+    // console.log(trip1);
     console.log("Seeding Complete!");
     process.exit(0);
   } catch (err) {

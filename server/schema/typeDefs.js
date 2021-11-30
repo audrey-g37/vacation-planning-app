@@ -17,6 +17,7 @@ const typeDefs = gql`
     description: String
     tasks: [Task]
     budget: [Budget]
+    userId: ID!
   }
 
   type Task {
@@ -26,6 +27,7 @@ const typeDefs = gql`
     dueDate: String!
     status: Boolean!
     assignee: String!
+    tripId: ID!
   }
 
   type Budget {
@@ -34,6 +36,7 @@ const typeDefs = gql`
     value: Int!
     purchaseDate: String!
     purchasedBy: String!
+    tripId: ID!
   }
 
   type Auth {
@@ -44,12 +47,12 @@ const typeDefs = gql`
   type Query {
     user(username: String!): User
     users: [User]!
-    trip(tripId: ID!): Trip
-    trips: [Trip]!
-    tasks: [Task]!
+    trip(tripId: ID!, userId: ID!): Trip
+    trips(userId: ID!): [Trip]!
     task(taskId: ID!): Task
-    budgets: [Budget]!
+    tasks(tripId: ID!): [Task]!
     budget(budgetId: ID!): Budget
+    budgets(tripId: ID!): [Budget]!
   }
 
   type Mutation {

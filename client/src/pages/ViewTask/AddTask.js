@@ -1,20 +1,18 @@
 import React, { lazy, useState } from "react";
-import "./ViewTask.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { Container, Row, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router";
 import { REMOVE_TASK, ADD_TASK } from "../../utils/mutations";
+import Auth from "../../utils/auth"
 
 
 const AddTask = () => {
-  const tripIdVar = useParams();
-  const idToUse = tripIdVar.id;
-
+  const tripId = Auth.getTripId();
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [assignee, setAssignee] = useState("");
-  const [status, setStatus] = useState(false);
+  const checkboxEl = document.getElementById("assign-checkbox");
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -28,9 +26,7 @@ const AddTask = () => {
       setDueDate(value);
     } else if (name === "assignee") {
       setAssignee(value);
-    } else {
-      setStatus(value);
-    }
+    } 
   };
 
   const [addTask, { error }] = useMutation(ADD_TASK);
@@ -41,42 +37,33 @@ const AddTask = () => {
     event.preventDefault();
     addTask({
       variables: {
-        tripId: idToUse,
+        tripId: tripId,
         title: title,
         details: details,
         dueDate: dueDate,
-        status: status,
+        status: checkboxEl.checked,
         assignee: assignee,
       },
     }).then((data) => {
-      console.log(data);
+      // console.log(data);
       setTitle("");
       setDetails("");
       setDueDate("");
       setAssignee("");
     });
+    window.location.reload()
   };
 
   return (
-    < >
       <div className="add-task">
         <Form>
-          <h2>Add A New Task</h2>
+          <h3>Add A New Task</h3>
           <Form.Group className="mb-3">
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
               name="title"
               value={title}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Details</Form.Label>
-            <Form.Control
-              type="text"
-              name="details"
-              value={details}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -88,11 +75,13 @@ const AddTask = () => {
               value={dueDate}
               onChange={handleInputChange}
             />
-            <Form.Group className="mb-3">
+            <Form.Group id="checkbox"className="mb-3">
               <Form.Check
+              id="assign-checkbox"
                 type="checkbox"
                 name="status"
                 label="Check if already completed!"
+                onChange={handleInputChange}
               ></Form.Check>
             </Form.Group>
           </Form.Group>
@@ -105,6 +94,15 @@ const AddTask = () => {
               onChange={handleInputChange}
             />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Details</Form.Label>
+            <Form.Control
+              type="text"
+              name="details"
+              value={details}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
           <Button
             className="add-trip-button"
             variant="dark"
@@ -114,7 +112,6 @@ const AddTask = () => {
           </Button>
         </Form>
       </div>
-    </>
   );
 };
 
