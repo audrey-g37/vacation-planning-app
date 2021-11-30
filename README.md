@@ -5,9 +5,7 @@
   <a href="https://github.com/Korbin-Sargent/vacation-planning-app">
     <img src="client/public/images/logo.png" alt="Logo">
   </a>
-
   <h3 align="center">GRIP</h3>
-
   <p align="center">
     Get A GRIP ON YOUR NEXT GROUP TRIP
     <br />

@@ -12,6 +12,7 @@ const AddTask = () => {
   const [details, setDetails] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [assignee, setAssignee] = useState("");
+  const [status, setStatus] = useState(false);
   const checkboxEl = document.getElementById("assign-checkbox");
 
   const handleInputChange = (event) => {
@@ -26,7 +27,9 @@ const AddTask = () => {
       setDueDate(value);
     } else if (name === "assignee") {
       setAssignee(value);
-    } 
+    } else {
+      setStatus(checkboxEl.checked)
+    }
   };
 
   const [addTask, { error }] = useMutation(ADD_TASK);
@@ -41,7 +44,7 @@ const AddTask = () => {
         title: title,
         details: details,
         dueDate: dueDate,
-        status: checkboxEl.checked,
+        status: status,
         assignee: assignee,
       },
     }).then((data) => {

@@ -1,5 +1,12 @@
-.add-task {
-    width: 80%
+.current-task {
+    background-color: none;
+    width: 80%;
+    padding: 10px;
+    margin: 30px auto;
+}
+.task-card-header {
+    font-size: 35px;
+    font-weight: 600;
 }
 .current-task-title {
     font-size: 35px;
@@ -9,10 +16,15 @@
 .completion {
     text-decoration: underline solid;
 }
+.edit-task-form {
+    background-color: var(--white);
+    opacity: .9;
+    width: 80%;
+    margin: 15px auto;
+}
 .edit-task-text {
-    font-size: 25px;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    margin: 15px;
 }
 .task-list-items {
     list-style: none;
@@ -24,7 +36,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.task-mutation-input {
-    width: max-content;
+    margin: 5px auto;
 }
