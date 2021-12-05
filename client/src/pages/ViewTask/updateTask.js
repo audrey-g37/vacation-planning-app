@@ -16,60 +16,40 @@ const EditTask = () => {
 
   const TripIdToUse = AuthService.getTripId();
 
-  const [title, setTitle] = useState("");
-  const [details, setDetails] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [assignee, setAssignee] = useState("");
-  const [status, setStatus] = useState("");
+//   console.log(taskData);
 
-  const { loading, data } = useQuery(QUERY_TASK, {
-      variables: {taskId: taskIdToUse}
-  });
+const { loading, data } = useQuery(QUERY_TASK, {
+  variables: {taskId: taskIdToUse}
+});
+
+const taskData = data?.task || [];
+
+  const [title, setTitle] = useState(taskData.title);
+  const [details, setDetails] = useState(taskData.details);
+  const [dueDate, setDueDate] = useState(taskData.dueDate);
+  const [assignee, setAssignee] = useState(taskData.assignee);
+  const [status, setStatus] = useState(taskData.status);
+  const checkboxEl = document.getElementById("assign-checkbox");
+
+
 
   const [updateTask] = useMutation(UPDATE_TASK);
-
-  const taskData = data?.task || [];
-//   console.log(taskData);
 
 
   const handleInputChange = (event) => {
     event.preventDefault();
-    const { name, value, checked } = event.target;
-
-    if (name === "title" ) {
-    setTitle(value);
-    } 
-    else {
-        setTitle (taskData.title)
+    const { name, value } = event.target;
+    if (name === "title") {
+      setTitle(value);
+    } else if (name === "details") {
+      setDetails(value);
+    } else if (name === "dueDate") {
+      setDueDate(value);
+    } else if (name === "assignee") {
+      setAssignee(value);
+    } else {
+      setStatus(checkboxEl.checked)
     }
-    if (name === "details") {
-        setDetails(value)
-    } 
-    else {
-        setDetails(taskData.details)
-    }
-    if (name==="dueDate") {
-        setDueDate(value)
-    } 
-    else {
-        setDueDate(
-            (moment(taskData.dueDate, "MMM, Do, YYYY").format("MM-DD-YYYY"))
-            )
-    }
-    if (name === "status") {
-        setStatus(value)
-    } 
-    else {
-        setStatus(taskData.status)
-    }
-    if (name==="assignee") {
-        setAssignee(value)
-    } 
-    else {
-        setAssignee(taskData.assignee)
-    }
-
-    // console.log({title, details, dueDate, status, assignee})
   };
 
   const handleFormSubmit = (event) => {
@@ -95,11 +75,11 @@ const EditTask = () => {
   };
 
   return (
-    <Container className="add-task" fluid="md">
-        <Row>
-            <Card className = "text-center">
-            <Card.Header className="current-task-title">{taskData.title}</Card.Header>
+    <section>
+            <Card className = "current-task text-center">
+            <Card.Header className="task-card-header">Current Task Details</Card.Header>
             <Card.Body>
+                <Card.Title className="current-task-title">Title: {taskData.title}</Card.Title>
                 <Card.Title className="task-list-items completion">Status: {
                   taskData.status===true? "Completed" : "Incomplete"
                 }</Card.Title>
@@ -112,8 +92,7 @@ const EditTask = () => {
                 </Card.Text>
             </Card.Body>
             </Card>
-        </Row>
-    <Row>
+      <div className = "edit-task-form">
       <Form className = "task-mutation">
         <h2 className="edit-task-text">Edit Task Below:</h2>
         <Form.Group className="mb-3">
@@ -123,29 +102,27 @@ const EditTask = () => {
             type="text"
             name="title"
             value={title}
-            placeholder={taskData.title}
             onChange={handleInputChange}
           />
         </Form.Group>
-        {/* <Form.Group className="mb-3">
-            <Form.Check
-              type="checkbox"
-              name="status"
-              value={status}
-              label="Check to mark this task is complete!"
-              onChange={handleInputChange}
-            ></Form.Check>
-        </Form.Group> */}
         <Form.Group className="mb-3">
           <Form.Label>Due Date:</Form.Label>
           <Form.Control
            className = "task-mutation-input"
             type="date"
             name="dueDate"
-            placeholder = {taskData.dueDate}
             value={dueDate}
             onChange={handleInputChange}
           />
+        </Form.Group>
+        <Form.Group className="mb-3">
+            <Form.Check
+            id="assign-checkbox"
+              type="checkbox"
+              name="status"
+              label="Check to mark this task is complete!"
+              onChange={handleInputChange}
+            ></Form.Check>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Assignee:</Form.Label>
@@ -153,7 +130,6 @@ const EditTask = () => {
            className = "task-mutation-input"
             type="text"
             name="assignee"
-            placeholder={taskData.assignee}
             value={assignee}
             onChange={handleInputChange}
           />
@@ -164,7 +140,6 @@ const EditTask = () => {
            className = "task-mutation-input"
             type="text"
             name="details"
-            placeholder = {taskData.details}
             value={details}
             onChange={handleInputChange}
           />
@@ -177,8 +152,8 @@ const EditTask = () => {
           Save Edits
         </Button>
       </Form>
-    </Row>
-  </Container>
+      </div>
+  </section>
   );
 };
 

@@ -1,14 +1,14 @@
 # GRIP 
-<h4 align="center">Get A GRIP On Your Next Group Trip
-<br />
- <a href="(https://grip-your-trip.herokuapp.com/)"> Link to GRIP Site </a>
-</h4>
+ Get a GRIP on your next group trip!
+
+[Link to GRIP](https://grip-your-trip.herokuapp.com/)
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/Korbin-Sargent/vacation-planning-app">
     <img src="client/public/images/logo.png" alt="Logo">
   </a>
+  </p>
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -37,8 +37,9 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-![Homepage](client/public/images/homepg.png)
+<div align="center" >
+<img src="client/public/images/grip-screenshot.png" alt="viewing current tasks for the Lobster Fest trip" width="500px" />
+</div>
 
 Get a GRIP on your next group trip!
 
@@ -129,4 +130,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - [Adrian Auchterlonie](https://github.com/adrianauch) 
 - [Eddy Calderon](https://github.com/Ecalderon10) 
 
-Project Link: [GRIP](https://grip-your-trip.herokuapp.com/)
+
+[Link to GRIP](https://grip-your-trip.herokuapp.com/)
