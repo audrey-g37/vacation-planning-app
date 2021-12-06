@@ -28,15 +28,11 @@ const taskData = data?.task || [];
   const [dueDate, setDueDate] = useState(taskData.dueDate);
   const [assignee, setAssignee] = useState(taskData.assignee);
   const [status, setStatus] = useState(taskData.status);
-  const checkboxEl = document.getElementById("assign-checkbox");
-
-
 
   const [updateTask] = useMutation(UPDATE_TASK);
 
 
   const handleInputChange = (event) => {
-    event.preventDefault();
     const { name, value } = event.target;
     if (name === "title") {
       setTitle(value);
@@ -47,12 +43,15 @@ const taskData = data?.task || [];
     } else if (name === "assignee") {
       setAssignee(value);
     } else {
-      setStatus(checkboxEl.checked)
+      if (taskData.status ===true) {
+        setStatus(false)
+      } else {
+        setStatus(true)
+      }
     }
   };
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
     updateTask({
       variables: {
         tripId: TripIdToUse,
@@ -64,13 +63,13 @@ const taskData = data?.task || [];
         assignee: assignee
       },
     }).then((data) => {
-      // console.log(data);
+      console.log(data);
       setTitle("");
       setDetails("");
       setDueDate("");
       setAssignee("");
-      window.location.reload();
     });
+    window.location.replace(`/${TripIdToUse}/view-tasks`);
   };
 
   return (
@@ -106,7 +105,7 @@ const taskData = data?.task || [];
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Due Date:</Form.Label>
-          <Form.Control
+          <input
            className = "task-mutation-input"
             type="date"
             name="dueDate"
@@ -115,13 +114,21 @@ const taskData = data?.task || [];
           />
         </Form.Group>
         <Form.Group className="mb-3">
-            <Form.Check
+          {taskData.status==true? <Form.Check
             id="assign-checkbox"
               type="checkbox"
               name="status"
-              label="Check to mark this task is complete!"
+              label="Task is incomplete!"
               onChange={handleInputChange}
             ></Form.Check>
+          :
+          <Form.Check
+            id="assign-checkbox"
+              type="checkbox"
+              name="status"
+              label="Task has been completed!"
+              onChange={handleInputChange}
+            ></Form.Check> }
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Assignee:</Form.Label>
