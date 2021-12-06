@@ -33,7 +33,6 @@ const spending = allExpenses.map((expense)=> {
 });
 // console.log(spending)
 
-
 const sumBudget = (array) => {
   let total =0;
    for (let i=0; i<array.length; i++) {
@@ -46,6 +45,13 @@ const sumBudget = (array) => {
 
   //  console.log(weSpent)
 
+  const viewEditBudget = (event) => {
+    event.preventDefault();
+    const {value} = event.target;
+
+    window.location.replace(`/${tripId}/view-budgets/${value}`)
+
+  }
 
   const deleteBudget = async (event) => {
     event.preventDefault();
@@ -94,9 +100,14 @@ const sumBudget = (array) => {
                     {" "}
                     <Button
                     value={budget._id}
-                      id="delete-button"
-                      variant="danger"
-                      className="tashbtn"
+                      className="task-btn btn btn-sm btn-warning ml-auto"
+                      onClick={viewEditBudget}
+                    >Edit
+                    </Button>
+                    {" "}
+                    <Button
+                    value={budget._id}
+                    className="task-btn btn btn-sm btn-danger ml-auto"
                       onClick={deleteBudget}
                     >X
                     </Button>

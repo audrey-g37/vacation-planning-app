@@ -26,7 +26,6 @@ const ViewTask = () => {
   // console.log(allTasks);
 
   const [removeTask, { error }] = useMutation(REMOVE_TASK);
-  const [updateTask] = useMutation(UPDATE_TASK);
 
   const viewEditTask = (event) => {
     event.preventDefault();

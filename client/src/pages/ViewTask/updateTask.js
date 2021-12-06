@@ -64,12 +64,8 @@ const taskData = data?.task || [];
       },
     }).then((data) => {
       console.log(data);
-      setTitle("");
-      setDetails("");
-      setDueDate("");
-      setAssignee("");
+      // window.location.replace(`/${TripIdToUse}/view-tasks`);
     });
-    window.location.replace(`/${TripIdToUse}/view-tasks`);
   };
 
   return (
@@ -105,7 +101,7 @@ const taskData = data?.task || [];
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Due Date:</Form.Label>
-          <input
+          <Form.Control
            className = "task-mutation-input"
             type="date"
             name="dueDate"
@@ -113,7 +109,7 @@ const taskData = data?.task || [];
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3 completion">
           {taskData.status==true? <Form.Check
             id="assign-checkbox"
               type="checkbox"
@@ -129,7 +125,7 @@ const taskData = data?.task || [];
               label="Task has been completed!"
               onChange={handleInputChange}
             ></Form.Check> }
-        </Form.Group>
+            </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Assignee:</Form.Label>
           <Form.Control

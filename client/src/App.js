@@ -18,6 +18,7 @@ import ViewTask from "./pages/ViewTask/ViewTask";
 import ViewBudget from "./pages/ViewBudget/ViewBudget";
 import Signup from "./pages/signup/signup";
 import EditTask from "./pages/ViewTask/updateTask";
+import EditBudget from "./pages/ViewBudget/updateBudget";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -72,6 +73,9 @@ function App() {
           </Route>
           <Route exact path="/:id/view-budget">
             <ViewBudget />
+          </Route>
+          <Route exact path="/:id/view-budgets/:id">
+            <EditBudget />
           </Route>
         </Switch>
         </div>
