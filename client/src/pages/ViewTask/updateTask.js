@@ -127,15 +127,6 @@ const taskData = data?.task || [];
             ></Form.Check> }
             </Form.Group>
         <Form.Group className="mb-3">
-            <Form.Check
-            id="assign-checkbox"
-              type="checkbox"
-              name="status"
-              label="Check to mark this task is complete!"
-              onChange={handleInputChange}
-            ></Form.Check>
-        </Form.Group>
-        <Form.Group className="mb-3">
           <Form.Label>Assignee:</Form.Label>
           <Form.Control
            className = "task-mutation-input"

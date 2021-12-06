@@ -16,7 +16,6 @@ const AddTask = () => {
   const checkboxEl = document.getElementById("assign-checkbox");
 
   const handleInputChange = (event) => {
-    event.preventDefault();
     const { name, value } = event.target;
 
     if (name === "title") {
