@@ -1,21 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./ViewTask.css";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_TRIP, QUERY_TASKS, QUERY_TASK } from "../../utils/queries";
-import { Table, Form, Button, DropdownButton, Dropdown } from "react-bootstrap";
-import { REMOVE_TASK, ADD_TASK, UPDATE_TASK } from "../../utils/mutations";
-import { useParams } from "react-router-dom";
-import AddTask from "./AddTask";
 import Auth from "../../utils/auth";
+import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from "../../utils/queries";
+import { REMOVE_TASK, UPDATE_TASK } from "../../utils/mutations";
+import AddTask from "./AddTask";
+import { Table, Button } from "react-bootstrap";
+import "./ViewTask.css";
 
 const ViewTask = () => {
   const tripId = Auth.getTripId();
-  const userId = Auth.getUserId();
-  const { data: data1 } = useQuery(QUERY_TRIP, {
-    variables: { tripId: tripId, userId: userId },
+  const currentUser = Auth.getUsername();
+  const { data: data1 } = useQuery(QUERY_USER, {
+    variables: { username : currentUser },
   });
-  const tripData = data1?.trip || [];
+  const userData = data1?.user || [];
+  const { data: data2 } = useQuery(QUERY_TRIP, {
+    variables: { tripId: tripId, userId: userData._id },
+  });
+  const tripData = data2?.trip || [];
   // console.log(tripData);
 
   const { loading, data } = useQuery(QUERY_TASKS, {variables: {tripId: tripId }});
@@ -23,7 +26,6 @@ const ViewTask = () => {
   // console.log(allTasks);
 
   const [removeTask, { error }] = useMutation(REMOVE_TASK);
-  const [updateTask] = useMutation(UPDATE_TASK);
 
   const viewEditTask = (event) => {
     event.preventDefault();
@@ -43,7 +45,7 @@ const ViewTask = () => {
         tripId: tripId,
         taskId: value
       }
-    }).then((data) => {
+    }).then(() => {
       window.location.reload()
     })
   }

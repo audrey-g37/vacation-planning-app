@@ -1,25 +1,14 @@
 # GRIP 
+ Get a GRIP on your next group trip!
+
+[Link to GRIP](https://grip-your-trip.herokuapp.com/)
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/Korbin-Sargent/vacation-planning-app">
     <img src="client/public/images/logo.png" alt="Logo">
   </a>
-  <h3 align="center">GRIP</h3>
-  <p align="center">
-    Get A GRIP ON YOUR NEXT GROUP TRIP
-    <br />
-    <a href="#about-the-project"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://grip-your-trip.herokuapp.com/">View Demo</a>
-    ·
-    <a href="hhttps://github.com/Korbin-Sargent/vacation-planning-app/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Korbin-Sargent/vacation-planning-app/issues">Request Feature</a>
   </p>
-</p>
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -48,8 +37,9 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-![Homepage](client/public/images/homepg.png)
+<div align="center" >
+<img src="client/public/images/grip-screenshot.png" alt="viewing current tasks for the Lobster Fest trip" width="500px" />
+</div>
 
 Get a GRIP on your next group trip!
 
@@ -106,13 +96,11 @@ This is an example of how to list things you need to use the software and how to
 
 The application was created for users to be able to organzie and plan upcoming trips. Currently users are asked to create a singlar username and password and use that to login and see thier trip information (a login is required to use the site). The users is able to create a new trip, view upcoming trips and previously created trips. Each trip holds tasks and expesenses to help users track what needs to be done and the money that has been contibuted to the trip. If you have any questions please use the information below to contact us. 
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
 <!-- ROADMAP -->
 
 ## Roadmap
 
-See the [open issues](https://github.com/Korbin-Sargent/vacation-planning-app) for a list of proposed features (and known issues).Please also visit our roadmap for future features [roadmap](https://docs.google.com/presentation/d/1mp4uCn9-fUiOFlpRSjp_9-SETQiNF_lNR7HVkpUlDEU/edit#slide=id.g29f43f0a72_0_24).
+See the [open issues](https://github.com/Korbin-Sargent/vacation-planning-app/issues) for a list of proposed features (and known issues).Please also visit our roadmap for future features [roadmap](https://docs.google.com/presentation/d/1mp4uCn9-fUiOFlpRSjp_9-SETQiNF_lNR7HVkpUlDEU/edit#slide=id.g29f43f0a72_0_10).
 
 <!-- CONTRIBUTING -->
 
@@ -134,12 +122,13 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- CONTACT -->
 
-## Contact
+## Github Profiles
 
-- Audrey Gillies - [@Audrey-g37](https://github.com/audrey-g37) 
-- Gina Im - [@Gim928](https://github.com/gim928) 
-- Korbin Sargent - [@Korbin-Sargent](https://github.com/Korbin-Sargent) 
-- Eddy Calderon - [@Edcalderon](https://github.com/Ecalderon10) 
-- Adrian Auchterlonie - [@AdrianAuch](https://github.com/adrianauch) 
+- [Audrey Gillies](https://github.com/audrey-g37) 
+- [Gina Im](https://github.com/gim928) 
+- [Korbin Sargent](https://github.com/Korbin-Sargent) 
+- [Adrian Auchterlonie](https://github.com/adrianauch) 
+- [Eddy Calderon](https://github.com/Ecalderon10) 
 
-Project Link: [GRIP](https://grip-your-trip.herokuapp.com/)
+## Link to Grip
+[Link to GRIP](https://grip-your-trip.herokuapp.com/)

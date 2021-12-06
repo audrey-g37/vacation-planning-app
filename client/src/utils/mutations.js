@@ -144,27 +144,15 @@ export const UPDATE_TASK = gql`
 `;
 
 export const UPDATE_BUDGET = gql`
-  mutation updateBudget(
-    $tripId: ID!
-    $budgetId: ID!
-    $title: String
-    $value: Int
-    $purchaseDate: String
-    $purchasedBy: String
-  ) {
-    addBudget(
-      tripId: $tripId
-      budgetId: $budgetId
-      title: $title
-      purchaseDate: $purchaseDate
-      purchasedBy: $purchasedBy
-    ) {
-      title
-      value
-      purchaseDate
-      purchasedBy
-    }
+mutation updateBudget($tripId: ID!, $budgetId: ID!, $title: String, $value: Int, $purchaseDate: String, $purchasedBy: String) {
+  updateBudget(tripId: $tripId, budgetId:$budgetId, title: $title, value: $value, purchaseDate: $purchaseDate, purchasedBy: $purchasedBy) {
+    _id
+    title
+  	value
+    purchaseDate
+    purchasedBy
   }
+}
 `;
 
 export const REMOVE_TRIP = gql`

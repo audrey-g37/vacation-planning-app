@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { useParams, Redirect } from "react-router-dom";
+import React from "react";
 import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
-import "./Dashboard.css";
-import { Table, Button, Row, Container} from "react-bootstrap";
 import { QUERY_USER, QUERY_TRIPS } from "../../utils/queries";
 import NewTrip from "../../components/NewTrip/NewTrip";
+import { Table, Button } from "react-bootstrap";
+import "./Dashboard.css";
 
 const Dashboard = () => {
 const currentUser = Auth.getUsername();
@@ -14,7 +13,6 @@ const { data: data1 } = useQuery(QUERY_USER, {
 });
 const userData = data1?.user || [];
 // console.log(userData);
-Auth.storeUserId(userData._id);
 
 const { data: data2 } = useQuery(QUERY_TRIPS, { variables: {userId: userData._id }
 });
@@ -29,9 +27,7 @@ if (storedTripLength > 8) {
   } 
 }else {
     recentEightTrips=allTrips
-  }
-
-
+  };
   return (
     <div className="whole-dash">
       <h2 className="dash-title">Welcome {currentUser}!</h2>

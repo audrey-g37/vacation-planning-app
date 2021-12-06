@@ -26,13 +26,18 @@
     font-size: 30px;
     margin: 15px;
 }
-.edit-task-text {
-    font-size: 30px;
-    margin: 15px;
+.task-list-items {
+    list-style: none;
+    color: var(--black);
+    font-size: 20px;
+    font-weight: 600;
 }
 .task-mutation {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 5px auto;
+}
+.save-edits-btn {
+    margin: 20px 0;
 }

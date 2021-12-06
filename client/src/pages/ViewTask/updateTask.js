@@ -1,12 +1,11 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router";
+import { useQuery, useMutation } from "@apollo/client";
+import AuthService from "../../utils/auth";
 import { QUERY_TASK } from "../../utils/queries";
 import { UPDATE_TASK } from "../../utils/mutations";
-import { Container, Card, Row, Button, Form } from "react-bootstrap";
-import AuthService from "../../utils/auth";
-import moment from "moment";
+// import moment from "moment";
+import { Card, Button, Form } from "react-bootstrap";
 import "./updateTask.css"
 
 const EditTask = () => {
@@ -31,13 +30,9 @@ const taskData = data?.task || [];
   const [status, setStatus] = useState(taskData.status);
   const checkboxEl = document.getElementById("assign-checkbox");
 
-
-
   const [updateTask] = useMutation(UPDATE_TASK);
 
-
   const handleInputChange = (event) => {
-    event.preventDefault();
     const { name, value } = event.target;
     if (name === "title") {
       setTitle(value);
@@ -48,12 +43,15 @@ const taskData = data?.task || [];
     } else if (name === "assignee") {
       setAssignee(value);
     } else {
-      setStatus(checkboxEl.checked)
+      if (taskData.status ===true) {
+        setStatus(false)
+      } else {
+        setStatus(true)
+      }
     }
   };
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
     updateTask({
       variables: {
         tripId: TripIdToUse,
@@ -66,11 +64,7 @@ const taskData = data?.task || [];
       },
     }).then((data) => {
       // console.log(data);
-      setTitle("");
-      setDetails("");
-      setDueDate("");
-      setAssignee("");
-      window.location.reload();
+      window.location.replace(`/${TripIdToUse}/view-tasks`);
     });
   };
 
@@ -115,6 +109,23 @@ const taskData = data?.task || [];
             onChange={handleInputChange}
           />
         </Form.Group>
+        <Form.Group className="mb-3 completion">
+          {taskData.status==true? <Form.Check
+            id="assign-checkbox"
+              type="checkbox"
+              name="status"
+              label="Task is incomplete!"
+              onChange={handleInputChange}
+            ></Form.Check>
+          :
+          <Form.Check
+            id="assign-checkbox"
+              type="checkbox"
+              name="status"
+              label="Task has been completed!"
+              onChange={handleInputChange}
+            ></Form.Check> }
+            </Form.Group>
         <Form.Group className="mb-3">
             <Form.Check
             id="assign-checkbox"
