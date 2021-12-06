@@ -10,12 +10,12 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    users: async (parent, args, context) => {
-      if (context.user) {
-        return await User.find({}).populate("trip");
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
+    // users: async (parent, args, context) => {
+    //   if (context.user) {
+    //     return await User.find({}).populate("trip");
+    //   }
+    //   throw new AuthenticationError("You need to be logged in!");
+    // },
     trip: async (parent, { userId, tripId }, context) => {
       if (context.user) {
         return await Trip.findOne({ _id: tripId, userId: userId, }).populate("tasks", "budget");

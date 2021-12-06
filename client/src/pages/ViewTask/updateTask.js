@@ -1,12 +1,11 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router";
+import { useQuery, useMutation } from "@apollo/client";
+import AuthService from "../../utils/auth";
 import { QUERY_TASK } from "../../utils/queries";
 import { UPDATE_TASK } from "../../utils/mutations";
-import { Container, Card, Row, Button, Form } from "react-bootstrap";
-import AuthService from "../../utils/auth";
-import moment from "moment";
+// import moment from "moment";
+import { Card, Button, Form } from "react-bootstrap";
 import "./updateTask.css"
 
 const EditTask = () => {
