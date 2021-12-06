@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import "./NewTrip.css";
 import { useQuery, useMutation } from "@apollo/client";
-import { Form, Button } from "react-bootstrap";
-import { ADD_TRIP } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import { ADD_TRIP } from "../../utils/mutations";
 import { QUERY_USER } from "../../utils/queries";
+import { Form, Button } from "react-bootstrap";
+import "./NewTrip.css";
 
 const NewTrip = () => {
+  const currentUser = Auth.getUsername();
+  const { data: data1 } = useQuery(QUERY_USER, {
+    variables: { username : currentUser },
+  });
+  const userData = data1?.user || [];
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -34,7 +40,7 @@ const NewTrip = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const userId = Auth.getUserId();
+    const userId = userData._id;
     addTrip({
       variables: {
         title: title,

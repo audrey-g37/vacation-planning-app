@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ViewBudget.css";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_BUDGETS, QUERY_TRIP } from "../../utils/queries";
+import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from "../../utils/queries";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import BudgetForm from "./budgetForm";
@@ -12,11 +12,15 @@ import { Link } from "react-router-dom";
 
 const ViewBudget = () => {
   const tripId = Auth.getTripId();
-  const userId = Auth.getUserId();
-  const { data: data1 } = useQuery(QUERY_TRIP, {
-    variables: { tripId: tripId, userId: userId },
+  const currentUser = Auth.getUsername();
+  const { data: data1 } = useQuery(QUERY_USER, {
+    variables: { username : currentUser },
   });
-  const tripData = data1?.trip || [];
+  const userData = data1?.user || [];
+  const { data: data2 } = useQuery(QUERY_TRIP, {
+    variables: { tripId: tripId, userId: userData._id },
+  });
+  const tripData = data2?.trip || [];
   const { loading, data } = useQuery(QUERY_BUDGETS, {variables: {tripId: tripId}});
   const allExpenses = data?.budgets || [];
   // console.log(allExpenses);
@@ -28,7 +32,6 @@ const spending = allExpenses.map((expense)=> {
   return parseInt(expense.value)
 });
 // console.log(spending)
-
 
 const sumBudget = (array) => {
   let total =0;
@@ -42,8 +45,15 @@ const sumBudget = (array) => {
 
   //  console.log(weSpent)
 
+  const viewEditBudget = (event) => {
+    event.preventDefault();
+    const {value} = event.target;
 
-  const assignBudget = async (event) => {
+    window.location.replace(`/${tripId}/view-budgets/${value}`)
+
+  }
+
+  const deleteBudget = async (event) => {
     event.preventDefault();
     const { value } = event.target;
     // console.log(value);
@@ -90,12 +100,16 @@ const sumBudget = (array) => {
                     {" "}
                     <Button
                     value={budget._id}
-                      id="delete-button"
-                      variant="danger"
-                      className="tashbtn"
-                      onClick={assignBudget}
+                      className="task-btn btn btn-sm btn-warning ml-auto"
+                      onClick={viewEditBudget}
+                    >Edit
+                    </Button>
+                    {" "}
+                    <Button
+                    value={budget._id}
+                    className="task-btn btn btn-sm btn-danger ml-auto"
+                      onClick={deleteBudget}
                     >X
-                      {/* <BsTrashFill /> */}
                     </Button>
                   </td>
                 </tr>

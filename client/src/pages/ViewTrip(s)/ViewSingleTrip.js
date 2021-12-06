@@ -1,21 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./ViewSingleTrip.css";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router";
-import { QUERY_TRIP, QUERY_USER } from "../../utils/queries";
-import { Container, Card, Button } from "react-bootstrap";
+import { QUERY_USER, QUERY_TRIP } from "../../utils/queries";
+import { Card, Button } from "react-bootstrap";
 import Auth from "../../utils/auth";
+import "./ViewSingleTrip.css";
 
 const ViewSingleTrip = () => {
   const tripId = useParams();
   const idToUse = tripId.id;
   Auth.storeTripId(idToUse);
 
-  const userId = Auth.getUserId();
+  const currentUser = Auth.getUsername();
+  const { data: data1 } = useQuery(QUERY_USER, {
+    variables: { username : currentUser },
+  });
+  const userData = data1?.user || [];
 
   const { data } = useQuery(QUERY_TRIP, {
-    variables: { tripId: idToUse, userId: userId },
+    variables: { tripId: idToUse, userId: userData._id },
   });
   const tripData = data?.trip || [];
 
