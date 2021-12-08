@@ -65,7 +65,7 @@ margin: 5px 0 0;
   border-radius: 10px;
   border: solid 2px var(--black);
   padding: 30px;
-  max-width: 35%;
+  min-width: 40%;
 }
 .add-task #checkbox {
 margin: 20px 0;
