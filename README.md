@@ -130,5 +130,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - [Adrian Auchterlonie](https://github.com/adrianauch) 
 - [Eddy Calderon](https://github.com/Ecalderon10) 
 
-
+## Link
 [Link to GRIP](https://grip-your-trip.herokuapp.com/)

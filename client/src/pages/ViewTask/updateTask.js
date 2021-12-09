@@ -28,9 +28,9 @@ const taskData = data?.task || [];
   const [dueDate, setDueDate] = useState(taskData.dueDate);
   const [assignee, setAssignee] = useState(taskData.assignee);
   const [status, setStatus] = useState(taskData.status);
+  const checkboxEl = document.getElementById("assign-checkbox");
 
   const [updateTask] = useMutation(UPDATE_TASK);
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -63,8 +63,8 @@ const taskData = data?.task || [];
         assignee: assignee
       },
     }).then((data) => {
-      console.log(data);
-      // window.location.replace(`/${TripIdToUse}/view-tasks`);
+      // console.log(data);
+      window.location.replace(`/${TripIdToUse}/view-tasks`);
     });
   };
 

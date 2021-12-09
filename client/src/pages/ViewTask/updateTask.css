@@ -1,6 +1,6 @@
 .current-task {
     background-color: none;
-    max-width: 45%;
+    width: 80%;
     padding: 10px;
     margin: 30px auto;
 }
@@ -17,11 +17,14 @@
     text-decoration: underline solid;
 }
 .edit-task-form {
-    align-items: center;
     background-color: var(--white);
     opacity: .9;
-    max-width: 50%;
+    width: 80%;
     margin: 15px auto;
+}
+.edit-task-text {
+    font-size: 30px;
+    margin: 15px;
 }
 .edit-task-text {
     font-size: 30px;
