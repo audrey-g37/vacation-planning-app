@@ -35,7 +35,7 @@ class AuthService {
   }
 
   logout() {
-    let itemsToRemove = ["id_token", "username", "userId", "tripId"]
+    let itemsToRemove = ["id_token", "username", "tripId"]
     itemsToRemove.forEach(item => {
       localStorage.removeItem(item);
     })
