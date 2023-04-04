@@ -1,30 +1,33 @@
 {
-  "name": "vacation-planning-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node server/server.js",
-    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "install": "cd server && npm i && cd ../client && npm i",
-    "build": "cd client && npm run build",
-    "seed": "node server/seeders/seed.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Korbin-Sargent/vacation-planning-app.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Korbin-Sargent/vacation-planning-app/issues"
-  },
-  "homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme",
-  "dependencies": {
-    "concurrently": "^6.3.0",
-    "moment": "^2.29.1",
-    "react-icons": "^4.3.1"
-  }
+	"name": "vacation-planning-app",
+	"version": "1.0.0",
+	"engines": {
+		"node": "16.x"
+	},
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server/server.js",
+		"develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+		"install": "cd server && npm i && cd ../client && npm i",
+		"build": "cd client && npm run build",
+		"seed": "node server/seeders/seed.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Korbin-Sargent/vacation-planning-app.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Korbin-Sargent/vacation-planning-app/issues"
+	},
+	"homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme",
+	"dependencies": {
+		"concurrently": "^6.3.0",
+		"moment": "^2.29.1",
+		"react-icons": "^4.3.1"
+	}
 }
