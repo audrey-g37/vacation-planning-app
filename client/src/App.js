@@ -38,43 +38,53 @@ const client = new ApolloClient({
 	cache: new InMemoryCache()
 });
 
+// *using to disable app/features while I refactor and enhance app
+const underConstruction = true;
+
 function App() {
 	return (
 		<>
 			<ApolloProvider client={client}>
 				<Router>
-					<NavBar underConstruction={true} />
+					<NavBar underConstruction={underConstruction} />
 					<div className='whole'>
-						<Route exact path='/'>
-							{/* <Login /> */}
-							<UnderConstruction />
-						</Route>
-						{/* <Route exact path='/signup'>
-							<Signup />
-						</Route> */}
-						{/* <Switch>
-							<Route exact path='/dashboard'>
-								<Dashboard />
+						{underConstruction ? (
+							<Route exact path='/'>
+								<UnderConstruction />
 							</Route>
-							<Route exact path='/view-trip/:id'>
-								<ViewSingleTrip />
-							</Route>
-							<Route exact path='/view-trips/'>
-								<ViewAllTrips />
-							</Route>
-							<Route exact path='/:id/view-tasks'>
-								<ViewTask />
-							</Route>
-							<Route exact path='/:id/view-tasks/:id'>
-								<EditTask />
-							</Route>
-							<Route exact path='/:id/view-budget'>
-								<ViewBudget />
-							</Route>
-							<Route exact path='/:id/view-budgets/:id'>
-								<EditBudget />
-							</Route>
-						</Switch> */}
+						) : (
+							<>
+								<Route exact path='/'>
+									<Login />
+								</Route>
+								<Route exact path='/signup'>
+									<Signup />
+								</Route>
+								<Switch>
+									<Route exact path='/dashboard'>
+										<Dashboard />
+									</Route>
+									<Route exact path='/view-trip/:id'>
+										<ViewSingleTrip />
+									</Route>
+									<Route exact path='/view-trips/'>
+										<ViewAllTrips />
+									</Route>
+									<Route exact path='/:id/view-tasks'>
+										<ViewTask />
+									</Route>
+									<Route exact path='/:id/view-tasks/:id'>
+										<EditTask />
+									</Route>
+									<Route exact path='/:id/view-budget'>
+										<ViewBudget />
+									</Route>
+									<Route exact path='/:id/view-budgets/:id'>
+										<EditBudget />
+									</Route>
+								</Switch>
+							</>
+						)}
 					</div>
 					<Footer />
 				</Router>
