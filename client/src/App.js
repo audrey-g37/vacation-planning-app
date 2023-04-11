@@ -3,18 +3,20 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import Footer from './components/Footer/Footer';
-import NavBar from './components/NavBar/NavBar';
-import Login from './pages/Login/Login';
-import Dashboard from './pages/Dashboard/Dashboard';
-import ViewAllTrips from './pages/ViewTrip(s)/ViewAllTrips';
-import ViewSingleTrip from './pages/ViewTrip(s)/ViewSingleTrip';
-import ViewTask from './pages/ViewTask/ViewTask';
-import ViewBudget from './pages/ViewBudget/ViewBudget';
-import Signup from './pages/signup/signup';
-import EditTask from './pages/ViewTask/updateTask';
-import EditBudget from './pages/ViewBudget/updateBudget';
-import UnderConstruction from './pages/ErrorPages/UnderConstruction';
+import { Footer, MainNav } from 'views/components/display';
+import {
+	Signup,
+	Login,
+	Dashboard,
+	UnderConstruction,
+	ViewSingleTrip,
+	ViewAllTrips,
+	ViewTask,
+	ViewBudget,
+	EditTask,
+	EditBudget
+} from 'views/pages';
+import { Grid } from '@mui/material';
 
 const httpLink = createHttpLink({
 	uri: '/graphql'
@@ -46,47 +48,53 @@ function App() {
 		<>
 			<ApolloProvider client={client}>
 				<Router>
-					<NavBar underConstruction={underConstruction} />
-					<div className='whole'>
-						{underConstruction ? (
-							<Route exact path='/'>
-								<UnderConstruction />
-							</Route>
-						) : (
-							<>
+					<Grid container>
+						<Grid item xs={12}>
+							<MainNav underConstruction={underConstruction} />
+						</Grid>
+						<Grid item xs={12}>
+							{underConstruction ? (
 								<Route exact path='/'>
-									<Login />
+									<UnderConstruction />
 								</Route>
-								<Route exact path='/signup'>
-									<Signup />
-								</Route>
-								<Switch>
-									<Route exact path='/dashboard'>
-										<Dashboard />
+							) : (
+								<>
+									<Route exact path='/'>
+										<Login />
 									</Route>
-									<Route exact path='/view-trip/:id'>
-										<ViewSingleTrip />
+									<Route exact path='/signup'>
+										<Signup />
 									</Route>
-									<Route exact path='/view-trips/'>
-										<ViewAllTrips />
-									</Route>
-									<Route exact path='/:id/view-tasks'>
-										<ViewTask />
-									</Route>
-									<Route exact path='/:id/view-tasks/:id'>
-										<EditTask />
-									</Route>
-									<Route exact path='/:id/view-budget'>
-										<ViewBudget />
-									</Route>
-									<Route exact path='/:id/view-budgets/:id'>
-										<EditBudget />
-									</Route>
-								</Switch>
-							</>
-						)}
-					</div>
-					<Footer />
+									<Switch>
+										<Route exact path='/dashboard'>
+											<Dashboard />
+										</Route>
+										<Route exact path='/view-trip/:id'>
+											<ViewSingleTrip />
+										</Route>
+										<Route exact path='/view-trips/'>
+											<ViewAllTrips />
+										</Route>
+										<Route exact path='/:id/view-tasks'>
+											<ViewTask />
+										</Route>
+										<Route exact path='/:id/view-tasks/:id'>
+											<EditTask />
+										</Route>
+										<Route exact path='/:id/view-budget'>
+											<ViewBudget />
+										</Route>
+										<Route exact path='/:id/view-budgets/:id'>
+											<EditBudget />
+										</Route>
+									</Switch>
+								</>
+							)}
+						</Grid>
+						<Grid item xs={12}>
+							<Footer />
+						</Grid>
+					</Grid>
 				</Router>
 			</ApolloProvider>
 		</>

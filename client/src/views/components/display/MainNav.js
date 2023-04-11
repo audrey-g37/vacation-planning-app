@@ -1,10 +1,9 @@
 import React from 'react';
 // import { Route, Link, useRouteMatch } from 'react-router-dom';
-import './NavBar.css';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
-import Auth from '../../utils/auth';
+import Auth from 'utils/auth';
 
-const NavBar = ({ underConstruction }) => {
+const MainNav = ({ underConstruction }) => {
 	const logout = (event) => {
 		event.preventDefault();
 		Auth.logout();
@@ -57,4 +56,4 @@ const NavBar = ({ underConstruction }) => {
 	);
 };
 
-export default NavBar;
+export default MainNav;
