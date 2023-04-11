@@ -1,6 +1,6 @@
 :root {
-	--white: rgb(255, 255, 255);
-	--black: rgb(0, 0, 0);
+	--white: #ffffff;
+	--black: #000000;
 
 	--greyDark: rgb(173, 173, 173);
 	--greyLight: rgb(226, 226, 226);

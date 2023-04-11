@@ -1,58 +1,55 @@
+import { Grid } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
-// import { Route, Link, useRouteMatch } from 'react-router-dom';
-import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import NavMenu from 'views/components/display/NavMenu';
 import Auth from 'utils/auth';
 
 const MainNav = ({ underConstruction }) => {
+	const theme = useTheme();
 	const logout = (event) => {
 		event.preventDefault();
 		Auth.logout();
 	};
 
-	//  const [formState, setFormState] = useState({ username: '', password: '' });
+	const withAuth = Auth.loggedIn();
 
-	//   const handleChange = (event) => {
-	//     const { name, value } = event.target;
+	const headerNav = [
+		{ text: 'GRIP', url: '/', tooltipText: 'Home' },
+		{ text: 'Login', url: '/' },
+		{ text: 'Signup', url: '/signup' }
+	];
 
-	//     setFormState({
-	//       ...formState,
-	//       [name]: value,
-	//     });
-	//   };
+	if (withAuth) {
+		headerNav.push(
+			{ text: 'Dashboard', url: '/dashboard' },
+			{ text: 'View Trips', url: '/view-trips' }
+		);
+	}
 
-	// const routeMatch = useRouteMatch(["/dashboard", "/", "/viewtrips", "/view-tasks", "/view-budget", "/view-trip/:id"])
-	// const currentTab = routeMatch?.path
 	return (
-		<>
-			<Navbar bg='dark' variant='dark'>
-				<Container className='justify-content-center'>
-					<Navbar.Brand className='app-title'>GRIP</Navbar.Brand>
-					<Nav className='me-auto'>
-						{underConstruction ? (
-							<>
-								<Nav.Link href='#'>Login</Nav.Link>
-								<Nav.Link href='#'>Sign Up</Nav.Link>
-							</>
-						) : Auth.loggedIn() ? (
-							<>
-								<Nav.Link href='/dashboard'>Dashboard</Nav.Link>
-								<Nav.Link href='/view-trips'>View Trips</Nav.Link>
-							</>
-						) : (
-							<>
-								<Nav.Link href='/'>Login</Nav.Link>
-								<Nav.Link href='/signup'>Sign Up</Nav.Link>
-							</>
-						)}
-					</Nav>
-					<Nav className='Justify-content-end'>
-						<Button variant='light' onClick={!underConstruction ? logout : undefined}>
-							Logout
-						</Button>
-					</Nav>
-				</Container>
-			</Navbar>
-		</>
+		<Grid
+			container
+			sx={{
+				justifyContent: 'flex-start',
+				alignItems: 'center',
+				position: 'absolute',
+				top: '0',
+				height: '3rem',
+				backgroundColor: theme.palette.greyDark
+			}}
+		>
+			<Grid item>
+				<NavMenu
+					navOptions={
+						underConstruction
+							? headerNav.map((navOption) => (navOption = { ...navOption, url: '#' }))
+							: headerNav
+					}
+					textField={'text'}
+					vertical={false}
+				/>
+			</Grid>
+		</Grid>
 	);
 };
 

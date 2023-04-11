@@ -2,7 +2,10 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { ThemeProvider } from '@mui/material';
 
+// project imports
+import theme from 'style/theme';
 import { Footer, MainNav } from 'views/components/display';
 import {
 	Signup,
@@ -16,7 +19,6 @@ import {
 	EditTask,
 	EditBudget
 } from 'views/pages';
-import { Grid } from '@mui/material';
 
 const httpLink = createHttpLink({
 	uri: '/graphql'
@@ -47,55 +49,47 @@ function App() {
 	return (
 		<>
 			<ApolloProvider client={client}>
-				<Router>
-					<Grid container>
-						<Grid item xs={12}>
-							<MainNav underConstruction={underConstruction} />
-						</Grid>
-						<Grid item xs={12}>
-							{underConstruction ? (
+				<ThemeProvider theme={theme}>
+					<Router>
+						<MainNav underConstruction={underConstruction} />
+						{underConstruction ? (
+							<UnderConstruction />
+						) : (
+							<>
 								<Route exact path='/'>
-									<UnderConstruction />
+									<Login />
 								</Route>
-							) : (
-								<>
-									<Route exact path='/'>
-										<Login />
+								<Route exact path='/signup'>
+									<Signup />
+								</Route>
+								<Switch>
+									<Route exact path='/dashboard'>
+										<Dashboard />
 									</Route>
-									<Route exact path='/signup'>
-										<Signup />
+									<Route exact path='/view-trip/:id'>
+										<ViewSingleTrip />
 									</Route>
-									<Switch>
-										<Route exact path='/dashboard'>
-											<Dashboard />
-										</Route>
-										<Route exact path='/view-trip/:id'>
-											<ViewSingleTrip />
-										</Route>
-										<Route exact path='/view-trips/'>
-											<ViewAllTrips />
-										</Route>
-										<Route exact path='/:id/view-tasks'>
-											<ViewTask />
-										</Route>
-										<Route exact path='/:id/view-tasks/:id'>
-											<EditTask />
-										</Route>
-										<Route exact path='/:id/view-budget'>
-											<ViewBudget />
-										</Route>
-										<Route exact path='/:id/view-budgets/:id'>
-											<EditBudget />
-										</Route>
-									</Switch>
-								</>
-							)}
-						</Grid>
-						<Grid item xs={12}>
-							<Footer />
-						</Grid>
-					</Grid>
-				</Router>
+									<Route exact path='/view-trips/'>
+										<ViewAllTrips />
+									</Route>
+									<Route exact path='/:id/view-tasks'>
+										<ViewTask />
+									</Route>
+									<Route exact path='/:id/view-tasks/:id'>
+										<EditTask />
+									</Route>
+									<Route exact path='/:id/view-budget'>
+										<ViewBudget />
+									</Route>
+									<Route exact path='/:id/view-budgets/:id'>
+										<EditBudget />
+									</Route>
+								</Switch>
+							</>
+						)}
+						<Footer />
+					</Router>
+				</ThemeProvider>
 			</ApolloProvider>
 		</>
 	);
