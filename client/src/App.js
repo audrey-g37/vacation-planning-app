@@ -2,19 +2,23 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { ThemeProvider } from '@mui/material';
 
-import Footer from './components/Footer/Footer';
-import NavBar from './components/NavBar/NavBar';
-import Login from './pages/Login/Login';
-import Dashboard from './pages/Dashboard/Dashboard';
-import ViewAllTrips from './pages/ViewTrip(s)/ViewAllTrips';
-import ViewSingleTrip from './pages/ViewTrip(s)/ViewSingleTrip';
-import ViewTask from './pages/ViewTask/ViewTask';
-import ViewBudget from './pages/ViewBudget/ViewBudget';
-import Signup from './pages/signup/signup';
-import EditTask from './pages/ViewTask/updateTask';
-import EditBudget from './pages/ViewBudget/updateBudget';
-import UnderConstruction from './pages/ErrorPages/UnderConstruction';
+// project imports
+import theme from 'style/theme';
+import { Footer, MainNav } from 'views/components/display';
+import {
+	Signup,
+	Login,
+	Dashboard,
+	UnderConstruction,
+	ViewSingleTrip,
+	ViewAllTrips,
+	ViewTask,
+	ViewBudget,
+	EditTask,
+	EditBudget
+} from 'views/pages';
 
 const httpLink = createHttpLink({
 	uri: '/graphql'
@@ -45,13 +49,11 @@ function App() {
 	return (
 		<>
 			<ApolloProvider client={client}>
-				<Router>
-					<NavBar underConstruction={underConstruction} />
-					<div className='whole'>
+				<ThemeProvider theme={theme}>
+					<Router>
+						<MainNav underConstruction={underConstruction} />
 						{underConstruction ? (
-							<Route exact path='/'>
-								<UnderConstruction />
-							</Route>
+							<UnderConstruction />
 						) : (
 							<>
 								<Route exact path='/'>
@@ -85,9 +87,9 @@ function App() {
 								</Switch>
 							</>
 						)}
-					</div>
-					<Footer />
-				</Router>
+						<Footer />
+					</Router>
+				</ThemeProvider>
 			</ApolloProvider>
 		</>
 	);
