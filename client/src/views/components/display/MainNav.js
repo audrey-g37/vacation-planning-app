@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
-import NavMenu from 'views/components/display/NavMenu';
+import NavMenu from 'views/components/general/NavMenu';
 import Auth from 'utils/auth';
 
 const MainNav = ({ underConstruction }) => {

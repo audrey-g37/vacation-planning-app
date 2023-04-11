@@ -4,7 +4,7 @@ import { Grid, Tooltip } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 // project imports
-import NavMenu from './NavMenu';
+import NavMenu from '../general/NavMenu';
 
 const Footer = () => {
 	const theme = useTheme();
