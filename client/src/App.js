@@ -32,7 +32,8 @@ const client = new ApolloClient({
 });
 
 // *using to disable app/features while I refactor and enhance app
-const underConstruction = false;
+const underConstruction = true;
+const lastModifiedDate = '04/11/2023';
 
 function App() {
 	return (
@@ -41,7 +42,11 @@ function App() {
 				<ThemeProvider theme={theme}>
 					<Router>
 						<MainNav underConstruction={underConstruction} />
-						{underConstruction ? <UnderConstruction /> : <Routes />}
+						{underConstruction ? (
+							<UnderConstruction lastModifiedDate={lastModifiedDate} />
+						) : (
+							<Routes />
+						)}
 						<Footer />
 					</Router>
 				</ThemeProvider>
