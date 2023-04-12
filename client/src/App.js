@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material';
@@ -7,19 +7,8 @@ import { ThemeProvider } from '@mui/material';
 // project imports
 import theme from 'style/theme';
 import { Footer, MainNav } from 'views/components/display';
-import {
-	Signup,
-	Login,
-	Dashboard,
-	UnderConstruction,
-	ViewSingleTrip,
-	ViewAllTrips,
-	ViewTask,
-	ViewBudget,
-	EditTask,
-	EditBudget
-} from 'views/pages';
-
+import { UnderConstruction } from 'views/pages';
+import Routes from 'routes';
 const httpLink = createHttpLink({
 	uri: '/graphql'
 });
@@ -44,6 +33,7 @@ const client = new ApolloClient({
 
 // *using to disable app/features while I refactor and enhance app
 const underConstruction = true;
+const lastModifiedDate = '04/11/2023';
 
 function App() {
 	return (
@@ -53,39 +43,9 @@ function App() {
 					<Router>
 						<MainNav underConstruction={underConstruction} />
 						{underConstruction ? (
-							<UnderConstruction />
+							<UnderConstruction lastModifiedDate={lastModifiedDate} />
 						) : (
-							<>
-								<Route exact path='/'>
-									<Login />
-								</Route>
-								<Route exact path='/signup'>
-									<Signup />
-								</Route>
-								<Switch>
-									<Route exact path='/dashboard'>
-										<Dashboard />
-									</Route>
-									<Route exact path='/view-trip/:id'>
-										<ViewSingleTrip />
-									</Route>
-									<Route exact path='/view-trips/'>
-										<ViewAllTrips />
-									</Route>
-									<Route exact path='/:id/view-tasks'>
-										<ViewTask />
-									</Route>
-									<Route exact path='/:id/view-tasks/:id'>
-										<EditTask />
-									</Route>
-									<Route exact path='/:id/view-budget'>
-										<ViewBudget />
-									</Route>
-									<Route exact path='/:id/view-budgets/:id'>
-										<EditBudget />
-									</Route>
-								</Switch>
-							</>
+							<Routes />
 						)}
 						<Footer />
 					</Router>
