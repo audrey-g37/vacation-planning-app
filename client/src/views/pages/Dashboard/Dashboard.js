@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import Auth from 'utils/auth';
 import { QUERY_USER, QUERY_TRIPS } from 'utils/queries';
 import NewTrip from 'views/components/NewTrip/NewTrip';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button } from '@mui/material';
 import './Dashboard.css';
 
 const Dashboard = () => {

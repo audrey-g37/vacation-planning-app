@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Auth from 'utils/auth';
 import { ADD_BUDGET } from 'utils/mutations';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
+import { Button } from '@mui/material';
 
 const BudgetForm = () => {
 	const tripId = Auth.getTripId();
@@ -52,9 +50,9 @@ const BudgetForm = () => {
 
 	return (
 		<div className='add-task'>
-			<Form>
+			<form>
 				<h3>Add a New Expense</h3>
-				<Form.Group className='mb-3'>
+				{/* <Form.Group className='mb-3'>
 					<Form.Label>Expense Title*</Form.Label>
 					<Form.Control
 						type='text'
@@ -89,11 +87,11 @@ const BudgetForm = () => {
 						value={purchasedBy}
 						onChange={handleInputChange}
 					/>
-				</Form.Group>
+				</Form.Group> */}
 				<Button variant='dark' onClick={handleFormSubmit}>
 					Add New Expense
 				</Button>
-			</Form>
+			</form>
 		</div>
 	);
 };

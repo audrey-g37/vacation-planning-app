@@ -5,7 +5,7 @@ import Auth from 'utils/auth';
 import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from 'utils/queries';
 import { REMOVE_TASK, UPDATE_TASK } from 'utils/mutations';
 import AddTask from './AddTask';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button } from '@mui/material';
 import './ViewTask.css';
 
 const ViewTask = () => {

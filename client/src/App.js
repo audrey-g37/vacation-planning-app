@@ -32,7 +32,7 @@ const client = new ApolloClient({
 });
 
 // *using to disable app/features while I refactor and enhance app
-const underConstruction = true;
+const underConstruction = process.env.NODE_ENV === 'development' ? false : true;
 const lastModifiedDate = '04/11/2023';
 
 function App() {
