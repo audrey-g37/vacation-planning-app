@@ -1,13 +1,13 @@
+import AuthLayout from 'views/layouts/AuthLayout';
 import { Login, Signup } from 'views/pages';
 
-export default function AuthRoutes() {
-	let authRoutes = useRoutes([
-		{
-			path: '/',
-			element: <Login />
-		},
+const authRoutes = {
+	path: '/',
+	element: <AuthLayout />,
+	children: [
+		{ path: 'login', element: <Login /> },
 		{ path: 'signup', element: <Signup /> }
-	]);
+	]
+};
 
-	return authRoutes;
-}
+export default authRoutes;
