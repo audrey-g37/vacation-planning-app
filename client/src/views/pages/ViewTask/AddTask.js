@@ -1,6 +1,6 @@
 import React, { lazy, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { Container, Row, Form, Button } from 'react-bootstrap';
+import { Button } from '@mui/material';
 import { useParams } from 'react-router';
 import { REMOVE_TASK, ADD_TASK } from 'utils/mutations';
 import Auth from 'utils/auth';
@@ -57,9 +57,9 @@ const AddTask = () => {
 
 	return (
 		<div className='add-task'>
-			<Form>
+			<form>
 				<h3>Add A New Task</h3>
-				<Form.Group className='mb-3'>
+				{/* <Form.Group className='mb-3'>
 					<Form.Label>Title*</Form.Label>
 					<Form.Control
 						type='text'
@@ -103,11 +103,11 @@ const AddTask = () => {
 						value={details}
 						onChange={handleInputChange}
 					/>
-				</Form.Group>
+				</Form.Group> */}
 				<Button className='add-trip-button' variant='dark' onClick={handleFormSubmit}>
 					Add Task
 				</Button>
-			</Form>
+			</form>
 		</div>
 	);
 };

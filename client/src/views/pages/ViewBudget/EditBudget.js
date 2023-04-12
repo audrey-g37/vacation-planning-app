@@ -5,7 +5,7 @@ import AuthService from 'utils/auth';
 import { QUERY_BUDGET } from 'utils/queries';
 import { UPDATE_BUDGET } from 'utils/mutations';
 // import moment from "moment";
-import { Card, Button, Form } from 'react-bootstrap';
+import { Card, Button, Form } from '@mui/material';
 import './updateBudget.css';
 
 const EditBudget = () => {
@@ -77,9 +77,9 @@ const EditBudget = () => {
 				</Card.Body>
 			</Card>
 			<div className='edit-task-form'>
-				<Form className='task-mutation'>
+				<form className='task-mutation'>
 					<h2 className='edit-task-text'>Edit Budget Below:</h2>
-					<Form.Group className='mb-3'>
+					{/* <Form.Group className='mb-3'>
 						<Form.Label>Title:</Form.Label>
 						<Form.Control
 							className='task-mutation-input'
@@ -117,11 +117,11 @@ const EditBudget = () => {
 							value={purchasedBy}
 							onChange={handleInputChange}
 						/>
-					</Form.Group>
+					</Form.Group> */}
 					<Button className='save-edits-btn' variant='dark' onClick={handleFormSubmit}>
 						Save Edits
 					</Button>
-				</Form>
+				</form>
 			</div>
 		</section>
 	);

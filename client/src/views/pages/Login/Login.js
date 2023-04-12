@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from 'utils/mutations';
 import Auth from 'utils/auth';
 import './Login.css';
-import { Button } from 'react-bootstrap';
+import { Button } from '@mui/material';
 
 const Login = (props) => {
 	const [formState, setFormState] = useState({ username: '', password: '' });

@@ -1,13 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './ViewBudget.css';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from 'utils/queries';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+import { Table, Button } from '@mui/material';
 import BudgetForm from './budgetForm';
 import { REMOVE_BUDGET } from 'utils/mutations';
 import Auth from 'utils/auth';
-import { Link } from 'react-router-dom';
 
 const ViewBudget = () => {
 	const tripId = Auth.getTripId();

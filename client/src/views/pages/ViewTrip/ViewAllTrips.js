@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Auth from 'utils/auth';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_TRIPS } from 'utils/queries';
-import { Button } from 'react-bootstrap';
+import { Button } from '@mui/material';
 import './ViewAllTrips.css';
 
 // import moment from "moment";

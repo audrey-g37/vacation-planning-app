@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { Form, Button } from 'react-bootstrap';
+import { Button } from '@mui/material';
 import Auth from 'utils/auth';
 import { ADD_TRIP } from 'utils/mutations';
 import { QUERY_USER } from 'utils/queries';
@@ -61,8 +61,8 @@ const NewTrip = () => {
 		window.location.reload();
 	};
 	return (
-		<Form className='add-trip-form'>
-			<h2>Add a New Trip:</h2>
+		<form className='add-trip-form'>
+			{/* <h2>Add a New Trip:</h2>
 			<Form.Group className='mb-3' controlId='name'>
 				<Form.Label>Title*</Form.Label>
 				<Form.Control type='text' name='title' value={title} onChange={handleInputChange} />
@@ -112,8 +112,8 @@ const NewTrip = () => {
 				>
 					Save
 				</Button>
-			)}
-		</Form>
+			)} */}
+		</form>
 	);
 };
 

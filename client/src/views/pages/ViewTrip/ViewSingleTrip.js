@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router';
 import { QUERY_USER, QUERY_TRIP } from 'utils/queries';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button } from '@mui/material';
 import Auth from 'utils/auth';
 import './ViewSingleTrip.css';
 

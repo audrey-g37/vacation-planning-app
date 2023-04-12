@@ -5,7 +5,7 @@ import AuthService from 'utils/auth';
 import { QUERY_TASK } from 'utils/queries';
 import { UPDATE_TASK } from 'utils/mutations';
 // import moment from "moment";
-import { Card, Button, Form } from 'react-bootstrap';
+import { Card, Button } from '@mui/material';
 import './updateTask.css';
 
 const EditTask = () => {
@@ -85,9 +85,9 @@ const EditTask = () => {
 				</Card.Body>
 			</Card>
 			<div className='edit-task-form'>
-				<Form className='task-mutation'>
+				<form className='task-mutation'>
 					<h2 className='edit-task-text'>Edit Task Below:</h2>
-					<Form.Group className='mb-3'>
+					{/* <Form.Group className='mb-3'>
 						<Form.Label>Title:</Form.Label>
 						<Form.Control
 							className='task-mutation-input'
@@ -145,11 +145,11 @@ const EditTask = () => {
 							value={details}
 							onChange={handleInputChange}
 						/>
-					</Form.Group>
+					</Form.Group> */}
 					<Button className='add-trip-button' variant='dark' onClick={handleFormSubmit}>
 						Save Edits
 					</Button>
-				</Form>
+				</form>
 			</div>
 		</section>
 	);
