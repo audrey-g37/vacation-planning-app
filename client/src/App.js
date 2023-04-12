@@ -1,13 +1,10 @@
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material';
 
 // project imports
 import theme from 'style/theme';
-import { Footer, MainNav } from 'views/components/display';
-import { UnderConstruction } from 'views/pages';
 import Routes from 'routes';
 const httpLink = createHttpLink({
 	uri: '/graphql'
@@ -40,15 +37,10 @@ function App() {
 		<>
 			<ApolloProvider client={client}>
 				<ThemeProvider theme={theme}>
-					<Router>
-						<MainNav underConstruction={underConstruction} />
-						{underConstruction ? (
-							<UnderConstruction lastModifiedDate={lastModifiedDate} />
-						) : (
-							<Routes />
-						)}
-						<Footer />
-					</Router>
+					<Routes
+						underConstruction={underConstruction}
+						lastModifiedDate={lastModifiedDate}
+					/>
 				</ThemeProvider>
 			</ApolloProvider>
 		</>

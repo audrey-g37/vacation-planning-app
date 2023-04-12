@@ -1,3 +1,4 @@
+import AuthLayout from 'views/pages/auth/AuthLayout';
 import {
 	Dashboard,
 	EditBudget,
@@ -10,6 +11,7 @@ import {
 
 const mainRoutes = {
 	path: '/',
+	element: <AuthLayout />,
 	children: [
 		{
 			path: '/dashboard',
