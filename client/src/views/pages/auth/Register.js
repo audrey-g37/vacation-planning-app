@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from 'utils/mutations';
 import Auth from 'utils/auth';
-import './signup.css';
 import { Button } from '@mui/material';
 
-const Signup = () => {
+const Register = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -102,4 +101,4 @@ const Signup = () => {
 	);
 };
 
-export default Signup;
+export default Register;
