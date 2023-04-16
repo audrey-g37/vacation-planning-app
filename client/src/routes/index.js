@@ -5,7 +5,7 @@ import AuthRoutes from './auth-routes';
 import MainRoutes from './main-routes';
 
 export default function Routes() {
-	let routes = [AuthRoutes];
+	let routes = [AuthRoutes, MainRoutes];
 
 	return useRoutes(routes);
 }

@@ -1,5 +1,5 @@
-import Signup from './signup/signup';
-import Login from './Login/Login';
+import Signup from './auth/Register';
+import Login from './auth/Login';
 import UnderConstruction from './ErrorPages/UnderConstruction';
 import Dashboard from './Dashboard/Dashboard';
 import ViewBudget from './ViewBudget/ViewBudget';

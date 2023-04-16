@@ -1,14 +1,13 @@
-import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material';
+import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
 // project imports
 import theme from 'style/theme';
-import { Footer, MainNav } from 'views/components/display';
-import { UnderConstruction } from 'views/pages';
 import Routes from 'routes';
+import './App.css';
+
 const httpLink = createHttpLink({
 	uri: '/graphql'
 });
@@ -31,27 +30,22 @@ const client = new ApolloClient({
 	cache: new InMemoryCache()
 });
 
-// *using to disable app/features while I refactor and enhance app
-const underConstruction = process.env.NODE_ENV === 'development' ? false : true;
-const lastModifiedDate = '04/11/2023';
-
 function App() {
+	// *using to disable app/features while I refactor and enhance app
+	const underConstruction = process.env.NODE_ENV === 'development' ? false : true;
+	const lastModifiedDate = '04/11/2023';
 	return (
-		<>
-			<ApolloProvider client={client}>
-				<ThemeProvider theme={theme}>
-					<Router>
-						<MainNav underConstruction={underConstruction} />
-						{underConstruction ? (
-							<UnderConstruction lastModifiedDate={lastModifiedDate} />
-						) : (
-							<Routes />
-						)}
-						<Footer />
-					</Router>
-				</ThemeProvider>
-			</ApolloProvider>
-		</>
+		<StyledEngineProvider injectFirst>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<ApolloProvider client={client}>
+					<Routes
+						underConstruction={underConstruction}
+						lastModifiedDate={lastModifiedDate}
+					/>
+				</ApolloProvider>
+			</ThemeProvider>
+		</StyledEngineProvider>
 	);
 }
 

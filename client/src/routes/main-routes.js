@@ -1,3 +1,4 @@
+import AuthLayout from 'views/pages/auth/AuthLayout';
 import {
 	Dashboard,
 	EditBudget,
@@ -10,6 +11,7 @@ import {
 
 const mainRoutes = {
 	path: '/',
+	element: <AuthLayout />,
 	children: [
 		{
 			path: '/dashboard',
@@ -24,19 +26,19 @@ const mainRoutes = {
 			element: <ViewSingleTrip />,
 			children: [
 				{
-					path: '/view-tasks',
+					path: '/view-trip/:id/view-tasks',
 					element: <ViewTask />
 				},
 				{
-					path: '/view-tasks/:id',
+					path: '/view-trip/:id/view-tasks/:id',
 					element: <EditTask />
 				},
 				{
-					path: '/view-budget',
+					path: '/view-trip/:id/view-budget',
 					element: <ViewBudget />
 				},
 				{
-					path: '/view-budgets/:id',
+					path: '/view-trip/:id/view-budgets/:id',
 					element: <EditBudget />
 				}
 			]
