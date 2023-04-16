@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from 'utils/mutations';
 import Auth from 'utils/auth';
-import './signup.css';
 import { Button } from '@mui/material';
 
-const Signup = () => {
+const Register = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -60,46 +59,43 @@ const Signup = () => {
 	};
 
 	return (
-		<div className='signup'>
-			<h4 className='signup-main-text card-header bg-dark text-light p-2'>Sign Up</h4>
-			<div className='signup-card text-center card'>
-				{data ? (
-					<p>
-						Success! You may now <Link to='/'>login</Link> to get started!
-					</p>
-				) : (
-					<form className='signup-form'>
-						<input
-							className='signup-form-input form-input'
-							placeholder='Your username'
-							name='username'
-							type='text'
-							value={username}
-							onChange={handleInputChange}
-						/>
-						<input
-							className='signup-form-input form-input'
-							placeholder='******'
-							name='password'
-							type='password'
-							value={password}
-							onChange={handleInputChange}
-						/>
-						<Button
-							className='signup-btn'
-							style={{ cursor: 'pointer' }}
-							variant='dark'
-							onClick={handleFormSubmit}
-						>
-							SignUp
-						</Button>
-					</form>
-				)}
+		<div>
+			{data ? (
+				<p>
+					Success! You may now <Link to='/'>login</Link> to get started!
+				</p>
+			) : (
+				<form>
+					<input
+						className='signup-form-input form-input'
+						placeholder='Your username'
+						name='username'
+						type='text'
+						value={username}
+						onChange={handleInputChange}
+					/>
+					<input
+						className='signup-form-input form-input'
+						placeholder='******'
+						name='password'
+						type='password'
+						value={password}
+						onChange={handleInputChange}
+					/>
+					<Button
+						className='signup-btn'
+						style={{ cursor: 'pointer' }}
+						variant='dark'
+						onClick={handleFormSubmit}
+					>
+						Register
+					</Button>
+				</form>
+			)}
 
-				{error && <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>}
-			</div>
+			{error && <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>}
 		</div>
 	);
 };
 
-export default Signup;
+export default Register;
