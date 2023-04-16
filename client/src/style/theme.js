@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import * as colors from '@mui/material/colors';
-const { grey, cyan, orange, pink } = colors;
+const { grey, cyan, orange, pink, blue, teal } = colors;
 const theme = createTheme({
 	palette: {
 		white: '#ffffff',
@@ -10,10 +10,10 @@ const theme = createTheme({
 		main: cyan[600],
 		mainDark: cyan[900],
 		mainLight: cyan[100],
-		textLight: '#ffffff',
-		textDark: '#000000',
 		contrast2: orange['A200'],
-		contrast1: pink[300]
+		contrast1: pink[300],
+		linkDark: blue[800],
+		linkHover: cyan[700]
 	}
 });
 

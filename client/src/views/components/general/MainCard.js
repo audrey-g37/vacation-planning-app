@@ -1,16 +1,9 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	Grid,
-	Typography,
-	useMediaQuery,
-	useTheme
-} from '@mui/material';
+import { Card, CardContent, CardHeader, Grid, useMediaQuery, useTheme } from '@mui/material';
 
 import CustomDivider from './CustomDivider';
+import CustomTypography from './CustomTypography';
 
 const MainCard = forwardRef(({ sx = {}, title = '', children, ...others }, ref) => {
 	const theme = useTheme();
@@ -24,7 +17,7 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, ...others }, ref) 
 				...sx,
 				display: 'flex',
 				flexWrap: 'nowrap',
-				height: medAndUp ? '60vh' : '75vh',
+				height: medAndUp ? '65vh' : '75vh',
 				width: medAndUp ? '60vw' : '80vw',
 				margin: 'auto'
 			}}
@@ -34,9 +27,11 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, ...others }, ref) 
 					<Grid item xs={12} sx={{ height: medAndUp ? '15%' : '10%' }}>
 						<CardHeader
 							title={
-								<Typography variant={medAndUp ? 'h4' : 'subtitle1'}>
-									{title}
-								</Typography>
+								<CustomTypography
+									variant={medAndUp ? 'h5' : 'h6'}
+									textColor={theme.palette.black}
+									textContent={title}
+								/>
 							}
 						/>
 						<CustomDivider />

@@ -1,5 +1,4 @@
 import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 
 // mui imports
 import { Grid } from '@mui/material';
@@ -29,31 +28,28 @@ const AuthLayout = ({}) => {
 				container
 				sx={{
 					position: 'absolute',
-					bottom: '3rem',
+					bottom: '1rem',
 					left: 0,
-					alignItems: 'center'
+					alignItems: 'center',
+					justifyContent: 'space-around'
 				}}
 			>
 				{authType !== 'login-help' && (
-					<Grid item xs={6}>
-						<Link to={'#'}>
-							<CustomTypography textContent={'Need help logging in?'} />
-						</Link>
-					</Grid>
+					<CustomTypography
+						tooltipText={'Forgot Username/Password'}
+						to={'#'}
+						textContent={'Need help logging in?'}
+					/>
 				)}
 				{authType !== 'login' && (
-					<Grid item xs={6}>
-						<Link to={'/login'}>
-							<CustomTypography textContent={'Login'} />
-						</Link>
-					</Grid>
+					<CustomTypography tooltipText={'Login'} to={'/login'} textContent={'Login'} />
 				)}
 				{authType !== 'register' && (
-					<Grid item xs={6}>
-						<Link to={'/register'}>
-							<CustomTypography textContent={'Register'} />
-						</Link>
-					</Grid>
+					<CustomTypography
+						tooltipText={'Create Account'}
+						to={'/register'}
+						textContent={'Register'}
+					/>
 				)}
 			</Grid>
 		</MainCard>
