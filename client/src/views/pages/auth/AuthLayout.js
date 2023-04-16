@@ -2,10 +2,11 @@ import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 
 // mui imports
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // project imports
 import MainCard from 'views/components/general/MainCard';
+import CustomTypography from 'views/components/general/CustomTypography';
 import Login from './Login';
 import Register from './Register';
 
@@ -20,41 +21,40 @@ const AuthLayout = ({}) => {
 	return (
 		<MainCard
 			title={`${authType.charAt(0).toUpperCase()}${authType.slice(1, authType.length)}`}
-			sx={{ textAlign: 'center' }}
+			sx={{ textAlign: 'center', position: 'relative' }}
 		>
 			{authTypes[authType]}
+
 			<Grid
 				container
 				sx={{
-					justifyContent: 'flex-end',
+					position: 'absolute',
+					bottom: '3rem',
+					left: 0,
 					alignItems: 'center'
 				}}
 			>
-				<Grid item xs={12} md={6}>
-					<Grid container>
-						{authType !== 'login' && (
-							<Grid item xs={6}>
-								<Link to={'/login'}>
-									<Typography>Login</Typography>
-								</Link>
-							</Grid>
-						)}
-						{authType !== 'register' && (
-							<Grid item xs={6}>
-								<Link to={'/register'}>
-									<Typography>Register</Typography>
-								</Link>
-							</Grid>
-						)}
-						{authType !== 'login-help' && (
-							<Grid item xs={6}>
-								<Link to={'#'}>
-									<Typography>Need help logging in?</Typography>
-								</Link>
-							</Grid>
-						)}
+				{authType !== 'login-help' && (
+					<Grid item xs={6}>
+						<Link to={'#'}>
+							<CustomTypography textContent={'Need help logging in?'} />
+						</Link>
 					</Grid>
-				</Grid>
+				)}
+				{authType !== 'login' && (
+					<Grid item xs={6}>
+						<Link to={'/login'}>
+							<CustomTypography textContent={'Login'} />
+						</Link>
+					</Grid>
+				)}
+				{authType !== 'register' && (
+					<Grid item xs={6}>
+						<Link to={'/register'}>
+							<CustomTypography textContent={'Register'} />
+						</Link>
+					</Grid>
+				)}
 			</Grid>
 		</MainCard>
 	);

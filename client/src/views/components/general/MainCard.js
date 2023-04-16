@@ -1,24 +1,56 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-import { Card, CardContent, CardHeader, Divider, Grid, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	Grid,
+	Typography,
+	useMediaQuery,
+	useTheme
+} from '@mui/material';
+
+import CustomDivider from './CustomDivider';
 
 const MainCard = forwardRef(({ sx = {}, title = '', children, ...others }, ref) => {
 	const theme = useTheme();
+	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+
 	return (
 		<Card
 			ref={ref}
 			{...others}
-			sx={{ ...sx, flexWrap: 'nowrap', height: '60vh', width: '60vw', margin: 'auto' }}
+			sx={{
+				...sx,
+				display: 'flex',
+				flexWrap: 'nowrap',
+				height: '60vh',
+				width: '60vw',
+				margin: 'auto'
+			}}
 		>
-			{title && (
-				<>
-					<CardHeader title={<Typography variant='h4'>{title}</Typography>} />
-					<Divider />
-				</>
-			)}
+			<Grid container>
+				{title && (
+					<Grid item xs={12} sx={{ height: medAndUp ? '15%' : '10%' }}>
+						<CardHeader
+							title={
+								<Typography variant={medAndUp ? 'h4' : 'subtitle1'}>
+									{title}
+								</Typography>
+							}
+						/>
+						<CustomDivider />
+					</Grid>
+				)}
 
-			{children && <CardContent>{children}</CardContent>}
+				{children && (
+					<Grid item xs={12} sx={{ height: medAndUp ? '85%' : '90%', margin: '1rem' }}>
+						<CardContent sx={{ margin: '0.5 rem', height: '100%' }}>
+							{children}
+						</CardContent>
+					</Grid>
+				)}
+			</Grid>
 		</Card>
 	);
 });
