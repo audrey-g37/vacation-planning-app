@@ -24,8 +24,8 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, ...others }, ref) 
 				...sx,
 				display: 'flex',
 				flexWrap: 'nowrap',
-				height: '60vh',
-				width: '60vw',
+				height: medAndUp ? '60vh' : '75vh',
+				width: medAndUp ? '60vw' : '80vw',
 				margin: 'auto'
 			}}
 		>
@@ -57,6 +57,7 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, ...others }, ref) 
 
 MainCard.propTypes = {
 	sx: PropTypes.object,
+	children: PropTypes.node,
 	title: PropTypes.string
 };
 

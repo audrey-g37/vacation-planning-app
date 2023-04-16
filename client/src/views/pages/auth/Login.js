@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useMutation } from '@apollo/client';
+
+// project imports
 import { LOGIN_USER } from 'utils/mutations';
 import Auth from 'utils/auth';
+import FormInput from 'views/components/general/inputs';
 
 const Login = (props) => {
 	const [formState, setFormState] = useState({ username: '', password: '' });
@@ -48,19 +51,33 @@ const Login = (props) => {
 				</p>
 			) : (
 				<form onSubmit={handleFormSubmit}>
-					<input
-						placeholder='Username'
-						name='username'
-						type='text'
-						value={formState.username}
-						onChange={handleChange}
+					<FormInput
+						componentType={'text'}
+						componentProps={{
+							placeholder: 'Username',
+							name: 'username',
+							type: 'text',
+							value: formState.username,
+							onChange: handleChange
+						}}
+						label={'New Username'}
+						required={true}
+						// error={!formState.username}
+						helperText={'Username is required.'}
 					/>
-					<input
-						placeholder='******'
-						name='password'
-						type='password'
-						value={formState.password}
-						onChange={handleChange}
+					<FormInput
+						componentType={'text'}
+						componentProps={{
+							placeholder: 'Password',
+							name: 'password',
+							type: 'password',
+							value: formState.password,
+							onChange: handleChange
+						}}
+						label={'Password'}
+						required={true}
+						// error={!formState.password}
+						helperText={'Password is required.'}
 					/>
 					<Button className='login-btn' variant='dark' onClick={handleFormSubmit}>
 						Login
