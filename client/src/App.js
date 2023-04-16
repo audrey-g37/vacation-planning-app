@@ -1,11 +1,13 @@
-import './App.css';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ThemeProvider } from '@mui/material';
+import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
 // project imports
 import theme from 'style/theme';
 import Routes from 'routes';
+import './App.css';
+
 const httpLink = createHttpLink({
 	uri: '/graphql'
 });
@@ -28,22 +30,22 @@ const client = new ApolloClient({
 	cache: new InMemoryCache()
 });
 
-// *using to disable app/features while I refactor and enhance app
-const underConstruction = process.env.NODE_ENV === 'development' ? false : true;
-const lastModifiedDate = '04/11/2023';
-
 function App() {
+	// *using to disable app/features while I refactor and enhance app
+	const underConstruction = process.env.NODE_ENV === 'development' ? false : true;
+	const lastModifiedDate = '04/11/2023';
 	return (
-		<>
-			<ApolloProvider client={client}>
-				<ThemeProvider theme={theme}>
+		<StyledEngineProvider injectFirst>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<ApolloProvider client={client}>
 					<Routes
 						underConstruction={underConstruction}
 						lastModifiedDate={lastModifiedDate}
 					/>
-				</ThemeProvider>
-			</ApolloProvider>
-		</>
+				</ApolloProvider>
+			</ThemeProvider>
+		</StyledEngineProvider>
 	);
 }
 
