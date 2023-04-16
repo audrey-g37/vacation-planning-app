@@ -15,8 +15,8 @@ const MainNav = ({ underConstruction }) => {
 
 	const headerNav = [
 		{ text: 'GRIP', url: '/', tooltipText: 'Home' },
-		{ text: 'Login', url: '/' },
-		{ text: 'Signup', url: '/signup' }
+		{ text: 'Login', url: '/login' },
+		{ text: 'Register', url: '/register' }
 	];
 
 	if (withAuth) {

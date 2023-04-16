@@ -1,11 +1,24 @@
 import { Link } from 'react-router-dom';
-import { Grid, Tooltip, Typography } from '@mui/material';
+import { Grid, Tooltip } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-const NavMenu = ({ navOptions, textField, relativePath = true, vertical, color }) => {
+// project imports
+import CustomTypography from './CustomTypography';
+
+const NavMenu = ({
+	navOptions,
+	textField,
+	relativePath = true,
+	vertical,
+	color,
+	hoverTextColor
+}) => {
 	const theme = useTheme();
 	if (!color) {
-		color = theme.palette.textDark;
+		color = theme.palette.black;
+	}
+	if (!hoverTextColor) {
+		hoverTextColor = theme.palette.linkDark;
 	}
 
 	return (
@@ -13,22 +26,14 @@ const NavMenu = ({ navOptions, textField, relativePath = true, vertical, color }
 			{navOptions.map((option) => {
 				return (
 					<Grid key={option[textField]} sx={{ whiteSpace: 'nowrap', margin: '0 0.5rem' }}>
-						<Tooltip
-							title={option.tooltipText || option[textField]}
-							placement={'top-end'}
-						>
-							{relativePath ? (
-								<Link to={option.url}>
-									<Typography sx={{ color: color, textDecoration: 'underline' }}>
-										{option[textField]}
-									</Typography>
-								</Link>
-							) : (
-								<a href={option.url} target={'_blank'} style={{ color: color }}>
-									{option[textField]}
-								</a>
-							)}
-						</Tooltip>
+						<CustomTypography
+							textContent={option[textField]}
+							to={option.url}
+							textColor={color}
+							hoverTextColor={hoverTextColor}
+							tooltipText={option.tooltipText || option[textField]}
+							relativePath={relativePath}
+						/>
 					</Grid>
 				);
 			})}
