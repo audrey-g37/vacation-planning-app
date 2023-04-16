@@ -8,30 +8,38 @@ const CustomTypography = ({
 	hoverTextColor,
 	tooltipText,
 	to,
-	relativePath
+	relativePath = true
 }) => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-	const customVariant = !variant ? (medAndUp ? 'body1' : 'body2') : variant;
-	const customStyle = {
-		color: textColor || theme.palette.linkDark
+	if (!variant) {
+		variant = medAndUp ? 'body1' : 'body2';
+	}
+	if (!textColor) {
+		textColor = theme.palette.linkDark;
+	}
+	if (!hoverTextColor) {
+		hoverTextColor = theme.palette.linkHover;
+	}
+	let customStyle = {
+		color: textColor
 	};
-	let finalStyle = customStyle;
 
+	// typography is being used as a link component
 	if (to) {
-		finalStyle = {
-			...finalStyle,
+		customStyle = {
+			...customStyle,
 			'textDecoration': `underline ${customStyle.color}`,
 			':hover': {
-				color: hoverTextColor || theme.palette.linkHover,
-				textDecoration: `underline ${hoverTextColor || theme.palette.linkHover}`
+				color: hoverTextColor,
+				textDecoration: `underline ${hoverTextColor}`
 			}
 		};
 	}
 
 	const FormattedTypography = (
-		<Typography variant={customVariant} sx={finalStyle}>
+		<Typography variant={variant} sx={customStyle}>
 			{textContent}
 		</Typography>
 	);
