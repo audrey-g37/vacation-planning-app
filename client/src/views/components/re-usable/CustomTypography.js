@@ -1,4 +1,5 @@
-import { Typography, useTheme, useMediaQuery, Tooltip, Link } from '@mui/material';
+import { Typography, useTheme, useMediaQuery, Link } from '@mui/material';
+import CustomTooltip from './CustomTooltip';
 
 const CustomTypography = ({ variant, textContent, tooltipText, to, relativePath = true, icon }) => {
 	const theme = useTheme();
@@ -22,35 +23,39 @@ const CustomTypography = ({ variant, textContent, tooltipText, to, relativePath 
 	}
 
 	const FormattedTypography = (
-		<>
+		<Typography variant={variant} sx={customStyle}>
 			{icon && icon}
-			{textContent && (
-				<Typography variant={variant} sx={customStyle}>
-					{textContent}
-				</Typography>
-			)}
-		</>
+			{textContent}
+		</Typography>
 	);
 
-	let finalText = FormattedTypography;
-	let withTooltip;
-
-	if (tooltipText) {
-		withTooltip = (
-			<Tooltip placement={'top'} title={tooltipText}>
-				{FormattedTypography}
-			</Tooltip>
-		);
-	}
-	if (to) {
-		finalText = (
+	const WithTooltipAndLink = (
+		<CustomTooltip tooltipText={tooltipText}>
 			<Link href={to} target={!relativePath ? '_blank' : ''}>
-				{withTooltip || FormattedTypography}
+				{FormattedTypography}
 			</Link>
-		);
-	} else finalText = withTooltip ? withTooltip : finalText;
+		</CustomTooltip>
+	);
 
-	return finalText;
+	const WithTooltipOnly = (
+		<Link href={to} target={!relativePath ? '_blank' : ''}>
+			{FormattedTypography}
+		</Link>
+	);
+
+	const WithLinkOnly = (
+		<CustomTooltip tooltipText={tooltipText} p>
+			{FormattedTypography}
+		</CustomTooltip>
+	);
+
+	return tooltipText && to
+		? WithTooltipAndLink
+		: to
+		? WithTooltipOnly
+		: tooltipText
+		? WithLinkOnly
+		: FormattedTypography;
 };
 
 export default CustomTypography;
