@@ -5,8 +5,9 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 // project imports
 import CustomTypography from './CustomTypography';
+import CustomTooltip from './CustomTooltip';
 
-const CollapsedMenu = ({ options, textField, relativePath = true }) => {
+const CollapsedMenu = ({ options, textField, relativePath = true, tooltipText }) => {
 	const theme = useTheme();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
@@ -16,19 +17,28 @@ const CollapsedMenu = ({ options, textField, relativePath = true }) => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const MenuButton = (
+		<Button
+			variant={'text'}
+			onClick={handleClick}
+			sx={{
+				'&:hover': {
+					backgroundColor: theme.palette.background
+				}
+			}}
+		>
+			{<MenuRoundedIcon />}
+		</Button>
+	);
+
 	return (
 		<>
-			<Button
-				variant={'text'}
-				onClick={handleClick}
-				sx={{
-					'&:hover': {
-						backgroundColor: theme.palette.background
-					}
-				}}
-			>
-				{<MenuRoundedIcon />}
-			</Button>
+			{tooltipText ? (
+				<CustomTooltip tooltipText={tooltipText}>{MenuButton}</CustomTooltip>
+			) : (
+				MenuButton
+			)}
 
 			<Menu
 				open={open}

@@ -1,25 +1,26 @@
 // mui imports
-import { Grid } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 
 // project imports
-import MainNav from 'views/components/display/MainNav';
-import Footer from 'views/components/display/Footer';
+import Header from 'views/components/specific/Header';
+import Footer from 'views/components/specific/Footer';
 import AuthLayout from 'views/pages/auth/AuthLayout';
 
 import { UnderConstruction } from 'views/pages';
 
 const AuthMain = () => {
+	const theme = useTheme();
 	// *using to disable app/features while I refactor and enhance app
-	const underConstruction = true;
-	// process.env.NODE_ENV === 'development' ? false : true;
+	const underConstruction = process.env.NODE_ENV === 'production';
 	const lastModifiedDate = '04/16/2023';
 	return (
 		<Grid
 			container
-			sx={{ justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw' }}
+			spacing={theme.spacing()}
+			sx={{ justifyContent: 'center', height: '100vh', width: '100vw' }}
 		>
 			<Grid item xs={12}>
-				<MainNav underConstruction={underConstruction} />
+				<Header underConstruction={underConstruction} />
 			</Grid>
 			<Grid item xs={12}>
 				{underConstruction ? (

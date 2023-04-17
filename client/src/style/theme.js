@@ -62,9 +62,12 @@ const theme = (mode) => {
 	};
 	palette = mode === 'dark' ? { ...palette, ...darkMode } : { ...palette, ...lightMode };
 
-	return createTheme({
-		palette: palette
+	let themeToUse = createTheme({
+		palette: palette,
+		spacing: [0, 4, 8, 16, 32, 64]
 	});
+	themeToUse.spacing(4);
+	return themeToUse;
 };
 
 export default theme;

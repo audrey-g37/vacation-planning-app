@@ -2,11 +2,11 @@ import React from 'react';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
-import CollapsedMenu from 'views/components/general/CollapsedMenu';
+import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
 import Auth from 'utils/auth';
-import CustomTypography from '../general/CustomTypography';
+import CustomTypography from '../re-usable/CustomTypography';
 
-const MainNav = ({ underConstruction }) => {
+const Header = ({ underConstruction }) => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 	const logout = (event) => {
@@ -31,6 +31,7 @@ const MainNav = ({ underConstruction }) => {
 	return (
 		<Grid
 			container
+			spacing={theme.spacing()}
 			sx={{
 				alignItems: 'center',
 				position: 'absolute',
@@ -48,7 +49,7 @@ const MainNav = ({ underConstruction }) => {
 			</Grid>
 
 			<Grid item>
-				<Grid container>
+				<Grid container spacing={theme.spacing()}>
 					<Grid item>
 						<CollapsedMenu
 							options={
@@ -59,6 +60,7 @@ const MainNav = ({ underConstruction }) => {
 									: headerNav
 							}
 							textField={'text'}
+							tooltipText={'Menu'}
 						/>
 					</Grid>
 				</Grid>
@@ -67,4 +69,4 @@ const MainNav = ({ underConstruction }) => {
 	);
 };
 
-export default MainNav;
+export default Header;

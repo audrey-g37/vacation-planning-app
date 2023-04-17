@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Grid } from '@mui/material';
+import { Grid, useTheme, useMediaQuery } from '@mui/material';
 import { useMutation } from '@apollo/client';
 
 // project imports
 import { LOGIN_USER } from 'utils/mutations';
 import Auth from 'utils/auth';
-import FormInput from 'views/components/general/inputs';
+import FormInput from 'views/components/re-usable/inputs';
+import SubmitButton from 'views/components/re-usable/SubmitButton';
 
 const Login = (props) => {
+	const theme = useTheme();
+	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
 	const [formState, setFormState] = useState({ username: '', password: '' });
 	const [login, { error, data }] = useMutation(LOGIN_USER);
 
@@ -43,6 +46,11 @@ const Login = (props) => {
 		});
 	};
 
+	const submissionDisabled = {
+		disabled: !formState.username || !formState.password,
+		message: 'Enter a username and password.'
+	};
+
 	return (
 		<>
 			{data ? (
@@ -51,7 +59,7 @@ const Login = (props) => {
 				</p>
 			) : (
 				<form onSubmit={handleFormSubmit}>
-					<Grid container>
+					<Grid container spacing={theme.spacing(lgAndUp ? 3 : 2)}>
 						<Grid item xs={12} md={6}>
 							<FormInput
 								componentType={'text'}
@@ -84,10 +92,25 @@ const Login = (props) => {
 								helperText={'Password is required.'}
 							/>
 						</Grid>
+						<Grid
+							container
+							spacing={theme.spacing()}
+							sx={{ justifyContent: 'flex-end' }}
+						>
+							<Grid item>
+								<SubmitButton
+									title={'Login'}
+									tooltipText={
+										!submissionDisabled.disabled
+											? 'Login'
+											: submissionDisabled.message
+									}
+									onClick={handleFormSubmit}
+									disabled={submissionDisabled.disabled}
+								/>
+							</Grid>
+						</Grid>
 					</Grid>
-					<Button className='login-btn' variant='dark' onClick={handleFormSubmit}>
-						Login
-					</Button>
 				</form>
 			)}
 
