@@ -8,14 +8,18 @@ import AuthLayout from 'views/pages/auth/AuthLayout';
 
 import { UnderConstruction } from 'views/pages';
 
-const AuthMain = ({ underConstruction, lastModifiedDate }) => {
+const AuthMain = () => {
+	// *using to disable app/features while I refactor and enhance app
+	const underConstruction = true;
+	// process.env.NODE_ENV === 'development' ? false : true;
+	const lastModifiedDate = '04/16/2023';
 	return (
 		<Grid
 			container
 			sx={{ justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw' }}
 		>
 			<Grid item xs={12}>
-				<MainNav />
+				<MainNav underConstruction={underConstruction} />
 			</Grid>
 			<Grid item xs={12}>
 				{underConstruction ? (

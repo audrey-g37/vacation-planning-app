@@ -4,8 +4,9 @@ import { ThemeProvider } from '@mui/material';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
 // project imports
-import theme from 'style/theme';
 import Routes from 'routes';
+import NavScroll from 'views/components/display/NavScroll';
+import theme from 'style/theme';
 import './App.css';
 
 const httpLink = createHttpLink({
@@ -31,18 +32,16 @@ const client = new ApolloClient({
 });
 
 function App() {
-	// *using to disable app/features while I refactor and enhance app
-	const underConstruction = process.env.NODE_ENV === 'development' ? false : true;
-	const lastModifiedDate = '04/11/2023';
+	const mode = 'light';
+
 	return (
 		<StyledEngineProvider injectFirst>
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={theme(mode)}>
 				<CssBaseline />
 				<ApolloProvider client={client}>
-					<Routes
-						underConstruction={underConstruction}
-						lastModifiedDate={lastModifiedDate}
-					/>
+					<NavScroll>
+						<Routes />
+					</NavScroll>
 				</ApolloProvider>
 			</ThemeProvider>
 		</StyledEngineProvider>
