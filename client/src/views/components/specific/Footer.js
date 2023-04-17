@@ -37,7 +37,7 @@ const Footer = () => {
 				backgroundColor: theme.palette.navBackground
 			}}
 		>
-			<Grid item xs={1} sx={{ margin: '1rem' }}>
+			<Grid item xs={1} sx={{ margin: '1rem', textAlign: 'center' }}>
 				<CustomTypography
 					to={'https://github.com/audrey-g37/vacation-planning-app'}
 					relativePath={false}
