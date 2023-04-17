@@ -2,7 +2,7 @@
 import { Grid } from '@mui/material';
 
 // project imports
-import MainNav from 'views/components/specific/MainNav';
+import Header from 'views/components/specific/Header';
 import Footer from 'views/components/specific/Footer';
 import AuthLayout from 'views/pages/auth/AuthLayout';
 
@@ -18,7 +18,7 @@ const AuthMain = () => {
 			sx={{ justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw' }}
 		>
 			<Grid item xs={12}>
-				<MainNav underConstruction={underConstruction} />
+				<Header underConstruction={underConstruction} />
 			</Grid>
 			<Grid item xs={12}>
 				{underConstruction ? (

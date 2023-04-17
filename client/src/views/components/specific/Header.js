@@ -6,7 +6,7 @@ import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
 import Auth from 'utils/auth';
 import CustomTypography from '../re-usable/CustomTypography';
 
-const MainNav = ({ underConstruction }) => {
+const Header = ({ underConstruction }) => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 	const logout = (event) => {
@@ -59,6 +59,7 @@ const MainNav = ({ underConstruction }) => {
 									: headerNav
 							}
 							textField={'text'}
+							tooltipText={'Menu'}
 						/>
 					</Grid>
 				</Grid>
@@ -67,4 +68,4 @@ const MainNav = ({ underConstruction }) => {
 	);
 };
 
-export default MainNav;
+export default Header;
