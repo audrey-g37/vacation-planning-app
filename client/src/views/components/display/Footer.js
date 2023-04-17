@@ -1,13 +1,15 @@
 // library imports
 import React from 'react';
-import { Grid, Tooltip } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Grid, useTheme, useMediaQuery } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 // project imports
 import NavMenu from 'views/components/general/NavMenu';
+import CustomTypography from '../general/CustomTypography';
 
 const Footer = () => {
 	const theme = useTheme();
+	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 	const contributors = [
 		{ name: 'Audrey Gillies', gitUser: 'audrey-g37' },
 		{ name: 'Gina Im', gitUser: 'gim928' },
@@ -31,33 +33,25 @@ const Footer = () => {
 				alignItems: 'center',
 				position: 'absolute',
 				bottom: '0',
-				height: '2.5rem',
-				backgroundColor: theme.palette.greyDark
+				height: '4rem',
+				backgroundColor: theme.palette.navBackground
 			}}
 		>
-			<Grid item xs={1}>
-				<Tooltip title={'GRIP Code'}>
-					<a href='https://github.com/audrey-g37/vacation-planning-app' target='_blank'>
-						<img
-							alt='Github repo link'
-							src='/images/github_logo.png'
-							width='30'
-							height='30'
-						/>
-					</a>
-				</Tooltip>
+			<Grid item xs={1} sx={{ margin: '1rem' }}>
+				<CustomTypography
+					to={'https://github.com/audrey-g37/vacation-planning-app'}
+					relativePath={false}
+					icon={<GitHubIcon fontSize={medAndUp ? 'large' : 'medium'} />}
+					tooltipText={'Grip Code'}
+				/>
 			</Grid>
-			<Grid item>
-				<Grid container>
-					<Grid item xs={12}>
-						<NavMenu
-							navOptions={contributors}
-							textField={'name'}
-							vertical={false}
-							relativePath={false}
-						/>
-					</Grid>
-				</Grid>
+			<Grid item xs={9} md={6} lg={4}>
+				<NavMenu
+					sx={{ justifyContent: 'center', flexWrap: medAndUp ? 'nowrap' : 'wrap' }}
+					options={contributors}
+					textField={'name'}
+					relativePath={false}
+				/>
 			</Grid>
 		</Grid>
 	);

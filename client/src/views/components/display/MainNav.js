@@ -1,11 +1,14 @@
-import { Grid } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import React from 'react';
-import NavMenu from 'views/components/general/NavMenu';
+import { Grid, useTheme, useMediaQuery } from '@mui/material';
+
+// project imports
+import CollapsedMenu from 'views/components/general/CollapsedMenu';
 import Auth from 'utils/auth';
+import CustomTypography from '../general/CustomTypography';
 
 const MainNav = ({ underConstruction }) => {
 	const theme = useTheme();
+	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 	const logout = (event) => {
 		event.preventDefault();
 		Auth.logout();
@@ -14,7 +17,6 @@ const MainNav = ({ underConstruction }) => {
 	const withAuth = Auth.loggedIn();
 
 	const headerNav = [
-		{ text: 'GRIP', url: '/', tooltipText: 'Home' },
 		{ text: 'Login', url: '/login' },
 		{ text: 'Register', url: '/register' }
 	];
@@ -30,24 +32,36 @@ const MainNav = ({ underConstruction }) => {
 		<Grid
 			container
 			sx={{
-				justifyContent: 'flex-start',
 				alignItems: 'center',
 				position: 'absolute',
+				flexWrap: 'nowrap',
 				top: '0',
-				height: '3rem',
-				backgroundColor: theme.palette.greyDark
+				height: '4rem',
+				backgroundColor: theme.palette.navBackground
 			}}
 		>
-			<Grid item>
-				<NavMenu
-					navOptions={
-						underConstruction
-							? headerNav.map((navOption) => (navOption = { ...navOption, url: '#' }))
-							: headerNav
-					}
-					textField={'text'}
-					vertical={false}
+			<Grid item xs={12} sx={{ textAlign: 'center' }}>
+				<CustomTypography
+					textContent={'Get a GRIP On Your Group Trip!'}
+					variant={medAndUp ? 'h4' : 'subtitle1'}
 				/>
+			</Grid>
+
+			<Grid item>
+				<Grid container>
+					<Grid item>
+						<CollapsedMenu
+							options={
+								underConstruction
+									? headerNav.map(
+											(navOption) => (navOption = { ...navOption, url: '#' })
+									  )
+									: headerNav
+							}
+							textField={'text'}
+						/>
+					</Grid>
+				</Grid>
 			</Grid>
 		</Grid>
 	);

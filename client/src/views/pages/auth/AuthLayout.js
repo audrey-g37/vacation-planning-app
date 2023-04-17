@@ -17,41 +17,42 @@ const AuthLayout = ({}) => {
 		register: <Register />
 		// 'login-help': <ForgotUserData />
 	};
+
+	const AuthNavLinks = (
+		<Grid
+			container
+			sx={{
+				alignItems: 'center',
+				justifyContent: 'space-around',
+				marginBottom: '0.5rem'
+			}}
+		>
+			{authType !== 'login-help' && (
+				<CustomTypography
+					tooltipText={'Forgot Username/Password'}
+					to={'#'}
+					textContent={'Need help logging in?'}
+				/>
+			)}
+			{authType !== 'login' && (
+				<CustomTypography tooltipText={'Login'} to={'/login'} textContent={'Login'} />
+			)}
+			{authType !== 'register' && (
+				<CustomTypography
+					tooltipText={'Create Account'}
+					to={'/register'}
+					textContent={'Register'}
+				/>
+			)}
+		</Grid>
+	);
+
 	return (
 		<MainCard
 			title={`${authType.charAt(0).toUpperCase()}${authType.slice(1, authType.length)}`}
-			sx={{ textAlign: 'center', position: 'relative' }}
+			actionSection={AuthNavLinks}
 		>
 			{authTypes[authType]}
-
-			<Grid
-				container
-				sx={{
-					position: 'absolute',
-					bottom: '1rem',
-					left: 0,
-					alignItems: 'center',
-					justifyContent: 'space-around'
-				}}
-			>
-				{authType !== 'login-help' && (
-					<CustomTypography
-						tooltipText={'Forgot Username/Password'}
-						to={'#'}
-						textContent={'Need help logging in?'}
-					/>
-				)}
-				{authType !== 'login' && (
-					<CustomTypography tooltipText={'Login'} to={'/login'} textContent={'Login'} />
-				)}
-				{authType !== 'register' && (
-					<CustomTypography
-						tooltipText={'Create Account'}
-						to={'/register'}
-						textContent={'Register'}
-					/>
-				)}
-			</Grid>
 		</MainCard>
 	);
 };

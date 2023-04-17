@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { useMutation } from '@apollo/client';
 
 // project imports
@@ -44,41 +44,47 @@ const Login = (props) => {
 	};
 
 	return (
-		<div>
+		<>
 			{data ? (
 				<p>
 					Success! You may now head <Link to='/'>back to the homepage.</Link>
 				</p>
 			) : (
 				<form onSubmit={handleFormSubmit}>
-					<FormInput
-						componentType={'text'}
-						componentProps={{
-							placeholder: 'Username',
-							name: 'username',
-							type: 'text',
-							value: formState.username,
-							onChange: handleChange
-						}}
-						label={'New Username'}
-						required={true}
-						// error={!formState.username}
-						helperText={'Username is required.'}
-					/>
-					<FormInput
-						componentType={'text'}
-						componentProps={{
-							placeholder: 'Password',
-							name: 'password',
-							type: 'password',
-							value: formState.password,
-							onChange: handleChange
-						}}
-						label={'Password'}
-						required={true}
-						// error={!formState.password}
-						helperText={'Password is required.'}
-					/>
+					<Grid container>
+						<Grid item xs={12} md={6}>
+							<FormInput
+								componentType={'text'}
+								componentProps={{
+									placeholder: 'Username',
+									name: 'username',
+									type: 'text',
+									value: formState.username,
+									onChange: handleChange
+								}}
+								label={'New Username'}
+								required={true}
+								// error={!formState.username}
+								helperText={'Username is required.'}
+							/>
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<FormInput
+								componentType={'text'}
+								componentProps={{
+									placeholder: 'Password',
+									name: 'password',
+									type: 'password',
+									value: formState.password,
+									onChange: handleChange
+								}}
+								label={'Password'}
+								required={true}
+								// error={!formState.password}
+								helperText={'Password is required.'}
+							/>
+						</Grid>
+					</Grid>
 					<Button className='login-btn' variant='dark' onClick={handleFormSubmit}>
 						Login
 					</Button>
@@ -86,7 +92,7 @@ const Login = (props) => {
 			)}
 
 			{error && <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>}
-		</div>
+		</>
 	);
 };
 

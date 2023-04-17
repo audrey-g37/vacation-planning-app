@@ -1,30 +1,13 @@
-import { Link } from 'react-router-dom';
-import { Typography, useTheme, useMediaQuery, Tooltip } from '@mui/material';
+import { Typography, useTheme, useMediaQuery, Tooltip, Link } from '@mui/material';
 
-const CustomTypography = ({
-	variant,
-	textContent,
-	textColor,
-	hoverTextColor,
-	tooltipText,
-	to,
-	relativePath = true
-}) => {
+const CustomTypography = ({ variant, textContent, tooltipText, to, relativePath = true, icon }) => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
 	if (!variant) {
 		variant = medAndUp ? 'body1' : 'body2';
 	}
-	if (!textColor) {
-		textColor = theme.palette.linkDark;
-	}
-	if (!hoverTextColor) {
-		hoverTextColor = theme.palette.linkHover;
-	}
-	let customStyle = {
-		color: textColor
-	};
+	let customStyle = {};
 
 	// typography is being used as a link component
 	if (to) {
@@ -32,37 +15,40 @@ const CustomTypography = ({
 			...customStyle,
 			'textDecoration': `underline ${customStyle.color}`,
 			':hover': {
-				color: hoverTextColor,
-				textDecoration: `underline ${hoverTextColor}`
+				color: theme.palette.primary.light,
+				textDecoration: `underline ${theme.palette.primary.light}`
 			}
 		};
 	}
 
 	const FormattedTypography = (
-		<Typography variant={variant} sx={customStyle}>
-			{textContent}
-		</Typography>
+		<>
+			{icon && icon}
+			{textContent && (
+				<Typography variant={variant} sx={customStyle}>
+					{textContent}
+				</Typography>
+			)}
+		</>
 	);
 
 	let finalText = FormattedTypography;
+	let withTooltip;
 
 	if (tooltipText) {
-		finalText = (
+		withTooltip = (
 			<Tooltip placement={'top'} title={tooltipText}>
-				{to ? (
-					relativePath ? (
-						<Link to={to}>{FormattedTypography}</Link>
-					) : (
-						<a href={to} target={'_blank'}>
-							{FormattedTypography}
-						</a>
-					)
-				) : (
-					FormattedTypography
-				)}
+				{FormattedTypography}
 			</Tooltip>
 		);
 	}
+	if (to) {
+		finalText = (
+			<Link href={to} target={!relativePath ? '_blank' : ''}>
+				{withTooltip || FormattedTypography}
+			</Link>
+		);
+	} else finalText = withTooltip ? withTooltip : finalText;
 
 	return finalText;
 };
