@@ -32,9 +32,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-	// *using to disable app/features while I refactor and enhance app
-	const underConstruction = process.env.NODE_ENV === 'development' ? false : true;
-	const lastModifiedDate = '04/11/2023';
 	const mode = 'light';
 
 	return (
@@ -43,10 +40,7 @@ function App() {
 				<CssBaseline />
 				<ApolloProvider client={client}>
 					<NavScroll>
-						<Routes
-							underConstruction={underConstruction}
-							lastModifiedDate={lastModifiedDate}
-						/>
+						<Routes />
 					</NavScroll>
 				</ApolloProvider>
 			</ThemeProvider>
