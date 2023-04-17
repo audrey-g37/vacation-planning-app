@@ -48,7 +48,7 @@ const Header = ({ underConstruction }) => {
 			</Grid>
 
 			<Grid item>
-				<Grid container>
+				<Grid container spacing={theme.spacing()}>
 					<Grid item>
 						<CollapsedMenu
 							options={

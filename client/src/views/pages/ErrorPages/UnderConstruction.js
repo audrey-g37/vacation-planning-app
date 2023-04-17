@@ -1,12 +1,17 @@
 import React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 
 const UnderConstruction = ({ lastModifiedDate }) => {
+	const theme = useTheme();
 	const options = { year: 'numeric', month: 'short', day: 'numeric' };
 	const displayDate = new Date(lastModifiedDate).toLocaleDateString('en-us', options);
 
 	return (
-		<Grid container sx={{ justifyContent: 'center', paddingTop: '5rem' }}>
+		<Grid
+			container
+			spacing={theme.spacing()}
+			sx={{ justifyContent: 'center', paddingTop: '5rem' }}
+		>
 			<Grid item>
 				<Box
 					sx={{

@@ -1,11 +1,16 @@
-import { Grid } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 
 // project imports
 import CustomTypography from './CustomTypography';
 
 const NavMenu = ({ options, textField, relativePath = true, vertical, sx = {} }) => {
+	const theme = useTheme();
 	return (
-		<Grid container sx={{ ...sx, flexDirection: vertical ? 'column' : 'row' }}>
+		<Grid
+			container
+			spacing={theme.spacing()}
+			sx={{ ...sx, flexDirection: vertical ? 'column' : 'row' }}
+		>
 			{options.map((option) => {
 				return (
 					<Grid key={option[textField]} sx={{ whiteSpace: 'nowrap', margin: '0 0.5rem' }}>
