@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router';
 
 // mui imports
-import { Grid } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 
 // project imports
 import MainCard from 'views/components/re-usable/MainCard';
@@ -10,6 +10,7 @@ import Login from './Login';
 import Register from './Register';
 
 const AuthLayout = ({}) => {
+	const theme = useTheme();
 	const { pathname } = useLocation();
 	const authType = pathname.replace('/', '') || 'login';
 	const authTypes = {
@@ -21,6 +22,7 @@ const AuthLayout = ({}) => {
 	const AuthNavLinks = (
 		<Grid
 			container
+			spacing={theme.spacing()}
 			sx={{
 				alignItems: 'center',
 				justifyContent: 'space-around',

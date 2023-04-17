@@ -24,6 +24,7 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, actionSection, ...
 		>
 			<Grid
 				container
+				spacing={theme.spacing()}
 				sx={{
 					flexWrap: 'nowrap',
 					justifyContent: 'center'

@@ -31,6 +31,7 @@ const Header = ({ underConstruction }) => {
 	return (
 		<Grid
 			container
+			spacing={theme.spacing()}
 			sx={{
 				alignItems: 'center',
 				position: 'absolute',

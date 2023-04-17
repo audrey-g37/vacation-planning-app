@@ -28,6 +28,7 @@ const Footer = () => {
 	return (
 		<Grid
 			container
+			spacing={theme.spacing()}
 			sx={{
 				justifyContent: 'center',
 				alignItems: 'center',
@@ -37,7 +38,7 @@ const Footer = () => {
 				backgroundColor: theme.palette.navBackground
 			}}
 		>
-			<Grid item xs={1} sx={{ margin: '1rem', textAlign: 'center' }}>
+			<Grid item xs={1} sx={{ margin: '1rem' }}>
 				<CustomTypography
 					to={'https://github.com/audrey-g37/vacation-planning-app'}
 					relativePath={false}
