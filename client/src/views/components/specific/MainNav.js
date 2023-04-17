@@ -2,9 +2,9 @@ import React from 'react';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
-import CollapsedMenu from 'views/components/general/CollapsedMenu';
+import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
 import Auth from 'utils/auth';
-import CustomTypography from '../general/CustomTypography';
+import CustomTypography from '../re-usable/CustomTypography';
 
 const MainNav = ({ underConstruction }) => {
 	const theme = useTheme();
