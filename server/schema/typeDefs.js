@@ -74,6 +74,7 @@ const typeDefs = gql`
 			purchaseDate: String!
 			purchasedBy: String!
 		): Budget
+		updateUser(_id: ID!, email: String, firstName: String, lastName: String): Trip
 		updateTrip(
 			tripId: ID!
 			title: String
