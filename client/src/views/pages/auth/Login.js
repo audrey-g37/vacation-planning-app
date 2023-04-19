@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
-import { useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 // project imports
-import { LOGIN_USER } from 'utils/mutations';
+import { QUERY_USER } from 'utils/queries';
 import Auth from 'utils/auth';
 import FormInput from 'views/components/re-usable/inputs';
 import SubmitButton from 'views/components/re-usable/SubmitButton';
@@ -13,7 +13,7 @@ const Login = (props) => {
 	const theme = useTheme();
 	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
 	const [formState, setFormState] = useState({ username: '', password: '' });
-	const [login, { error, data }] = useMutation(LOGIN_USER);
+	const [user, setUser] = useState(null);
 
 	// update state based on form input changes
 	const handleChange = (event) => {
@@ -28,12 +28,11 @@ const Login = (props) => {
 	// submit form
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
+		const { username, password } = formState;
 		try {
-			const { data } = await login({
-				variables: { ...formState }
-			});
-			Auth.login(data.login.token);
-			Auth.storeUsername(formState.username);
+			// useQuery(QUERY_USER, )
+			Auth.login(user.authId);
+			// Auth.storeUsername(formState.username);
 			window.location.replace('/dashboard');
 		} catch (e) {
 			console.error(e);
@@ -53,7 +52,7 @@ const Login = (props) => {
 
 	return (
 		<>
-			{data ? (
+			{user ? (
 				<p>
 					Success! You may now head <Link to='/'>back to the homepage.</Link>
 				</p>
@@ -113,8 +112,6 @@ const Login = (props) => {
 					</Grid>
 				</form>
 			)}
-
-			{error && <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>}
 		</>
 	);
 };
