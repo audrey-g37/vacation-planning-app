@@ -1,13 +1,15 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const app = express();
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const { typeDefs, resolvers } = require('./schema');
 
 const db = require('./config/connection');
 
-const PORT = process.env.NODE_ENV !== 'development' ? process.env.PORT : 3001;
-const app = express();
+const PORT = process.env.PORT || 3001;
 
 const server = new ApolloServer({
 	typeDefs,
