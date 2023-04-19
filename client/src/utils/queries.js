@@ -1,102 +1,103 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-query ($username: String!) {
-  user (username: $username) {
-	_id
-  username
-  password
-  }
-}
+	query ($ID: String!) {
+		user(_id: $ID) {
+			email
+			firstName
+			lastName
+		}
+	}
 `;
 
 export const QUERY_USERS = gql`
-query {
-  users {
-  _id
-  username
-  password
-  }
-}
+	query {
+		users {
+			_id
+			email
+			firstName
+			lastName
+		}
+	}
 `;
 
 export const QUERY_TRIP = gql`
-query ($tripId: ID!, $userId: ID!) {
-  trip (tripId: $tripId, userId: $userId) {
-    _id
-    title
-    location
-    startDate
-    endDate
-    description
-    tasks {
-      _id
-    }
-    budget {
-    _id
-    }
-  }
-}
+	query ($tripId: ID!, $userId: ID!) {
+		trip(tripId: $tripId, userId: $userId) {
+			_id
+			title
+			location
+			startDate
+			endDate
+			description
+			tasks {
+				_id
+			}
+			budget {
+				_id
+			}
+		}
+	}
 `;
 
 export const QUERY_TRIPS = gql`
-query ($userId: ID!) {
-  trips (userId: $userId) {
-    _id
-    title
-    location
-    startDate
-    endDate
-    description
-  }
-}
+	query ($userId: ID!) {
+		trips(userId: $userId) {
+			_id
+			title
+			location
+			startDate
+			endDate
+			description
+		}
+	}
 `;
 
 export const QUERY_TASK = gql`
-query ($taskId: ID!) {
-  task (taskId: $taskId) {
-    _id
-    title
-    details
-    dueDate
-    status
-    assignee
-  }
-}
+	query ($taskId: ID!) {
+		task(taskId: $taskId) {
+			_id
+			title
+			details
+			dueDate
+			status
+			assignee
+		}
+	}
 `;
 
 export const QUERY_TASKS = gql`
-query ($tripId: ID!) {
-  tasks (tripId: $tripId) {
-    _id
-    title
-    details
-    dueDate
-    status
-    assignee
-  }
-}
+	query ($tripId: ID!) {
+		tasks(tripId: $tripId) {
+			_id
+			title
+			details
+			dueDate
+			status
+			assignee
+		}
+	}
 `;
 
 export const QUERY_BUDGETS = gql`
-query ($tripId: ID!) {
-  budgets (tripId: $tripId) {
-    _id
-    title
- 		value
-    purchaseDate
-    purchasedBy
-  }
-}
+	query ($tripId: ID!) {
+		budgets(tripId: $tripId) {
+			_id
+			title
+			value
+			purchaseDate
+			purchasedBy
+		}
+	}
 `;
 export const QUERY_BUDGET = gql`
-query ($budgetId: ID!) {
-  budget(budgetId: $budgetId) {
-  	_id
-    title
- 		value
-    purchaseDate
-    purchasedBy
-  }
-}
+	query ($budgetId: ID!) {
+		budget(budgetId: $budgetId) {
+			_id
+			title
+			value
+			purchaseDate
+			purchasedBy
+		}
+	}
 `;
