@@ -79,9 +79,9 @@ export const QUERY_TASKS = gql`
 	}
 `;
 
-export const QUERY_BUDGETS = gql`
-	query ($tripId: ID!) {
-		budgets(tripId: $tripId) {
+export const QUERY_BUDGET = gql`
+	query ($budgetId: ID!) {
+		budget(budgetId: $budgetId) {
 			_id
 			title
 			value
@@ -90,9 +90,10 @@ export const QUERY_BUDGETS = gql`
 		}
 	}
 `;
-export const QUERY_BUDGET = gql`
-	query ($budgetId: ID!) {
-		budget(budgetId: $budgetId) {
+
+export const QUERY_BUDGETS = gql`
+	query ($tripId: ID!) {
+		budgets(tripId: $tripId) {
 			_id
 			title
 			value
