@@ -77,8 +77,6 @@ export const AuthProvider = ({ children }) => {
 		removeBudget: REMOVE_BUDGET
 	};
 
-	const [addUser, { data, loading, error }] = useMutation(ADD_USER);
-
 	const auth0Connection = new auth0.WebAuth({
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
 		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
@@ -101,10 +99,11 @@ export const AuthProvider = ({ children }) => {
 		autoHideDuration: 6000
 	});
 
-	// const for using react-router-dom navigation
-	const navigate = useNavigate();
+	const [addUser, { data: userData, loading: userLoading, error: userError }] = useMutation(
+		mutationTypes['addUser']
+	);
 
-	const authRegister = async (authObj) => {
+	const register = async (authObj) => {
 		const { email, password, firstName, lastName } = authObj;
 		const auth0CreateObj = {
 			email: email,
@@ -115,11 +114,15 @@ export const AuthProvider = ({ children }) => {
 		};
 		try {
 			auth0Connection.signup(auth0CreateObj, async function (req, res) {
-				const { data, loading, error } = addUser({
-					...authObj,
-					authId: res.Id
-				});
-				console.log({ data, error, loading });
+				if (res) {
+					addUser({
+						variables: {
+							...authObj,
+							authId: res?.Id
+						}
+					});
+					console.log({ userData, userError, userLoading });
+				} else setAlert({ ...alert, message: 'There was a problem creating the user.' });
 			});
 		} catch (err) {
 			console.error(err);
@@ -172,12 +175,15 @@ export const AuthProvider = ({ children }) => {
 		navigate('/login');
 	};
 
+	// const for using react-router-dom navigation
+	const navigate = useNavigate();
+
 	return (
 		<AuthContext.Provider
 			value={{
 				...state,
 				login: () => {},
-				authRegister,
+				register,
 				getUserAndDispatch,
 				navigate,
 				logoutUser,
