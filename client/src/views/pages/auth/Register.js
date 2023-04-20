@@ -1,99 +1,134 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from 'utils/apollo/mutations';
-import { Button } from '@mui/material';
+import { useTheme, useMediaQuery, Grid } from '@mui/material';
+
+// project imports
+import useAuth from 'hooks/useAuth';
+import FormInput from 'views/components/re-usable/inputs';
+import SubmitButton from 'views/components/re-usable/SubmitButton';
 
 const Register = () => {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
+	const theme = useTheme();
+	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
 
-	const handleInputChange = (event) => {
-		event.preventDefault();
+	const { register } = useAuth();
+
+	const initialState = {
+		email: '',
+		password: '',
+		firstName: '',
+		lastName: ''
+	};
+	const [formState, setFormState] = useState(initialState);
+
+	// update state based on form input changes
+	const handleChange = (event) => {
 		const { name, value } = event.target;
 
-		if (name === 'username') {
-			setUsername(value);
-		} else if (name === 'password') {
-			setPassword(value);
-		}
+		setFormState({
+			...formState,
+			[name]: value
+		});
 	};
-
-	// const [addUser, {error}] = useMutation(ADD_USER)
-
-	// const [formState, setFormState] = useState({
-	//   username: '',
-	//   password: '',
-	// });
-	const [addUser, { error, data }] = useMutation(ADD_USER);
-
-	// // update state based on form input changes
-	// const handleChange = (event) => {
-	//   const { name, value } = event.target;
-
-	//   setFormState({
-	//     ...formState,
-	//     [name]: value,
-	//   });
-	// };
 
 	// submit form
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
-
 		try {
-			await addUser({
-				variables: {
-					username: username,
-					password: password
-				}
-			}).then((data) => {
-				setUsername('');
-				setPassword('');
-				// console.log(data)
-			});
+			await register(formState);
 		} catch (e) {
 			console.error(e);
 		}
 	};
 
-	return (
-		<div>
-			{data ? (
-				<p>
-					Success! You may now <Link to='/'>login</Link> to get started!
-				</p>
-			) : (
-				<form>
-					<input
-						className='signup-form-input form-input'
-						placeholder='Your username'
-						name='username'
-						type='text'
-						value={username}
-						onChange={handleInputChange}
-					/>
-					<input
-						className='signup-form-input form-input'
-						placeholder='******'
-						name='password'
-						type='password'
-						value={password}
-						onChange={handleInputChange}
-					/>
-					<Button
-						className='signup-btn'
-						style={{ cursor: 'pointer' }}
-						variant='dark'
-						onClick={handleFormSubmit}
-					>
-						Register
-					</Button>
-				</form>
-			)}
+	const submissionDisabled = {
+		disabled:
+			!formState.email || !formState.password || !formState.firstName || !formState.lastName,
+		message: 'All fields are required.'
+	};
 
-			{error && <div className='my-3 p-3 bg-danger text-white'>{error.message}</div>}
-		</div>
+	return (
+		<form>
+			<Grid container spacing={theme.spacing(lgAndUp ? 3 : 2)}>
+				<Grid item xs={12} md={6}>
+					<FormInput
+						componentType={'text'}
+						componentProps={{
+							placeholder: '',
+							name: 'firstName',
+							type: 'text',
+							value: formState.firstName,
+							onChange: handleChange
+						}}
+						label={'First Name'}
+						required={true}
+						helperText={'First name is required.'}
+					/>
+				</Grid>
+				<Grid item xs={12} md={6}>
+					<FormInput
+						componentType={'text'}
+						componentProps={{
+							placeholder: '',
+							name: 'lastName',
+							type: 'text',
+							value: formState.lastName,
+							onChange: handleChange
+						}}
+						label={'LastName'}
+						required={true}
+						helperText={'Last name is required.'}
+					/>
+				</Grid>
+				<Grid item xs={12} md={6}>
+					<FormInput
+						componentType={'text'}
+						componentProps={{
+							placeholder: 'email@example.com',
+							name: 'email',
+							type: 'email',
+							value: formState.email,
+							onChange: handleChange
+						}}
+						label={'Email'}
+						required={true}
+						helperText={
+							!formState.email
+								? 'Email is required.'
+								: 'Entry must be a valid email address.'
+						}
+					/>
+				</Grid>
+				<Grid item xs={12} md={6}>
+					<FormInput
+						componentType={'text'}
+						componentProps={{
+							placeholder: 'New Password',
+							name: 'password',
+							type: 'password',
+							value: formState.password,
+							onChange: handleChange
+						}}
+						label={'Password'}
+						required={true}
+						helperText={'Password is required.'}
+					/>
+				</Grid>
+			</Grid>
+			<Grid container spacing={theme.spacing()} sx={{ justifyContent: 'flex-end' }}>
+				<Grid item>
+					<SubmitButton
+						title={'Register'}
+						tooltipText={
+							!submissionDisabled.disabled ? 'Login' : submissionDisabled.message
+						}
+						onClick={handleFormSubmit}
+						disabled={submissionDisabled.disabled}
+					/>
+				</Grid>
+			</Grid>
+		</form>
 	);
 };
 
