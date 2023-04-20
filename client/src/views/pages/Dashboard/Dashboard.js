@@ -1,15 +1,15 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import Auth from 'utils/auth';
-import { QUERY_USER, QUERY_TRIPS } from 'utils/queries';
+import { QUERY_USER, QUERY_TRIPS } from 'utils/apollo/queries';
 import NewTrip from 'views/components/NewTrip/NewTrip';
 import { Table, Button } from '@mui/material';
 import './Dashboard.css';
+import useAuth from 'hooks/useAuth';
 
 const Dashboard = () => {
-	const currentUser = Auth.getUsername();
+	const { user } = useAuth();
 	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: currentUser }
+		variables: { username: user }
 	});
 	const userData = data1?.user || [];
 	// console.log(userData);
@@ -29,7 +29,7 @@ const Dashboard = () => {
 	}
 	return (
 		<div className='whole-dash'>
-			<h2 className='dash-title'>Welcome {currentUser}!</h2>
+			<h2 className='dash-title'>Welcome {user}!</h2>
 			<div className='d-board'>
 				<div className='recent-trips'>
 					<h2>Recent Trips</h2>

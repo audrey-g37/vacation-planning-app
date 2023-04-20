@@ -8,7 +8,7 @@ const accountReducer = (state, action) => {
 	console.log({ payload });
 	switch (action.type) {
 		case LOGIN: {
-			// const {} = action.payload;
+			// const {} = payload;
 			state = {
 				...state,
 				isLoggedIn: true,

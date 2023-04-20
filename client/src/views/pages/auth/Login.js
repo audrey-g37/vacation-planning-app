@@ -4,8 +4,7 @@ import { Grid, useTheme, useMediaQuery } from '@mui/material';
 import { useQuery } from '@apollo/client';
 
 // project imports
-import { QUERY_USER } from 'utils/queries';
-import Auth from 'utils/auth';
+import { QUERY_USER } from 'utils/apollo/queries';
 import FormInput from 'views/components/re-usable/inputs';
 import SubmitButton from 'views/components/re-usable/SubmitButton';
 
@@ -30,9 +29,7 @@ const Login = (props) => {
 		event.preventDefault();
 		const { username, password } = formState;
 		try {
-			// useQuery(QUERY_USER, )
-			Auth.login(user.authId);
-			// Auth.storeUsername(formState.username);
+			//! login function on context
 			window.location.replace('/dashboard');
 		} catch (e) {
 			console.error(e);

@@ -2,11 +2,11 @@ import React, { lazy, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Button } from '@mui/material';
 import { useParams } from 'react-router';
-import { REMOVE_TASK, ADD_TASK } from 'utils/mutations';
-import Auth from 'utils/auth';
+import { REMOVE_TASK, ADD_TASK } from 'utils/apollo/mutations';
+import useAuth from 'hooks/useAuth';
 
 const AddTask = () => {
-	const tripId = Auth.getTripId();
+	const { tripId } = useAuth();
 	const [title, setTitle] = useState('');
 	const [details, setDetails] = useState('');
 	const [dueDate, setDueDate] = useState('');

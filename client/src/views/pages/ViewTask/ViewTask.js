@@ -1,18 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import Auth from 'utils/auth';
-import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from 'utils/queries';
-import { REMOVE_TASK, UPDATE_TASK } from 'utils/mutations';
+import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from 'utils/apollo/queries';
+import { REMOVE_TASK, UPDATE_TASK } from 'utils/apollo/mutations';
 import AddTask from './AddTask';
 import { Table, Button } from '@mui/material';
 import './ViewTask.css';
+import useAuth from 'hooks/useAuth';
 
 const ViewTask = () => {
-	const tripId = Auth.getTripId();
-	const currentUser = Auth.getUsername();
+	const { user, tripId } = useAuth();
 	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: currentUser }
+		variables: { username: user }
 	});
 	const userData = data1?.user || [];
 	const { data: data2 } = useQuery(QUERY_TRIP, {

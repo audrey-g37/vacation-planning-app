@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Button } from '@mui/material';
-import Auth from 'utils/auth';
-import { ADD_TRIP } from 'utils/mutations';
-import { QUERY_USER } from 'utils/queries';
+import { ADD_TRIP } from 'utils/apollo/mutations';
+import { QUERY_USER } from 'utils/apollo/queries';
 import './NewTrip.css';
+import useAuth from 'hooks/useAuth';
 
 const NewTrip = () => {
-	const currentUser = Auth.getUsername();
+	const { user } = useAuth();
 	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: currentUser }
+		variables: { username: user }
 	});
 	const userData = data1?.user || [];
 
@@ -103,7 +103,7 @@ const NewTrip = () => {
 					onChange={handleInputChange}
 				/>
 			</Form.Group>
-			{Auth.loggedIn() && (
+			{Auth.isLoggedIn() && (
 				<Button
 					className='add-trip-button'
 					variant='dark'

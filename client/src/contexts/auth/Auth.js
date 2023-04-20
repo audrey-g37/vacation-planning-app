@@ -128,7 +128,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const login = async (authObj) => {
-		if (!state.loggedIn) {
+		if (!state.isLoggedIn) {
 			try {
 				const authLogin = auth0Connection.login(authObj);
 				if (authLogin) {
@@ -136,7 +136,7 @@ export const AuthProvider = ({ children }) => {
 					// user.getBySearch({authId: authLogin._id})
 					dispatch({
 						type: LOGIN,
-						loggedIn: true
+						isLoggedIn: true
 					});
 				}
 			} catch (err) {
@@ -152,7 +152,7 @@ export const AuthProvider = ({ children }) => {
 
 	const getUserAndDispatch = async () => {
 		try {
-			if (!state?.loggedIn) {
+			if (!state?.isLoggedIn) {
 				return login();
 			}
 		} catch (err) {

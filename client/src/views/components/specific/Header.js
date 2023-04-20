@@ -3,18 +3,15 @@ import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
 import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
-import Auth from 'utils/auth';
 import CustomTypography from '../re-usable/CustomTypography';
+import useAuth from 'hooks/useAuth';
 
 const Header = ({ underConstruction }) => {
+	const { isLoggedIn } = useAuth();
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
-	const logout = (event) => {
-		event.preventDefault();
-		Auth.logout();
-	};
 
-	const withAuth = Auth.loggedIn();
+	const withAuth = isLoggedIn || false;
 
 	const headerNav = [
 		{ text: 'Login', url: '/login' },

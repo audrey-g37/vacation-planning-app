@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import AuthService from 'utils/auth';
-import { QUERY_TASK } from 'utils/queries';
-import { UPDATE_TASK } from 'utils/mutations';
+import { QUERY_TASK } from 'utils/apollo/queries';
+import { UPDATE_TASK } from 'utils/apollo/mutations';
 // import moment from "moment";
 import { Card, Button } from '@mui/material';
 import './updateTask.css';
+import useAuth from 'hooks/useAuth';
 
 const EditTask = () => {
 	const taskIdVar = useParams();
 	const taskIdToUse = taskIdVar.id;
 	//   console.log(taskIdToUse);
 
-	const TripIdToUse = AuthService.getTripId();
+	const { tripId } = useAuth();
 
 	//   console.log(taskData);
 
@@ -54,7 +54,7 @@ const EditTask = () => {
 	const handleFormSubmit = (event) => {
 		updateTask({
 			variables: {
-				tripId: TripIdToUse,
+				tripId: tripId,
 				taskId: taskData._id,
 				title: title,
 				details: details,
@@ -64,7 +64,7 @@ const EditTask = () => {
 			}
 		}).then((data) => {
 			// console.log(data);
-			window.location.replace(`/${TripIdToUse}/view-tasks`);
+			window.location.replace(`/${tripId}/view-tasks`);
 		});
 	};
 
