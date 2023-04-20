@@ -1,14 +1,39 @@
 import { createContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
 // action - state management
 import accountReducer from 'contexts/auth/accountReducer';
-import { LOGIN, LOGOUT } from 'store/actions';
+import { LOGIN, LOGOUT } from 'contexts/auth/actions';
 
-// project imports for auth
+// project imports
+// for auth
 import auth0 from 'auth0-js';
-import API from 'utils/API';
+// for apollo
+import {
+	QUERY_BUDGET,
+	QUERY_BUDGETS,
+	QUERY_TASK,
+	QUERY_TASKS,
+	QUERY_TRIP,
+	QUERY_TRIPS,
+	QUERY_USER,
+	QUERY_USERS
+} from 'utils/apollo/queries';
+import {
+	ADD_BUDGET,
+	ADD_TASK,
+	ADD_TRIP,
+	ADD_USER,
+	REMOVE_BUDGET,
+	REMOVE_TASK,
+	REMOVE_TRIP,
+	UPDATE_BUDGET,
+	UPDATE_TASK,
+	UPDATE_TRIP,
+	UPDATE_USER
+} from 'utils/apollo/mutations';
 
 // const for state of dispatch
 const initialState = {
@@ -27,12 +52,37 @@ export const AuthProvider = ({ children }) => {
 		login();
 	}, [dispatch]);
 
+	const queryTypes = {
+		user: QUERY_USER,
+		users: QUERY_USERS,
+		trip: QUERY_TRIP,
+		trips: QUERY_TRIPS,
+		task: QUERY_TASK,
+		tasks: QUERY_TASKS,
+		budget: QUERY_BUDGET,
+		budgets: QUERY_BUDGETS
+	};
+
+	const mutationTypes = {
+		addUser: ADD_USER,
+		addTrip: ADD_TRIP,
+		addTask: ADD_TASK,
+		addBudget: ADD_BUDGET,
+		updateUser: UPDATE_USER,
+		updateTrip: UPDATE_TRIP,
+		updateTask: UPDATE_TASK,
+		updateBudget: UPDATE_BUDGET,
+		removeTrip: REMOVE_TRIP,
+		removeTask: REMOVE_TASK,
+		removeBudget: REMOVE_BUDGET
+	};
+
+	const [addUser, { data, loading, error }] = useMutation(ADD_USER);
+
 	const auth0Connection = new auth0.WebAuth({
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
 		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
 	});
-
-	const { user } = API;
 
 	const [alert, setAlert] = useState({
 		action: false,
@@ -65,10 +115,11 @@ export const AuthProvider = ({ children }) => {
 		};
 		try {
 			auth0Connection.signup(auth0CreateObj, async function (req, res) {
-				await user.create({
+				const { data, loading, error } = addUser({
 					...authObj,
 					authId: res.Id
 				});
+				console.log({ data, error, loading });
 			});
 		} catch (err) {
 			console.error(err);
@@ -77,7 +128,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const login = async (authObj) => {
-		if (!state.isLoggedIn) {
+		if (!state.loggedIn) {
 			try {
 				const authLogin = auth0Connection.login(authObj);
 				if (authLogin) {
@@ -85,7 +136,7 @@ export const AuthProvider = ({ children }) => {
 					// user.getBySearch({authId: authLogin._id})
 					dispatch({
 						type: LOGIN,
-						isLoggedIn: true
+						loggedIn: true
 					});
 				}
 			} catch (err) {
@@ -101,7 +152,7 @@ export const AuthProvider = ({ children }) => {
 
 	const getUserAndDispatch = async () => {
 		try {
-			if (!state?.isLoggedIn) {
+			if (!state?.loggedIn) {
 				return login();
 			}
 		} catch (err) {
