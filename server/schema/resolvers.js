@@ -69,7 +69,8 @@ const resolvers = {
 	},
 	Mutation: {
 		addUser: async (parent, { email, firstName, lastName, authId }, context) => {
-			const userData = { ...email, ...firstName, ...lastName, ...authId };
+			const userData = { email, firstName, lastName, authId };
+			console.log({ userData });
 			const user = await User.create(userData);
 			return user;
 		},
