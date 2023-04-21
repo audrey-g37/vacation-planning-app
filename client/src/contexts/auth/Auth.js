@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }) => {
 		const auth0CreateObj = {
 			email: email,
 			password: password,
-			connection: 'Username-Password-Authentication',
+			connection: 'Grip',
 			given_name: firstName,
 			family_name: lastName
 		};
