@@ -3,36 +3,52 @@ import { gql } from '@apollo/client';
 export const ADD_USER = gql`
 	mutation addUser($email: String!, $firstName: String!, $lastName: String!, $authId: String!) {
 		addUser(email: $email, firstName: $firstName, lastName: $lastName, authId: $authId) {
-			user {
-				_id
-				email
-				firstName
-				lastName
-			}
+			_id
+			authId
+			email
+			firstName
+			lastName
 		}
 	}
 `;
 
 export const ADD_TRIP = gql`
 	mutation addTrip(
-		$userID: ID!
 		$title: String!
 		$description: String
-		$location: String!
-		$startDate: String!
-		$endDate: String!
+		$street1: String
+		$street2: String
+		$city: String
+		$state: String
+		$country: String
+		$zipCode: String
+		$startDate: String
+		$endDate: String
+		$userID: ID!
 	) {
 		addTrip(
-			userID: $userID
 			title: $title
 			description: $description
-			location: $location
+			street1: $street1
+			street2: $street2
+			city: $city
+			state: $state
+			country: $country
+			zipCode: $zipCode
 			startDate: $startDate
 			endDate: $endDate
+			userID: $userID
 		) {
 			title
 			description
-			location
+			address {
+				street1
+				street2
+				city
+				state
+				country
+				zipCode
+			}
 			startDate
 			endDate
 		}
@@ -91,11 +107,9 @@ export const ADD_BUDGET = gql`
 export const UPDATE_USER = gql`
 	mutation updateUser($email: String, $firstName: String, $lastName: String, $ID: String!) {
 		updateUser(_id: $ID, email: $email, firstName: $firstName, lastName: $lastName) {
-			user {
-				email
-				firstName
-				lastName
-			}
+			email
+			firstName
+			lastName
 		}
 	}
 `;
@@ -185,14 +199,12 @@ export const UPDATE_BUDGET = gql`
 export const REMOVE_TRIP = gql`
 	mutation removeTrip($tripId: ID!) {
 		removeTrip(tripId: $tripId) {
-			_id
 		}
 	}
 `;
 export const REMOVE_TASK = gql`
 	mutation removeTask($tripId: ID!, $taskId: ID!) {
 		removeTask(tripId: $tripId, taskId: $taskId) {
-			_id
 		}
 	}
 `;
@@ -200,7 +212,6 @@ export const REMOVE_TASK = gql`
 export const REMOVE_BUDGET = gql`
 	mutation removeBudget($tripId: ID!, $budgetId: ID!) {
 		removeBudget(tripId: $tripId, budgetId: $budgetId) {
-			_id
 		}
 	}
 `;
