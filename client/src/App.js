@@ -14,8 +14,12 @@ const httpLink = createHttpLink({
 
 // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
 const client = new ApolloClient({
-	uri: httpLink,
-	cache: new InMemoryCache()
+	uri: `${
+		process.env.NODE_ENV === 'development' ? 'http://localhost:3001/graphql' : createHttpLink
+	}`,
+	cache: new InMemoryCache(),
+	name: 'GRIP',
+	version: '1.0.0'
 });
 
 function App() {
