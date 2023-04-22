@@ -12,18 +12,16 @@ const taskSchema = new Schema(
 		},
 		dueDate: {
 			type: Date,
-			required: true,
 			get: (timestamp) => dateFormat(timestamp)
 		},
 		status: {
-			type: Boolean,
-			required: true
+			type: String,
+			default: 'Incomplete'
 		},
 		assignee: {
-			type: String,
-			required: true
+			type: String
 		},
-		tripId: {
+		tripID: {
 			type: Schema.Types.ObjectId,
 			ref: 'Trip',
 			required: true

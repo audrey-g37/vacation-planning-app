@@ -1,32 +1,44 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
+const addressSchema = new Schema({
+	street1: {
+		type: String
+	},
+	street2: {
+		type: String
+	},
+	city: {
+		type: String
+	},
+	state: {
+		type: String
+	},
+	country: {
+		type: String
+	},
+	zipCode: {
+		type: String
+	}
+});
+
 const tripSchema = new Schema(
 	{
 		title: {
 			type: String,
-			required: true,
-			unique: true
+			required: true
 		},
 		description: {
 			type: String
 		},
-		location: {
-			type: String,
-			required: true,
-			trim: true
-		},
+		address: addressSchema,
 		startDate: {
-			type: Date,
-			required: true,
-			get: (timestamp) => dateFormat(timestamp)
+			type: Date
 		},
 		endDate: {
-			type: Date,
-			required: true,
-			get: (timestamp) => dateFormat(timestamp)
+			type: Date
 		},
-		userId: {
+		userID: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',
 			required: true

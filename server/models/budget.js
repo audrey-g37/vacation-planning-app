@@ -8,23 +8,26 @@ const budgetSchema = new Schema(
 			required: true
 		},
 		value: {
-			type: Number,
-			required: true
+			type: Number
 		},
 		purchaseDate: {
 			type: Date,
-			required: true,
 			get: (timestamp) => dateFormat(timestamp)
 		},
 		purchasedBy: {
-			type: String,
-			required: true
+			type: String
 		},
-		tripId: {
+		tripID: {
 			type: Schema.Types.ObjectId,
 			ref: 'Trip',
 			required: true
-		}
+		},
+		taskID: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Task'
+			}
+		]
 	},
 	{
 		toJSON: {
