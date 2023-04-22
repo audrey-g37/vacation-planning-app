@@ -38,13 +38,13 @@ const resolvers = {
 	},
 	Mutation: {
 		addUser: async (parent, body, context) => {
-			const dataToSend = { ...body };
+			let dataToSend = { ...body };
 			const user = await User.create(dataToSend);
 			return user;
 		},
 		addTrip: async (parent, body, context) => {
 			const { street1, street2, city, state, country, zipCode } = body;
-			const dataToSend = {
+			let dataToSend = {
 				...body,
 				address: { street1, street2, city, state, country, zipCode }
 			};
@@ -52,33 +52,41 @@ const resolvers = {
 			return newData;
 		},
 		addTask: async (parent, body, context) => {
-			const dataToSend = { ...body };
+			let dataToSend = { ...body };
 			const newData = await Task.create(dataToSend);
 			return newData;
 		},
 		addBudget: async (parent, body, context) => {
-			const dataToSend = { ...body };
+			let dataToSend = { ...body };
 			const newData = await Budget.create(dataToSend);
 			return newData;
 		},
 		updateUser: async (parent, body, context) => {
 			const { queryID } = body;
-			const user = await User.findByIdAndUpdate(queryID, { ...body }, { new: true });
+			let dataToSend = { ...body };
+			const user = await User.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return user;
 		},
 		updateTrip: async (parent, body, context) => {
 			const { queryID } = body;
-			const updatedData = await Trip.findByIdAndUpdate(queryID, { ...body }, { new: true });
+			let dataToSend = { ...body };
+			const updatedData = await Trip.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
 		updateTask: async (parent, body, context) => {
 			const { queryID } = body;
-			const updatedData = await Task.findByIdAndUpdate(queryID, { ...body }, { new: true });
+			let dataToSend = { ...body };
+			const updatedData = await Task.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
 		updateBudget: async (parent, body, context) => {
 			const { queryID } = body;
-			const updatedData = await Budget.findByIdAndUpdate(queryID, { ...body }, { new: true });
+			let dataToSend = { ...body };
+			delete dataToSend.taskID;
+			if (body.taskID) {
+				dataToSend = { ...dataToSend, $addToSet: { taskID: body.taskID } };
+			}
+			const updatedData = await Budget.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
 		removeTrip: async (parent, { queryID }, context) => {
