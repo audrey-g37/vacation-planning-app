@@ -236,6 +236,7 @@ export const UPDATE_BUDGET = gql`
 export const REMOVE_TRIP = gql`
 	mutation removeTrip($tripId: ID!) {
 		removeTrip(tripId: $tripId) {
+			_id
 		}
 	}
 `;
@@ -243,6 +244,7 @@ export const REMOVE_TRIP = gql`
 export const REMOVE_TASK = gql`
 	mutation removeTask($tripId: ID!, $taskId: ID!) {
 		removeTask(tripId: $tripId, taskId: $taskId) {
+			_id
 		}
 	}
 `;
@@ -250,6 +252,7 @@ export const REMOVE_TASK = gql`
 export const REMOVE_BUDGET = gql`
 	mutation removeBudget($tripId: ID!, $budgetId: ID!) {
 		removeBudget(tripId: $tripId, budgetId: $budgetId) {
+			_id
 		}
 	}
 `;

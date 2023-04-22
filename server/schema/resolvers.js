@@ -90,13 +90,13 @@ const resolvers = {
 			return updatedData;
 		},
 		removeTrip: async (parent, { queryID }, context) => {
-			await Trip.findByIdAndDelete(queryID);
+			return await Trip.findByIdAndDelete(queryID);
 		},
 		removeTask: async (parent, { queryID }, context) => {
-			await Task.findByIdAndDelete(queryID);
+			return await Task.findByIdAndDelete(queryID);
 		},
 		removeBudget: async (parent, { queryID }, context) => {
-			await Budget.findByIdAndDelete(queryID);
+			return await Budget.findByIdAndDelete(queryID);
 		}
 	}
 };
