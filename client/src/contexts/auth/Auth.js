@@ -46,42 +46,10 @@ const initialState = {
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+	// all data stored on auth context
 	const [state, dispatch] = useReducer(accountReducer, initialState);
 
-	useEffect(() => {
-		login();
-	}, [dispatch]);
-
-	const queryTypes = {
-		user: QUERY_USER,
-		users: QUERY_USERS,
-		trip: QUERY_TRIP,
-		trips: QUERY_TRIPS,
-		task: QUERY_TASK,
-		tasks: QUERY_TASKS,
-		budget: QUERY_BUDGET,
-		budgets: QUERY_BUDGETS
-	};
-
-	const mutationTypes = {
-		addUser: ADD_USER,
-		addTrip: ADD_TRIP,
-		addTask: ADD_TASK,
-		addBudget: ADD_BUDGET,
-		updateUser: UPDATE_USER,
-		updateTrip: UPDATE_TRIP,
-		updateTask: UPDATE_TASK,
-		updateBudget: UPDATE_BUDGET,
-		removeTrip: REMOVE_TRIP,
-		removeTask: REMOVE_TASK,
-		removeBudget: REMOVE_BUDGET
-	};
-
-	const auth0Connection = new auth0.WebAuth({
-		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
-		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
-	});
-
+	// alerts that are displayed throughout app
 	const [alert, setAlert] = useState({
 		action: false,
 		open: false,
@@ -99,12 +67,55 @@ export const AuthProvider = ({ children }) => {
 		autoHideDuration: 6000
 	});
 
-	const [addUser, { data: userData, loading: userLoading, error: userError }] = useMutation(
-		mutationTypes['addUser']
-	);
+	// using react-router-dom navigation
+	const navigate = useNavigate();
 
+	// apollo queries
+	const queryTypes = {
+		// single result
+		user: QUERY_USER,
+		trip: QUERY_TRIP,
+		task: QUERY_TASK,
+		budget: QUERY_BUDGET,
+		// multiple results
+		users: QUERY_USERS,
+		trips: QUERY_TRIPS,
+		tasks: QUERY_TASKS,
+		budgets: QUERY_BUDGETS
+	};
+
+	// apollo mutations
+	const mutationTypes = {
+		// create
+		addUser: ADD_USER,
+		addTrip: ADD_TRIP,
+		addTask: ADD_TASK,
+		addBudget: ADD_BUDGET,
+		// update
+		updateUser: UPDATE_USER,
+		updateTrip: UPDATE_TRIP,
+		updateTask: UPDATE_TASK,
+		updateBudget: UPDATE_BUDGET,
+		// delete
+		removeTrip: REMOVE_TRIP,
+		removeTask: REMOVE_TASK,
+		removeBudget: REMOVE_BUDGET
+	};
+
+	// connection to Auth0 for auth functions
+	const auth0Connection = new auth0.WebAuth({
+		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
+		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
+	});
+
+	const [addUser] = useMutation(mutationTypes['addUser']);
+
+	// registering a new user
 	const register = async (authObj) => {
+		let userData;
+
 		const { email, password, firstName, lastName } = authObj;
+
 		const auth0CreateObj = {
 			email: email,
 			password: password,
@@ -112,24 +123,36 @@ export const AuthProvider = ({ children }) => {
 			given_name: firstName,
 			family_name: lastName
 		};
+
 		try {
 			auth0Connection.signup(auth0CreateObj, async function (req, res) {
 				if (res) {
-					addUser({
+					const { data } = await addUser({
 						variables: {
 							...authObj,
-							authId: res?.Id
+							authId: res.Id
 						}
 					});
-					console.log({ userData, userError, userLoading });
-				} else setAlert({ ...alert, message: 'There was a problem creating the user.' });
+					userData = data.addUser;
+				}
 			});
 		} catch (err) {
 			console.error(err);
-			setAlert({ ...alert, message: 'There was a problem creating the user.' });
 		}
+		userData
+			? setAlert({
+					...alert,
+					alertSeverity: 'success',
+					message: 'User successfully created!'
+			  })
+			: setAlert({
+					...alert,
+					alertSeverity: 'error',
+					message: 'There was a problem creating the user.'
+			  });
 	};
 
+	// logging in an existing user
 	const login = async (authObj) => {
 		if (!state.isLoggedIn) {
 			try {
@@ -153,21 +176,6 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const getUserAndDispatch = async () => {
-		try {
-			if (!state?.isLoggedIn) {
-				return login();
-			}
-		} catch (err) {
-			setAlert({
-				...alert,
-				open: true,
-				alertSeverity: 'error',
-				message: `There was a problem automatically loading new notifications.  If the problem persists, contact your administrator.`
-			});
-		}
-	};
-
 	const logoutUser = async () => {
 		dispatch({
 			type: LOGOUT
@@ -175,20 +183,20 @@ export const AuthProvider = ({ children }) => {
 		navigate('/login');
 	};
 
-	// const for using react-router-dom navigation
-	const navigate = useNavigate();
+	useEffect(() => {
+		login();
+	}, [dispatch]);
 
 	return (
 		<AuthContext.Provider
 			value={{
 				...state,
+				alert,
+				setAlert,
+				navigate,
 				login: () => {},
 				register,
-				getUserAndDispatch,
-				navigate,
-				logoutUser,
-				alert,
-				setAlert
+				logoutUser
 			}}
 		>
 			{children}
