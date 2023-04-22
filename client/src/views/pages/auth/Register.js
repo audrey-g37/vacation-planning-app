@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from 'utils/apollo/mutations';
 import { useTheme, useMediaQuery, Grid } from '@mui/material';
 
 // project imports
@@ -20,7 +18,15 @@ const Register = () => {
 		firstName: '',
 		lastName: ''
 	};
+
 	const [formState, setFormState] = useState(initialState);
+
+	const submissionDisabledInitialState = {
+		disabled: false,
+		message: ''
+	};
+
+	const [submissionDisabled, setSubmissionDisabled] = useState(submissionDisabledInitialState);
 
 	// update state based on form input changes
 	const handleChange = (event) => {
@@ -30,6 +36,16 @@ const Register = () => {
 			...formState,
 			[name]: value
 		});
+
+		setSubmissionDisabled({
+			...submissionDisabled,
+			disabled:
+				!formState.email ||
+				!formState.password ||
+				!formState.firstName ||
+				!formState.lastName,
+			message: 'All fields are required.'
+		});
 	};
 
 	// submit form
@@ -37,15 +53,11 @@ const Register = () => {
 		event.preventDefault();
 		try {
 			await register(formState);
+			setFormState(initialState);
 		} catch (e) {
 			console.error(e);
 		}
-	};
-
-	const submissionDisabled = {
-		disabled:
-			!formState.email || !formState.password || !formState.firstName || !formState.lastName,
-		message: 'All fields are required.'
+		setSubmissionDisabled({ ...submissionDisabled, disabled: false });
 	};
 
 	return (
@@ -76,7 +88,7 @@ const Register = () => {
 							value: formState.lastName,
 							onChange: handleChange
 						}}
-						label={'LastName'}
+						label={'Last Name'}
 						required={true}
 						helperText={'Last name is required.'}
 					/>
