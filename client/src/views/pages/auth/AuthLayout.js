@@ -26,25 +26,32 @@ const AuthLayout = ({}) => {
 			sx={{
 				alignItems: 'center',
 				justifyContent: 'space-around',
-				marginBottom: '0.5rem'
+				textAlign: 'center',
+				margin: '0.5rem 0'
 			}}
 		>
 			{authType !== 'login-help' && (
-				<CustomTypography
-					tooltipText={'Forgot Username/Password'}
-					to={'#'}
-					textContent={'Need help logging in?'}
-				/>
+				<Grid item xs={4}>
+					<CustomTypography
+						tooltipText={'Forgot Username/Password'}
+						to={'#'}
+						textContent={'Forgot Credentials?'}
+					/>
+				</Grid>
 			)}
 			{authType !== 'login' && (
-				<CustomTypography tooltipText={'Login'} to={'/login'} textContent={'Login'} />
+				<Grid item xs={4}>
+					<CustomTypography tooltipText={'Login'} to={'/login'} textContent={'Login'} />
+				</Grid>
 			)}
 			{authType !== 'register' && (
-				<CustomTypography
-					tooltipText={'Create Account'}
-					to={'/register'}
-					textContent={'Register'}
-				/>
+				<Grid item xs={4}>
+					<CustomTypography
+						tooltipText={'Create Account'}
+						to={'/register'}
+						textContent={'Register'}
+					/>
+				</Grid>
 			)}
 		</Grid>
 	);
@@ -53,6 +60,7 @@ const AuthLayout = ({}) => {
 		<MainCard
 			title={`${authType.charAt(0).toUpperCase()}${authType.slice(1, authType.length)}`}
 			actionSection={AuthNavLinks}
+			sx={{ margin: '2rem auto' }}
 		>
 			{authTypes[authType]}
 		</MainCard>

@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
 
-import { Button, Link, Menu, MenuItem, MenuList, useTheme } from '@mui/material';
+import {
+	Button,
+	Divider,
+	Link,
+	Menu,
+	MenuItem,
+	MenuList,
+	useTheme,
+	useMediaQuery
+} from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 // project imports
 import CustomTypography from './CustomTypography';
 import CustomTooltip from './CustomTooltip';
 
-const CollapsedMenu = ({ options, textField, relativePath = true, tooltipText }) => {
+const CollapsedMenu = ({
+	options,
+	textField,
+	relativePath = true,
+	tooltipText,
+	textAlign = 'start'
+}) => {
 	const theme = useTheme();
+	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (e) => {
@@ -58,35 +74,35 @@ const CollapsedMenu = ({ options, textField, relativePath = true, tooltipText })
 					sx={{
 						border: 'solid 0.025rem',
 						borderRadius: '10%',
-						padding: 0,
 						backgroundColor: theme.palette.navBackground
 					}}
 				>
 					{options.map((option, index) => {
 						const { url, tooltipText } = option;
 						return (
-							<MenuItem
-								key={option[textField]}
-								component={Link}
-								href={url}
-								target={!relativePath ? '_blank' : ''}
-								sx={{
-									'whiteSpace': 'nowrap',
-									'margin': '0',
-									'padding': '0.25rem',
-									'borderRadius': '10%',
-									'borderBottom':
-										index < options.length - 1 ? 'solid 0.025rem' : '',
-									'&:hover': {
-										backgroundColor: theme.palette.background
-									}
-								}}
-							>
-								<CustomTypography
-									textContent={option[textField]}
-									tooltipText={tooltipText || option[textField]}
-								/>
-							</MenuItem>
+							<div key={option[textField]}>
+								<MenuItem
+									key={option[textField]}
+									component={Link}
+									href={url}
+									target={!relativePath ? '_blank' : ''}
+									sx={{
+										'justifyContent': textAlign,
+										'whiteSpace': 'nowrap',
+										'borderRadius': '10%',
+										'padding': `0 ${medAndUp ? 1 : 0}rem`,
+										'&:hover': {
+											backgroundColor: theme.palette.background
+										}
+									}}
+								>
+									<CustomTypography
+										textContent={option[textField]}
+										tooltipText={tooltipText || option[textField]}
+									/>
+								</MenuItem>
+								{index !== options.length - 1 && <Divider />}
+							</div>
 						);
 					})}
 				</MenuList>

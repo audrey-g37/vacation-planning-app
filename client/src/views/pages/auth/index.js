@@ -14,25 +14,15 @@ const AuthMain = () => {
 	const underConstruction = process.env.NODE_ENV === 'production';
 	const lastModifiedDate = '04/16/2023';
 	return (
-		<Grid
-			container
-			spacing={theme.spacing()}
-			sx={{ justifyContent: 'center', height: '100vh', width: '100vw' }}
-		>
-			<Grid item xs={12}>
-				<Header underConstruction={underConstruction} />
-			</Grid>
-			<Grid item xs={12}>
-				{underConstruction ? (
-					<UnderConstruction lastModifiedDate={lastModifiedDate} />
-				) : (
-					<AuthLayout />
-				)}
-			</Grid>
-			<Grid item xs={12}>
-				<Footer />
-			</Grid>
-		</Grid>
+		<>
+			<Header underConstruction={underConstruction} />
+			{underConstruction ? (
+				<UnderConstruction lastModifiedDate={lastModifiedDate} />
+			) : (
+				<AuthLayout />
+			)}
+			<Footer />
+		</>
 	);
 };
 

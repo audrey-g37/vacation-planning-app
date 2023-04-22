@@ -10,6 +10,7 @@ import CustomTypography from '../re-usable/CustomTypography';
 const Footer = () => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
 	const contributors = [
 		{ name: 'Audrey Gillies', gitUser: 'audrey-g37' },
 		{ name: 'Gina Im', gitUser: 'gim928' },
@@ -32,7 +33,7 @@ const Footer = () => {
 			sx={{
 				justifyContent: 'center',
 				alignItems: 'center',
-				position: 'absolute',
+				position: `${lgAndUp ? 'fixed' : 'relative'}`,
 				bottom: '0',
 				height: '4rem',
 				backgroundColor: theme.palette.navBackground

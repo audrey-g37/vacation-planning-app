@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, useTheme, useMediaQuery } from '@mui/material';
+import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 
 // project imports
 import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
@@ -26,43 +26,47 @@ const Header = ({ underConstruction }) => {
 	}
 
 	return (
-		<Grid
-			container
-			spacing={theme.spacing()}
+		<AppBar
 			sx={{
-				alignItems: 'center',
-				position: 'absolute',
-				flexWrap: 'nowrap',
-				top: '0',
-				height: '4rem',
+				position: 'sticky',
+				height: `${medAndUp ? 3.5 : 2}rem`,
 				backgroundColor: theme.palette.navBackground
 			}}
 		>
-			<Grid item xs={12} sx={{ textAlign: 'center' }}>
-				<CustomTypography
-					textContent={'Get a GRIP On Your Group Trip!'}
-					variant={medAndUp ? 'h4' : 'subtitle1'}
-				/>
-			</Grid>
-
-			<Grid item>
-				<Grid container spacing={theme.spacing()}>
-					<Grid item>
-						<CollapsedMenu
-							options={
-								underConstruction
-									? headerNav.map(
-											(navOption) => (navOption = { ...navOption, url: '#' })
-									  )
-									: headerNav
-							}
-							textField={'text'}
-							tooltipText={'Menu'}
-						/>
-					</Grid>
+			<Grid
+				container
+				spacing={theme.spacing()}
+				sx={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
+			>
+				<Grid item xs={10} sx={{ textAlign: 'center' }}>
+					<CustomTypography
+						textContent={'Get a GRIP On Your Group Trip!'}
+						variant={medAndUp ? 'h4' : 'subtitle1'}
+					/>
 				</Grid>
+
+				{medAndUp && (
+					<Grid item xs={2}>
+						<Grid container spacing={theme.spacing()}>
+							<Grid item>
+								<CollapsedMenu
+									options={
+										underConstruction
+											? headerNav.map(
+													(navOption) =>
+														(navOption = { ...navOption, url: '#' })
+											  )
+											: headerNav
+									}
+									textField={'text'}
+									tooltipText={'Menu'}
+								/>
+							</Grid>
+						</Grid>
+					</Grid>
+				)}
 			</Grid>
-		</Grid>
+		</AppBar>
 	);
 };
 
