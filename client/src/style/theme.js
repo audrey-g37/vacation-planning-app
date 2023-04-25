@@ -9,7 +9,8 @@ const theme = (mode) => {
 			main: '#FAA484',
 			// hover on links
 			light: '#F09C16',
-			dark: '#3D805F'
+			// hover on buttons - match text.secondary
+			dark: '#FAD88D'
 		},
 		secondary: {
 			main: '#BAF9FF',
@@ -25,7 +26,7 @@ const theme = (mode) => {
 		},
 		action: {
 			// color when something has been clicked/selected - match text.primary
-			selected: '#A0FAE8'
+			selected: '#FFBFA8'
 		},
 		background: blueGrey[800],
 		navBackground: blueGrey[700]
@@ -36,7 +37,8 @@ const theme = (mode) => {
 			main: '#1477A8',
 			// hover on links
 			light: '#1FB4FF',
-			dark: '#027060'
+			// hover on buttons - match text.secondary
+			dark: '#28B599'
 		},
 		secondary: {
 			main: '#D06F62',
