@@ -29,40 +29,42 @@ const Header = ({ underConstruction }) => {
 		<AppBar
 			sx={{
 				position: 'sticky',
-				height: `${medAndUp ? 3.5 : 2}rem`,
+				height: `fit-content`,
+				padding: '0.5rem',
 				backgroundColor: theme.palette.navBackground
 			}}
 		>
 			<Grid
 				container
 				spacing={theme.spacing()}
-				sx={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
+				sx={{
+					height: '100%',
+					textAlign: 'center',
+					justifyContent: 'space-between',
+					alignItems: 'center'
+				}}
 			>
-				<Grid item xs={10} sx={{ textAlign: 'center' }}>
+				<Grid item xs={12} sm={8}>
 					<CustomTypography
 						textContent={'Get a GRIP On Your Group Trip!'}
 						variant={medAndUp ? 'h4' : 'subtitle1'}
+						customStyle={{ color: theme.palette.primary.main }}
 					/>
 				</Grid>
 
 				{medAndUp && (
-					<Grid item xs={2}>
-						<Grid container spacing={theme.spacing()}>
-							<Grid item>
-								<CollapsedMenu
-									options={
-										underConstruction
-											? headerNav.map(
-													(navOption) =>
-														(navOption = { ...navOption, url: '#' })
-											  )
-											: headerNav
-									}
-									textField={'text'}
-									tooltipText={'Menu'}
-								/>
-							</Grid>
-						</Grid>
+					<Grid item>
+						<CollapsedMenu
+							options={
+								underConstruction
+									? headerNav.map(
+											(navOption) => (navOption = { ...navOption, url: '#' })
+									  )
+									: headerNav
+							}
+							textField={'text'}
+							tooltipText={'Menu'}
+						/>
 					</Grid>
 				)}
 			</Grid>

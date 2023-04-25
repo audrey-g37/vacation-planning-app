@@ -1,12 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 import * as colors from '@mui/material/colors';
-const { grey } = colors;
+const { grey, blueGrey, teal } = colors;
 const theme = (mode) => {
 	const darkMode = {
 		// compound for the 3 (base color is text secondary)
 		primary: {
 			// text and links (not form labels)
-			main: '#FFD99C',
+			main: '#FAA484',
 			// hover on links
 			light: '#F09C16',
 			dark: '#3D805F'
@@ -18,17 +18,17 @@ const theme = (mode) => {
 		},
 		text: {
 			// titles of forms, buttons, helper text
-			primary: '#B5FFD1',
+			primary: '#FFBFA8',
 			// form input labels
-			secondary: '#FFB087',
+			secondary: '#FAD88D',
 			disabled: '#FAEEEB'
 		},
 		action: {
-			// color when something has been clicked/selected
-			selected: '#B5FFD1'
+			// color when something has been clicked/selected - match text.primary
+			selected: '#A0FAE8'
 		},
-		background: grey[900],
-		navBackground: grey[700]
+		background: blueGrey[800],
+		navBackground: blueGrey[700]
 	};
 	const lightMode = {
 		primary: {
@@ -54,8 +54,8 @@ const theme = (mode) => {
 			// color when something has been clicked/selected - match text.primary
 			selected: '#55788A'
 		},
-		background: grey[50],
-		navBackground: grey[300]
+		background: '#ffffff',
+		navBackground: teal[50]
 	};
 	let palette = {
 		mode: mode

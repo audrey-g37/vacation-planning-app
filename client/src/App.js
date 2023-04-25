@@ -23,21 +23,33 @@ const client = new ApolloClient({
 });
 
 function App() {
-	const mode = 'light';
+	const mode = 'dark';
+	const styledBackground = {
+		backgroundImage: `url(${
+			process.env.PUBLIC_URL +
+			`/images/hawaii-beach-${mode === 'dark' ? 'black-and-white' : 'rainbow'}.jpeg`
+		})`,
+		backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+		backgroundSize: 'cover',
+		minHeight: '100vh'
+	};
 
 	return (
-		<ApolloProvider client={client}>
-			<StyledEngineProvider injectFirst>
-				<ThemeProvider theme={theme(mode)}>
-					<CssBaseline />
-					<AuthProvider>
-						<NavScroll>
-							<Routes />
-						</NavScroll>
-					</AuthProvider>
-				</ThemeProvider>
-			</StyledEngineProvider>
-		</ApolloProvider>
+		<div style={styledBackground}>
+			<ApolloProvider client={client}>
+				<StyledEngineProvider injectFirst>
+					<ThemeProvider theme={theme(mode)}>
+						<CssBaseline />
+						<AuthProvider>
+							<NavScroll>
+								<Routes />
+							</NavScroll>
+						</AuthProvider>
+					</ThemeProvider>
+				</StyledEngineProvider>
+			</ApolloProvider>
+		</div>
 	);
 }
 export default App;
