@@ -8,10 +8,18 @@ const CustomTypography = ({
 	to,
 	relativePath = true,
 	icon,
+	button,
 	customStyle = {}
 }) => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+	if (!customStyle.color) {
+		customStyle = {
+			...customStyle,
+			color: button ? theme.palette.text.main : theme.palette.primary.main
+		};
+	}
 
 	if (!variant) {
 		variant = medAndUp ? 'body1' : 'body2';

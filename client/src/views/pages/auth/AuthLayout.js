@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router';
 
 // mui imports
-import { Grid, useTheme } from '@mui/material';
+import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
 import MainCard from 'views/components/re-usable/MainCard';
@@ -11,8 +11,11 @@ import Register from './Register';
 
 const AuthLayout = ({}) => {
 	const theme = useTheme();
+	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+
 	const { pathname } = useLocation();
 	const authType = pathname.replace('/', '') || 'login';
+
 	const authTypes = {
 		login: <Login />,
 		register: <Register />
@@ -60,7 +63,7 @@ const AuthLayout = ({}) => {
 		<MainCard
 			title={`${authType.charAt(0).toUpperCase()}${authType.slice(1, authType.length)}`}
 			actionSection={AuthNavLinks}
-			sx={{ margin: '2rem auto' }}
+			sx={{ margin: '2rem auto', maxWidth: medAndUp ? '55vw' : '85vw' }}
 		>
 			{authTypes[authType]}
 		</MainCard>

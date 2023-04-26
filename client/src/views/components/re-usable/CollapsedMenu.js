@@ -72,7 +72,7 @@ const CollapsedMenu = ({
 			>
 				<MenuList
 					sx={{
-						border: 'solid 0.025rem',
+						border: `solid ${theme.palette.primary.main} 0.025rem`,
 						borderRadius: '10%',
 						backgroundColor: theme.palette.navBackground
 					}}
@@ -87,13 +87,11 @@ const CollapsedMenu = ({
 									href={url}
 									target={!relativePath ? '_blank' : ''}
 									sx={{
-										'justifyContent': textAlign,
-										'whiteSpace': 'nowrap',
-										'borderRadius': '10%',
-										'padding': `0 ${medAndUp ? 1 : 0}rem`,
-										'&:hover': {
-											backgroundColor: theme.palette.background
-										}
+										justifyContent: textAlign,
+										whiteSpace: 'nowrap',
+										borderRadius: '10%',
+										padding: `0 ${medAndUp ? 1 : 0}rem`,
+										margin: `0 ${medAndUp ? 1 : 0.5}rem`
 									}}
 								>
 									<CustomTypography

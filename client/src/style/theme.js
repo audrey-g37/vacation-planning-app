@@ -6,15 +6,15 @@ const theme = (mode) => {
 		// compound for the 3 (base color is text secondary)
 		primary: {
 			// text and links (not form labels)
-			main: '#FAA484',
-			// hover on links
-			light: '#F09C16',
-			// hover on buttons - match text.secondary
+			main: '#FABAA2',
+			// hover on links and menu items in collapsed menu custom component
+			light: '#ffffff',
+			// hover on buttons - match text secondary
 			dark: '#FAD88D'
 		},
 		secondary: {
 			main: '#BAF9FF',
-			light: '#DBFCFF',
+			light: '#FFECD4',
 			dark: '#95C7CC'
 		},
 		text: {
@@ -35,10 +35,10 @@ const theme = (mode) => {
 		primary: {
 			// text and links (not form labels)
 			main: '#1477A8',
-			// hover on links
-			light: '#1FB4FF',
-			// hover on buttons - match text.secondary
-			dark: '#28B599'
+			// hover on links and menu items in collapsed menu custom component
+			light: '#1B9655',
+			// hover on buttons - match text secondary
+			dark: '#348F28'
 		},
 		secondary: {
 			main: '#D06F62',
@@ -46,10 +46,11 @@ const theme = (mode) => {
 			dark: '#702302'
 		},
 		text: {
-			// titles of forms, buttons, helper text
-			primary: '#55788A',
+			// button background, helper text
+			primary: '#223FAD',
 			// form input labels
-			secondary: '#28B599',
+			secondary: '#348F28',
+			input: '#eeeeee',
 			disabled: '#eeeeee'
 		},
 		action: {
@@ -57,7 +58,7 @@ const theme = (mode) => {
 			selected: '#55788A'
 		},
 		background: '#ffffff',
-		navBackground: teal[50]
+		navBackground: grey[100]
 	};
 	let palette = {
 		mode: mode

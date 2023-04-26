@@ -16,7 +16,7 @@ const SubmitButton = ({
 	const FormattedButton = (
 		<span>
 			<Button onClick={onClick} disabled={disabled} variant={variant} type={type}>
-				<CustomTypography textContent={title} icon={icon} />
+				<CustomTypography textContent={title} icon={icon} button={true} />
 			</Button>
 		</span>
 	);

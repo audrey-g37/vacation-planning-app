@@ -15,7 +15,6 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, actionSection, ...
 			{...others}
 			sx={{
 				...sx,
-				maxWidth: medAndUp ? '60vw' : '85vw',
 				backgroundColor: theme.palette.background
 			}}
 		>
@@ -35,6 +34,7 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, actionSection, ...
 									variant={medAndUp ? 'h5' : 'body1'}
 									textContent={title}
 									textAlign={'center'}
+									customStyle={{ color: theme.palette.primary.main }}
 								/>
 							}
 						/>
