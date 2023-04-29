@@ -10,9 +10,7 @@ const resolvers = {
 			} else if (authId) {
 				userToReturn = await User.findOne({ authId: authId });
 			}
-			return userToReturn
-				? userToReturn
-				: new AuthenticationError('You need to be logged in!');
+			return userToReturn;
 		},
 		users: async (parent, body, context) => {
 			return await User.find({ ...body }).populate('trip');
