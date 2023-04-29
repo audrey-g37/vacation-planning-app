@@ -8,6 +8,7 @@ import accountReducer from 'contexts/auth/accountReducer';
 import { LOGIN, LOGOUT } from 'contexts/auth/actions';
 
 // project imports
+
 // for auth
 import auth0 from 'auth0-js';
 // for apollo
@@ -102,13 +103,27 @@ export const AuthProvider = ({ children }) => {
 		removeBudget: REMOVE_BUDGET
 	};
 
-	// connection to Auth0 for auth functions
-	const auth0Connection = new auth0.WebAuth({
+	const [getUser] = useLazyQuery(queryTypes['user']);
+	const [addUser] = useMutation(mutationTypes['addUser']);
+
+	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
 		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
-	});
+		// authorizationParams: {
+		// 	redirect_uri: window.location.origin
+		// }
+	};
+	// connection to Auth0 for auth functions
+	const auth0Connection = new auth0.WebAuth(auth0ConnectionObj);
 
-	const [addUser] = useMutation(mutationTypes['addUser']);
+	let auth0AuthObj = {
+		realm: 'Grip',
+		scope: 'openid',
+		responseType: 'token id_token',
+		redirectUri: `${
+			process.env.NODE_ENV === 'development' ? 'http://localhost:3000/dashboard' : ''
+		}`
+	};
 
 	// registering a new user
 	const register = async (authObj) => {
@@ -152,40 +167,75 @@ export const AuthProvider = ({ children }) => {
 			  });
 	};
 
-	// logging in an existing user
-	const login = async (authObj) => {
-		if (!state.isLoggedIn) {
-			try {
-				const authLogin = auth0Connection.login(authObj);
-				if (authLogin) {
-					console.log({ authLogin });
-					// user.getBySearch({authId: authLogin._id})
-					dispatch({
-						type: LOGIN,
-						isLoggedIn: true
-					});
-				}
-			} catch (err) {
-				setAlert({
-					...alert,
-					open: true,
-					alertSeverity: 'error',
-					message: `There was a problem logging you in and gathering your user data.  Please try again later.`
-				});
+	// using accessToken to get user info and replacing the token in the url
+	const applyAuthToken = async () => {
+		try {
+			const existingToken = state.authInfo?.accessToken;
+			const accessToken = window.location.hash;
+			let dispatchObj = {
+				type: LOGIN,
+				isLoggedIn: true
+			};
+			if (!accessToken && !existingToken) {
+				setAlert({ message: 'You need to be logged in to see this page.' });
+				return window.location.replace('/login');
 			}
+			if (accessToken) {
+				auth0Connection.parseHash(async (err, authResult) => {
+					if (err) {
+						return console.error(err);
+					}
+					const authId = authResult.idTokenPayload.sub.split('auth0|')[1];
+					const { data } = await getUser({ variables: { authId: authId } });
+					dispatchObj = {
+						...dispatchObj,
+						user: data.user,
+						authInfo: authResult
+					};
+				});
+			} else {
+				auth0Connection.authorize(
+					{ ...auth0AuthObj, state: state.authInfo.state },
+					(err, authResult) => {
+						if (err) {
+							return console.error(err);
+						}
+						dispatchObj = {
+							...dispatchObj,
+							authInfo: authResult
+						};
+					}
+				);
+			}
+			dispatch({ ...dispatchObj });
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	// authorizing an existing user based on email and password
+	const getAuthToken = async (authObj = {}) => {
+		try {
+			const authToSend = { ...auth0AuthObj, ...authObj };
+			auth0Connection.authorize(authToSend);
+		} catch (err) {
+			console.error({ err });
+			setAlert({
+				...alert,
+				open: true,
+				alertSeverity: 'error',
+				message: `There was a problem logging you in and gathering your user data.  Please try again later.`
+			});
 		}
 	};
 
 	const logoutUser = async () => {
+		auth0Connection.logout();
 		dispatch({
 			type: LOGOUT
 		});
 		navigate('/login');
 	};
-
-	useEffect(() => {
-		login();
-	}, [dispatch]);
 
 	return (
 		<AuthContext.Provider
@@ -195,6 +245,8 @@ export const AuthProvider = ({ children }) => {
 				setAlert,
 				navigate,
 				login: () => {},
+				getAuthToken,
+				applyAuthToken,
 				register,
 				logoutUser
 			}}
