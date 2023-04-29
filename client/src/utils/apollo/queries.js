@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-	query ($ID: String, $authId: String) {
-		user(_id: $ID, authId: $authId) {
+	query ($queryID: ID, $authId: String) {
+		user(queryID: $queryID, authId: $authId) {
+			_id
 			email
 			firstName
 			lastName
@@ -22,8 +23,8 @@ export const QUERY_USERS = gql`
 `;
 
 export const QUERY_TRIP = gql`
-	query ($tripId: ID!, $userId: ID!) {
-		trip(tripId: $tripId, userId: $userId) {
+	query ($queryID: ID!) {
+		trip(queryID: $queryID) {
 			_id
 			title
 			location
@@ -41,8 +42,8 @@ export const QUERY_TRIP = gql`
 `;
 
 export const QUERY_TRIPS = gql`
-	query ($userId: ID!) {
-		trips(userId: $userId) {
+	query {
+		trips {
 			_id
 			title
 			location
@@ -54,8 +55,8 @@ export const QUERY_TRIPS = gql`
 `;
 
 export const QUERY_TASK = gql`
-	query ($taskId: ID!) {
-		task(taskId: $taskId) {
+	query ($queryID: ID!) {
+		task(queryID: $queryID) {
 			_id
 			title
 			details
@@ -67,8 +68,8 @@ export const QUERY_TASK = gql`
 `;
 
 export const QUERY_TASKS = gql`
-	query ($tripId: ID!) {
-		tasks(tripId: $tripId) {
+	query {
+		tasks {
 			_id
 			title
 			details
@@ -80,8 +81,8 @@ export const QUERY_TASKS = gql`
 `;
 
 export const QUERY_BUDGET = gql`
-	query ($budgetId: ID!) {
-		budget(budgetId: $budgetId) {
+	query ($queryID: ID!) {
+		budget(queryID: $queryID) {
 			_id
 			title
 			value
@@ -92,8 +93,8 @@ export const QUERY_BUDGET = gql`
 `;
 
 export const QUERY_BUDGETS = gql`
-	query ($tripId: ID!) {
-		budgets(tripId: $tripId) {
+	query {
+		budgets {
 			_id
 			title
 			value
