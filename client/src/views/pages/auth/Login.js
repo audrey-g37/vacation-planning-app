@@ -32,8 +32,8 @@ const Login = () => {
 		try {
 			await getAuthToken({ ...formState });
 			setFormState(initialState);
-		} catch (e) {
-			console.error(e);
+		} catch (err) {
+			console.error(err);
 		}
 	};
 

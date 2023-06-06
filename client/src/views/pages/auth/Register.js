@@ -54,8 +54,8 @@ const Register = () => {
 		try {
 			await register(formState);
 			setFormState(initialState);
-		} catch (e) {
-			console.error(e);
+		} catch (err) {
+			console.error(err);
 		}
 		setSubmissionDisabled({ ...submissionDisabled, disabled: false });
 	};
