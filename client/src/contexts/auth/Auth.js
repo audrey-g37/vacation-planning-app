@@ -181,18 +181,22 @@ export const AuthProvider = ({ children }) => {
 				return window.location.replace('/login');
 			}
 			if (accessToken) {
-				auth0Connection.parseHash(async (err, authResult) => {
-					if (err) {
-						return console.error(err);
-					}
-					const authId = authResult.idTokenPayload.sub.split('auth0|')[1];
-					const { data } = await getUser({ variables: { authId: authId } });
-					dispatchObj = {
-						...dispatchObj,
-						user: data.user,
-						authInfo: authResult
-					};
-				});
+				if (state.isLoggedIn) {
+					console.log({ accessToken });
+				} else {
+					auth0Connection.parseHash(async (err, authResult) => {
+						if (err) {
+							return console.error(err);
+						}
+						const authId = authResult.idTokenPayload.sub.split('|')[1];
+						const { data } = await getUser({ variables: { authId: authId } });
+						dispatchObj = {
+							...dispatchObj,
+							user: data.user,
+							authInfo: authResult
+						};
+					});
+				}
 			} else {
 				auth0Connection.authorize(
 					{ ...auth0AuthObj, state: state.authInfo.state },
@@ -214,10 +218,11 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	// authorizing an existing user based on email and password
+	// ! don't need to authorize on a refresh - so check for something here -- just changed method to 'login' instead of 'authorize' - so continue down this rabbit hole of 'login'
 	const getAuthToken = async (authObj = {}) => {
 		try {
 			const authToSend = { ...auth0AuthObj, ...authObj };
-			auth0Connection.authorize(authToSend);
+			//! auth0Connection.login(authToSend);
 		} catch (err) {
 			console.error({ err });
 			setAlert({
