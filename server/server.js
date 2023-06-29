@@ -23,11 +23,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('*', (req, res) => {
-	res.sendFile((__dirname, '../client/build/index.html'));
+	res.sendFile(('index.html', { root: __dirname }));
 });
 
 db.once('open', () => {
 	app.listen(PORT, () => {
+		console.log('changes received');
 		console.log(`API server running on port ${PORT}!`);
 		console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
 	});
