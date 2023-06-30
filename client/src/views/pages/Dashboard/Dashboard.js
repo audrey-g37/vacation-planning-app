@@ -5,11 +5,7 @@ import './Dashboard.css';
 import useAuth from 'hooks/useAuth';
 
 const Dashboard = () => {
-	const { isLoggedIn, user, applyAuthToken, authInfo } = useAuth();
-
-	const checkForUser = () => {
-		applyAuthToken();
-	};
+	const { user, navigate } = useAuth();
 
 	const allTrips = [];
 
@@ -23,10 +19,6 @@ const Dashboard = () => {
 	} else {
 		recentEightTrips = allTrips;
 	}
-
-	useEffect(() => {
-		!authInfo && checkForUser();
-	}, [isLoggedIn]);
 
 	return (
 		user && (
@@ -68,7 +60,7 @@ const Dashboard = () => {
 							className='all-trips-button'
 							variant='dark'
 							type='submit'
-							href='/view-trips'
+							onClick={() => navigate('/view-trips')}
 						>
 							View All
 						</Button>

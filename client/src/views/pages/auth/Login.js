@@ -31,10 +31,10 @@ const Login = () => {
 		event.preventDefault();
 		try {
 			await getAuthToken({ ...formState });
-			setFormState(initialState);
 		} catch (err) {
 			console.error(err);
 		}
+		setFormState(initialState);
 	};
 
 	const submissionDisabled = {

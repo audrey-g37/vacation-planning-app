@@ -49,6 +49,36 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
 	// all data stored on auth context
 	const [state, dispatch] = useReducer(accountReducer, initialState);
+	useEffect(() => {
+		login();
+	}, [dispatch]);
+
+	const authSessionInfo = JSON.parse(window.sessionStorage.getItem('authInfo'));
+	const userSessionInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+
+	const login = () => {
+		if (!authSessionInfo) {
+			applyAuthToken()
+				.then((res) => {
+					if (!res.success) {
+						dispatch({ type: LOGOUT });
+						navigate('/login');
+					}
+				})
+				.catch((err) => {
+					console.error(err);
+					dispatch({ type: LOGOUT });
+					navigate('/login');
+				});
+		}
+		if (!state.user || !state.auhInfo) {
+			dispatch({
+				type: LOGIN,
+				user: userSessionInfo,
+				authInfo: authSessionInfo
+			});
+		}
+	};
 
 	// alerts that are displayed throughout app
 	const [alert, setAlert] = useState({
@@ -109,9 +139,6 @@ export const AuthProvider = ({ children }) => {
 	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
 		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
-		// authorizationParams: {
-		// 	redirect_uri: window.location.origin
-		// }
 	};
 	// connection to Auth0 for auth functions
 	const auth0Connection = new auth0.WebAuth(auth0ConnectionObj);
@@ -169,32 +196,43 @@ export const AuthProvider = ({ children }) => {
 
 	// using accessToken to get user info and replacing the token in the url
 	const applyAuthToken = async () => {
+		let responseObj = {
+			success: false
+		};
 		try {
-			const existingToken = state.authInfo?.accessToken;
+			const existingToken = authSessionInfo?.accessToken;
 			const accessToken = window.location.hash;
+			const isLoggedIn = state.isLoggedIn;
+
 			let dispatchObj = {
 				type: LOGIN,
 				isLoggedIn: true
 			};
-			if (!accessToken && !existingToken) {
+			const runDispatch = (dispatchInfo) => {
+				window.sessionStorage.setItem('authInfo', JSON.stringify(dispatchInfo.authInfo));
+				window.sessionStorage.setItem('userInfo', JSON.stringify(dispatchInfo.user));
+				dispatch({ ...dispatchInfo });
+			};
+			if (!existingToken && !isLoggedIn && !accessToken) {
 				setAlert({ message: 'You need to be logged in to see this page.' });
-				return window.location.replace('/login');
+				return responseObj;
+			}
+			if (existingToken) {
+				return { ...responseObj, success: true };
 			}
 			if (accessToken) {
-				if (state.isLoggedIn) {
-					console.log({ accessToken });
-				} else {
+				if (!isLoggedIn) {
 					auth0Connection.parseHash(async (err, authResult) => {
 						if (err) {
-							return console.error(err);
+							return { ...responseObj, success: false };
 						}
 						const authId = authResult.idTokenPayload.sub.split('|')[1];
 						const { data } = await getUser({ variables: { authId: authId } });
-						dispatchObj = {
+						runDispatch({
 							...dispatchObj,
 							user: data.user,
 							authInfo: authResult
-						};
+						});
 					});
 				}
 			} else {
@@ -202,27 +240,30 @@ export const AuthProvider = ({ children }) => {
 					{ ...auth0AuthObj, state: state.authInfo.state },
 					(err, authResult) => {
 						if (err) {
-							return console.error(err);
+							return { ...responseObj, success: false };
 						}
-						dispatchObj = {
+						runDispatch({
 							...dispatchObj,
 							authInfo: authResult
-						};
+						});
 					}
 				);
 			}
-			dispatch({ ...dispatchObj });
+			return { ...responseObj, success: true };
 		} catch (err) {
 			console.error(err);
 		}
 	};
 
 	// authorizing an existing user based on email and password
-	// ! don't need to authorize on a refresh - so check for something here -- just changed method to 'login' instead of 'authorize' - so continue down this rabbit hole of 'login'
 	const getAuthToken = async (authObj = {}) => {
 		try {
 			const authToSend = { ...auth0AuthObj, ...authObj };
-			//! auth0Connection.login(authToSend);
+			auth0Connection.login(authToSend, async (err) => {
+				if (err) {
+					return console.error({ err });
+				}
+			});
 		} catch (err) {
 			console.error({ err });
 			setAlert({
@@ -246,10 +287,10 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				...state,
+				login: () => {},
 				alert,
 				setAlert,
 				navigate,
-				login: () => {},
 				getAuthToken,
 				applyAuthToken,
 				register,
