@@ -1,14 +1,29 @@
 import { Typography, useTheme, useMediaQuery, Link } from '@mui/material';
 import CustomTooltip from './CustomTooltip';
 
-const CustomTypography = ({ variant, textContent, tooltipText, to, relativePath = true, icon }) => {
+const CustomTypography = ({
+	variant,
+	textContent,
+	tooltipText,
+	to,
+	relativePath = true,
+	icon,
+	button,
+	customStyle = {}
+}) => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+	if (!customStyle.color) {
+		customStyle = {
+			...customStyle,
+			color: button ? theme.palette.text.main : theme.palette.primary.main
+		};
+	}
 
 	if (!variant) {
 		variant = medAndUp ? 'body1' : 'body2';
 	}
-	let customStyle = {};
 
 	// typography is being used as a link component
 	if (to) {

@@ -9,13 +9,22 @@ const typeDefs = gql`
 		authId: String!
 	}
 
+	type Address {
+		street1: String
+		street2: String
+		city: String
+		state: String
+		country: String
+		zipCode: String
+	}
+
 	type Trip {
 		_id: ID!
 		title: String!
-		location: String!
-		startDate: String!
-		endDate: String!
 		description: String
+		address: Address
+		startDate: String
+		endDate: String
 		userID: ID!
 	}
 
@@ -23,84 +32,103 @@ const typeDefs = gql`
 		_id: ID!
 		title: String!
 		details: String
-		dueDate: String!
-		status: Boolean!
-		assignee: String!
-		tripId: ID!
+		dueDate: String
+		status: String
+		assignee: String
+		tripID: ID!
 	}
 
 	type Budget {
 		_id: ID!
 		title: String!
-		value: Int!
-		purchaseDate: String!
-		purchasedBy: String!
-		tripId: ID!
+		minAmount: Int
+		maxAmount: Int
+		actualAmount: Int
+		purchaseDate: String
+		purchasedBy: String
+		tripID: ID!
+		taskID: [ID]
 	}
 
 	type Query {
-		user(ID: ID!): User
+		user(queryID: ID, authId: String): User
+		trip(queryID: ID!): Trip
+		task(queryID: ID!): Task
+		budget(queryID: ID!): Budget
 		users: [User]!
-		trip(tripId: ID!, userId: ID!): Trip
-		trips(userId: ID!): [Trip]!
-		task(taskId: ID!): Task
-		tasks(tripId: ID!): [Task]!
-		budget(budgetId: ID!): Budget
-		budgets(tripId: ID!): [Budget]!
+		trips: [Trip]!
+		tasks: [Task]!
+		budgets: [Budget]!
 	}
 
 	type Mutation {
-		addUser(username: String!, password: String!): User
+		addUser(firstName: String!, lastName: String!, email: String!, authId: String!): User
 		addTrip(
-			userId: ID!
 			title: String!
 			description: String
-			location: String!
-			startDate: String!
-			endDate: String!
+			street1: String
+			street2: String
+			city: String
+			state: String
+			country: String
+			zipCode: String
+			startDate: String
+			endDate: String
+			userID: ID!
 		): Trip
 		addTask(
-			tripId: ID!
 			title: String!
 			details: String
-			dueDate: String!
-			status: Boolean!
-			assignee: String!
+			dueDate: String
+			status: String
+			assignee: String
+			tripID: ID!
 		): Task
 		addBudget(
-			tripId: ID!
 			title: String!
-			value: Int!
-			purchaseDate: String!
-			purchasedBy: String!
+			minAmount: Int
+			maxAmount: Int
+			actualAmount: Int
+			purchaseDate: String
+			purchasedBy: String
+			tripID: ID!
+			taskID: ID
 		): Budget
-		updateUser(_id: ID!, email: String, firstName: String, lastName: String): Trip
+		updateUser(queryID: ID!, email: String, firstName: String, lastName: String): User
 		updateTrip(
-			tripId: ID!
+			queryID: ID!
 			title: String
 			description: String
-			location: String
+			street1: String
+			street2: String
+			city: String
+			state: String
+			country: String
+			zipCode: String
 			startDate: String
 			endDate: String
 		): Trip
 		updateTask(
-			taskId: ID!
+			queryID: ID!
 			title: String
 			details: String
 			dueDate: String
-			status: Boolean
+			status: String
 			assignee: String
 		): Task
 		updateBudget(
-			budgetId: ID!
+			queryID: ID!
 			title: String
-			value: Int
+			minAmount: Int
+			maxAmount: Int
+			actualAmount: Int
 			purchaseDate: String
 			purchasedBy: String
+			taskID: ID
 		): Budget
-		removeTrip(tripId: ID!): Trip
-		removeTask(taskId: ID!): Task
-		removeBudget(budgetId: ID!): Budget
+		removeTrip(queryID: ID!): Trip
+		removeTask(queryID: ID!): Task
+		removeBudget(queryID: ID!): Budget
 	}
 `;
 

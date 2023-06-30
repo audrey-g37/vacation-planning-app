@@ -11,34 +11,33 @@ import {
 
 const mainRoutes = {
 	path: '/',
-	element: <AuthLayout />,
 	children: [
 		{
-			path: '/dashboard',
+			path: 'dashboard',
 			element: <Dashboard />
 		},
 		{
-			path: '/view-trips',
+			path: 'view-trips',
 			element: <ViewAllTrips />
 		},
 		{
-			path: '/view-trip/:id',
+			path: 'view-trip/:id',
 			element: <ViewSingleTrip />,
 			children: [
 				{
-					path: '/view-trip/:id/view-tasks',
+					path: 'view-trip/:id/view-tasks',
 					element: <ViewTask />
 				},
 				{
-					path: '/view-trip/:id/view-tasks/:id',
+					path: 'view-trip/:id/view-tasks/:id',
 					element: <EditTask />
 				},
 				{
-					path: '/view-trip/:id/view-budget',
+					path: 'view-trip/:id/view-budget',
 					element: <ViewBudget />
 				},
 				{
-					path: '/view-trip/:id/view-budgets/:id',
+					path: 'view-trip/:id/view-budgets/:id',
 					element: <EditBudget />
 				}
 			]

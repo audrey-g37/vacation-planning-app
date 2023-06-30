@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
 
 const taskSchema = new Schema(
 	{
@@ -11,19 +10,16 @@ const taskSchema = new Schema(
 			type: String
 		},
 		dueDate: {
-			type: Date,
-			required: true,
-			get: (timestamp) => dateFormat(timestamp)
+			type: Date
 		},
 		status: {
-			type: Boolean,
-			required: true
+			type: String,
+			default: 'Not Started'
 		},
 		assignee: {
-			type: String,
-			required: true
+			type: String
 		},
-		tripId: {
+		tripID: {
 			type: Schema.Types.ObjectId,
 			ref: 'Trip',
 			required: true

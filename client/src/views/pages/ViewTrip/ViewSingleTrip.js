@@ -2,19 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router';
-import { QUERY_USER, QUERY_TRIP } from 'utils/queries';
+import { QUERY_USER, QUERY_TRIP } from 'utils/apollo/queries';
 import { Card, Button } from '@mui/material';
-import Auth from 'utils/auth';
 import './ViewSingleTrip.css';
+import useAuth from 'hooks/useAuth';
 
 const ViewSingleTrip = () => {
 	const tripId = useParams();
 	const idToUse = tripId.id;
-	Auth.storeTripId(idToUse);
+	// !was storing a tripId locally - can save to context or put in url params
 
-	const currentUser = Auth.getUsername();
+	const { user } = useAuth();
 	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: currentUser }
+		variables: { username: user }
 	});
 	const userData = data1?.user || [];
 

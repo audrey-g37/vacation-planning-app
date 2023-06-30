@@ -14,13 +14,3 @@
 	--contrast2: #edb918;
 	--contrast1: #ff4b9f;
 }
-
-#root {
-	/* background-image: url(https://cdn.shopify.com/s/files/1/0043/8471/8938/products/154516875564915737.jpg?v=1555128185); */
-	background-color: var(--accent2b);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	height: 100vh;
-	width: 100vw;
-}

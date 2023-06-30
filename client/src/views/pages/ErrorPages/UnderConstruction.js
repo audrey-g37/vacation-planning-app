@@ -1,34 +1,41 @@
 import React from 'react';
-import { Box, Grid, useTheme } from '@mui/material';
+import { Box, useTheme, useMediaQuery } from '@mui/material';
+import CustomTypography from 'views/components/re-usable/CustomTypography';
 
 const UnderConstruction = ({ lastModifiedDate }) => {
 	const theme = useTheme();
+	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 	const options = { year: 'numeric', month: 'short', day: 'numeric' };
 	const displayDate = new Date(lastModifiedDate).toLocaleDateString('en-us', options);
 
 	return (
-		<Grid
-			container
-			spacing={theme.spacing()}
-			sx={{ justifyContent: 'center', paddingTop: '5rem' }}
+		<Box
+			sx={{
+				background: theme.palette.background,
+				textAlign: 'center',
+				margin: '1.5rem auto',
+				padding: `${medAndUp ? 1 : 0.5}rem`,
+				width: 'fit-content',
+				border: `solid`
+			}}
 		>
-			<Grid item>
-				<Box
-					sx={{
-						background: 'white',
-						textAlign: 'center',
-						fontSize: '2.5rem',
-						padding: '0.5rem',
-						border: 'solid black'
-					}}
-				>
-					<p>Website Under Construction</p>
-					<span style={{ fontSize: '2.0rem' }}>Please Check Back Later!</span>
-					<br />
-					<span style={{ fontSize: '1rem' }}>Last Modified: {displayDate}</span>
-				</Box>
-			</Grid>
-		</Grid>
+			<CustomTypography
+				textContent={'Website Under Construction'}
+				variant={medAndUp ? 'h4' : 'h6'}
+			/>
+			<br />
+			<CustomTypography
+				textContent={'Please check back later!'}
+				variant={medAndUp ? 'h6' : 'body1'}
+				customStyle={{ color: theme.palette.primary.light }}
+			/>
+			<br />
+			<CustomTypography
+				textContent={`Last Modified: ${displayDate}`}
+				variant={medAndUp ? 'h6' : 'body1'}
+				customStyle={{ color: theme.palette.primary.light }}
+			/>
+		</Box>
 	);
 };
 

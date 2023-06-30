@@ -1,18 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Auth from 'utils/auth';
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_TRIPS } from 'utils/queries';
+import { QUERY_USER, QUERY_TRIPS } from 'utils/apollo/queries';
 import { Button } from '@mui/material';
 import './ViewAllTrips.css';
-
-// import moment from "moment";
+import useAuth from 'hooks/useAuth';
 
 const ViewAllTrips = () => {
-	// const now = moment();
-	const currentUser = Auth.getUsername();
+	const { user } = useAuth();
 	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: currentUser }
+		variables: { username: user }
 	});
 	const userData = data1?.user || [];
 	const { data: data2 } = useQuery(QUERY_TRIPS, { variables: { userId: userData._id } });

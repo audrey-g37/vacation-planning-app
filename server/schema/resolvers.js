@@ -3,155 +3,98 @@ const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
 	Query: {
-		user: async (parent, { ID, authId }) => {
+		user: async (parent, { queryID, authId }) => {
 			let userToReturn;
-			if (ID) {
-				userToReturn = await User.findById(ID);
+			if (queryID) {
+				userToReturn = await User.findById(queryID);
 			} else if (authId) {
 				userToReturn = await User.findOne({ authId: authId });
 			}
-			return userToReturn
-				? userToReturn
-				: new AuthenticationError('You need to be logged in!');
+			return userToReturn;
 		},
-		// users: async (parent, args, context) => {
-		//   if (context.user) {
-		//     return await User.find({}).populate("trip");
-		//   }
-		//   throw new AuthenticationError("You need to be logged in!");
-		// },
-		trip: async (parent, { userId, tripId }, context) => {
-			if (context.user) {
-				return await Trip.findOne({ _id: tripId, userId: userId }).populate(
-					'tasks',
-					'budget'
-				);
-			}
-			throw new AuthenticationError('You need to be logged in!');
+		users: async (parent, body, context) => {
+			return await User.find({ ...body }).populate('trip');
 		},
-		trips: async (parent, { userId }, context) => {
-			if (context.user) {
-				return await Trip.find({ userId: userId }).populate('tasks', 'budget');
-			}
-			throw new AuthenticationError('You need to be logged in!');
+		trip: async (parent, { queryID }, context) => {
+			return await Trip.findById(queryID).populate('tasks', 'budget');
 		},
-		task: async (parent, { taskId }, context) => {
-			if (
-				context.user
-				// (context.const[(state, dispatch)] = useReducer(
-				//   reducer,
-				//   initialState,
-				//   init
-				// ))
-			) {
-				return await Task.findOne({ _id: taskId });
-			}
-			throw new AuthenticationError('You need to be logged in!');
+		trips: async (parent, body, context) => {
+			return await Trip.find({ ...body }).populate('tasks', 'budget');
 		},
-		tasks: async (parent, { tripId }, context) => {
-			if (context.user) {
-				return await Task.find({ tripId: tripId });
-			}
-			throw new AuthenticationError('You need to be logged in!');
+		task: async (parent, { queryID }, context) => {
+			return await Task.findById(queryID);
 		},
-		budget: async (parent, { budgetId }, context) => {
-			if (context.user) {
-				return await Budget.findOne({ _id: budgetId });
-			}
-			throw new AuthenticationError('You need to be logged in!');
+		tasks: async (parent, body, context) => {
+			return await Task.find({ ...body });
 		},
-		budgets: async (parent, { tripId }, context) => {
-			if (context.user) {
-				return await Budget.find({ tripId: tripId });
-			}
-			throw new AuthenticationError('You need to be logged in!');
+		budget: async (parent, { queryID }, context) => {
+			return await Budget.findById(queryID);
+		},
+		budgets: async (parent, body, context) => {
+			return await Budget.find({ ...body });
 		}
 	},
 	Mutation: {
-		addUser: async (parent, { email, firstName, lastName, authId }, context) => {
-			const userData = { ...email, ...firstName, ...lastName, ...authId };
-			const user = await User.create(userData);
+		addUser: async (parent, body, context) => {
+			let dataToSend = { ...body };
+			const user = await User.create(dataToSend);
 			return user;
 		},
-		addTrip: async (
-			parent,
-			{ userId, title, description, location, startDate, endDate },
-			context
-		) => {
-			const tripData = { title, description, location, startDate, endDate, userId };
-			const newData = await Trip.create(tripData);
+		addTrip: async (parent, body, context) => {
+			const { street1, street2, city, state, country, zipCode } = body;
+			let dataToSend = {
+				...body,
+				address: { street1, street2, city, state, country, zipCode }
+			};
+			const newData = await Trip.create(dataToSend);
 			return newData;
 		},
-		addTask: async (parent, { tripId, title, details, dueDate, status, assignee }, context) => {
-			const taskData = { tripId, title, details, dueDate, status, assignee };
-			const newData = await Task.create(taskData);
+		addTask: async (parent, body, context) => {
+			let dataToSend = { ...body };
+			const newData = await Task.create(dataToSend);
 			return newData;
 		},
-		addBudget: async (parent, { tripId, title, value, purchaseDate, purchasedBy }, context) => {
-			const budgetData = { tripId, title, value, purchaseDate, purchasedBy };
-			const newData = await Budget.create(budgetData);
+		addBudget: async (parent, body, context) => {
+			let dataToSend = { ...body };
+			const newData = await Budget.create(dataToSend);
 			return newData;
 		},
 		updateUser: async (parent, body, context) => {
-			const user = await User.findByIdAndUpdate(ID, { ...body }, { new: true });
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			const user = await User.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return user;
 		},
-		updateTrip: async (
-			parent,
-			{ userId, tripId, title, description, location, startDate, endDate },
-			context
-		) => {
-			const tripData = {
-				title: title,
-				description: description,
-				location: location,
-				startDate: startDate,
-				endDate: endDate
-			};
-			const updatedData = await Trip.findByIdAndUpdate(tripId, tripData, {
-				new: true
-			});
+		updateTrip: async (parent, body, context) => {
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			const updatedData = await Trip.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
-		updateTask: async (
-			parent,
-			{ tripId, taskId, title, details, dueDate, status, assignee },
-			context
-		) => {
-			const taskData = {
-				title: title,
-				details: details,
-				dueDate: dueDate,
-				status: status,
-				assignee: assignee
-			};
-			const updatedData = await Task.findByIdAndUpdate(taskId, taskData, { new: true });
+		updateTask: async (parent, body, context) => {
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			const updatedData = await Task.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
-		updateBudget: async (
-			parent,
-			{ tripId, budgetId, title, value, purchaseDate, purchasedBy },
-			context
-		) => {
-			const budgetData = {
-				title: title,
-				value: value,
-				purchaseDate: purchaseDate,
-				purchasedBy: purchasedBy
-			};
-			const updatedData = await Budget.findByIdAndUpdate(budgetId, budgetData, {
-				new: true
-			});
+		updateBudget: async (parent, body, context) => {
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			delete dataToSend.taskID;
+			if (body.taskID) {
+				dataToSend = { ...dataToSend, $addToSet: { taskID: body.taskID } };
+			}
+			const updatedData = await Budget.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
-		removeTrip: async (parent, { tripId }, context) => {
-			await Trip.findByIdAndDelete(tripId);
+		removeTrip: async (parent, { queryID }, context) => {
+			return await Trip.findByIdAndDelete(queryID);
 		},
-		removeTask: async (parent, { taskId }, context) => {
-			await Task.findByIdAndDelete(taskId);
+		removeTask: async (parent, { queryID }, context) => {
+			return await Task.findByIdAndDelete(queryID);
 		},
-		removeBudget: async (parent, { budgetId }, context) => {
-			await Budget.findByIdAndDelete(budgetId);
+		removeBudget: async (parent, { queryID }, context) => {
+			return await Budget.findByIdAndDelete(queryID);
 		}
 	}
 };

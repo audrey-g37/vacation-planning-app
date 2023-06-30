@@ -1,20 +1,17 @@
 import React from 'react';
-import { Grid, useTheme, useMediaQuery } from '@mui/material';
+import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 
 // project imports
 import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
-import Auth from 'utils/auth';
 import CustomTypography from '../re-usable/CustomTypography';
+import useAuth from 'hooks/useAuth';
 
 const Header = ({ underConstruction }) => {
+	const { isLoggedIn } = useAuth();
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
-	const logout = (event) => {
-		event.preventDefault();
-		Auth.logout();
-	};
 
-	const withAuth = Auth.loggedIn();
+	const withAuth = isLoggedIn || false;
 
 	const headerNav = [
 		{ text: 'Login', url: '/login' },
@@ -29,27 +26,33 @@ const Header = ({ underConstruction }) => {
 	}
 
 	return (
-		<Grid
-			container
-			spacing={theme.spacing()}
+		<AppBar
 			sx={{
-				alignItems: 'center',
-				position: 'absolute',
-				flexWrap: 'nowrap',
-				top: '0',
-				height: '4rem',
+				position: 'sticky',
+				height: `fit-content`,
+				padding: '0.5rem',
 				backgroundColor: theme.palette.navBackground
 			}}
 		>
-			<Grid item xs={12} sx={{ textAlign: 'center' }}>
-				<CustomTypography
-					textContent={'Get a GRIP On Your Group Trip!'}
-					variant={medAndUp ? 'h4' : 'subtitle1'}
-				/>
-			</Grid>
+			<Grid
+				container
+				spacing={theme.spacing()}
+				sx={{
+					height: '100%',
+					textAlign: 'center',
+					justifyContent: 'space-between',
+					alignItems: 'center'
+				}}
+			>
+				<Grid item xs={12} sm={8}>
+					<CustomTypography
+						textContent={'Get a GRIP On Your Group Trip!'}
+						variant={medAndUp ? 'h4' : 'subtitle1'}
+						customStyle={{ color: theme.palette.primary.main }}
+					/>
+				</Grid>
 
-			<Grid item>
-				<Grid container spacing={theme.spacing()}>
+				{medAndUp && (
 					<Grid item>
 						<CollapsedMenu
 							options={
@@ -63,9 +66,9 @@ const Header = ({ underConstruction }) => {
 							tooltipText={'Menu'}
 						/>
 					</Grid>
-				</Grid>
+				)}
 			</Grid>
-		</Grid>
+		</AppBar>
 	);
 };
 

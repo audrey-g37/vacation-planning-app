@@ -15,11 +15,7 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, actionSection, ...
 			{...others}
 			sx={{
 				...sx,
-				height: medAndUp ? '65vh' : '70vh',
-				width: medAndUp ? '60vw' : '85vw',
-				margin: '4rem auto',
-				backgroundColor: theme.palette.background,
-				position: 'relative'
+				backgroundColor: theme.palette.background
 			}}
 		>
 			<Grid
@@ -38,6 +34,7 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, actionSection, ...
 									variant={medAndUp ? 'h5' : 'body1'}
 									textContent={title}
 									textAlign={'center'}
+									customStyle={{ color: theme.palette.primary.main }}
 								/>
 							}
 						/>
@@ -47,11 +44,7 @@ const MainCard = forwardRef(({ sx = {}, title = '', children, actionSection, ...
 			{title && <CustomDivider />}
 
 			{children && <CardContent>{children}</CardContent>}
-			{actionSection && (
-				<Grid container spacing={theme.spacing()} sx={{ position: 'absolute', bottom: 0 }}>
-					{actionSection}
-				</Grid>
-			)}
+			{actionSection && actionSection}
 		</Card>
 	);
 });

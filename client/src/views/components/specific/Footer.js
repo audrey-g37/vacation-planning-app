@@ -10,6 +10,7 @@ import CustomTypography from '../re-usable/CustomTypography';
 const Footer = () => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
 	const contributors = [
 		{ name: 'Audrey Gillies', gitUser: 'audrey-g37' },
 		{ name: 'Gina Im', gitUser: 'gim928' },
@@ -32,13 +33,13 @@ const Footer = () => {
 			sx={{
 				justifyContent: 'center',
 				alignItems: 'center',
-				position: 'absolute',
+				position: `fixed`,
 				bottom: '0',
-				height: '4rem',
+				height: 'fit-content',
 				backgroundColor: theme.palette.navBackground
 			}}
 		>
-			<Grid item xs={1} sx={{ margin: '1rem' }}>
+			<Grid item xs={2}>
 				<CustomTypography
 					to={'https://github.com/audrey-g37/vacation-planning-app'}
 					relativePath={false}

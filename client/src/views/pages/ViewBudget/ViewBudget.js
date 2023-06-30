@@ -2,17 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './ViewBudget.css';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from 'utils/queries';
+import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from 'utils/apollo/queries';
 import { Table, Button } from '@mui/material';
 import BudgetForm from './budgetForm';
-import { REMOVE_BUDGET } from 'utils/mutations';
-import Auth from 'utils/auth';
+import { REMOVE_BUDGET } from 'utils/apollo/mutations';
+import useAuth from 'hooks/useAuth';
 
 const ViewBudget = () => {
-	const tripId = Auth.getTripId();
-	const currentUser = Auth.getUsername();
+	const { user, tripId } = useAuth;
 	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: currentUser }
+		variables: { username: user }
 	});
 	const userData = data1?.user || [];
 	const { data: data2 } = useQuery(QUERY_TRIP, {
@@ -24,7 +23,6 @@ const ViewBudget = () => {
 	// console.log(allExpenses);
 
 	const [removeBudget, { error }] = useMutation(REMOVE_BUDGET);
-	const tripIdToRemove = Auth.getTripId();
 
 	const spending = allExpenses.map((expense) => {
 		return parseInt(expense.value);
@@ -57,7 +55,7 @@ const ViewBudget = () => {
 		// console.log(value);
 		await removeBudget({
 			variables: {
-				tripId: tripIdToRemove,
+				tripId: tripId,
 				budgetId: value
 			}
 		}).then((data) => {

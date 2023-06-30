@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import Auth from 'utils/auth';
-import { ADD_BUDGET } from 'utils/mutations';
+import { ADD_BUDGET } from 'utils/apollo/mutations';
 import { Button } from '@mui/material';
+import useAuth from 'hooks/useAuth';
 
 const BudgetForm = () => {
-	const tripId = Auth.getTripId();
+	const { tripId } = useAuth();
 	const [title, setTitle] = useState('');
 	const [cost, setCost] = useState('');
 	const [purchaseDate, setPurchaseDate] = useState('');

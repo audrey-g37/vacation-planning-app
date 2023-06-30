@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import AuthService from 'utils/auth';
-import { QUERY_BUDGET } from 'utils/queries';
-import { UPDATE_BUDGET } from 'utils/mutations';
+import { QUERY_BUDGET } from 'utils/apollo/queries';
+import { UPDATE_BUDGET } from 'utils/apollo/mutations';
 // import moment from "moment";
 import { Card, Button, Form } from '@mui/material';
 import './updateBudget.css';
+import useAuth from 'hooks/useAuth';
 
 const EditBudget = () => {
 	const budgetIdVar = useParams();
 	const budgetIdToUse = budgetIdVar.id;
 	//   console.log(taskIdToUse);
 
-	const TripIdToUse = AuthService.getTripId();
+	const { tripId } = useAuth();
 
 	const { loading, data } = useQuery(QUERY_BUDGET, {
 		variables: { budgetId: budgetIdToUse }
@@ -31,7 +31,7 @@ const EditBudget = () => {
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
-		console.log([title, cost, purchasedBy, purchaseDate, TripIdToUse, budgetData._id]);
+		console.log([title, cost, purchasedBy, purchaseDate, tripId, budgetData._id]);
 		if (name === 'title') {
 			setTitle(value);
 		} else if (name === 'cost') {
@@ -46,7 +46,7 @@ const EditBudget = () => {
 	const handleFormSubmit = (event) => {
 		updateBudget({
 			variables: {
-				tripId: TripIdToUse,
+				tripId: tripId,
 				budgetId: budgetData._id,
 				title: title,
 				value: cost,
@@ -55,7 +55,7 @@ const EditBudget = () => {
 			}
 		}).then((data) => {
 			// console.log(data)
-			window.location.replace(`/${TripIdToUse}/view-budget`);
+			window.location.replace(`/${tripId}/view-budget`);
 		});
 	};
 
