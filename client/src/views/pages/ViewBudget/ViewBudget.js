@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Table, Button } from '@mui/material';
 
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from 'utils/apollo/queries.js';
-import BudgetForm from './budgetForm.js';
-import { REMOVE_BUDGET } from 'utils/apollo/mutations.js';
-import useAuth from 'hooks/useAuth.js';
+import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from 'utils/apollo/queries';
+import BudgetForm from './budgetForm';
+import { REMOVE_BUDGET } from 'utils/apollo/mutations';
+import useAuth from 'hooks/useAuth';
 import './ViewBudget.css';
 
 const ViewBudget = () => {

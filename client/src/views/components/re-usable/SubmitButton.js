@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
-import CustomTypography from './CustomTypography.js';
-import CustomTooltip from './CustomTooltip.js';
+import CustomTypography from './CustomTypography';
+import CustomTooltip from './CustomTooltip';
 
 const SubmitButton = ({
 	title = 'Submit',

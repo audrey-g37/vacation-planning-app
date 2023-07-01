@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import NewTrip from 'views/components/NewTrip/NewTrip.js';
+import NewTrip from 'views/components/NewTrip/NewTrip';
 import { Table, Button } from '@mui/material';
 import './Dashboard.css';
-import useAuth from 'hooks/useAuth.js';
+import useAuth from 'hooks/useAuth';
 
 const Dashboard = () => {
 	const { user, navigate } = useAuth();
