@@ -4,6 +4,7 @@
 	"private": true,
 	"proxy": "http://localhost:3001",
 	"main": "index.js",
+	"homepage": "",
 	"compilerOptions": {
 		"baseUrl": "src"
 	},
