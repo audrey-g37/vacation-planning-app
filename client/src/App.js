@@ -9,14 +9,12 @@ import theme from 'style/theme';
 import './App.css';
 
 const httpLink = createHttpLink({
-	uri: '/graphql'
+	uri: `${window.location.origin}/graphql`
 });
 
 // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
 const client = new ApolloClient({
-	uri: `${
-		process.env.NODE_ENV === 'development' ? 'http://localhost:3001/graphql' : createHttpLink
-	}`,
+	uri: `${process.env.NODE_ENV === 'development' ? 'http://localhost:3001/graphql' : httpLink}`,
 	cache: new InMemoryCache(),
 	name: 'GRIP',
 	version: '1.0.0'

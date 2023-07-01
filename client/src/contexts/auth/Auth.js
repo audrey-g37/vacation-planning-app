@@ -147,9 +147,7 @@ export const AuthProvider = ({ children }) => {
 		realm: 'Grip',
 		scope: 'openid',
 		responseType: 'token id_token',
-		redirectUri: `${
-			process.env.NODE_ENV === 'development' ? 'http://localhost:3000/dashboard' : ''
-		}`
+		redirectUri: `${window.location.origin}/dashboard`
 	};
 
 	// registering a new user
@@ -228,6 +226,7 @@ export const AuthProvider = ({ children }) => {
 						}
 						const authId = authResult.idTokenPayload.sub.split('|')[1];
 						const { data } = await getUser({ variables: { authId: authId } });
+						console.log({ data });
 						runDispatch({
 							...dispatchObj,
 							user: data.user,
