@@ -147,11 +147,7 @@ export const AuthProvider = ({ children }) => {
 		realm: 'Grip',
 		scope: 'openid',
 		responseType: 'token id_token',
-		redirectUri: `${
-			process.env.NODE_ENV === 'development'
-				? 'http://localhost:3000/dashboard'
-				: 'https://grip-your-trip.herokuapp.com/dashboard'
-		}`
+		redirectUri: `${window.location.origin}/dashboard`
 	};
 
 	// registering a new user
