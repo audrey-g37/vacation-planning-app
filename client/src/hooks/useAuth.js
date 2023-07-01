@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 // auth provider
-import AuthContext from 'contexts/auth/Auth';
+import AuthContext from 'contexts/auth/Auth.js';
 
 // ==============================|| AUTH HOOKS ||============================== //
 

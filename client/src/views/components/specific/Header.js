@@ -2,9 +2,9 @@ import React from 'react';
 import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 
 // project imports
-import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
-import CustomTypography from '../re-usable/CustomTypography';
-import useAuth from 'hooks/useAuth';
+import CollapsedMenu from 'views/components/re-usable/CollapsedMenu.js';
+import CustomTypography from '../re-usable/CustomTypography.js';
+import useAuth from 'hooks/useAuth.js';
 
 const Header = ({ underConstruction }) => {
 	const { isLoggedIn } = useAuth();

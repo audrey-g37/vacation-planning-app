@@ -4,10 +4,10 @@ import { useLocation } from 'react-router';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
-import MainCard from 'views/components/re-usable/MainCard';
-import CustomTypography from 'views/components/re-usable/CustomTypography';
-import Login from './Login';
-import Register from './Register';
+import MainCard from 'views/components/re-usable/MainCard.js';
+import CustomTypography from 'views/components/re-usable/CustomTypography.js';
+import Login from './Login.js';
+import Register from './Register.js';
 
 const AuthLayout = ({}) => {
 	const theme = useTheme();

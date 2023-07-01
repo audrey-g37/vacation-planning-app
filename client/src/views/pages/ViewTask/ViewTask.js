@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from 'utils/apollo/queries';
-import { REMOVE_TASK, UPDATE_TASK } from 'utils/apollo/mutations';
-import AddTask from './AddTask';
 import { Table, Button } from '@mui/material';
+
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from 'utils/apollo/queries.js';
+import { REMOVE_TASK, UPDATE_TASK } from 'utils/apollo/mutations.js';
+import AddTask from './AddTask.js';
+import useAuth from 'hooks/useAuth.js';
 import './ViewTask.css';
-import useAuth from 'hooks/useAuth';
 
 const ViewTask = () => {
 	const { user, tripId } = useAuth();

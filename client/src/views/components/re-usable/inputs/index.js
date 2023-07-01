@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, FormHelperText, useTheme } from '@mui/material';
 
-import Text from './Text';
+import Text from './Text.js';
 
 const FormInput = ({
 	componentType,

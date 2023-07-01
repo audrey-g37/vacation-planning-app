@@ -1,5 +1,5 @@
 import { Typography, useTheme, useMediaQuery, Link } from '@mui/material';
-import CustomTooltip from './CustomTooltip';
+import CustomTooltip from './CustomTooltip.js';
 
 const CustomTypography = ({
 	variant,

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
-import FormInput from 'views/components/re-usable/inputs';
-import SubmitButton from 'views/components/re-usable/SubmitButton';
-import useAuth from 'hooks/useAuth';
+import FormInput from 'views/components/re-usable/inputs/index.js';
+import SubmitButton from 'views/components/re-usable/SubmitButton.js';
+import useAuth from 'hooks/useAuth.js';
 
 const Login = () => {
 	const theme = useTheme();

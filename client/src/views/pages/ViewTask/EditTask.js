@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_TASK } from 'utils/apollo/queries';
-import { UPDATE_TASK } from 'utils/apollo/mutations';
+import { QUERY_TASK } from 'utils/apollo/queries.js';
+import { UPDATE_TASK } from 'utils/apollo/mutations.js';
 // import moment from "moment";
 import { Card, Button } from '@mui/material';
 import './updateTask.css';
-import useAuth from 'hooks/useAuth';
+import useAuth from 'hooks/useAuth.js';
 
 const EditTask = () => {
 	const taskIdVar = useParams();

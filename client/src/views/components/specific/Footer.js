@@ -1,11 +1,11 @@
 // library imports
 import React from 'react';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import GitHubIcon from '@mui/icons-material/GitHub.js';
 
 // project imports
-import NavMenu from 'views/components/re-usable/NavMenu';
-import CustomTypography from '../re-usable/CustomTypography';
+import NavMenu from 'views/components/re-usable/NavMenu.js';
+import CustomTypography from '../re-usable/CustomTypography.js';
 
 const Footer = () => {
 	const theme = useTheme();

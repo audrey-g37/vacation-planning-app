@@ -10,11 +10,11 @@ import {
 	useTheme,
 	useMediaQuery
 } from '@mui/material';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded.js';
 
 // project imports
-import CustomTypography from './CustomTypography';
-import CustomTooltip from './CustomTooltip';
+import CustomTypography from './CustomTypography.js';
+import CustomTooltip from './CustomTooltip.js';
 
 const CollapsedMenu = ({
 	options,

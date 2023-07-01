@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
 import { Button } from '@mui/material';
-import { ADD_TRIP } from 'utils/apollo/mutations';
-import { QUERY_USER } from 'utils/apollo/queries';
+
+import { useQuery, useMutation } from '@apollo/client';
+import { ADD_TRIP } from 'utils/apollo/mutations.js';
+import { QUERY_USER } from 'utils/apollo/queries.js';
+import useAuth from 'hooks/useAuth.js';
 import './NewTrip.css';
-import useAuth from 'hooks/useAuth';
 
 const NewTrip = () => {
 	const { user } = useAuth();

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
 // action - state management
-import accountReducer from 'contexts/auth/accountReducer';
-import { LOGIN, LOGOUT } from 'contexts/auth/actions';
+import accountReducer from 'contexts/auth/accountReducer.js';
+import { LOGIN, LOGOUT } from 'contexts/auth/actions.js';
 
 // project imports
 
@@ -21,7 +21,7 @@ import {
 	QUERY_TRIPS,
 	QUERY_USER,
 	QUERY_USERS
-} from 'utils/apollo/queries';
+} from 'utils/apollo/queries.js';
 import {
 	ADD_BUDGET,
 	ADD_TASK,
@@ -34,7 +34,7 @@ import {
 	UPDATE_TASK,
 	UPDATE_TRIP,
 	UPDATE_USER
-} from 'utils/apollo/mutations';
+} from 'utils/apollo/mutations.js';
 
 // const for state of dispatch
 const initialState = {
