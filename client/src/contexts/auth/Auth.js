@@ -148,7 +148,9 @@ export const AuthProvider = ({ children }) => {
 		scope: 'openid',
 		responseType: 'token id_token',
 		redirectUri: `${
-			process.env.NODE_ENV === 'development' ? 'http://localhost:3000/dashboard' : ''
+			process.env.NODE_ENV === 'development'
+				? 'http://localhost:3000/dashboard'
+				: 'https://grip-your-trip.herokuapp.com/dashboard'
 		}`
 	};
 
@@ -228,6 +230,7 @@ export const AuthProvider = ({ children }) => {
 						}
 						const authId = authResult.idTokenPayload.sub.split('|')[1];
 						const { data } = await getUser({ variables: { authId: authId } });
+						console.log({ data });
 						runDispatch({
 							...dispatchObj,
 							user: data.user,
