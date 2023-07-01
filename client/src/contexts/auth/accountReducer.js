@@ -1,5 +1,5 @@
 // action - state management
-import { LOGIN, LOGOUT } from './actions.js';
+import { LOGIN, LOGOUT } from './actions';
 
 // ==============================|| ACCOUNT REDUCER ||============================== //
 

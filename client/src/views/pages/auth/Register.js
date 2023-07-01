@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useTheme, useMediaQuery, Grid } from '@mui/material';
 
 // project imports
-import useAuth from 'hooks/useAuth.js';
-import FormInput from 'views/components/re-usable/inputs/index.js';
-import SubmitButton from 'views/components/re-usable/SubmitButton.js';
+import useAuth from 'hooks/useAuth';
+import FormInput from 'views/components/re-usable/inputs/index';
+import SubmitButton from 'views/components/re-usable/SubmitButton';
 
 const Register = () => {
 	const theme = useTheme();

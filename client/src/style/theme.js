@@ -1,5 +1,5 @@
-import { createTheme } from '@mui/material/styles/index.js';
-import * as colors from '@mui/material/colors/index.js';
+import { createTheme } from '@mui/material/styles/index';
+import * as colors from '@mui/material/colors/index';
 const { grey, blueGrey, teal } = colors;
 const theme = (mode) => {
 	const darkMode = {

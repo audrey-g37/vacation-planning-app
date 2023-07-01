@@ -1,13 +1,13 @@
-import Signup from './auth/Register.js';
-import Login from './auth/Login.js';
-import UnderConstruction from './ErrorPages/UnderConstruction.js';
-import Dashboard from './Dashboard/Dashboard.js';
-import ViewBudget from './ViewBudget/ViewBudget.js';
-import ViewTask from './ViewTask/ViewTask.js';
-import ViewSingleTrip from './ViewTrip/ViewSingleTrip.js';
-import ViewAllTrips from './ViewTrip/ViewAllTrips.js';
-import EditTask from './ViewTask/EditTask.js';
-import EditBudget from './ViewBudget/EditBudget.js';
+import Signup from './auth/Register';
+import Login from './auth/Login';
+import UnderConstruction from './ErrorPages/UnderConstruction';
+import Dashboard from './Dashboard/Dashboard';
+import ViewBudget from './ViewBudget/ViewBudget';
+import ViewTask from './ViewTask/ViewTask';
+import ViewSingleTrip from './ViewTrip/ViewSingleTrip';
+import ViewAllTrips from './ViewTrip/ViewAllTrips';
+import EditTask from './ViewTask/EditTask';
+import EditBudget from './ViewBudget/EditBudget';
 
 export {
 	Signup,

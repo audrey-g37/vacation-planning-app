@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button } from '@mui/material';
 
 import { useQuery, useMutation } from '@apollo/client';
-import { ADD_TRIP } from 'utils/apollo/mutations.js';
-import { QUERY_USER } from 'utils/apollo/queries.js';
-import useAuth from 'hooks/useAuth.js';
+import { ADD_TRIP } from 'utils/apollo/mutations';
+import { QUERY_USER } from 'utils/apollo/queries';
+import useAuth from 'hooks/useAuth';
 import './NewTrip.css';
 
 const NewTrip = () => {

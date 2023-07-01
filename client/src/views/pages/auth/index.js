@@ -1,9 +1,9 @@
 // project imports
-import Header from 'views/components/specific/Header.js';
-import Footer from 'views/components/specific/Footer.js';
-import AuthLayout from 'views/pages/auth/AuthLayout.js';
+import Header from 'views/components/specific/Header';
+import Footer from 'views/components/specific/Footer';
+import AuthLayout from 'views/pages/auth/AuthLayout';
 
-import { UnderConstruction } from 'views/pages/index.js';
+import { UnderConstruction } from 'views/pages/index';
 
 const AuthMain = () => {
 	// *using to disable app/features while I refactor and enhance app

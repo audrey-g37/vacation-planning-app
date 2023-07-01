@@ -3,10 +3,10 @@
 	"version": "0.1.0",
 	"private": true,
 	"proxy": "http://localhost:3001",
+	"main": "index.js",
 	"compilerOptions": {
 		"baseUrl": "src"
 	},
-	"type": "module",
 	"dependencies": {
 		"@apollo/client": "^3.4.15",
 		"@emotion/react": "^11.10.6",
