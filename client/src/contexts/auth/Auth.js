@@ -2,7 +2,6 @@ import { createContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import dotenv from 'dotenv';
 
 // action - state management
 import accountReducer from 'contexts/auth/accountReducer';
@@ -36,8 +35,6 @@ import {
 	UPDATE_TRIP,
 	UPDATE_USER
 } from 'utils/apollo/mutations';
-
-dotenv.config();
 
 // const for state of dispatch
 const initialState = {
