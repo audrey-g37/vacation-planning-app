@@ -21,7 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
-	app.use('/static', express.static(path.join(__dirname, '../client/build')));
+	const buildPath = path.join(__dirname, '../client/build');
+	app.use(express.static(buildPath));
 }
 
 app.get('/', (req, res) => {
@@ -31,6 +32,5 @@ app.get('/', (req, res) => {
 db.once('open', () => {
 	app.listen(PORT, () => {
 		console.log(`API server running on port ${PORT}!`);
-		console.log(__dirname);
 	});
 });
