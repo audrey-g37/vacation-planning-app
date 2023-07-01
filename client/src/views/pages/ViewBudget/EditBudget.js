@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_BUDGET } from 'utils/apollo/queries';
-import { UPDATE_BUDGET } from 'utils/apollo/mutations';
-// import moment from "moment";
 import { Card, Button, Form } from '@mui/material';
+
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_BUDGET } from 'utils/apollo/queries.js';
+import { UPDATE_BUDGET } from 'utils/apollo/mutations.js';
+// import moment from "moment";
 import './updateBudget.css';
-import useAuth from 'hooks/useAuth';
+import useAuth from 'hooks/useAuth.js';
 
 const EditBudget = () => {
 	const budgetIdVar = useParams();

@@ -1,7 +1,7 @@
 import { Grid, useTheme } from '@mui/material';
 
 // project imports
-import CustomTypography from './CustomTypography';
+import CustomTypography from './CustomTypography.js';
 
 const NavMenu = ({ options, textField, relativePath = true, vertical, sx = {} }) => {
 	const theme = useTheme();

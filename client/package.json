@@ -6,7 +6,7 @@
 	"compilerOptions": {
 		"baseUrl": "src"
 	},
-	"type": "commonjs",
+	"type": "module",
 	"dependencies": {
 		"@apollo/client": "^3.4.15",
 		"@emotion/react": "^11.10.6",

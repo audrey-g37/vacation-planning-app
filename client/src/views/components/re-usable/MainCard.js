@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 import { Card, CardContent, CardHeader, Grid, useMediaQuery, useTheme } from '@mui/material';
 
-import CustomDivider from './CustomDivider';
-import CustomTypography from './CustomTypography';
+import CustomDivider from './CustomDivider.js';
+import CustomTypography from './CustomTypography.js';
 
 const MainCard = forwardRef(({ sx = {}, title = '', children, actionSection, ...others }, ref) => {
 	const theme = useTheme();

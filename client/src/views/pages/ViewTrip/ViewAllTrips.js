@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_TRIPS } from 'utils/apollo/queries';
+import { QUERY_USER, QUERY_TRIPS } from 'utils/apollo/queries.js';
 import { Button } from '@mui/material';
 import './ViewAllTrips.css';
-import useAuth from 'hooks/useAuth';
+import useAuth from 'hooks/useAuth.js';
 
 const ViewAllTrips = () => {
 	const { user } = useAuth();

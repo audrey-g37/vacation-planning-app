@@ -1,4 +1,4 @@
-import AuthLayout from 'views/pages/auth/AuthLayout';
+import AuthLayout from 'views/pages/auth/AuthLayout.js';
 import {
 	Dashboard,
 	EditBudget,
@@ -7,7 +7,7 @@ import {
 	ViewBudget,
 	ViewSingleTrip,
 	ViewTask
-} from 'views/pages';
+} from 'views/pages/index.js';
 
 const mainRoutes = {
 	path: '/',
