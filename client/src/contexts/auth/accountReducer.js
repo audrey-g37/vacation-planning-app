@@ -4,15 +4,13 @@ import { LOGIN, LOGOUT } from './actions';
 // ==============================|| ACCOUNT REDUCER ||============================== //
 
 const accountReducer = (state, action) => {
-	const { user, authInfo, type } = action;
+	const { type } = action;
 	switch (type) {
 		case LOGIN: {
 			state = {
 				...state,
 				isLoggedIn: true,
-				isInitialized: true,
-				user: user,
-				authInfo: authInfo
+				isInitialized: true
 			};
 
 			return { ...state };
@@ -20,8 +18,7 @@ const accountReducer = (state, action) => {
 		case LOGOUT: {
 			return {
 				isInitialized: true,
-				isLoggedIn: false,
-				token: null
+				isLoggedIn: false
 			};
 		}
 		default: {

@@ -71,11 +71,9 @@ export const AuthProvider = ({ children }) => {
 					navigate('/login');
 				});
 		}
-		if (!state.user || !state.auhInfo) {
+		if (!userSessionInfo || !authSessionInfo) {
 			dispatch({
-				type: LOGIN,
-				user: userSessionInfo,
-				authInfo: authSessionInfo
+				type: LOGIN
 			});
 		}
 	};
@@ -135,6 +133,8 @@ export const AuthProvider = ({ children }) => {
 
 	const [getUser] = useLazyQuery(queryTypes['user']);
 	const [addUser] = useMutation(mutationTypes['addUser']);
+
+	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
 
 	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
@@ -288,6 +288,8 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				...state,
+				authSessionInfo,
+				userSessionInfo,
 				login: () => {},
 				alert,
 				setAlert,
@@ -295,7 +297,8 @@ export const AuthProvider = ({ children }) => {
 				getAuthToken,
 				applyAuthToken,
 				register,
-				logoutUser
+				logoutUser,
+				getAllTrips
 			}}
 		>
 			{children}
