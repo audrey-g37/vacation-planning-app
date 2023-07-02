@@ -1,82 +1,59 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_TRIPS } from 'utils/apollo/queries';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
-import './ViewAllTrips.css';
+
+// project imports
+import TableOfData from 'views/components/table';
 import useAuth from 'hooks/useAuth';
+import './ViewAllTrips.css';
 
-const ViewAllTrips = () => {
-	const { user } = useAuth();
-	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: user }
-	});
-	const userData = data1?.user || [];
-	const { data: data2 } = useQuery(QUERY_TRIPS, { variables: { userId: userData._id } });
-	const allTrips = data2?.trips || [];
-	// console.log(allTrips);
-	// const tripDates = allTrips.map((trip) => {
-	//   let date = trip.startDate;
-	//   date = Date.parse((moment(date, "MMM, Do, YYYY").format("MM-DD-YYYY"))
-	// )});
+const ViewAllTrips = ({ allTrips }) => {
+	const { userSessionInfo: user, getAllTrips } = useAuth();
 
-	// console.log (tripDates);
+	const [allExistingTrips, setAllExistingTrips] = useState([]);
 
-	// const sortedDates = tripDates.sort();
+	const setUserTripData = async () => {
+		await getAllTrips({ userID: user._id }).then((res) => {
+			const { data } = res;
+			setAllExistingTrips(data.trips);
+			if (data.trips.length > 8) {
+				const storedTripLength = data.trips.length;
+				let recentEightTrips = [];
+				for (let i = storedTripLength - 8; i < storedTripLength; i++) {
+					recentEightTrips.push(allTrips[i]);
+				}
+			}
+		});
+	};
 
-	// console.log(sortedDates)
+	useEffect(() => {
+		!allTrips ? setUserTripData() : setAllExistingTrips(allTrips);
+	}, [allTrips]);
 
-	// const orderedDates = sortedDates.map((date) => {
-	//   return date = moment(date).format("MM-DD-YYYY");
-	// });
+	const columns = [
+		{ id: 'title', label: 'Title', minWidth: 170 },
+		{
+			id: 'startDate',
+			label: 'Starts',
+			minWidth: 125,
+			format: (value) => (value ? new Date(+value).toDateString() : '')
+		},
+		{
+			id: 'endDate',
+			label: 'Ends',
+			minWidth: 125,
+			format: (value) => (value ? new Date(+value).toDateString() : '')
+		},
+		{
+			id: 'address',
+			label: 'Location',
+			minWidth: 170,
+			format: (value) => `${value.city || ''} ${value.state || ''} ${value.country || ''}`
+		}
+	];
 
-	// console.log (orderedDates);
+	const rows = allExistingTrips;
 
-	// const ogDatesIndex = tripDates.map((date, index)=> {
-	// return index;
-	// })
-
-	// console.log(ogDatesIndex)
-
-	// reformattedAllTrips = allTrips.map((trip), =>  {
-
-	// });
-
-	// const sortedTrips = allTrips.sort((a)=> {
-	//   if (a.startDate> now) {
-	//     return 1
-	//   } else {
-	//     return -1
-	//   }
-	// })
-
-	// console.log(sortedTrips)
-
-	return (
-		<body id='all-trips-whole'>
-			<h1>All Stored Trips</h1>
-			<div className='all-trips'>
-				<ul className='list-of-trips'>
-					{allTrips.length > 0 ? (
-						allTrips.map((trip) => (
-							<li className='trip'>
-								{trip.title}
-								<div className='view-details'>
-									<Link className='link' to={`view-trip/${trip._id}`}>
-										<Button variant='dark' size='small' className='button'>
-											Details
-										</Button>
-									</Link>
-								</div>
-							</li>
-						))
-					) : (
-						<h4> No trips created yet! </h4>
-					)}
-				</ul>
-			</div>
-		</body>
-	);
+	return <TableOfData rows={rows} columns={columns} edit={true} showPagination={false} />;
 };
 
 export default ViewAllTrips;

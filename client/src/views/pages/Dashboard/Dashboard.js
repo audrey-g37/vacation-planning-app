@@ -5,45 +5,64 @@ import useAuth from 'hooks/useAuth';
 // project imports
 import NewTrip from 'views/components/forms/NewTrip';
 import MainCard from 'views/components/re-usable/MainCard';
+import ViewAllTrips from '../ViewTrip/ViewAllTrips';
+import CustomTypography from 'views/components/re-usable/CustomTypography';
 
 const Dashboard = () => {
 	const theme = useTheme();
-	const { userSessionInfo: user, navigate, getAllTrips } = useAuth();
+	const { userSessionInfo: user, getAllTrips } = useAuth();
 
 	const [allTrips, setAllTrips] = useState([]);
-	const [recentEightTrips, setRecentEightTrips] = useState([]);
 
 	const setUserTripData = async () => {
 		await getAllTrips({ userID: user._id }).then((res) => {
 			const { data } = res;
-			setAllTrips(data.trips);
-			if (data.trips.length > 8) {
-				const storedTripLength = data.trips.length;
-				let recentEightTrips = [];
-				for (let i = storedTripLength - 8; i < storedTripLength; i++) {
-					recentEightTrips.push(allTrips[i]);
+			let tripData = data.trips;
+			tripData = tripData.reduce((prev, next) => {
+				let existing = prev;
+				const today = new Date(new Date()).valueOf();
+				const startDate = new Date(+next.startDate).valueOf();
+				if (!(startDate < today)) {
+					existing.push(next);
 				}
-				setRecentEightTrips(recentEightTrips);
-			}
+				return existing;
+			}, []);
+
+			tripData = tripData.sort((a, b) => {
+				const today = new Date(new Date()).valueOf();
+				const startDateA = new Date(+a.startDate).valueOf();
+				const startDateB = new Date(+b.startDate).valueOf();
+				const closenessA = startDateA - today;
+				const closenessB = startDateB - today;
+
+				return closenessA > closenessB ? 1 : -1;
+			});
+			tripData = tripData.splice(
+				0,
+				tripData.length > 5 ? tripData.length - (tripData.length - 5) : tripData.length
+			);
+			setAllTrips(tripData);
 		});
 	};
+
+	const actionSection = (
+		<Grid container sx={{ justifyContent: 'center', textAlign: 'center' }}>
+			<Grid item xs={12} sx={{ padding: '0.5rem' }}>
+				<CustomTypography textContent={'View All'} to={'/view-trips'} />
+			</Grid>
+		</Grid>
+	);
 
 	useEffect(() => {
 		user && setUserTripData();
 	}, []);
 
-	const actionSection = (
-		<Grid container>
-			<Grid item>
-				<Button>New Trip</Button>
-			</Grid>
-		</Grid>
-	);
-
 	return (
 		<Grid container spacing={theme.spacing()}>
 			<Grid item xs={12} sm={6} md={5} sx={{ margin: '1rem' }}>
-				<MainCard title={`Upcoming Trips`} newItem='Trip'></MainCard>
+				<MainCard title={`My Next 5 Trips`} newItem='Trip' actionSection={actionSection}>
+					<ViewAllTrips allTrips={allTrips} />
+				</MainCard>
 			</Grid>
 		</Grid>
 	);
