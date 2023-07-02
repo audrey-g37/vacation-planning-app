@@ -46,10 +46,17 @@ export const QUERY_TRIPS = gql`
 		trips {
 			_id
 			title
-			location
+			description
+			address {
+				street1
+				street2
+				city
+				state
+				country
+				zipCode
+			}
 			startDate
 			endDate
-			description
 		}
 	}
 `;
