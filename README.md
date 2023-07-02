@@ -1,7 +1,9 @@
-# GRIP 
- Get a GRIP on your next group trip!
+# GRIP
 
-[Link to GRIP](https://grip-your-trip.herokuapp.com/)
+Get a GRIP on your next group trip!
+
+[Link to GRIP](https://grip.webappsbyaudreyapi.dev/)
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -37,64 +39,63 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
+
 <div align="center" >
 <img src="client/public/images/grip-screenshot.png" alt="viewing current tasks for the Lobster Fest trip" width="500px" />
 </div>
 
 Get a GRIP on your next group trip!
 
-GRIP was created to help plan and organize upcoming trips with friends! Users are able to keep track of trip details, tasks that each group member need to complete, and an expense tracker to keep track of who spent what. GRIP was created because after the past year it's time to travel again, and we are looking forward to help your group organize their next trip. 
+GRIP was created to help plan and organize upcoming trips with friends! Users are able to keep track of trip details, tasks that each group member need to complete, and an expense tracker to keep track of who spent what. GRIP was created because after the past year it's time to travel again, and we are looking forward to help your group organize their next trip.
 
-The application utilizies graphQL on the backend to keep track of all the trip data, and any updates and changes to the trip, tasks or expenses. On the frontend the application runs on react and creates a streamlined and seemless UI, to create an easy user experience. The application is currently deployed on a heroku server and is full compatible on mobile devices, so users can use the application anywhere. 
-
+The application utilizes graphQL on the backend to keep track of all the trip data, and any updates and changes to the trip, tasks or expenses. On the frontend the application runs on react and creates a streamlined UI using MUI. The application is currently deployed on a digital ocean droplet and is fully compatible on mobile devices, so users can use the application anywhere.
 
 ### Built With
 
 This section lists any major frameworks that was used to build GRIP.
 
-- [React-Bootstrap](https://react-bootstrap.github.io/)
-- [MongoDB](https://www.mongodb.com/)
-- [Apollo Client](https://www.apollographql.com/docs/react/)
-- [GraphQL](https://graphql.org//)
-- [Heroku](https://heroku.com/)
--[JWT](https://jwt.io/)
--[React](https://reactjs.org/)
-
+-   [React-Bootstrap](https://react-bootstrap.github.io/)
+-   [Material UI](https://mui.com//)
+-   [MongoDB](https://www.mongodb.com/)
+-   [Apollo Client](https://www.apollographql.com/docs/react/)
+-   [GraphQL](https://graphql.org//)
+-   [Digital Ocean](https://www.digitalocean.com/)
+-   [React](https://reactjs.org/)
 
 <!-- GETTING STARTED -->
 
 ## Getting Started
 
-For use of of application please visit our deployed application. Otherwise, please clone our repository to our local machine. You will need to npm install, and npm run develop in order to pull the appilcation on your local host. Please see installation for further directions. 
+For use of of application please visit our deployed application. Otherwise, please clone our repository to our local machine. You will need to npm install, and npm run develop in order to pull the application on your local host. Please see installation for further directions.
 
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
 
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
+-   npm
+    ```sh
+    npm install npm@latest -g
+    ```
 
 ### Installation
 
 2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
+    ```sh
+    git clone https://github.com/your_username_/Project-Name.git
+    ```
 3. Install NPM packages
-   ```sh
-   npm install
-   ```
+    ```sh
+    npm install
+    ```
 4. Enter your Local Database in `config.js`
+
 ```sh
    mongodb://localhost/
-   ```
-  
+```
 
 ## Usage
 
-The application was created for users to be able to organzie and plan upcoming trips. Currently users are asked to create a singlar username and password and use that to login and see thier trip information (a login is required to use the site). The users is able to create a new trip, view upcoming trips and previously created trips. Each trip holds tasks and expesenses to help users track what needs to be done and the money that has been contibuted to the trip. If you have any questions please use the information below to contact us. 
+The application was created for users to be able to organize and plan upcoming trips. Currently, users are asked to create an account with an email and password and use that to login and see their trip information. The users is able to create a new trip and view/edit existing trips. Each trip holds tasks and expenses to help users track what needs to be done and the money that has been contributed to the trip. If you have any questions please use the information below to contact us.
 
 <!-- ROADMAP -->
 
@@ -124,11 +125,12 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Github Profiles
 
-- [Audrey Gillies](https://github.com/audrey-g37) 
-- [Gina Im](https://github.com/gim928) 
-- [Korbin Sargent](https://github.com/Korbin-Sargent) 
-- [Adrian Auchterlonie](https://github.com/adrianauch) 
-- [Eddy Calderon](https://github.com/Ecalderon10) 
+-   [Audrey Gillies](https://github.com/audrey-g37)
+-   [Gina Im](https://github.com/gim928)
+-   [Korbin Sargent](https://github.com/Korbin-Sargent)
+-   [Adrian Auchterlonie](https://github.com/adrianauch)
+-   [Eddy Calderon](https://github.com/Ecalderon10)
 
 ## Link
+
 [Link to GRIP](https://grip-your-trip.herokuapp.com/)
