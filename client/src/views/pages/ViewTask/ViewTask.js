@@ -5,7 +5,7 @@ import { Table, Button } from '@mui/material';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from 'utils/apollo/queries';
 import { REMOVE_TASK, UPDATE_TASK } from 'utils/apollo/mutations';
-import AddTask from './AddTask';
+import AddTask from '../../components/forms/AddTask';
 import useAuth from 'hooks/useAuth';
 import './ViewTask.css';
 

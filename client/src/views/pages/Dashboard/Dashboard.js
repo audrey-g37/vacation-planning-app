@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import NewTrip from 'views/components/NewTrip/NewTrip';
 import { Table, Button } from '@mui/material';
-import './Dashboard.css';
 import useAuth from 'hooks/useAuth';
+
+// project imports
+import NewTrip from 'views/components/forms/NewTrip';
+import './Dashboard.css';
 
 const Dashboard = () => {
 	const { user, navigate } = useAuth();
