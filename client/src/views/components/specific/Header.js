@@ -7,22 +7,23 @@ import CustomTypography from '../re-usable/CustomTypography';
 import useAuth from 'hooks/useAuth';
 
 const Header = ({ underConstruction }) => {
-	const { isLoggedIn } = useAuth();
+	const { isLoggedIn, logoutUser } = useAuth();
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
 	const withAuth = isLoggedIn || false;
 
-	const headerNav = [
+	let headerNav = [
 		{ text: 'Login', url: '/login' },
 		{ text: 'Register', url: '/register' }
 	];
 
 	if (withAuth) {
-		headerNav.push(
+		headerNav = [
 			{ text: 'Dashboard', url: '/dashboard' },
-			{ text: 'View Trips', url: '/view-trips' }
-		);
+			{ text: 'View Trips', url: '/view-trips' },
+			{ text: 'Logout', onClick: logoutUser }
+		];
 	}
 
 	return (

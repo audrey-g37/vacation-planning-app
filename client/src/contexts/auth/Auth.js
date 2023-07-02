@@ -225,12 +225,13 @@ export const AuthProvider = ({ children }) => {
 							return { ...responseObj, success: false };
 						}
 						const authId = authResult.idTokenPayload.sub.split('|')[1];
-						const { data } = await getUser({ variables: { authId: authId } });
-						console.log({ data });
-						runDispatch({
-							...dispatchObj,
-							user: data.user,
-							authInfo: authResult
+						await getUser({ variables: { authId: authId } }).then((res) => {
+							const { data } = res;
+							runDispatch({
+								...dispatchObj,
+								user: data.user,
+								authInfo: authResult
+							});
 						});
 					});
 				}
@@ -274,12 +275,13 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const logoutUser = async () => {
-		auth0Connection.logout();
+	const logoutUser = () => {
+		window.sessionStorage.removeItem('authInfo');
+		window.sessionStorage.removeItem('userInfo');
 		dispatch({
 			type: LOGOUT
 		});
-		navigate('/login');
+		auth0Connection.logout({ returnTo: `${window.location.origin}/login` });
 	};
 
 	return (
