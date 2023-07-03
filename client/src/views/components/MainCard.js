@@ -1,23 +1,21 @@
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	Grid,
-	IconButton,
-	useMediaQuery,
-	useTheme
-} from '@mui/material';
+import { forwardRef, useState } from 'react';
+import { Card, CardContent, CardHeader, Grid, useMediaQuery, useTheme } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import CustomDivider from './CustomDivider';
 import CustomTypography from './CustomTypography';
+import Form from 'views/components/forms';
 
 const MainCard = forwardRef(
-	({ sx = {}, title = '', newItem = '', children, actionSection, ...others }, ref) => {
+	(
+		{ sx = {}, title = '', collection = '', newItem = '', children, actionSection, ...others },
+		ref
+	) => {
 		const theme = useTheme();
 		const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+		const [dialogOpen, setDialogOpen] = useState(false);
 
 		let cardHeaderProps = {
 			title: (
@@ -37,6 +35,7 @@ const MainCard = forwardRef(
 						icon={<AddBoxIcon />}
 						tooltipText={`Add ${newItem}`}
 						button={true}
+						onClick={() => setDialogOpen(true)}
 					/>
 				)
 			};
@@ -70,7 +69,14 @@ const MainCard = forwardRef(
 					)}
 				</Grid>
 				{title && <CustomDivider />}
-
+				{dialogOpen && (
+					<Form
+						isOpen={dialogOpen}
+						itemName={newItem}
+						setClosed={() => setDialogOpen(false)}
+						collection={collection}
+					/>
+				)}
 				{children && <CardContent>{children}</CardContent>}
 				{actionSection && actionSection}
 			</Card>
@@ -83,6 +89,7 @@ MainCard.propTypes = {
 	children: PropTypes.node,
 	actionSection: PropTypes.node,
 	title: PropTypes.string,
+	collection: PropTypes.string,
 	newItem: PropTypes.string
 };
 

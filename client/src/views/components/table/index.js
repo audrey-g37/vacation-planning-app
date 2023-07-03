@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import {
 	Paper,
 	Table,
@@ -8,23 +8,28 @@ import {
 	TableHead,
 	TablePagination,
 	TableRow,
-	IconButton,
 	useTheme
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+
+import Form from '../forms';
 import CustomTypography from '../CustomTypography';
 
 const TableOfData = ({
 	rows,
 	columns,
 	edit,
+	collection,
 	showPagination = true,
 	dataPerPage = 10,
 	maxTableHeight = '70vh'
 }) => {
 	const theme = useTheme();
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(dataPerPage);
+
+	const [dialogOpen, setDialogOpen] = useState({ open: false, formData: {} });
+
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(dataPerPage);
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -106,7 +111,13 @@ const TableOfData = ({
 													icon={<EditIcon />}
 													tooltipText={'Edit'}
 													button={true}
-													//todo onClick={() => console.log('hi')}
+													onClick={() =>
+														setDialogOpen({
+															...dialogOpen,
+															open: true,
+															formData: row
+														})
+													}
 												/>
 											</TableCell>
 										)}
@@ -125,6 +136,15 @@ const TableOfData = ({
 					page={page}
 					onPageChange={handleChangePage}
 					onRowsPerPageChange={handleChangeRowsPerPage}
+				/>
+			)}
+			{dialogOpen && (
+				<Form
+					isOpen={dialogOpen.open}
+					formData={dialogOpen.formData}
+					setClosed={() => setDialogOpen({ ...dialogOpen, open: false })}
+					collection={collection}
+					edit={true}
 				/>
 			)}
 		</Paper>

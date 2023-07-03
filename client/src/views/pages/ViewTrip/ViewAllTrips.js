@@ -62,11 +62,17 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 
 			<Grid container spacing={theme.spacing()}>
 				<Grid item xs={12} sx={{ margin: '6rem' }}>
-					<MainCard title={title} newItem='Trip' actionSection={actionSection}>
+					<MainCard
+						title={title}
+						collection={'trip'}
+						newItem='Trip'
+						actionSection={actionSection}
+					>
 						<TableOfData
 							rows={rows}
 							columns={columns}
 							edit={true}
+							collection={'trip'}
 							showPagination={!dashboardView}
 							maxTableHeight={!dashboardView ? '75vh' : '60vh'}
 						/>

@@ -3,7 +3,7 @@ import { useTheme, Grid, Button } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 
 // project imports
-import NewTrip from 'views/components/forms/NewTrip';
+import NewTrip from 'views/components/forms/Trip';
 import MainCard from 'views/components/MainCard';
 import ViewAllTrips from '../ViewTrip/ViewAllTrips';
 import CustomTypography from 'views/components/CustomTypography';
