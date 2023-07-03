@@ -33,9 +33,11 @@ const MainCard = forwardRef(
 			cardHeaderProps = {
 				...cardHeaderProps,
 				action: (
-					<IconButton aria-label={newItem}>
-						<AddBoxIcon sx={{ color: theme.palette.primary.main }} />
-					</IconButton>
+					<CustomTypography
+						icon={<AddBoxIcon />}
+						tooltipText={`Add ${newItem}`}
+						button={true}
+					/>
 				)
 			};
 		}

@@ -1,4 +1,4 @@
-import { Typography, useTheme, useMediaQuery, Link } from '@mui/material';
+import { Typography, useTheme, useMediaQuery, Link, IconButton } from '@mui/material';
 import CustomTooltip from './CustomTooltip';
 
 const CustomTypography = ({
@@ -9,6 +9,7 @@ const CustomTypography = ({
 	relativePath = true,
 	icon,
 	button,
+	onClick,
 	customStyle = {}
 }) => {
 	const theme = useTheme();
@@ -17,7 +18,7 @@ const CustomTypography = ({
 	if (!customStyle.color) {
 		customStyle = {
 			...customStyle,
-			color: button ? theme.palette.text.main : theme.palette.primary.main
+			color: button ? theme.palette.text.primary : theme.palette.primary.main
 		};
 	}
 
@@ -37,11 +38,28 @@ const CustomTypography = ({
 		};
 	}
 
+	if (button) {
+		customStyle = {
+			...customStyle,
+			':hover': {
+				color: theme.palette.primary.dark
+			}
+		};
+	}
+
 	const FormattedTypography = (
 		<Typography variant={variant} sx={customStyle}>
 			{icon && icon}
 			{textContent}
 		</Typography>
+	);
+
+	const WithTooltipAndButton = (
+		<CustomTooltip tooltipText={tooltipText}>
+			<IconButton onClick={onClick} sx={customStyle}>
+				{icon}
+			</IconButton>
+		</CustomTooltip>
 	);
 
 	const WithTooltipAndLink = (
@@ -64,13 +82,18 @@ const CustomTypography = ({
 		</CustomTooltip>
 	);
 
-	return tooltipText && to
-		? WithTooltipAndLink
-		: to
-		? WithTooltipOnly
-		: tooltipText
-		? WithLinkOnly
-		: FormattedTypography;
+	const ComponentUsing =
+		tooltipText && to
+			? WithTooltipAndLink
+			: to
+			? WithTooltipOnly
+			: button
+			? WithTooltipAndButton
+			: tooltipText
+			? WithLinkOnly
+			: FormattedTypography;
+
+	return ComponentUsing;
 };
 
 export default CustomTypography;

@@ -12,6 +12,7 @@ import {
 	useTheme
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import CustomTypography from '../CustomTypography';
 
 const TableOfData = ({
 	rows,
@@ -35,10 +36,12 @@ const TableOfData = ({
 	};
 
 	const headerStylingObj = {
-		fontWeight: 600,
-		fontSize: theme.typography.h6,
-		backgroundColor: theme.palette.secondary.main,
-		color: theme.palette.text.secondary
+		row: { backgroundColor: theme.palette.secondary.main },
+		typography: {
+			fontWeight: 600,
+			fontSize: theme.typography.h6,
+			color: theme.palette.text.secondary
+		}
 	};
 
 	return (
@@ -52,9 +55,12 @@ const TableOfData = ({
 									key={column.id}
 									align={column.align || 'left'}
 									style={{ minWidth: column.minWidth }}
-									sx={headerStylingObj}
+									sx={headerStylingObj.row}
 								>
-									{column.label}
+									<CustomTypography
+										textContent={column.label}
+										customStyle={headerStylingObj.typography}
+									/>
 								</TableCell>
 							))}
 							{edit && (
@@ -62,9 +68,12 @@ const TableOfData = ({
 									key={'edit'}
 									align={'left'}
 									style={{ minWidth: 50 }}
-									sx={headerStylingObj}
+									sx={headerStylingObj.row}
 								>
-									'Edit'
+									<CustomTypography
+										textContent={'Edit'}
+										customStyle={headerStylingObj.typography}
+									/>
 								</TableCell>
 							)}
 						</TableRow>
@@ -85,19 +94,20 @@ const TableOfData = ({
 													key={column.id}
 													align={column.align || 'left'}
 												>
-													{value || 'None'}
+													<CustomTypography
+														textContent={value || 'None'}
+													/>
 												</TableCell>
 											);
 										})}
 										{edit && (
 											<TableCell>
-												<IconButton>
-													<EditIcon
-														sx={{
-															color: theme.palette.primary.main
-														}}
-													/>
-												</IconButton>
+												<CustomTypography
+													icon={<EditIcon />}
+													tooltipText={'Edit'}
+													button={true}
+													//todo onClick={() => console.log('hi')}
+												/>
 											</TableCell>
 										)}
 									</TableRow>
