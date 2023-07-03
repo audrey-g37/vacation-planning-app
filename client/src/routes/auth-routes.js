@@ -1,4 +1,4 @@
-import AuthMain from 'views/pages/auth/index';
+import AuthMain from 'views/layouts/AuthLayout';
 
 const authRoutes = {
 	path: '/',

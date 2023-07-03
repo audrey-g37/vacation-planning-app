@@ -4,7 +4,7 @@ import { CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material'
 // project imports
 import { AuthProvider } from 'contexts/auth/Auth';
 import Routes from 'routes';
-import NavScroll from 'views/components/re-usable/NavScroll';
+import NavScroll from 'views/components/NavScroll';
 import theme from 'style/theme';
 import './App.css';
 

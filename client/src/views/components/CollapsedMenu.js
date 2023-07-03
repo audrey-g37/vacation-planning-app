@@ -78,13 +78,14 @@ const CollapsedMenu = ({
 					}}
 				>
 					{options.map((option, index) => {
-						const { url, tooltipText } = option;
+						const { url, tooltipText, onClick } = option;
 						return (
 							<div key={option[textField]}>
 								<MenuItem
 									key={option[textField]}
 									component={Link}
-									href={url}
+									href={url ? url : '#'}
+									onClick={onClick}
 									target={!relativePath ? '_blank' : ''}
 									sx={{
 										justifyContent: textAlign,

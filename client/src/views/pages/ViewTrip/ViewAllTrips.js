@@ -1,81 +1,85 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_TRIPS } from 'utils/apollo/queries';
-import { Button } from '@mui/material';
-import './ViewAllTrips.css';
+import React, { useState, useEffect } from 'react';
+import { Grid, useTheme } from '@mui/material';
+
+// project imports
+import TableOfData from 'views/components/table';
 import useAuth from 'hooks/useAuth';
+import Loader from 'views/components/CircularLoader';
+import MainCard from 'views/components/MainCard';
 
-const ViewAllTrips = () => {
-	const { user } = useAuth();
-	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: user }
-	});
-	const userData = data1?.user || [];
-	const { data: data2 } = useQuery(QUERY_TRIPS, { variables: { userId: userData._id } });
-	const allTrips = data2?.trips || [];
-	// console.log(allTrips);
-	// const tripDates = allTrips.map((trip) => {
-	//   let date = trip.startDate;
-	//   date = Date.parse((moment(date, "MMM, Do, YYYY").format("MM-DD-YYYY"))
-	// )});
+const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
+	const theme = useTheme();
+	const { userSessionInfo: user, getAllTrips } = useAuth();
 
-	// console.log (tripDates);
+	const dashboardView = window.location.pathname.includes('dashboard');
 
-	// const sortedDates = tripDates.sort();
+	const [allExistingTrips, setAllExistingTrips] = useState([]);
+	const [loading, setLoading] = useState(true);
 
-	// console.log(sortedDates)
+	const setUserTripData = async () => {
+		if (allTrips) {
+			setAllExistingTrips(allTrips);
+		} else {
+			await getAllTrips({ userID: user._id }).then((res) => {
+				const { data } = res;
+				setAllExistingTrips(data.trips);
+			});
+		}
+		setLoading(false);
+	};
 
-	// const orderedDates = sortedDates.map((date) => {
-	//   return date = moment(date).format("MM-DD-YYYY");
-	// });
+	useEffect(() => {
+		setUserTripData();
+	}, [allTrips, dashboardView]);
 
-	// console.log (orderedDates);
+	const columns = [
+		{ id: 'title', label: 'Title', minWidth: 170 },
+		{
+			id: 'startDate',
+			label: 'Starts',
+			minWidth: 125,
+			format: (value) => (value ? new Date(+value).toDateString() : '')
+		},
+		{
+			id: 'endDate',
+			label: 'Ends',
+			minWidth: 125,
+			format: (value) => (value ? new Date(+value).toDateString() : '')
+		},
+		{
+			id: 'address',
+			label: 'Location',
+			minWidth: 170,
+			format: (value) => `${value.city || ''} ${value.state || ''} ${value.country || ''}`
+		}
+	];
 
-	// const ogDatesIndex = tripDates.map((date, index)=> {
-	// return index;
-	// })
-
-	// console.log(ogDatesIndex)
-
-	// reformattedAllTrips = allTrips.map((trip), =>  {
-
-	// });
-
-	// const sortedTrips = allTrips.sort((a)=> {
-	//   if (a.startDate> now) {
-	//     return 1
-	//   } else {
-	//     return -1
-	//   }
-	// })
-
-	// console.log(sortedTrips)
+	const rows = allExistingTrips;
 
 	return (
-		<body id='all-trips-whole'>
-			<h1>All Stored Trips</h1>
-			<div className='all-trips'>
-				<ul className='list-of-trips'>
-					{allTrips.length > 0 ? (
-						allTrips.map((trip) => (
-							<li className='trip'>
-								{trip.title}
-								<div className='view-details'>
-									<Link className='link' to={`view-trip/${trip._id}`}>
-										<Button variant='dark' size='small' className='button'>
-											Details
-										</Button>
-									</Link>
-								</div>
-							</li>
-						))
-					) : (
-						<h4> No trips created yet! </h4>
-					)}
-				</ul>
-			</div>
-		</body>
+		<>
+			{loading && <Loader />}
+
+			<Grid container spacing={theme.spacing()}>
+				<Grid item xs={12} sx={{ margin: '6rem' }}>
+					<MainCard
+						title={title}
+						collection={'trip'}
+						newItem='Trip'
+						actionSection={actionSection}
+					>
+						<TableOfData
+							rows={rows}
+							columns={columns}
+							edit={true}
+							collection={'trip'}
+							showPagination={!dashboardView}
+							maxTableHeight={!dashboardView ? '75vh' : '60vh'}
+						/>
+					</MainCard>
+				</Grid>
+			</Grid>
+		</>
 	);
 };
 

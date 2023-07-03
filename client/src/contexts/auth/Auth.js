@@ -71,11 +71,9 @@ export const AuthProvider = ({ children }) => {
 					navigate('/login');
 				});
 		}
-		if (!state.user || !state.auhInfo) {
+		if (!userSessionInfo || !authSessionInfo) {
 			dispatch({
-				type: LOGIN,
-				user: userSessionInfo,
-				authInfo: authSessionInfo
+				type: LOGIN
 			});
 		}
 	};
@@ -135,6 +133,8 @@ export const AuthProvider = ({ children }) => {
 
 	const [getUser] = useLazyQuery(queryTypes['user']);
 	const [addUser] = useMutation(mutationTypes['addUser']);
+
+	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
 
 	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
@@ -225,12 +225,13 @@ export const AuthProvider = ({ children }) => {
 							return { ...responseObj, success: false };
 						}
 						const authId = authResult.idTokenPayload.sub.split('|')[1];
-						const { data } = await getUser({ variables: { authId: authId } });
-						console.log({ data });
-						runDispatch({
-							...dispatchObj,
-							user: data.user,
-							authInfo: authResult
+						await getUser({ variables: { authId: authId } }).then((res) => {
+							const { data } = res;
+							runDispatch({
+								...dispatchObj,
+								user: data.user,
+								authInfo: authResult
+							});
 						});
 					});
 				}
@@ -274,18 +275,21 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const logoutUser = async () => {
-		auth0Connection.logout();
+	const logoutUser = () => {
+		window.sessionStorage.removeItem('authInfo');
+		window.sessionStorage.removeItem('userInfo');
 		dispatch({
 			type: LOGOUT
 		});
-		navigate('/login');
+		auth0Connection.logout({ returnTo: `${window.location.origin}/login` });
 	};
 
 	return (
 		<AuthContext.Provider
 			value={{
 				...state,
+				authSessionInfo,
+				userSessionInfo,
 				login: () => {},
 				alert,
 				setAlert,
@@ -293,7 +297,8 @@ export const AuthProvider = ({ children }) => {
 				getAuthToken,
 				applyAuthToken,
 				register,
-				logoutUser
+				logoutUser,
+				getAllTrips
 			}}
 		>
 			{children}

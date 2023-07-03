@@ -5,9 +5,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import { ADD_TRIP } from 'utils/apollo/mutations';
 import { QUERY_USER } from 'utils/apollo/queries';
 import useAuth from 'hooks/useAuth';
-import './NewTrip.css';
 
-const NewTrip = () => {
+const TripForm = ({ edit }) => {
 	const { user } = useAuth();
 	const { data: data1 } = useQuery(QUERY_USER, {
 		variables: { username: user }
@@ -61,61 +60,7 @@ const NewTrip = () => {
 		});
 		window.location.reload();
 	};
-	return (
-		<form className='add-trip-form'>
-			{/* <h2>Add a New Trip:</h2>
-			<Form.Group className='mb-3' controlId='name'>
-				<Form.Label>Title*</Form.Label>
-				<Form.Control type='text' name='title' value={title} onChange={handleInputChange} />
-			</Form.Group>
-			<Form.Group className='mb-3' controlId='name'>
-				<Form.Label>Location*</Form.Label>
-				<Form.Control
-					type='text'
-					name='location'
-					value={location}
-					onChange={handleInputChange}
-				/>
-			</Form.Group>
-			<Form.Group className='mb-3' controlId='name'>
-				<Form.Label>Start Date*</Form.Label>
-				<Form.Control
-					type='date'
-					name='startDate'
-					value={startDate}
-					onChange={handleInputChange}
-				/>
-			</Form.Group>
-			<Form.Group className='mb-3' controlId='name'>
-				<Form.Label>End Date*</Form.Label>
-				<Form.Control
-					type='date'
-					name='endDate'
-					value={endDate}
-					onChange={handleInputChange}
-				/>
-			</Form.Group>
-			<Form.Group className='mb-3' controlId='name'>
-				<Form.Label> Trip Description</Form.Label>
-				<Form.Control
-					type='text'
-					name='description'
-					value={description}
-					onChange={handleInputChange}
-				/>
-			</Form.Group>
-			{Auth.isLoggedIn() && (
-				<Button
-					className='add-trip-button'
-					variant='dark'
-					onClick={handleFormSubmit}
-					type='submit'
-				>
-					Save
-				</Button>
-			)} */}
-		</form>
-	);
+	return <p>{edit ? 'Edit' : 'New'} Trip Form</p>;
 };
 
-export default NewTrip;
+export default TripForm;

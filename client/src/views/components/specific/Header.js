@@ -2,27 +2,29 @@ import React from 'react';
 import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 
 // project imports
-import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
-import CustomTypography from '../re-usable/CustomTypography';
+import CollapsedMenu from 'views/components/CollapsedMenu';
+import CustomTypography from '../CustomTypography';
 import useAuth from 'hooks/useAuth';
 
 const Header = ({ underConstruction }) => {
-	const { isLoggedIn } = useAuth();
+	const { authSessionInfo, logoutUser } = useAuth();
+
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-	const withAuth = isLoggedIn || false;
+	const withAuth = authSessionInfo;
 
-	const headerNav = [
+	let headerNav = [
 		{ text: 'Login', url: '/login' },
 		{ text: 'Register', url: '/register' }
 	];
 
 	if (withAuth) {
-		headerNav.push(
+		headerNav = [
 			{ text: 'Dashboard', url: '/dashboard' },
-			{ text: 'View Trips', url: '/view-trips' }
-		);
+			{ text: 'View Trips', url: '/view-trips' },
+			{ text: 'Logout', onClick: logoutUser }
+		];
 	}
 
 	return (

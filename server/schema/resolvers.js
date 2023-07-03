@@ -13,13 +13,13 @@ const resolvers = {
 			return userToReturn;
 		},
 		users: async (parent, body, context) => {
-			return await User.find({ ...body }).populate('trip');
+			return await User.find({ ...body });
 		},
 		trip: async (parent, { queryID }, context) => {
-			return await Trip.findById(queryID).populate('tasks', 'budget');
+			return await Trip.findById(queryID);
 		},
 		trips: async (parent, body, context) => {
-			return await Trip.find({ ...body }).populate('tasks', 'budget');
+			return await Trip.find({ ...body });
 		},
 		task: async (parent, { queryID }, context) => {
 			return await Task.findById(queryID);

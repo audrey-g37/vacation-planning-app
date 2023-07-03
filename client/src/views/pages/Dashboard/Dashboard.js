@@ -1,74 +1,64 @@
-import React, { useEffect } from 'react';
-import NewTrip from 'views/components/NewTrip/NewTrip';
-import { Table, Button } from '@mui/material';
-import './Dashboard.css';
+import React, { useState, useEffect } from 'react';
+import { useTheme, Grid, Button } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 
+// project imports
+import NewTrip from 'views/components/forms/Trip';
+import MainCard from 'views/components/MainCard';
+import ViewAllTrips from '../ViewTrip/ViewAllTrips';
+import CustomTypography from 'views/components/CustomTypography';
+
 const Dashboard = () => {
-	const { user, navigate } = useAuth();
+	const theme = useTheme();
+	const { userSessionInfo: user, getAllTrips } = useAuth();
 
-	const allTrips = [];
+	const [allTrips, setAllTrips] = useState([]);
 
-	let recentEightTrips;
-	const storedTripLength = allTrips.length;
-	if (storedTripLength > 8) {
-		recentEightTrips = [];
-		for (let i = storedTripLength - 8; i < storedTripLength; i++) {
-			recentEightTrips.push(allTrips[i]);
-		}
-	} else {
-		recentEightTrips = allTrips;
-	}
+	const setUserTripData = async () => {
+		await getAllTrips({ userID: user._id }).then((res) => {
+			const { data } = res;
+			let tripData = data.trips;
+			tripData = tripData.reduce((prev, next) => {
+				let existing = prev;
+				const today = new Date(new Date()).valueOf();
+				const startDate = new Date(+next.startDate).valueOf();
+				if (!(startDate < today)) {
+					existing.push(next);
+				}
+				return existing;
+			}, []);
+
+			tripData = tripData.sort((a, b) => {
+				const today = new Date(new Date()).valueOf();
+				const startDateA = new Date(+a.startDate).valueOf();
+				const startDateB = new Date(+b.startDate).valueOf();
+				const closenessA = startDateA - today;
+				const closenessB = startDateB - today;
+
+				return closenessA > closenessB ? 1 : -1;
+			});
+			tripData = tripData.splice(
+				0,
+				tripData.length > 5 ? tripData.length - (tripData.length - 5) : tripData.length
+			);
+			setAllTrips(tripData);
+		});
+	};
+
+	const actionSection = (
+		<Grid container sx={{ justifyContent: 'center', textAlign: 'center' }}>
+			<Grid item xs={12} sx={{ padding: '0.5rem' }}>
+				<CustomTypography textContent={'View All'} to={'/view-trips'} />
+			</Grid>
+		</Grid>
+	);
+
+	useEffect(() => {
+		user && setUserTripData();
+	}, []);
 
 	return (
-		user && (
-			<div className='whole-dash'>
-				<h2 className='dash-title'>Welcome {user.firstName}!</h2>
-				<div className='d-board'>
-					<div className='recent-trips'>
-						<h2>Recent Trips</h2>
-						<Table className='trips-table'>
-							<thead className='recent-trips-title'>
-								<tr className='recent-trips-table-header'>
-									<th>Title</th>
-									<th>Location</th>
-									<th>Start Date</th>
-									<th>End Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								{recentEightTrips.length > 0 ? (
-									recentEightTrips.map((trip) => (
-										<tr>
-											<td>{trip.title}</td>
-											<td>{trip.location}</td>
-											<td>{trip.startDate}</td>
-											<td>{trip.endDate}</td>
-										</tr>
-									))
-								) : (
-									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-									</tr>
-								)}
-							</tbody>
-						</Table>
-						<Button
-							className='all-trips-button'
-							variant='dark'
-							type='submit'
-							onClick={() => navigate('/view-trips')}
-						>
-							View All
-						</Button>
-					</div>
-					<NewTrip />
-				</div>
-			</div>
-		)
+		<ViewAllTrips allTrips={allTrips} actionSection={actionSection} title={'My Next 5 Trips'} />
 	);
 };
 

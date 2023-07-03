@@ -1,7 +1,7 @@
 // project imports
 import Header from 'views/components/specific/Header';
 import Footer from 'views/components/specific/Footer';
-import AuthLayout from 'views/pages/auth/AuthLayout';
+import AuthForm from 'views/pages/auth/AuthForm';
 
 import { UnderConstruction } from 'views/pages/index';
 
@@ -15,7 +15,7 @@ const AuthMain = () => {
 			{underConstruction ? (
 				<UnderConstruction lastModifiedDate={lastModifiedDate} />
 			) : (
-				<AuthLayout />
+				<AuthForm />
 			)}
 			<Footer />
 		</>

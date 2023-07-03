@@ -4,7 +4,7 @@ import { Table, Button } from '@mui/material';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from 'utils/apollo/queries';
-import BudgetForm from './budgetForm';
+import BudgetForm from '../../components/forms/budgetForm';
 import { REMOVE_BUDGET } from 'utils/apollo/mutations';
 import useAuth from 'hooks/useAuth';
 import './ViewBudget.css';
