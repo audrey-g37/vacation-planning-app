@@ -13,10 +13,17 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
-const TableOfData = ({ rows, columns, edit, showPagination = true }) => {
+const TableOfData = ({
+	rows,
+	columns,
+	edit,
+	showPagination = true,
+	dataPerPage = 10,
+	maxTableHeight = '70vh'
+}) => {
 	const theme = useTheme();
 	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+	const [rowsPerPage, setRowsPerPage] = React.useState(dataPerPage);
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -27,9 +34,16 @@ const TableOfData = ({ rows, columns, edit, showPagination = true }) => {
 		setPage(0);
 	};
 
+	const headerStylingObj = {
+		fontWeight: 600,
+		fontSize: theme.typography.h6,
+		backgroundColor: theme.palette.secondary.main,
+		color: theme.palette.text.secondary
+	};
+
 	return (
-		<Paper sx={{ width: '100%', overflow: 'hidden' }}>
-			<TableContainer sx={{ maxHeight: 440 }}>
+		<Paper sx={{ width: '100%', overflow: 'auto' }}>
+			<TableContainer sx={{ maxHeight: maxTableHeight }}>
 				<Table stickyHeader aria-label='sticky table'>
 					<TableHead>
 						<TableRow>
@@ -38,11 +52,21 @@ const TableOfData = ({ rows, columns, edit, showPagination = true }) => {
 									key={column.id}
 									align={column.align || 'left'}
 									style={{ minWidth: column.minWidth }}
-									sx={{ fontWeight: 600 }}
+									sx={headerStylingObj}
 								>
 									{column.label}
 								</TableCell>
 							))}
+							{edit && (
+								<TableCell
+									key={'edit'}
+									align={'left'}
+									style={{ minWidth: 50 }}
+									sx={headerStylingObj}
+								>
+									'Edit'
+								</TableCell>
+							)}
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -69,7 +93,9 @@ const TableOfData = ({ rows, columns, edit, showPagination = true }) => {
 											<TableCell>
 												<IconButton>
 													<EditIcon
-														sx={{ color: theme.palette.primary.main }}
+														sx={{
+															color: theme.palette.primary.main
+														}}
 													/>
 												</IconButton>
 											</TableCell>

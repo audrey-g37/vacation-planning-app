@@ -58,13 +58,7 @@ const Dashboard = () => {
 	}, []);
 
 	return (
-		<Grid container spacing={theme.spacing()}>
-			<Grid item xs={12} sm={6} md={5} sx={{ margin: '1rem' }}>
-				<MainCard title={`My Next 5 Trips`} newItem='Trip' actionSection={actionSection}>
-					<ViewAllTrips allTrips={allTrips} />
-				</MainCard>
-			</Grid>
-		</Grid>
+		<ViewAllTrips allTrips={allTrips} actionSection={actionSection} title={'My Next 5 Trips'} />
 	);
 };
 

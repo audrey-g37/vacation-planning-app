@@ -12,15 +12,17 @@ const theme = (mode) => {
 			// hover on buttons - match text secondary
 			dark: '#FAD88D'
 		},
+		// put background in color wheel and split complementary
 		secondary: {
-			main: '#BAF9FF',
-			light: '#FFECD4',
-			dark: '#95C7CC'
+			// background color of the table header
+			main: '#4F403B',
+			light: '#9C857C',
+			dark: '#393B2B'
 		},
 		text: {
 			// titles of forms, buttons, helper text
 			primary: '#FFBFA8',
-			// form input labels
+			// form input labels, table header text
 			secondary: '#FAD88D',
 			disabled: '#FAEEEB'
 		},
@@ -40,17 +42,18 @@ const theme = (mode) => {
 			// hover on buttons - match text secondary
 			dark: '#348F28'
 		},
+		// put background in color wheel and split complementary
 		secondary: {
-			main: '#D06F62',
-			light: '#F07E4D',
-			dark: '#702302'
+			// background color of the table header
+			main: '#E4E7EB',
+			light: '#B3B1A1',
+			dark: '#A1A8B3'
 		},
 		text: {
 			// button background, helper text
 			primary: '#223FAD',
-			// form input labels
+			// form input labels, table header text
 			secondary: '#348F28',
-			input: '#eeeeee',
 			disabled: '#eeeeee'
 		},
 		action: {
