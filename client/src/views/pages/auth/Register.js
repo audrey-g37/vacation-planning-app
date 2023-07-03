@@ -3,8 +3,8 @@ import { useTheme, useMediaQuery, Grid } from '@mui/material';
 
 // project imports
 import useAuth from 'hooks/useAuth';
-import FormInput from 'views/components/re-usable/inputs/index';
-import SubmitButton from 'views/components/re-usable/SubmitButton';
+import FormInput from 'views/components/forms/inputs/index';
+import SubmitButton from 'views/components/SubmitButton';
 
 const Register = () => {
 	const theme = useTheme();

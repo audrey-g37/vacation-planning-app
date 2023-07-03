@@ -85,7 +85,7 @@ const TableOfData = ({
 													key={column.id}
 													align={column.align || 'left'}
 												>
-													{value}
+													{value || 'None'}
 												</TableCell>
 											);
 										})}

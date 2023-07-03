@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
-import FormInput from 'views/components/re-usable/inputs/index';
-import SubmitButton from 'views/components/re-usable/SubmitButton';
+import FormInput from 'views/components/forms/inputs/index';
+import SubmitButton from 'views/components/SubmitButton';
 import useAuth from 'hooks/useAuth';
 
 const Login = () => {

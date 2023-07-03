@@ -4,8 +4,8 @@ import { Grid, useTheme } from '@mui/material';
 // project imports
 import TableOfData from 'views/components/table';
 import useAuth from 'hooks/useAuth';
-import Loader from 'views/components/re-usable/CircularLoader';
-import MainCard from 'views/components/re-usable/MainCard';
+import Loader from 'views/components/CircularLoader';
+import MainCard from 'views/components/MainCard';
 
 const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 	const theme = useTheme();

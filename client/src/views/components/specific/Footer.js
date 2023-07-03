@@ -4,8 +4,8 @@ import { Grid, useTheme, useMediaQuery } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 // project imports
-import NavMenu from 'views/components/re-usable/NavMenu';
-import CustomTypography from '../re-usable/CustomTypography';
+import NavMenu from 'views/components/NavMenu';
+import CustomTypography from '../CustomTypography';
 
 const Footer = () => {
 	const theme = useTheme();

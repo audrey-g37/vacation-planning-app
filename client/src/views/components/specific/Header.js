@@ -2,8 +2,8 @@ import React from 'react';
 import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 
 // project imports
-import CollapsedMenu from 'views/components/re-usable/CollapsedMenu';
-import CustomTypography from '../re-usable/CustomTypography';
+import CollapsedMenu from 'views/components/CollapsedMenu';
+import CustomTypography from '../CustomTypography';
 import useAuth from 'hooks/useAuth';
 
 const Header = ({ underConstruction }) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
-import CustomTypography from 'views/components/re-usable/CustomTypography';
+import CustomTypography from 'views/components/CustomTypography';
 
 const UnderConstruction = ({ lastModifiedDate }) => {
 	const theme = useTheme();

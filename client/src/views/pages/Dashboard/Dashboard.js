@@ -4,9 +4,9 @@ import useAuth from 'hooks/useAuth';
 
 // project imports
 import NewTrip from 'views/components/forms/NewTrip';
-import MainCard from 'views/components/re-usable/MainCard';
+import MainCard from 'views/components/MainCard';
 import ViewAllTrips from '../ViewTrip/ViewAllTrips';
-import CustomTypography from 'views/components/re-usable/CustomTypography';
+import CustomTypography from 'views/components/CustomTypography';
 
 const Dashboard = () => {
 	const theme = useTheme();

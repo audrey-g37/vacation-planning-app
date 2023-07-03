@@ -4,8 +4,8 @@ import { useLocation } from 'react-router';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
-import MainCard from 'views/components/re-usable/MainCard';
-import CustomTypography from 'views/components/re-usable/CustomTypography';
+import MainCard from 'views/components/MainCard';
+import CustomTypography from 'views/components/CustomTypography';
 import Login from './Login';
 import Register from './Register';
 
