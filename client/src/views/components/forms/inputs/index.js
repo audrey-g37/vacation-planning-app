@@ -12,7 +12,6 @@ const FormInput = ({
 	disabled = false
 }) => {
 	const theme = useTheme();
-	componentProps = { ...componentProps, error: error, disabled: disabled };
 	const componentTypes = {
 		text: <Text {...componentProps} />
 	};

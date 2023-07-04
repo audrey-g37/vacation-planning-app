@@ -6,6 +6,7 @@ const Text = ({
 	type,
 	value = '',
 	onChange,
+	onBlur,
 	multiline = false,
 	minRows = 1,
 	error,
@@ -25,6 +26,7 @@ const Text = ({
 			name={name}
 			value={value}
 			onChange={onChange}
+			onBlur={onBlur}
 			error={error}
 			disabled={disabled}
 			multiline={multiline}
