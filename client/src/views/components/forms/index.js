@@ -12,6 +12,7 @@ const Form = ({ edit = false, isOpen, setClosed, itemName, collection, formData 
 			setClosed={setClosed}
 			itemName={itemName}
 			collection={collection}
+			formData={edit ? formData : {}}
 		/>
 	);
 };

@@ -27,7 +27,8 @@ const DraggableDialog = ({
 
 	const formInfoObj = {
 		edit: edit,
-		formData: formData
+		formData: formData,
+		setClosed: setClosed
 	};
 
 	const collectionTypes = {
@@ -41,20 +42,32 @@ const DraggableDialog = ({
 			aria-labelledby='draggable-dialog-title'
 			fullWidth={true}
 		>
-			<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
-				<Grid container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-					<Grid item>
-						<CustomTypography
-							textContent={`${edit ? 'Edit' : 'New'} ${itemName}`}
-							customStyle={{ fontSize: theme.typography.h6 }}
-						/>
-					</Grid>
-					<Grid item>
-						<SubmitButton icon={<CloseIcon />} onClick={setClosed} />
-					</Grid>
+			<Grid
+				container
+				sx={{ backgroundColor: theme.palette.background, flexDirection: 'column' }}
+			>
+				<Grid item xs={12}>
+					<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+						<Grid
+							container
+							sx={{ justifyContent: 'space-between', alignItems: 'center' }}
+						>
+							<Grid item>
+								<CustomTypography
+									textContent={`${edit ? 'Edit' : 'New'} ${itemName}`}
+									customStyle={{ fontSize: theme.typography.h6 }}
+								/>
+							</Grid>
+							<Grid item>
+								<SubmitButton icon={<CloseIcon />} onClick={setClosed} />
+							</Grid>
+						</Grid>
+					</DialogTitle>
 				</Grid>
-			</DialogTitle>
-			<DialogContent>{collectionTypes[collection]}</DialogContent>
+				<Grid item xs={12}>
+					<DialogContent>{collectionTypes[collection]}</DialogContent>
+				</Grid>
+			</Grid>
 		</Dialog>
 	);
 };
