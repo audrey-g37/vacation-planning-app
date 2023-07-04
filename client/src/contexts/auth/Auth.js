@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
 
 	const authSessionInfo = JSON.parse(window.sessionStorage.getItem('authInfo'));
 	const userSessionInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+	const url = window.location.pathname;
 
 	const login = () => {
 		if (!authSessionInfo) {
@@ -62,13 +63,14 @@ export const AuthProvider = ({ children }) => {
 				.then((res) => {
 					if (!res.success) {
 						dispatch({ type: LOGOUT });
-						navigate('/login');
+						!url.includes('auth') && navigate('auth/login');
 					}
 				})
 				.catch((err) => {
 					console.error(err);
 					dispatch({ type: LOGOUT });
 					navigate('/login');
+					!url.includes('auth') && navigate('auth/login');
 				});
 		}
 		if (!userSessionInfo || !authSessionInfo) {

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { Grid, useTheme, useMediaQuery } from '@mui/material';
 
 // project imports
@@ -37,10 +36,12 @@ const Login = () => {
 		setFormState(initialState);
 	};
 
-	const submissionDisabled = {
+	const submissionDisabledInitialState = {
 		disabled: !formState.email || !formState.password,
 		message: 'Enter your email and password.'
 	};
+
+	const [submissionDisabled, setSubmissionDisabled] = useState(submissionDisabledInitialState);
 
 	return (
 		<>

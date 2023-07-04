@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTheme, useMediaQuery, Grid } from '@mui/material';
 
 // project imports
-import useAuth from 'hooks/useAuth';
 import FormInput from 'views/components/forms/inputs/index';
 import SubmitButton from 'views/components/SubmitButton';
+import useAuth from 'hooks/useAuth';
 
 const Register = () => {
 	const theme = useTheme();
@@ -133,7 +133,7 @@ const Register = () => {
 					<SubmitButton
 						title={'Register'}
 						tooltipText={
-							!submissionDisabled.disabled ? 'Login' : submissionDisabled.message
+							!submissionDisabled.disabled ? 'Register' : submissionDisabled.message
 						}
 						onClick={handleFormSubmit}
 						disabled={submissionDisabled.disabled}
