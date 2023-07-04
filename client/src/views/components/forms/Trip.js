@@ -1,66 +1,205 @@
-import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
-import { useQuery, useMutation } from '@apollo/client';
-import { ADD_TRIP } from 'utils/apollo/mutations';
-import { QUERY_USER } from 'utils/apollo/queries';
+// project imports
+import FormInput from './inputs';
+import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
+import CustomDivider from '../CustomDivider';
 
-const TripForm = ({ edit }) => {
-	const { user } = useAuth();
-	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: user }
-	});
-	const userData = data1?.user || [];
+const TripForm = ({ edit, formData, setClosed }) => {
+	const { userSessionInfo: user } = useAuth();
 
-	const [title, setTitle] = useState('');
-	const [description, setDescription] = useState('');
-	const [location, setLocation] = useState('');
-	const [startDate, setStartDate] = useState('');
-	const [endDate, setEndDate] = useState('');
+	const theme = useTheme();
 
-	const [addTrip, { error }] = useMutation(ADD_TRIP);
-
-	const handleInputChange = (event) => {
-		event.preventDefault();
-		const { name, value } = event.target;
-
-		if (name === 'title') {
-			setTitle(value);
-		} else if (name === 'description') {
-			setDescription(value);
-		} else if (name === 'location') {
-			setLocation(value);
-		} else if (name === 'startDate') {
-			setStartDate(value);
-		} else if (name === 'endDate') {
-			setEndDate(value);
-		}
+	const blankInfo = {
+		title: '',
+		description: '',
+		address: {
+			street1: '',
+			street2: '',
+			city: '',
+			state: '',
+			country: '',
+			zipCode: ''
+		},
+		startDate: '',
+		endDate: '',
+		userID: user._id
 	};
 
-	const handleFormSubmit = (event) => {
-		event.preventDefault();
-		const userId = userData._id;
-		addTrip({
-			variables: {
-				title: title,
-				description: description,
-				location: location,
-				startDate: startDate,
-				endDate: endDate,
-				userId: userId
-			}
-		}).then((data) => {
-			// console.log(data);
-			setTitle('');
-			setLocation('');
-			setStartDate('');
-			setEndDate('');
-			setDescription('');
-		});
-		window.location.reload();
-	};
-	return <p>{edit ? 'Edit' : 'New'} Trip Form</p>;
+	return (
+		<Formik
+			initialValues={edit ? formData : blankInfo}
+			enableReinitialize
+			validationSchema={Yup.object().shape({
+				title: Yup.string().trim().required('Trip name is required.')
+			})}
+			onSubmit={async (values, { setStatus, setSubmitting }) => {
+				try {
+					if (edit) {
+						console.log('saving edit');
+					} else {
+						console.log('saving new');
+					}
+					await setClosed();
+				} catch (err) {
+					console.error(err);
+				}
+			}}
+		>
+			{({
+				handleChange,
+				handleBlur,
+				handleSubmit,
+				isSubmitting,
+				touched,
+				errors,
+				values
+			}) => {
+				return (
+					<form noValidate>
+						<Grid container spacing={theme.spacing()}>
+							<Grid item xs={12}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'title',
+										value: values.title,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Name'}
+									required={true}
+									error={Boolean(touched.title && errors.title)}
+									helperText={touched.title && errors.title && `${errors.title}`}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'description',
+										type: 'description',
+										value: values.description,
+										multiline: true,
+										minRows: 3,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Details'}
+									error={Boolean(touched.description && errors.description)}
+									helperText={
+										touched.description &&
+										errors.description &&
+										`${errors.description}`
+									}
+								/>
+							</Grid>
+							<CustomDivider />
+							<Grid item xs={12}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'street1',
+										value: values.address.street1,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Street Line One'}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'address.street2',
+										value: values.address.street2,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Street Line Two'}
+									helperText={'Apt #, etc.'}
+								/>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'address.city',
+										value: values.address.city,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'City'}
+								/>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'address.state',
+										value: values.address.state,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'State'}
+								/>
+							</Grid>
+							{/* <Grid item xs={12} md={6}>
+                                <AutoCompleteInput
+                                    name={'registeredAddress.country'}
+                                    label={'Country*'}
+                                    options={countryOptions}
+                                    setFieldValue={setFieldValue}
+                                    onBlur={handleBlur}
+                                    value={values.registeredAddress.country}
+                                    valueSubField={'label'}
+                                    error={Boolean(
+                                        getIn(touched, 'registeredAddress.country') &&
+                                            getIn(errors, 'registeredAddress.country')
+                                    )}
+                                    helperText={
+                                        getIn(touched, 'registeredAddress.country') &&
+                                        getIn(errors, 'registeredAddress.country') &&
+                                        `${errors.registeredAddress.country}`
+                                    }
+                                />
+                            </Grid> */}
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<FormInput
+								componentType={'text'}
+								componentProps={{
+									name: 'address.zipCode',
+									value: values.address.zipCode,
+									onChange: handleChange,
+									onBlur: handleBlur
+								}}
+								label={'Zip Code'}
+							/>
+						</Grid>
+
+						<br />
+						<Grid
+							container
+							sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
+							spacing={theme.spacing()}
+						>
+							<SubmitButton
+								disableElevation
+								disabled={isSubmitting || values.educationLevel === ''}
+								title={'Save Changes'}
+								onClick={handleSubmit}
+								placeholder={'Save Changes'}
+							/>
+						</Grid>
+					</form>
+				);
+			}}
+		</Formik>
+	);
 };
 
 export default TripForm;
