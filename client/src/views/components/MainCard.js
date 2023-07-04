@@ -36,6 +36,7 @@ const MainCard = forwardRef(
 						icon={<AddBoxIcon />}
 						tooltipText={`Add ${newItem}`}
 						onClick={() => setDialogOpen(true)}
+						customStyle={{ color: theme.palette.primary.main }}
 					/>
 				)
 			};

@@ -17,15 +17,18 @@ const FormInput = ({
 	};
 
 	return (
-		<FormControl fullWidth error={error} disabled={disabled} sx={{ margin: '0.25rem 0' }}>
+		<FormControl fullWidth disabled={disabled} sx={{ margin: '0.25rem 0' }}>
 			<FormLabel
 				sx={{
-					textAlign: 'left'
+					textAlign: 'left',
+					color: error ? theme.palette.text.error : theme.palette.primary.dark
 				}}
 			>{`${label}${required ? '*' : ''}`}</FormLabel>
 			{componentTypes[componentType]}
 			{helperText && (
-				<FormHelperText sx={{ color: theme.palette.text.primary }}>
+				<FormHelperText
+					sx={{ color: error ? theme.palette.text.error : theme.palette.primary.dark }}
+				>
 					{helperText}
 				</FormHelperText>
 			)}

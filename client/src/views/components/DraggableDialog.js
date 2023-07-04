@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import TripForm from './forms/Trip';
 import CustomTypography from './CustomTypography';
 import SubmitButton from './SubmitButton';
+import CustomDivider from './CustomDivider';
 
 function PaperComponent(props) {
 	return (
@@ -55,7 +56,10 @@ const DraggableDialog = ({
 							<Grid item>
 								<CustomTypography
 									textContent={`${edit ? 'Edit' : 'New'} ${itemName}`}
-									customStyle={{ fontSize: theme.typography.h6 }}
+									customStyle={{
+										fontSize: theme.typography.h6,
+										color: theme.palette.text.secondary
+									}}
 								/>
 							</Grid>
 							<Grid item>
@@ -64,6 +68,7 @@ const DraggableDialog = ({
 						</Grid>
 					</DialogTitle>
 				</Grid>
+				<CustomDivider />
 				<Grid item xs={12}>
 					<DialogContent>{collectionTypes[collection]}</DialogContent>
 				</Grid>

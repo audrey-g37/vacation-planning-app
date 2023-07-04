@@ -15,22 +15,34 @@ const SubmitButton = ({
 	customStyle = {}
 }) => {
 	const theme = useTheme();
+
+	if (!customStyle.color) {
+		customStyle.color = theme.palette.text.secondary;
+	}
+
 	let typographyCustomStyle = {
 		...customStyle,
-		color: disabled ? theme.palette.text.disabled : theme.palette.text.enabled
+		color: disabled ? theme.palette.text.disabled : theme.palette.text.dark
 	};
 
 	let buttonStyle = {
-		backgroundColor: theme.palette.action.selected
+		...customStyle,
+		padding: 0,
+		backgroundColor: theme.palette.text.secondary
 	};
 
 	if (icon) {
 		buttonStyle = {
 			...buttonStyle,
-			'backgroundColor': 'none',
-			'color': theme.palette.text.primary,
-			'&:hover': {
-				color: theme.palette.text.secondary
+			padding: '0.5rem',
+			backgroundColor: 'none'
+		};
+	} else {
+		buttonStyle = {
+			...buttonStyle,
+			'backgroundColor': theme.palette.text.secondary,
+			':hover': {
+				backgroundColor: theme.palette.text.primary
 			}
 		};
 	}

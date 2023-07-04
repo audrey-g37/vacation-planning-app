@@ -17,7 +17,7 @@ const CustomTypography = ({
 	if (!customStyle.color) {
 		customStyle = {
 			...customStyle,
-			color: button ? theme.palette.text.primary : theme.palette.primary.main
+			color: theme.palette.text.primary
 		};
 	}
 
@@ -31,9 +31,16 @@ const CustomTypography = ({
 			...customStyle,
 			'textDecoration': `underline ${customStyle.color}`,
 			':hover': {
-				color: theme.palette.primary.light,
-				textDecoration: `underline ${theme.palette.primary.light}`
+				color: theme.palette.text.secondary,
+				textDecoration: `underline ${theme.palette.text.secondary}`
 			}
+		};
+	}
+
+	if (button) {
+		customStyle = {
+			...customStyle,
+			padding: '0.5rem'
 		};
 	}
 

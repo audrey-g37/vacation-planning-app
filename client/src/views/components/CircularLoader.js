@@ -13,7 +13,7 @@ const CircularLoader = () => {
 			}}
 		>
 			<Grid item>
-				<CircularProgress sx={{ color: theme.palette.text.primary }} />
+				<CircularProgress sx={{ color: theme.palette.primary.main }} />
 			</Grid>
 		</Grid>
 	);

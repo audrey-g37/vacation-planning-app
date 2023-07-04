@@ -27,13 +27,13 @@ const UnderConstruction = ({ lastModifiedDate }) => {
 			<CustomTypography
 				textContent={'Please check back later!'}
 				variant={medAndUp ? 'h6' : 'body1'}
-				customStyle={{ color: theme.palette.primary.light }}
+				customStyle={{ color: theme.palette.text.primary }}
 			/>
 			<br />
 			<CustomTypography
 				textContent={`Last Modified: ${displayDate}`}
 				variant={medAndUp ? 'h6' : 'body1'}
-				customStyle={{ color: theme.palette.primary.light }}
+				customStyle={{ color: theme.palette.text.primary }}
 			/>
 		</Box>
 	);

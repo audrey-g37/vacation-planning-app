@@ -118,6 +118,9 @@ const TableOfData = ({
 															formData: row
 														})
 													}
+													customStyle={{
+														color: theme.palette.text.primary
+													}}
 												/>
 											</TableCell>
 										)}
