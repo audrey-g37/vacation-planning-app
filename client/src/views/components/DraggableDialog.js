@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import TripForm from './forms/Trip';
 import CustomTypography from './CustomTypography';
+import SubmitButton from './SubmitButton';
 
 function PaperComponent(props) {
 	return (
@@ -41,7 +42,7 @@ const DraggableDialog = ({
 			fullWidth={true}
 		>
 			<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
-				<Grid container sx={{ justifyContent: 'space-between' }}>
+				<Grid container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
 					<Grid item>
 						<CustomTypography
 							textContent={`${edit ? 'Edit' : 'New'} ${itemName}`}
@@ -49,7 +50,7 @@ const DraggableDialog = ({
 						/>
 					</Grid>
 					<Grid item>
-						<CustomTypography icon={<CloseIcon />} button={true} onClick={setClosed} />
+						<SubmitButton icon={<CloseIcon />} onClick={setClosed} />
 					</Grid>
 				</Grid>
 			</DialogTitle>

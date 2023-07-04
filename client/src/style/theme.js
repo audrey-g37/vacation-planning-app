@@ -20,10 +20,12 @@ const theme = (mode) => {
 			dark: '#393B2B'
 		},
 		text: {
-			// titles of forms, buttons, helper text
+			// titles of forms, helper text
 			primary: '#FFBFA8',
 			// form input labels, table header text
 			secondary: '#FAD88D',
+			// title of submit button when enabled - matches background
+			enabled: blueGrey[800],
 			disabled: '#FAEEEB'
 		},
 		action: {
@@ -50,11 +52,13 @@ const theme = (mode) => {
 			dark: '#A1A8B3'
 		},
 		text: {
-			// button background, helper text
+			// titles of forms, buttons, helper text
 			primary: '#223FAD',
 			// form input labels, table header text
 			secondary: '#348F28',
-			disabled: '#eeeeee'
+			// title of submit button when enabled - matches background
+			enabled: '#ffffff',
+			disabled: '#000000'
 		},
 		action: {
 			// color when something has been clicked/selected - match text.primary

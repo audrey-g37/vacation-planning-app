@@ -6,6 +6,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import CustomDivider from './CustomDivider';
 import CustomTypography from './CustomTypography';
 import Form from 'views/components/forms';
+import SubmitButton from './SubmitButton';
 
 const MainCard = forwardRef(
 	(
@@ -31,10 +32,9 @@ const MainCard = forwardRef(
 			cardHeaderProps = {
 				...cardHeaderProps,
 				action: (
-					<CustomTypography
+					<SubmitButton
 						icon={<AddBoxIcon />}
 						tooltipText={`Add ${newItem}`}
-						button={true}
 						onClick={() => setDialogOpen(true)}
 					/>
 				)

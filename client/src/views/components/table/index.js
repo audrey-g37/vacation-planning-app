@@ -14,6 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import Form from '../forms';
 import CustomTypography from '../CustomTypography';
+import SubmitButton from '../SubmitButton';
 
 const TableOfData = ({
 	rows,
@@ -107,10 +108,9 @@ const TableOfData = ({
 										})}
 										{edit && (
 											<TableCell>
-												<CustomTypography
+												<SubmitButton
 													icon={<EditIcon />}
 													tooltipText={'Edit'}
-													button={true}
 													onClick={() =>
 														setDialogOpen({
 															...dialogOpen,
