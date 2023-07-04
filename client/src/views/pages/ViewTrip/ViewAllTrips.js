@@ -4,7 +4,7 @@ import { Grid, useTheme } from '@mui/material';
 // project imports
 import TableOfData from 'views/components/table';
 import useAuth from 'hooks/useAuth';
-import Loader from 'views/components/CircularLoader';
+import CircularLoader from 'views/components/CircularLoader';
 import MainCard from 'views/components/MainCard';
 
 const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
@@ -30,7 +30,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 
 	useEffect(() => {
 		setUserTripData();
-	}, [allTrips, dashboardView]);
+	}, [allTrips]);
 
 	const columns = [
 		{ id: 'title', label: 'Title', minWidth: 170 },
@@ -58,7 +58,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 
 	return (
 		<>
-			{loading && <Loader />}
+			{loading && <CircularLoader />}
 
 			<Grid container spacing={theme.spacing()}>
 				<Grid item xs={12} sx={{ margin: '6rem' }}>

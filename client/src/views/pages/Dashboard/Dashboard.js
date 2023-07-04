@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme, Grid, Button } from '@mui/material';
+import { Grid } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 
 // project imports
-import NewTrip from 'views/components/forms/Trip';
-import MainCard from 'views/components/MainCard';
 import ViewAllTrips from '../ViewTrip/ViewAllTrips';
 import CustomTypography from 'views/components/CustomTypography';
 
 const Dashboard = () => {
-	const theme = useTheme();
 	const { userSessionInfo: user, getAllTrips } = useAuth();
 
 	const [allTrips, setAllTrips] = useState([]);
@@ -55,7 +52,7 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		user && setUserTripData();
-	}, []);
+	}, [user?._id]);
 
 	return (
 		<ViewAllTrips allTrips={allTrips} actionSection={actionSection} title={'My Next 5 Trips'} />
