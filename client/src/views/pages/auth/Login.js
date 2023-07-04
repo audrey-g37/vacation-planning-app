@@ -23,6 +23,10 @@ const Login = () => {
 			...formState,
 			[name]: value
 		});
+		setSubmissionDisabled({
+			...submissionDisabled,
+			disabled: !formState.email || !formState.password
+		});
 	};
 
 	// submit form
@@ -37,7 +41,7 @@ const Login = () => {
 	};
 
 	const submissionDisabledInitialState = {
-		disabled: !formState.email || !formState.password,
+		disabled: true,
 		message: 'Enter your email and password.'
 	};
 

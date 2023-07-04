@@ -22,8 +22,8 @@ const Register = () => {
 	const [formState, setFormState] = useState(initialState);
 
 	const submissionDisabledInitialState = {
-		disabled: false,
-		message: ''
+		disabled: true,
+		message: 'All fields are required.'
 	};
 
 	const [submissionDisabled, setSubmissionDisabled] = useState(submissionDisabledInitialState);
@@ -135,6 +135,7 @@ const Register = () => {
 						tooltipText={
 							!submissionDisabled.disabled ? 'Register' : submissionDisabled.message
 						}
+						button={true}
 						onClick={handleFormSubmit}
 						disabled={submissionDisabled.disabled}
 					/>
