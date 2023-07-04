@@ -49,13 +49,21 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
 	// all data stored on auth context
 	const [state, dispatch] = useReducer(accountReducer, initialState);
-	useEffect(() => {
-		login();
-	}, [dispatch]);
+
+	// using react-router-dom navigation
+	const navigate = useNavigate();
 
 	const authSessionInfo = JSON.parse(window.sessionStorage.getItem('authInfo'));
 	const userSessionInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
 	const url = window.location.pathname;
+
+	useEffect(() => {
+		if (userSessionInfo && authSessionInfo) {
+			if (url.includes('auth') || url === '/') {
+				navigate('dashboard');
+			}
+		} else login();
+	}, [authSessionInfo, userSessionInfo, dispatch, url]);
 
 	const login = () => {
 		if (!authSessionInfo) {
@@ -69,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 				.catch((err) => {
 					console.error(err);
 					dispatch({ type: LOGOUT });
-					navigate('/login');
+					navigate('auth/login');
 					!url.includes('auth') && navigate('auth/login');
 				});
 		}
@@ -97,9 +105,6 @@ export const AuthProvider = ({ children }) => {
 		actionButton: false,
 		autoHideDuration: 6000
 	});
-
-	// using react-router-dom navigation
-	const navigate = useNavigate();
 
 	// apollo queries
 	const queryTypes = {
@@ -231,7 +236,7 @@ export const AuthProvider = ({ children }) => {
 							const { data } = res;
 							runDispatch({
 								...dispatchObj,
-								user: data.user,
+								user: data?.user,
 								authInfo: authResult
 							});
 						});
@@ -266,6 +271,7 @@ export const AuthProvider = ({ children }) => {
 					return console.error({ err });
 				}
 			});
+			navigate('dashboard');
 		} catch (err) {
 			console.error({ err });
 			setAlert({

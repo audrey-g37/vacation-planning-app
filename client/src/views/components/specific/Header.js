@@ -15,8 +15,8 @@ const Header = ({ underConstruction }) => {
 	const withAuth = authSessionInfo;
 
 	let headerNav = [
-		{ text: 'Login', url: '/login' },
-		{ text: 'Register', url: '/register' }
+		{ text: 'Login', url: '/auth/login' },
+		{ text: 'Register', url: '/auth/register' }
 	];
 
 	if (withAuth) {
