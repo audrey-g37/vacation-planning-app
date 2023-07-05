@@ -118,7 +118,6 @@ const TableOfData = ({
 															open: true,
 															formData: row
 														});
-														queryResults && (await queryResults());
 													}}
 													customStyle={{
 														color: theme.palette.text.primary
@@ -148,6 +147,7 @@ const TableOfData = ({
 					isOpen={dialogOpen.open}
 					formData={dialogOpen.formData}
 					setClosed={() => setDialogOpen({ ...dialogOpen, open: false })}
+					queryResults={queryResults}
 					collection={collection}
 					edit={true}
 				/>

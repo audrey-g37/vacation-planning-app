@@ -83,10 +83,8 @@ const MainCard = forwardRef(
 					<Form
 						isOpen={dialogOpen}
 						itemName={newItem}
-						setClosed={async () => {
-							setDialogOpen(false);
-							queryResults && (await queryResults());
-						}}
+						setClosed={() => setDialogOpen(false)}
+						queryResults={queryResults}
 						collection={collection}
 					/>
 				)}

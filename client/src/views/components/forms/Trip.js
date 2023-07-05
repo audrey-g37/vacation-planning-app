@@ -8,7 +8,7 @@ import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
 
-const TripForm = ({ edit, formData, setClosed }) => {
+const TripForm = ({ edit, formData, onSubmit }) => {
 	const { userSessionInfo: user, crudFunctions } = useAuth();
 
 	const { addTrip, editTrip } = crudFunctions;
@@ -64,7 +64,7 @@ const TripForm = ({ edit, formData, setClosed }) => {
 					} else {
 						await addTrip(dataToSend);
 					}
-					setClosed && setClosed();
+					onSubmit && onSubmit();
 				} catch (err) {
 					console.error(err);
 				}

@@ -19,6 +19,7 @@ function PaperComponent(props) {
 const DraggableDialog = ({
 	isOpen = false,
 	setClosed,
+	onSubmit,
 	formData = {},
 	edit = false,
 	itemName = '',
@@ -29,7 +30,7 @@ const DraggableDialog = ({
 	const formInfoObj = {
 		edit: edit,
 		formData: formData,
-		setClosed: setClosed
+		onSubmit: onSubmit
 	};
 
 	const collectionTypes = {
