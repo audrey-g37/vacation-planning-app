@@ -9,7 +9,9 @@ import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
 
 const TripForm = ({ edit, formData, setClosed }) => {
-	const { userSessionInfo: user } = useAuth();
+	const { userSessionInfo: user, crudFunctions } = useAuth();
+
+	const { addTrip, editTrip } = crudFunctions;
 
 	const theme = useTheme();
 
@@ -38,12 +40,31 @@ const TripForm = ({ edit, formData, setClosed }) => {
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
-					if (edit) {
-						console.log('saving edit');
-					} else {
-						console.log('saving new');
+					let dataToSend = {
+						variables: values
+					};
+					for (const [key, value] of Object.entries(dataToSend.variables.address)) {
+						if (key !== '_id' && key !== '__typename' && value) {
+							dataToSend = {
+								...dataToSend,
+								variables: {
+									...dataToSend.variables,
+									[key]: value
+								}
+							};
+						}
 					}
-					await setClosed();
+					delete dataToSend.variables.address;
+					if (edit) {
+						dataToSend = {
+							...dataToSend,
+							variables: { ...dataToSend.variables, queryID: values._id }
+						};
+						await editTrip(dataToSend);
+					} else {
+						await addTrip(dataToSend);
+					}
+					setClosed && setClosed();
 				} catch (err) {
 					console.error(err);
 				}

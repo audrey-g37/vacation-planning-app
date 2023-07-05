@@ -21,6 +21,7 @@ const TableOfData = ({
 	columns,
 	edit,
 	collection,
+	queryResults,
 	showPagination = true,
 	dataPerPage = 10,
 	maxTableHeight = '70vh'
@@ -111,13 +112,14 @@ const TableOfData = ({
 												<SubmitButton
 													icon={<EditIcon />}
 													tooltipText={'Edit'}
-													onClick={() =>
+													onClick={async () => {
 														setDialogOpen({
 															...dialogOpen,
 															open: true,
 															formData: row
-														})
-													}
+														});
+														queryResults && (await queryResults());
+													}}
 													customStyle={{
 														color: theme.palette.text.primary
 													}}

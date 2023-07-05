@@ -10,7 +10,16 @@ import SubmitButton from './SubmitButton';
 
 const MainCard = forwardRef(
 	(
-		{ sx = {}, title = '', collection = '', newItem = '', children, actionSection, ...others },
+		{
+			sx = {},
+			title = '',
+			collection = '',
+			newItem = '',
+			queryResults,
+			children,
+			actionSection,
+			...others
+		},
 		ref
 	) => {
 		const theme = useTheme();
@@ -74,7 +83,10 @@ const MainCard = forwardRef(
 					<Form
 						isOpen={dialogOpen}
 						itemName={newItem}
-						setClosed={() => setDialogOpen(false)}
+						setClosed={async () => {
+							setDialogOpen(false);
+							queryResults && (await queryResults());
+						}}
 						collection={collection}
 					/>
 				)}
@@ -91,7 +103,8 @@ MainCard.propTypes = {
 	actionSection: PropTypes.node,
 	title: PropTypes.string,
 	collection: PropTypes.string,
-	newItem: PropTypes.string
+	newItem: PropTypes.string,
+	queryResults: PropTypes.func
 };
 
 export default MainCard;

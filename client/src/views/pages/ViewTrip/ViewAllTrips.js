@@ -16,18 +16,23 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 	const dashboardView = window.location.pathname.includes('dashboard');
 
 	const [allExistingTrips, setAllExistingTrips] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
+
+	const queryFunction = async () => {
+		setLoading(true);
+		await getAllTrips({ userID: user._id }).then((res) => {
+			const { data } = res;
+			setAllExistingTrips(data.trips);
+		});
+		setLoading(false);
+	};
 
 	const setUserTripData = async () => {
 		if (allTrips) {
 			setAllExistingTrips(allTrips);
 		} else {
-			await getAllTrips({ userID: user._id }).then((res) => {
-				const { data } = res;
-				setAllExistingTrips(data.trips);
-			});
+			await queryFunction();
 		}
-		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -69,12 +74,14 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 						collection={'trip'}
 						newItem='Trip'
 						actionSection={actionSection}
+						queryResults={queryFunction}
 					>
 						<TableOfData
 							rows={rows}
 							columns={columns}
 							edit={true}
 							collection={'trip'}
+							queryResults={queryFunction}
 							showPagination={!dashboardView}
 							maxTableHeight={!dashboardView ? '75vh' : '60vh'}
 						/>

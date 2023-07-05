@@ -44,7 +44,14 @@ const resolvers = {
 			const { street1, street2, city, state, country, zipCode } = body;
 			let dataToSend = {
 				...body,
-				address: { street1, street2, city, state, country, zipCode }
+				address: {
+					street1: street1,
+					street2: street2,
+					city: city,
+					state: state,
+					country: country,
+					zipCode: zipCode
+				}
 			};
 			const newData = await Trip.create(dataToSend);
 			return newData;
@@ -67,7 +74,18 @@ const resolvers = {
 		},
 		updateTrip: async (parent, body, context) => {
 			const { queryID } = body;
-			let dataToSend = { ...body };
+			const { street1, street2, city, state, country, zipCode } = body;
+			let dataToSend = {
+				...body,
+				address: {
+					street1: street1,
+					street2: street2,
+					city: city,
+					state: state,
+					country: country,
+					zipCode: zipCode
+				}
+			};
 			const updatedData = await Trip.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
