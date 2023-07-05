@@ -7,7 +7,9 @@ import ViewAllTrips from '../ViewTrip/ViewAllTrips';
 import CustomTypography from 'views/components/CustomTypography';
 
 const Dashboard = () => {
-	const { userSessionInfo: user, getAllTrips } = useAuth();
+	const { userSessionInfo: user, crudFunctions } = useAuth();
+
+	const { getAllTrips } = crudFunctions;
 
 	const [allTrips, setAllTrips] = useState([]);
 

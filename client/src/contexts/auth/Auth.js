@@ -128,20 +128,26 @@ export const AuthProvider = ({ children }) => {
 		addTask: ADD_TASK,
 		addBudget: ADD_BUDGET,
 		// update
-		updateUser: UPDATE_USER,
-		updateTrip: UPDATE_TRIP,
-		updateTask: UPDATE_TASK,
-		updateBudget: UPDATE_BUDGET,
+		editUser: UPDATE_USER,
+		editTrip: UPDATE_TRIP,
+		editTask: UPDATE_TASK,
+		editBudget: UPDATE_BUDGET,
 		// delete
 		removeTrip: REMOVE_TRIP,
 		removeTask: REMOVE_TASK,
 		removeBudget: REMOVE_BUDGET
 	};
 
+	// queries
 	const [getUser] = useLazyQuery(queryTypes['user']);
-	const [addUser] = useMutation(mutationTypes['addUser']);
-
 	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
+
+	// mutations
+	const [addUser] = useMutation(mutationTypes['addUser']);
+	const [addTrip] = useMutation(mutationTypes['addTrip']);
+	const [editTrip] = useMutation(mutationTypes['editTrip']);
+
+	const crudFunctions = { getUser, getAllTrips, addUser, addTrip, editTrip };
 
 	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
@@ -305,7 +311,8 @@ export const AuthProvider = ({ children }) => {
 				applyAuthToken,
 				register,
 				logoutUser,
-				getAllTrips
+				crudFunctions,
+				editTrip
 			}}
 		>
 			{children}

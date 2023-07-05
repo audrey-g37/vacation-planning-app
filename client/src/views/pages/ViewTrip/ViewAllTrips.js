@@ -9,7 +9,9 @@ import MainCard from 'views/components/MainCard';
 
 const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 	const theme = useTheme();
-	const { userSessionInfo: user, getAllTrips } = useAuth();
+	const { userSessionInfo: user, crudFunctions } = useAuth();
+
+	const { getAllTrips } = crudFunctions;
 
 	const dashboardView = window.location.pathname.includes('dashboard');
 
