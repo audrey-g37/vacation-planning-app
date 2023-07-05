@@ -22,7 +22,17 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 		setLoading(true);
 		await getAllTrips({ userID: user._id }).then((res) => {
 			const { data } = res;
-			setAllExistingTrips(data.trips);
+			let tripData = data.trips;
+			tripData = tripData.sort((a, b) => {
+				const today = new Date(new Date()).valueOf();
+				const startDateA = new Date(+a.startDate).valueOf();
+				const startDateB = new Date(+b.startDate).valueOf();
+				const closenessA = startDateA - today;
+				const closenessB = startDateB - today;
+
+				return startDateA && closenessA > closenessB ? -1 : 1;
+			});
+			setAllExistingTrips(tripData);
 		});
 		setLoading(false);
 	};
