@@ -203,6 +203,7 @@ export const AuthProvider = ({ children }) => {
 					alertSeverity: 'error',
 					message: 'There was a problem creating the user.'
 			  });
+		navigate('login');
 	};
 
 	// using accessToken to get user info and replacing the token in the url

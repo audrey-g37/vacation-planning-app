@@ -1,4 +1,4 @@
-import { TextField, useTheme } from '@mui/material';
+import { InputAdornment, TextField, useTheme } from '@mui/material';
 
 const Text = ({
 	placeholder = '',
@@ -11,7 +11,8 @@ const Text = ({
 	minRows = 1,
 	error,
 	disabled,
-	size = 'small'
+	size = 'small',
+	inputAdornment
 }) => {
 	const theme = useTheme();
 	const customStyle = {
@@ -19,20 +20,29 @@ const Text = ({
 		WebkitTextFillColor: `${theme.palette.text.primary}`
 	};
 	return (
-		<TextField
-			size={size}
-			type={type}
-			placeholder={placeholder}
-			name={name}
-			value={value}
-			onChange={onChange}
-			onBlur={onBlur}
-			error={error}
-			disabled={disabled}
-			multiline={multiline}
-			minRows={minRows}
-			inputProps={{ style: customStyle }}
-		/>
+		<>
+			<TextField
+				size={size}
+				type={type}
+				placeholder={placeholder}
+				name={name}
+				value={value}
+				onChange={onChange}
+				onBlur={onBlur}
+				error={error}
+				disabled={disabled}
+				multiline={multiline}
+				minRows={minRows}
+				inputProps={{ style: customStyle }}
+				InputProps={{
+					[inputAdornment?.position === 'end' ? 'endAdornment' : 'startAdornment']:
+						inputAdornment?.icon,
+					style: {
+						backgroundColor: theme.palette.background
+					}
+				}}
+			/>
+		</>
 	);
 };
 
