@@ -1,6 +1,7 @@
 import { FormControl, FormLabel, FormHelperText, useTheme } from '@mui/material';
 
 import Text from './Text';
+import DateSelection from './DateSelection';
 
 const FormInput = ({
 	componentType,
@@ -13,11 +14,18 @@ const FormInput = ({
 }) => {
 	const theme = useTheme();
 	const componentTypes = {
-		text: <Text {...componentProps} />
+		text: <Text {...componentProps} />,
+		date: <DateSelection {...componentProps} />
 	};
 
 	return (
-		<FormControl fullWidth disabled={disabled} sx={{ margin: '0.25rem 0' }}>
+		<FormControl
+			fullWidth
+			disabled={disabled}
+			sx={{
+				margin: '0.25rem 0'
+			}}
+		>
 			<FormLabel
 				sx={{
 					textAlign: 'left',

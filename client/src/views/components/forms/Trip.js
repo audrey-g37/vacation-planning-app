@@ -31,19 +31,29 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 		userID: user._id
 	};
 
+	if (formData.startDate) {
+		formData = { ...formData, startDate: new Date(+formData.startDate) };
+	}
+	if (formData.endDate) {
+		formData = { ...formData, endDate: new Date(+formData.endDate) };
+	}
+
 	return (
 		<Formik
 			initialValues={edit ? formData : blankInfo}
 			enableReinitialize
 			validationSchema={Yup.object().shape({
-				title: Yup.string().trim().required('Trip name is required.')
+				title: Yup.string().trim().required('Trip name is required.'),
+				endDate: Yup.date()
+					.min(Yup.ref('startDate'), 'End date must be after start date.')
+					.notRequired()
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
 					let dataToSend = {
 						variables: values
 					};
-					for (const [key, value] of Object.entries(dataToSend.variables.address)) {
+					for (const [key, value] of Object.entries(dataToSend.variables?.address)) {
 						if (key !== '_id' && key !== '__typename' && value) {
 							dataToSend = {
 								...dataToSend,
@@ -73,7 +83,9 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 			{({
 				handleChange,
 				handleBlur,
+				setTouched,
 				handleSubmit,
+				setFieldValue,
 				isSubmitting,
 				touched,
 				errors,
@@ -119,12 +131,48 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 								/>
 							</Grid>
 							<CustomDivider />
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'date'}
+									componentProps={{
+										name: 'startDate',
+										value: values.startDate,
+										multiline: true,
+										minRows: 3,
+										onChange: setFieldValue,
+										onBlur: setTouched
+									}}
+									label={'Starts'}
+								/>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'date'}
+									componentProps={{
+										name: 'endDate',
+										value: values.endDate,
+										multiline: true,
+										minRows: 3,
+										onChange: setFieldValue,
+										onBlur: setTouched
+									}}
+									label={'Ends'}
+									error={Boolean(touched.endDate && errors.endDate)}
+									helperText={
+										touched.endDate &&
+										errors.endDate &&
+										!errors.endDate.includes('Invalid Date') &&
+										`${errors.endDate}`
+									}
+								/>
+							</Grid>
+							<CustomDivider />
 							<Grid item xs={12}>
 								<FormInput
 									componentType={'text'}
 									componentProps={{
 										name: 'street1',
-										value: values.address.street1,
+										value: values.address?.street1,
 										onChange: handleChange,
 										onBlur: handleBlur
 									}}
@@ -136,7 +184,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									componentType={'text'}
 									componentProps={{
 										name: 'address.street2',
-										value: values.address.street2,
+										value: values.address?.street2,
 										onChange: handleChange,
 										onBlur: handleBlur
 									}}
@@ -149,7 +197,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									componentType={'text'}
 									componentProps={{
 										name: 'address.city',
-										value: values.address.city,
+										value: values.address?.city,
 										onChange: handleChange,
 										onBlur: handleBlur
 									}}
@@ -161,7 +209,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									componentType={'text'}
 									componentProps={{
 										name: 'address.state',
-										value: values.address.state,
+										value: values.address?.state,
 										onChange: handleChange,
 										onBlur: handleBlur
 									}}
@@ -194,7 +242,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 								componentType={'text'}
 								componentProps={{
 									name: 'address.zipCode',
-									value: values.address.zipCode,
+									value: values.address?.zipCode,
 									onChange: handleChange,
 									onBlur: handleBlur
 								}}

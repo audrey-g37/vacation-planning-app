@@ -24,7 +24,7 @@ const theme = (mode) => {
 			// font color of disabled button
 			disabled: '#FAEEEB',
 			// helper text color if error
-			error: '#FFD8D8'
+			error: '#EEFF00'
 		},
 		background: blueGrey[800],
 		navBackground: blueGrey[700]
