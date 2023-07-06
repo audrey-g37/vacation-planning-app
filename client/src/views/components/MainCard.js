@@ -52,14 +52,7 @@ const MainCard = forwardRef(
 		}
 
 		return (
-			<Card
-				ref={ref}
-				{...others}
-				sx={{
-					...sx,
-					backgroundColor: theme.palette.background
-				}}
-			>
+			<Card ref={ref} {...others} sx={sx}>
 				<Grid
 					container
 					spacing={theme.spacing()}

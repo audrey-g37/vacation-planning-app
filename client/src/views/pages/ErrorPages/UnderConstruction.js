@@ -11,7 +11,6 @@ const UnderConstruction = ({ lastModifiedDate }) => {
 	return (
 		<Box
 			sx={{
-				background: theme.palette.background,
 				textAlign: 'center',
 				margin: '1.5rem auto',
 				padding: `${medAndUp ? 1 : 0.5}rem`,

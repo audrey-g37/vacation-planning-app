@@ -1,8 +1,11 @@
+import { useTheme } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
 const DateSelection = ({ placeholder = '', name, value, onChange, onBlur, disabled }) => {
+	const theme = useTheme();
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<DatePicker
@@ -18,7 +21,7 @@ const DateSelection = ({ placeholder = '', name, value, onChange, onBlur, disabl
 					onBlur({ [name]: true });
 				}}
 				disabled={disabled}
-				render
+				sx={{ '& .MuiInputBase-input': { padding: '9px' } }}
 			/>
 		</LocalizationProvider>
 	);

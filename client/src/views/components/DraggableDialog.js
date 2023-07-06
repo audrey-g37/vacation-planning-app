@@ -44,10 +44,7 @@ const DraggableDialog = ({
 			aria-labelledby='draggable-dialog-title'
 			fullWidth={true}
 		>
-			<Grid
-				container
-				sx={{ backgroundColor: theme.palette.background, flexDirection: 'column' }}
-			>
+			<Grid container sx={{ flexDirection: 'column' }}>
 				<Grid item xs={12}>
 					<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
 						<Grid

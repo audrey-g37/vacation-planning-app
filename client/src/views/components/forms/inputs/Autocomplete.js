@@ -1,20 +1,17 @@
-import { Autocomplete as AutocompleteInput, TextField, useTheme } from '@mui/material';
+import { Autocomplete as AutocompleteInput, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
 const Autocomplete = ({ options = [], label = '', onChange, onBlur, value, name }) => {
-	const theme = useTheme();
-
 	const GroupHeader = styled('div')(({ theme }) => ({
 		position: 'sticky',
 		top: '-8px',
 		padding: '4px 10px',
-		backgroundColor: theme.palette.text.secondary,
-		color: theme.palette.text.dark
+		backgroundColor: theme.palette.secondary.main,
+		color: theme.palette.text.secondary
 	}));
 
 	const GroupItems = styled('ul')({
-		padding: 0,
-		backgroundColor: theme.palette.navBackground
+		padding: 0
 	});
 
 	const sortedOptions = options.map((option) => {
@@ -35,7 +32,7 @@ const Autocomplete = ({ options = [], label = '', onChange, onBlur, value, name 
 			options={sortedOptions.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
 			groupBy={(option) => option.firstLetter}
 			getOptionLabel={(option) => option.label || option}
-			sx={{ width: 300, backgroundColor: theme.palette.background }}
+			sx={{ '& .MuiInputBase-root': { padding: '1.5px' } }}
 			onBlur={onBlur}
 			value={valueToShow}
 			isOptionEqualToValue={(option, value) => option.label === value}

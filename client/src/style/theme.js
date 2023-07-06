@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles/index';
 import * as colors from '@mui/material/colors/index';
-const { grey, blueGrey, teal } = colors;
+const { grey, blueGrey } = colors;
 const theme = (mode) => {
 	const darkMode = {
 		// split comp for the 3 (base color is primary main)
@@ -26,8 +26,12 @@ const theme = (mode) => {
 			// helper text color if error
 			error: '#EEFF00'
 		},
-		background: blueGrey[800],
-		navBackground: blueGrey[700]
+		background: {
+			paper: blueGrey[800]
+		},
+		custom: {
+			navBackground: blueGrey[700]
+		}
 	};
 	const lightMode = {
 		primary: {
@@ -44,8 +48,12 @@ const theme = (mode) => {
 			disabled: '#000000',
 			error: '#B60000'
 		},
-		background: '#ffffff',
-		navBackground: grey[100]
+		background: {
+			paper: '#ffffff'
+		},
+		custom: {
+			navBackground: grey[100]
+		}
 	};
 	let palette = {
 		mode: mode

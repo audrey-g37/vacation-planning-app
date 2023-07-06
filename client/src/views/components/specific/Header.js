@@ -33,7 +33,7 @@ const Header = ({ underConstruction }) => {
 				position: 'sticky',
 				height: `fit-content`,
 				padding: '0.5rem',
-				backgroundColor: theme.palette.navBackground
+				backgroundColor: theme.palette.custom.navBackground
 			}}
 		>
 			<Grid
