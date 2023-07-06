@@ -7,6 +7,7 @@ import FormInput from './inputs';
 import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
+import { countryOptions } from 'utils/apollo/options';
 
 const TripForm = ({ edit, formData, onSubmit }) => {
 	const { userSessionInfo: user, crudFunctions } = useAuth();
@@ -100,7 +101,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									componentProps={{
 										name: 'title',
 										value: values.title,
-										onChange: handleChange,
+										onChange: setFieldValue,
 										onBlur: handleBlur
 									}}
 									label={'Name'}
@@ -216,26 +217,19 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									label={'State'}
 								/>
 							</Grid>
-							{/* <Grid item xs={12} md={6}>
-                                <AutoCompleteInput
-                                    name={'registeredAddress.country'}
-                                    label={'Country*'}
-                                    options={countryOptions}
-                                    setFieldValue={setFieldValue}
-                                    onBlur={handleBlur}
-                                    value={values.registeredAddress.country}
-                                    valueSubField={'label'}
-                                    error={Boolean(
-                                        getIn(touched, 'registeredAddress.country') &&
-                                            getIn(errors, 'registeredAddress.country')
-                                    )}
-                                    helperText={
-                                        getIn(touched, 'registeredAddress.country') &&
-                                        getIn(errors, 'registeredAddress.country') &&
-                                        `${errors.registeredAddress.country}`
-                                    }
-                                />
-                            </Grid> */}
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'autocomplete'}
+									componentProps={{
+										name: 'address.country',
+										onChange: setFieldValue,
+										onBlur: handleBlur,
+										value: values.address.country,
+										options: countryOptions
+									}}
+									label={'Country'}
+								/>
+							</Grid>
 						</Grid>
 						<Grid item xs={12} md={6}>
 							<FormInput
@@ -249,8 +243,6 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 								label={'Zip Code'}
 							/>
 						</Grid>
-
-						<br />
 						<Grid
 							container
 							sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
