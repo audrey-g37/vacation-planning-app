@@ -101,7 +101,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									componentProps={{
 										name: 'title',
 										value: values.title,
-										onChange: setFieldValue,
+										onChange: handleChange,
 										onBlur: handleBlur
 									}}
 									label={'Name'}
@@ -115,7 +115,6 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									componentType={'text'}
 									componentProps={{
 										name: 'description',
-										type: 'description',
 										value: values.description,
 										multiline: true,
 										minRows: 3,
@@ -172,7 +171,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 								<FormInput
 									componentType={'text'}
 									componentProps={{
-										name: 'street1',
+										name: 'address.street1',
 										value: values.address?.street1,
 										onChange: handleChange,
 										onBlur: handleBlur
@@ -230,18 +229,18 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									label={'Country'}
 								/>
 							</Grid>
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<FormInput
-								componentType={'text'}
-								componentProps={{
-									name: 'address.zipCode',
-									value: values.address?.zipCode,
-									onChange: handleChange,
-									onBlur: handleBlur
-								}}
-								label={'Zip Code'}
-							/>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'address.zipCode',
+										value: values.address?.zipCode,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Zip Code'}
+								/>
+							</Grid>
 						</Grid>
 						<Grid
 							container
