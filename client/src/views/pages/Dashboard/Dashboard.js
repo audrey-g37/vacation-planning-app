@@ -14,7 +14,7 @@ const Dashboard = () => {
 	const [allTrips, setAllTrips] = useState([]);
 
 	const setUserTripData = async () => {
-		await getAllTrips({ userID: user._id }).then((res) => {
+		await getAllTrips({ variables: { userID: user._id } }).then((res) => {
 			const { data } = res;
 			let tripData = data.trips;
 			tripData = tripData.reduce((prev, next) => {

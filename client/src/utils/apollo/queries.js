@@ -42,8 +42,8 @@ export const QUERY_TRIP = gql`
 `;
 
 export const QUERY_TRIPS = gql`
-	query {
-		trips {
+	query ($userID: ID!) {
+		trips(userID: $userID) {
 			_id
 			title
 			description

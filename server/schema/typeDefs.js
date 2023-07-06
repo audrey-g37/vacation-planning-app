@@ -56,7 +56,7 @@ const typeDefs = gql`
 		task(queryID: ID!): Task
 		budget(queryID: ID!): Budget
 		users: [User]!
-		trips(filterObj: String): [Trip]!
+		trips(userID: ID!): [Trip]!
 		tasks: [Task]!
 		budgets: [Budget]!
 	}

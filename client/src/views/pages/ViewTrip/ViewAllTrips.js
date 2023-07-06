@@ -20,7 +20,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 
 	const queryFunction = async () => {
 		setLoading(true);
-		await getAllTrips({ userID: user._id }).then((res) => {
+		await getAllTrips({ variables: { userID: user._id } }).then((res) => {
 			const { data } = res;
 			let tripData = [...data.trips];
 			tripData = tripData.sort((a, b) => {
