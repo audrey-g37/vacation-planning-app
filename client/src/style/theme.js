@@ -1,67 +1,59 @@
 import { createTheme } from '@mui/material/styles/index';
 import * as colors from '@mui/material/colors/index';
-const { grey, blueGrey, teal } = colors;
+const { grey, blueGrey } = colors;
 const theme = (mode) => {
 	const darkMode = {
-		// compound for the 3 (base color is text secondary)
+		// split comp for the 3 (base color is primary main)
 		primary: {
-			// text and links (not form labels)
-			main: '#FABAA2',
-			// hover on links and menu items in collapsed menu custom component
-			light: '#ffffff',
-			// hover on buttons - match text secondary
-			dark: '#FAD88D'
+			// form input outline when selected (not form labels), title of project, main card title and 'new' icon in main card, collapsed menu icon color/outline, circular loader
+			main: '#B3E1FF',
+			// form labels, helper text (if no error)
+			dark: '#FFE999'
 		},
-		// put background in color wheel and split complementary
 		secondary: {
 			// background color of the table header
-			main: '#4F403B',
-			light: '#9C857C',
-			dark: '#393B2B'
+			main: '#393635'
 		},
 		text: {
-			// titles of forms, buttons, helper text
-			primary: '#FFBFA8',
-			// form input labels, table header text
-			secondary: '#FAD88D',
-			disabled: '#FAEEEB'
+			// custom typography default (table row text color), background color of submit button on hover
+			primary: '#FDFDFD',
+			// hover on links, draggable dialog form title and close icon, table header row text color, background color of submit button
+			secondary: '#A6FFF1',
+			// font color of submit button
+			dark: '#000000',
+			// font color of disabled button
+			disabled: '#FAEEEB',
+			// helper text color if error
+			error: '#EEFF00'
 		},
-		action: {
-			// color when something has been clicked/selected - match text.primary
-			selected: '#FFBFA8'
+		background: {
+			paper: blueGrey[800]
 		},
-		background: blueGrey[800],
-		navBackground: blueGrey[700]
+		custom: {
+			navBackground: blueGrey[700]
+		}
 	};
 	const lightMode = {
 		primary: {
-			// text and links (not form labels)
-			main: '#1477A8',
-			// hover on links and menu items in collapsed menu custom component
-			light: '#1B9655',
-			// hover on buttons - match text secondary
-			dark: '#348F28'
+			main: '#871F14',
+			dark: '#87451B'
 		},
-		// put background in color wheel and split complementary
 		secondary: {
-			// background color of the table header
-			main: '#E4E7EB',
-			light: '#B3B1A1',
-			dark: '#A1A8B3'
+			main: '#E1E1E1'
 		},
 		text: {
-			// button background, helper text
-			primary: '#223FAD',
-			// form input labels, table header text
-			secondary: '#348F28',
-			disabled: '#eeeeee'
+			primary: '#000000',
+			secondary: '#045D60',
+			dark: '#E4E7EB',
+			disabled: '#000000',
+			error: '#B60000'
 		},
-		action: {
-			// color when something has been clicked/selected - match text.primary
-			selected: '#55788A'
+		background: {
+			paper: '#ffffff'
 		},
-		background: '#ffffff',
-		navBackground: grey[100]
+		custom: {
+			navBackground: grey[100]
+		}
 	};
 	let palette = {
 		mode: mode

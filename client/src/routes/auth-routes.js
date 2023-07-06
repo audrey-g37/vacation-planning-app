@@ -4,8 +4,8 @@ const authRoutes = {
 	path: '/',
 	element: <AuthMain />,
 	children: [
-		{ path: 'login', element: <AuthMain /> },
-		{ path: 'register', element: <AuthMain /> }
+		{ path: 'auth/login', element: <AuthMain /> },
+		{ path: 'auth/register', element: <AuthMain /> }
 	]
 };
 

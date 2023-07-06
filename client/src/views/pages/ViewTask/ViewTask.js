@@ -7,7 +7,6 @@ import { QUERY_TRIP, QUERY_TASKS, QUERY_USER } from 'utils/apollo/queries';
 import { REMOVE_TASK, UPDATE_TASK } from 'utils/apollo/mutations';
 import AddTask from '../../components/forms/AddTask';
 import useAuth from 'hooks/useAuth';
-import './ViewTask.css';
 
 const ViewTask = () => {
 	const { user, tripId } = useAuth();

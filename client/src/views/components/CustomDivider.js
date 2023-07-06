@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material';
 
-const CustomDivider = ({ sx = { margin: 0 } }) => <Divider sx={sx} />;
+const CustomDivider = ({ margin = '0' }) => <Divider sx={{ margin: margin }} />;
 
 export default CustomDivider;

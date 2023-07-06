@@ -1,4 +1,4 @@
-import { Typography, useTheme, useMediaQuery, Link, IconButton } from '@mui/material';
+import { Typography, useTheme, useMediaQuery, Link } from '@mui/material';
 import CustomTooltip from './CustomTooltip';
 
 const CustomTypography = ({
@@ -9,7 +9,6 @@ const CustomTypography = ({
 	relativePath = true,
 	icon,
 	button,
-	onClick,
 	customStyle = {}
 }) => {
 	const theme = useTheme();
@@ -18,7 +17,7 @@ const CustomTypography = ({
 	if (!customStyle.color) {
 		customStyle = {
 			...customStyle,
-			color: button ? theme.palette.text.primary : theme.palette.primary.main
+			color: theme.palette.text.primary
 		};
 	}
 
@@ -32,8 +31,8 @@ const CustomTypography = ({
 			...customStyle,
 			'textDecoration': `underline ${customStyle.color}`,
 			':hover': {
-				color: theme.palette.primary.light,
-				textDecoration: `underline ${theme.palette.primary.light}`
+				color: theme.palette.text.secondary,
+				textDecoration: `underline ${theme.palette.text.secondary}`
 			}
 		};
 	}
@@ -41,9 +40,7 @@ const CustomTypography = ({
 	if (button) {
 		customStyle = {
 			...customStyle,
-			':hover': {
-				color: theme.palette.primary.dark
-			}
+			padding: '0.5rem'
 		};
 	}
 
@@ -52,14 +49,6 @@ const CustomTypography = ({
 			{icon && icon}
 			{textContent}
 		</Typography>
-	);
-
-	const WithTooltipAndButton = (
-		<CustomTooltip tooltipText={tooltipText}>
-			<IconButton onClick={onClick} sx={customStyle}>
-				{icon}
-			</IconButton>
-		</CustomTooltip>
 	);
 
 	const WithTooltipAndLink = (
@@ -87,8 +76,6 @@ const CustomTypography = ({
 			? WithTooltipAndLink
 			: to
 			? WithTooltipOnly
-			: button
-			? WithTooltipAndButton
 			: tooltipText
 			? WithLinkOnly
 			: FormattedTypography;

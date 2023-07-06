@@ -5,7 +5,6 @@ import { QUERY_TASK } from 'utils/apollo/queries';
 import { UPDATE_TASK } from 'utils/apollo/mutations';
 // import moment from "moment";
 import { Card, Button } from '@mui/material';
-import './updateTask.css';
 import useAuth from 'hooks/useAuth';
 
 const EditTask = () => {

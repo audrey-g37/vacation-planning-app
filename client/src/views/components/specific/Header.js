@@ -15,8 +15,8 @@ const Header = ({ underConstruction }) => {
 	const withAuth = authSessionInfo;
 
 	let headerNav = [
-		{ text: 'Login', url: '/login' },
-		{ text: 'Register', url: '/register' }
+		{ text: 'Login', url: '/auth/login' },
+		{ text: 'Register', url: '/auth/register' }
 	];
 
 	if (withAuth) {
@@ -33,7 +33,7 @@ const Header = ({ underConstruction }) => {
 				position: 'sticky',
 				height: `fit-content`,
 				padding: '0.5rem',
-				backgroundColor: theme.palette.navBackground
+				backgroundColor: theme.palette.custom.navBackground
 			}}
 		>
 			<Grid

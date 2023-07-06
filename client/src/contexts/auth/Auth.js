@@ -49,12 +49,21 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
 	// all data stored on auth context
 	const [state, dispatch] = useReducer(accountReducer, initialState);
-	useEffect(() => {
-		login();
-	}, [dispatch]);
+
+	// using react-router-dom navigation
+	const navigate = useNavigate();
 
 	const authSessionInfo = JSON.parse(window.sessionStorage.getItem('authInfo'));
 	const userSessionInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
+	const url = window.location.pathname;
+
+	useEffect(() => {
+		if (userSessionInfo && authSessionInfo) {
+			if (url.includes('auth') || url === '/') {
+				navigate('dashboard');
+			}
+		} else login();
+	}, [authSessionInfo, userSessionInfo, dispatch, url]);
 
 	const login = () => {
 		if (!authSessionInfo) {
@@ -62,13 +71,14 @@ export const AuthProvider = ({ children }) => {
 				.then((res) => {
 					if (!res.success) {
 						dispatch({ type: LOGOUT });
-						navigate('/login');
+						!url.includes('auth') && navigate('auth/login');
 					}
 				})
 				.catch((err) => {
 					console.error(err);
 					dispatch({ type: LOGOUT });
-					navigate('/login');
+					navigate('auth/login');
+					!url.includes('auth') && navigate('auth/login');
 				});
 		}
 		if (!userSessionInfo || !authSessionInfo) {
@@ -96,9 +106,6 @@ export const AuthProvider = ({ children }) => {
 		autoHideDuration: 6000
 	});
 
-	// using react-router-dom navigation
-	const navigate = useNavigate();
-
 	// apollo queries
 	const queryTypes = {
 		// single result
@@ -121,20 +128,26 @@ export const AuthProvider = ({ children }) => {
 		addTask: ADD_TASK,
 		addBudget: ADD_BUDGET,
 		// update
-		updateUser: UPDATE_USER,
-		updateTrip: UPDATE_TRIP,
-		updateTask: UPDATE_TASK,
-		updateBudget: UPDATE_BUDGET,
+		editUser: UPDATE_USER,
+		editTrip: UPDATE_TRIP,
+		editTask: UPDATE_TASK,
+		editBudget: UPDATE_BUDGET,
 		// delete
 		removeTrip: REMOVE_TRIP,
 		removeTask: REMOVE_TASK,
 		removeBudget: REMOVE_BUDGET
 	};
 
+	// queries
 	const [getUser] = useLazyQuery(queryTypes['user']);
-	const [addUser] = useMutation(mutationTypes['addUser']);
-
 	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
+
+	// mutations
+	const [addUser] = useMutation(mutationTypes['addUser']);
+	const [addTrip] = useMutation(mutationTypes['addTrip']);
+	const [editTrip] = useMutation(mutationTypes['editTrip']);
+
+	const crudFunctions = { getUser, getAllTrips, addUser, addTrip, editTrip };
 
 	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
@@ -190,6 +203,7 @@ export const AuthProvider = ({ children }) => {
 					alertSeverity: 'error',
 					message: 'There was a problem creating the user.'
 			  });
+		navigate('login');
 	};
 
 	// using accessToken to get user info and replacing the token in the url
@@ -225,13 +239,12 @@ export const AuthProvider = ({ children }) => {
 							return { ...responseObj, success: false };
 						}
 						const authId = authResult.idTokenPayload.sub.split('|')[1];
-						await getUser({ variables: { authId: authId } }).then((res) => {
-							const { data } = res;
-							runDispatch({
-								...dispatchObj,
-								user: data.user,
-								authInfo: authResult
-							});
+						const { data } = await getUser({ variables: { authId: authId } });
+
+						runDispatch({
+							...dispatchObj,
+							user: data?.user,
+							authInfo: authResult
 						});
 					});
 				}
@@ -281,7 +294,8 @@ export const AuthProvider = ({ children }) => {
 		dispatch({
 			type: LOGOUT
 		});
-		auth0Connection.logout({ returnTo: `${window.location.origin}/login` });
+		auth0Connection.logout({ returnTo: `${window.location.origin}/auth/login` });
+		navigate('auth/login');
 	};
 
 	return (
@@ -298,7 +312,8 @@ export const AuthProvider = ({ children }) => {
 				applyAuthToken,
 				register,
 				logoutUser,
-				getAllTrips
+				crudFunctions,
+				editTrip
 			}}
 		>
 			{children}

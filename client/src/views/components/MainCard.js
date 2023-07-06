@@ -6,10 +6,20 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import CustomDivider from './CustomDivider';
 import CustomTypography from './CustomTypography';
 import Form from 'views/components/forms';
+import SubmitButton from './SubmitButton';
 
 const MainCard = forwardRef(
 	(
-		{ sx = {}, title = '', collection = '', newItem = '', children, actionSection, ...others },
+		{
+			sx = {},
+			title = '',
+			collection = '',
+			newItem = '',
+			queryResults,
+			children,
+			actionSection,
+			...others
+		},
 		ref
 	) => {
 		const theme = useTheme();
@@ -31,25 +41,18 @@ const MainCard = forwardRef(
 			cardHeaderProps = {
 				...cardHeaderProps,
 				action: (
-					<CustomTypography
+					<SubmitButton
 						icon={<AddBoxIcon />}
 						tooltipText={`Add ${newItem}`}
-						button={true}
 						onClick={() => setDialogOpen(true)}
+						customStyle={{ color: theme.palette.primary.main }}
 					/>
 				)
 			};
 		}
 
 		return (
-			<Card
-				ref={ref}
-				{...others}
-				sx={{
-					...sx,
-					backgroundColor: theme.palette.background
-				}}
-			>
+			<Card ref={ref} {...others} sx={sx}>
 				<Grid
 					container
 					spacing={theme.spacing()}
@@ -74,6 +77,7 @@ const MainCard = forwardRef(
 						isOpen={dialogOpen}
 						itemName={newItem}
 						setClosed={() => setDialogOpen(false)}
+						queryResults={queryResults}
 						collection={collection}
 					/>
 				)}
@@ -90,7 +94,8 @@ MainCard.propTypes = {
 	actionSection: PropTypes.node,
 	title: PropTypes.string,
 	collection: PropTypes.string,
-	newItem: PropTypes.string
+	newItem: PropTypes.string,
+	queryResults: PropTypes.func
 };
 
 export default MainCard;

@@ -7,8 +7,6 @@ import { QUERY_USER, QUERY_BUDGETS, QUERY_TRIP } from 'utils/apollo/queries';
 import BudgetForm from '../../components/forms/budgetForm';
 import { REMOVE_BUDGET } from 'utils/apollo/mutations';
 import useAuth from 'hooks/useAuth';
-import './ViewBudget.css';
-
 const ViewBudget = () => {
 	const { user, tripId } = useAuth;
 	const { data: data1 } = useQuery(QUERY_USER, {

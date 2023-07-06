@@ -14,7 +14,7 @@ const AuthLayout = ({}) => {
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
 	const { pathname } = useLocation();
-	const authType = pathname.replace('/', '') || 'login';
+	const authType = pathname.replace('/auth/', '') || 'login';
 
 	const authTypes = {
 		login: <Login />,
@@ -44,14 +44,18 @@ const AuthLayout = ({}) => {
 			)}
 			{authType !== 'login' && (
 				<Grid item xs={4}>
-					<CustomTypography tooltipText={'Login'} to={'/login'} textContent={'Login'} />
+					<CustomTypography
+						tooltipText={'Login'}
+						to={'/auth/login'}
+						textContent={'Login'}
+					/>
 				</Grid>
 			)}
 			{authType !== 'register' && (
 				<Grid item xs={4}>
 					<CustomTypography
 						tooltipText={'Create Account'}
-						to={'/register'}
+						to={'/auth/register'}
 						textContent={'Register'}
 					/>
 				</Grid>

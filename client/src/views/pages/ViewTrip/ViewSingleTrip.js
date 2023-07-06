@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router';
 import { QUERY_USER, QUERY_TRIP } from 'utils/apollo/queries';
 import { Card, Button } from '@mui/material';
-import './ViewSingleTrip.css';
 import useAuth from 'hooks/useAuth';
 
 const ViewSingleTrip = () => {

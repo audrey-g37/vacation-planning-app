@@ -36,7 +36,7 @@ const Footer = () => {
 				position: `fixed`,
 				bottom: '0',
 				height: 'fit-content',
-				backgroundColor: theme.palette.navBackground
+				backgroundColor: theme.palette.custom.navBackground
 			}}
 		>
 			<Grid item xs={2}>

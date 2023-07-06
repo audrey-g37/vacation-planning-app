@@ -1,146 +1,167 @@
-import React, { useState } from 'react';
-import { useTheme, useMediaQuery, Grid } from '@mui/material';
+import { useState } from 'react';
+import { Grid, IconButton, InputAdornment, useTheme } from '@mui/material';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 // project imports
-import useAuth from 'hooks/useAuth';
-import FormInput from 'views/components/forms/inputs/index';
+import FormInput from 'views/components/forms/inputs';
 import SubmitButton from 'views/components/SubmitButton';
+import useAuth from 'hooks/useAuth';
 
-const Register = () => {
+const Register = ({ onSubmit }) => {
 	const theme = useTheme();
-	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
 
 	const { register } = useAuth();
 
-	const initialState = {
-		email: '',
-		password: '',
-		firstName: '',
-		lastName: ''
-	};
+	const blankInfo = { email: '', password: '', firstName: '', lastName: '' };
 
-	const [formState, setFormState] = useState(initialState);
-
-	const submissionDisabledInitialState = {
-		disabled: false,
-		message: ''
-	};
-
-	const [submissionDisabled, setSubmissionDisabled] = useState(submissionDisabledInitialState);
-
-	// update state based on form input changes
-	const handleChange = (event) => {
-		const { name, value } = event.target;
-
-		setFormState({
-			...formState,
-			[name]: value
-		});
-
-		setSubmissionDisabled({
-			...submissionDisabled,
-			disabled:
-				!formState.email ||
-				!formState.password ||
-				!formState.firstName ||
-				!formState.lastName,
-			message: 'All fields are required.'
-		});
-	};
-
-	// submit form
-	const handleFormSubmit = async (event) => {
-		event.preventDefault();
-		try {
-			await register(formState);
-			setFormState(initialState);
-		} catch (err) {
-			console.error(err);
-		}
-		setSubmissionDisabled({ ...submissionDisabled, disabled: false });
-	};
+	const [showPassword, setShowPassword] = useState(false);
 
 	return (
-		<form>
-			<Grid container spacing={theme.spacing(lgAndUp ? 3 : 2)}>
-				<Grid item xs={12} md={6}>
-					<FormInput
-						componentType={'text'}
-						componentProps={{
-							placeholder: '',
-							name: 'firstName',
-							type: 'text',
-							value: formState.firstName,
-							onChange: handleChange
-						}}
-						label={'First Name'}
-						required={true}
-						helperText={'First name is required.'}
-					/>
-				</Grid>
-				<Grid item xs={12} md={6}>
-					<FormInput
-						componentType={'text'}
-						componentProps={{
-							placeholder: '',
-							name: 'lastName',
-							type: 'text',
-							value: formState.lastName,
-							onChange: handleChange
-						}}
-						label={'Last Name'}
-						required={true}
-						helperText={'Last name is required.'}
-					/>
-				</Grid>
-				<Grid item xs={12} md={6}>
-					<FormInput
-						componentType={'text'}
-						componentProps={{
-							placeholder: 'email@example.com',
-							name: 'email',
-							type: 'email',
-							value: formState.email,
-							onChange: handleChange
-						}}
-						label={'Email'}
-						required={true}
-						helperText={
-							!formState.email
-								? 'Email is required.'
-								: 'Entry must be a valid email address.'
-						}
-					/>
-				</Grid>
-				<Grid item xs={12} md={6}>
-					<FormInput
-						componentType={'text'}
-						componentProps={{
-							placeholder: 'New Password',
-							name: 'password',
-							type: 'password',
-							value: formState.password,
-							onChange: handleChange
-						}}
-						label={'Password'}
-						required={true}
-						helperText={'Password is required.'}
-					/>
-				</Grid>
-			</Grid>
-			<Grid container spacing={theme.spacing()} sx={{ justifyContent: 'flex-end' }}>
-				<Grid item>
-					<SubmitButton
-						title={'Register'}
-						tooltipText={
-							!submissionDisabled.disabled ? 'Login' : submissionDisabled.message
-						}
-						onClick={handleFormSubmit}
-						disabled={submissionDisabled.disabled}
-					/>
-				</Grid>
-			</Grid>
-		</form>
+		<Formik
+			initialValues={blankInfo}
+			enableReinitialize
+			validationSchema={Yup.object().shape({
+				email: Yup.string()
+					.email('Must be a valid email.')
+					.trim()
+					.required('Email is required.'),
+				password: Yup.string()
+					.min(8, 'Must be at least 8 characters.')
+					.matches(
+						/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+						'Must have at least one lowercase letter, one uppercase letter, one number, and one special character.'
+					)
+					.required('Password is required.'),
+				firstName: Yup.string().trim().required('First name is required.'),
+				lastName: Yup.string().trim().required('Last name is required.')
+			})}
+			onSubmit={async (values, { setStatus, setSubmitting }) => {
+				try {
+					await register(values);
+					onSubmit && onSubmit();
+				} catch (err) {
+					console.error(err);
+				}
+			}}
+		>
+			{({
+				handleChange,
+				handleBlur,
+				handleSubmit,
+				isSubmitting,
+				touched,
+				errors,
+				values
+			}) => {
+				return (
+					<form noValidate>
+						<Grid container spacing={theme.spacing()}>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'firstName',
+										value: values.firstName,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'First Name'}
+									required={true}
+									error={Boolean(touched.firstName && errors.firstName)}
+									helperText={
+										touched.firstName &&
+										errors.firstName &&
+										`${errors.firstName}`
+									}
+								/>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'lastName',
+										value: values.lastName,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Last Name'}
+									required={true}
+									error={Boolean(touched.lastName && errors.lastName)}
+									helperText={
+										touched.lastName && errors.lastName && `${errors.lastName}`
+									}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'email',
+										type: 'email',
+										value: values.email,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Email'}
+									required={true}
+									error={Boolean(touched.email && errors.email)}
+									helperText={touched.email && errors.email && `${errors.email}`}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'password',
+										type: !showPassword ? 'password' : 'text',
+										value: values.password,
+										onChange: handleChange,
+										onBlur: handleBlur,
+										inputAdornment: {
+											icon: (
+												<IconButton
+													onClick={() => setShowPassword(!showPassword)}
+												>
+													<VisibilityOffIcon
+														sx={{ color: theme.palette.primary.dark }}
+													/>
+												</IconButton>
+											),
+											position: 'end'
+										}
+									}}
+									label={'Password'}
+									required={true}
+									error={Boolean(touched.password && errors.password)}
+									helperText={
+										touched.password && errors.password && `${errors.password}`
+									}
+								/>
+							</Grid>
+							<Grid item xs={12} sx={{ margin: '1rem 0 0' }}>
+								<Grid
+									container
+									sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
+									spacing={theme.spacing()}
+								>
+									<Grid item>
+										<SubmitButton
+											disableElevation
+											disabled={isSubmitting}
+											title={'Register'}
+											onClick={handleSubmit}
+											placeholder={'Register'}
+										/>
+									</Grid>
+								</Grid>
+							</Grid>
+						</Grid>
+					</form>
+				);
+			}}
+		</Formik>
 	);
 };
 

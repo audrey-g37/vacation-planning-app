@@ -14,12 +14,14 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import Form from '../forms';
 import CustomTypography from '../CustomTypography';
+import SubmitButton from '../SubmitButton';
 
 const TableOfData = ({
 	rows,
 	columns,
 	edit,
 	collection,
+	queryResults,
 	showPagination = true,
 	dataPerPage = 10,
 	maxTableHeight = '70vh'
@@ -107,17 +109,19 @@ const TableOfData = ({
 										})}
 										{edit && (
 											<TableCell>
-												<CustomTypography
+												<SubmitButton
 													icon={<EditIcon />}
 													tooltipText={'Edit'}
-													button={true}
-													onClick={() =>
+													onClick={async () => {
 														setDialogOpen({
 															...dialogOpen,
 															open: true,
 															formData: row
-														})
-													}
+														});
+													}}
+													customStyle={{
+														color: theme.palette.text.primary
+													}}
 												/>
 											</TableCell>
 										)}
@@ -143,6 +147,7 @@ const TableOfData = ({
 					isOpen={dialogOpen.open}
 					formData={dialogOpen.formData}
 					setClosed={() => setDialogOpen({ ...dialogOpen, open: false })}
+					queryResults={queryResults}
 					collection={collection}
 					edit={true}
 				/>

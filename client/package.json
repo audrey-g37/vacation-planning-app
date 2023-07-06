@@ -14,11 +14,13 @@
 		"@emotion/styled": "^11.10.6",
 		"@mui/icons-material": "^5.11.16",
 		"@mui/material": "^5.12.1",
+		"@mui/x-date-pickers": "^6.9.1",
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/react": "^11.2.7",
 		"@testing-library/user-event": "^12.8.3",
 		"auth0-js": "^9.20.2",
-		"bootstrap": "^5.2.3",
+		"dayjs": "^1.11.9",
+		"formik": "^2.4.2",
 		"graphql": "^15.6.0",
 		"install": "^0.13.0",
 		"jwt-decode": "^3.1.2",
@@ -33,7 +35,8 @@
 		"react-router-dom": "^6.10.0",
 		"react-scripts": "5.0.1",
 		"web-vitals": "^1.1.2",
-		"webpack": "^5.88.1"
+		"webpack": "^5.88.1",
+		"yup": "^1.2.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",

@@ -35,15 +35,7 @@ const CollapsedMenu = ({
 	};
 
 	const MenuButton = (
-		<Button
-			variant={'text'}
-			onClick={handleClick}
-			sx={{
-				'&:hover': {
-					backgroundColor: theme.palette.background
-				}
-			}}
-		>
+		<Button variant={'text'} onClick={handleClick}>
 			<MenuRoundedIcon />
 		</Button>
 	);
@@ -69,12 +61,17 @@ const CollapsedMenu = ({
 				}}
 				anchorEl={anchorEl}
 				onClose={handleClose}
+				sx={{
+					'& .MuiPaper-root': {
+						backgroundColor: 'unset'
+					}
+				}}
 			>
 				<MenuList
 					sx={{
 						border: `solid ${theme.palette.primary.main} 0.025rem`,
 						borderRadius: '10%',
-						backgroundColor: theme.palette.navBackground
+						backgroundColor: theme.palette.custom.navBackground
 					}}
 				>
 					{options.map((option, index) => {

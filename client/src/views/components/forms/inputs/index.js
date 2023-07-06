@@ -1,6 +1,8 @@
 import { FormControl, FormLabel, FormHelperText, useTheme } from '@mui/material';
 
 import Text from './Text';
+import DateSelection from './DateSelection';
+import Autocomplete from './Autocomplete';
 
 const FormInput = ({
 	componentType,
@@ -12,21 +14,31 @@ const FormInput = ({
 	disabled = false
 }) => {
 	const theme = useTheme();
-	componentProps = { ...componentProps, error: error, disabled: disabled };
 	const componentTypes = {
-		text: <Text {...componentProps} />
+		text: <Text {...componentProps} />,
+		date: <DateSelection {...componentProps} />,
+		autocomplete: <Autocomplete {...componentProps} />
 	};
 
 	return (
-		<FormControl fullWidth error={error} disabled={disabled} sx={{ margin: '0.25rem 0' }}>
+		<FormControl
+			fullWidth
+			disabled={disabled}
+			sx={{
+				margin: '0.25rem 0'
+			}}
+		>
 			<FormLabel
 				sx={{
-					textAlign: 'left'
+					textAlign: 'left',
+					color: error ? theme.palette.text.error : theme.palette.primary.dark
 				}}
 			>{`${label}${required ? '*' : ''}`}</FormLabel>
 			{componentTypes[componentType]}
 			{helperText && (
-				<FormHelperText sx={{ color: theme.palette.text.primary }}>
+				<FormHelperText
+					sx={{ color: error ? theme.palette.text.error : theme.palette.primary.dark }}
+				>
 					{helperText}
 				</FormHelperText>
 			)}

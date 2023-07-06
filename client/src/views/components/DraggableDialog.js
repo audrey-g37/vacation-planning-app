@@ -5,6 +5,8 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import TripForm from './forms/Trip';
 import CustomTypography from './CustomTypography';
+import SubmitButton from './SubmitButton';
+import CustomDivider from './CustomDivider';
 
 function PaperComponent(props) {
 	return (
@@ -17,6 +19,7 @@ function PaperComponent(props) {
 const DraggableDialog = ({
 	isOpen = false,
 	setClosed,
+	onSubmit,
 	formData = {},
 	edit = false,
 	itemName = '',
@@ -26,7 +29,8 @@ const DraggableDialog = ({
 
 	const formInfoObj = {
 		edit: edit,
-		formData: formData
+		formData: formData,
+		onSubmit: onSubmit
 	};
 
 	const collectionTypes = {
@@ -40,20 +44,33 @@ const DraggableDialog = ({
 			aria-labelledby='draggable-dialog-title'
 			fullWidth={true}
 		>
-			<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
-				<Grid container sx={{ justifyContent: 'space-between' }}>
-					<Grid item>
-						<CustomTypography
-							textContent={`${edit ? 'Edit' : 'New'} ${itemName}`}
-							customStyle={{ fontSize: theme.typography.h6 }}
-						/>
-					</Grid>
-					<Grid item>
-						<CustomTypography icon={<CloseIcon />} button={true} onClick={setClosed} />
-					</Grid>
+			<Grid container sx={{ flexDirection: 'column' }}>
+				<Grid item xs={12}>
+					<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+						<Grid
+							container
+							sx={{ justifyContent: 'space-between', alignItems: 'center' }}
+						>
+							<Grid item>
+								<CustomTypography
+									textContent={`${edit ? 'Edit' : 'New'} ${itemName}`}
+									customStyle={{
+										fontSize: theme.typography.h6,
+										color: theme.palette.text.secondary
+									}}
+								/>
+							</Grid>
+							<Grid item>
+								<SubmitButton icon={<CloseIcon />} onClick={setClosed} />
+							</Grid>
+						</Grid>
+					</DialogTitle>
 				</Grid>
-			</DialogTitle>
-			<DialogContent>{collectionTypes[collection]}</DialogContent>
+				<CustomDivider />
+				<Grid item xs={12}>
+					<DialogContent>{collectionTypes[collection]}</DialogContent>
+				</Grid>
+			</Grid>
 		</Dialog>
 	);
 };
