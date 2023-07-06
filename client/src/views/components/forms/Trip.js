@@ -250,7 +250,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 						>
 							<SubmitButton
 								disableElevation
-								disabled={isSubmitting || values.educationLevel === ''}
+								disabled={isSubmitting}
 								title={'Save Changes'}
 								onClick={handleSubmit}
 								placeholder={'Save Changes'}
