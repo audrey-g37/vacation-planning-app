@@ -241,19 +241,23 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									label={'Zip Code'}
 								/>
 							</Grid>
-						</Grid>
-						<Grid
-							container
-							sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
-							spacing={theme.spacing()}
-						>
-							<SubmitButton
-								disableElevation
-								disabled={isSubmitting}
-								title={'Save Changes'}
-								onClick={handleSubmit}
-								placeholder={'Save Changes'}
-							/>
+							<Grid item xs={12}>
+								<Grid
+									container
+									sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
+									spacing={theme.spacing()}
+								>
+									<Grid item>
+										<SubmitButton
+											disableElevation
+											disabled={isSubmitting}
+											title={'Save Changes'}
+											onClick={handleSubmit}
+											placeholder={'Save Changes'}
+										/>
+									</Grid>
+								</Grid>
+							</Grid>
 						</Grid>
 					</form>
 				);

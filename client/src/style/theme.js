@@ -62,9 +62,8 @@ const theme = (mode) => {
 
 	let themeToUse = createTheme({
 		palette: palette,
-		spacing: [0, 4, 8, 16, 32, 64]
+		spacing: 8
 	});
-	themeToUse.spacing(4);
 	return themeToUse;
 };
 
