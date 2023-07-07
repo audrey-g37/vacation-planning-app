@@ -55,6 +55,9 @@ const theme = (mode) => {
 			navBackground: grey[100]
 		}
 	};
+	const typography = {
+		subtitle1: { fontSize: 18 }
+	};
 	let palette = {
 		mode: mode
 	};
@@ -62,6 +65,7 @@ const theme = (mode) => {
 
 	let themeToUse = createTheme({
 		palette: palette,
+		typography: typography,
 		spacing: 8
 	});
 	return themeToUse;
