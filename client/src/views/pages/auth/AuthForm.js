@@ -19,7 +19,7 @@ const AuthLayout = ({}) => {
 	const authTypes = {
 		login: <Login />,
 		register: <Register />
-		// 'login-help': <ForgotUserData />
+		// todo 'login-help': <ForgotUserData />
 	};
 
 	const AuthNavLinks = (
@@ -33,15 +33,18 @@ const AuthLayout = ({}) => {
 				margin: '0.5rem 0'
 			}}
 		>
-			{authType !== 'login-help' && (
-				<Grid item xs={4}>
-					<CustomTypography
-						tooltipText={'Forgot Username/Password'}
-						to={'#'}
-						textContent={'Forgot Credentials?'}
-					/>
-				</Grid>
-			)}
+			{
+				//* remove the authTypes['login-help'] to put 'Forgot Credentials' link back in when that form is built/working
+				authTypes['login-help'] && authType !== 'login-help' && (
+					<Grid item xs={4}>
+						<CustomTypography
+							tooltipText={'Forgot Username/Password'}
+							to={'#'}
+							textContent={'Forgot Credentials?'}
+						/>
+					</Grid>
+				)
+			}
 			{authType !== 'login' && (
 				<Grid item xs={4}>
 					<CustomTypography

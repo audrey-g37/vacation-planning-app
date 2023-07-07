@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Grid, IconButton, InputAdornment, useTheme } from '@mui/material';
+import { Grid, IconButton, useTheme } from '@mui/material';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Formik } from 'formik';
 import * as Yup from 'yup';

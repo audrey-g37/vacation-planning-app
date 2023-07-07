@@ -21,7 +21,7 @@ const client = new ApolloClient({
 });
 
 function App() {
-	const mode = 'dark';
+	const mode = 'light';
 	const styledBackground = {
 		backgroundImage: `url(${
 			process.env.PUBLIC_URL +
