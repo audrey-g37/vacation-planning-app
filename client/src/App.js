@@ -8,9 +8,7 @@ import NavScroll from 'views/components/NavScroll';
 import theme from 'style/theme';
 import './App.css';
 
-const httpLink = createHttpLink({
-	uri: `${window.location.origin}/graphql`
-});
+const httpLink = `${window.location.origin}/graphql`;
 
 // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
 const client = new ApolloClient({
