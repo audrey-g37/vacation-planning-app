@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, useTheme } from '@mui/material';
 
 // project imports
-import TableOfData from 'views/components/table';
+import DataGrid from 'views/components/data-grid';
 import useAuth from 'hooks/useAuth';
 import CircularLoader from 'views/components/CircularLoader';
 import MainCard from 'views/components/MainCard';
@@ -50,24 +50,35 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 	}, [allTrips]);
 
 	const columns = [
-		{ id: 'title', label: 'Title', minWidth: 170 },
 		{
-			id: 'startDate',
-			label: 'Starts',
-			minWidth: 125,
-			format: (value) => (value ? new Date(+value).toDateString() : '')
+			field: 'title',
+			headerName: 'Title',
+			width: 225,
+			editable: false
 		},
 		{
-			id: 'endDate',
-			label: 'Ends',
-			minWidth: 125,
-			format: (value) => (value ? new Date(+value).toDateString() : '')
+			field: 'startDate',
+			headerName: 'Starts',
+			width: 150,
+			editable: false,
+			type: 'date'
 		},
 		{
-			id: 'address',
-			label: 'Location',
-			minWidth: 170,
-			format: (value) => `${value.city || ''} ${value.state || ''} ${value.country || ''}`
+			field: 'endDate',
+			headerName: 'Ends',
+			width: 150,
+			editable: false,
+			type: 'date'
+		},
+		{
+			field: 'address',
+			headerName: 'Location',
+			width: 250,
+			editable: false,
+			format: {
+				type: 'subField',
+				subField: 'trip.address'
+			}
 		}
 	];
 
@@ -86,14 +97,15 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 						actionSection={actionSection}
 						queryResults={queryFunction}
 					>
-						<TableOfData
+						<DataGrid
 							rows={rows}
 							columns={columns}
-							edit={true}
+							editIcon={true}
+							viewIcon={true}
 							collection={'trip'}
 							queryResults={queryFunction}
-							showPagination={!dashboardView}
-							maxTableHeight={!dashboardView ? '75vh' : '60vh'}
+							hidePagination={dashboardView}
+							maxHeight={!dashboardView ? '75vh' : '60vh'}
 						/>
 					</MainCard>
 				</Grid>
