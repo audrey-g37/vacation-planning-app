@@ -1,4 +1,7 @@
-import { Grid, useTheme } from '@mui/material';
+import { useState } from 'react';
+
+import { Grid, useTheme, IconButton } from '@mui/material';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -14,6 +17,8 @@ const Login = ({ onSubmit }) => {
 
 	const blankInfo = { email: '', password: '' };
 
+	const [showPassword, setShowPassword] = useState(false);
+
 	return (
 		<Formik
 			initialValues={blankInfo}
@@ -27,6 +32,16 @@ const Login = ({ onSubmit }) => {
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
+					if (
+						values.email === 'testuser@test-grip.org' &&
+						values.password === 'testing123'
+					) {
+						values = {
+							...values,
+							email: process.env.REACT_APP_DEMO_EMAIL,
+							password: process.env.REACT_APP_DEMO_PASSWORD
+						};
+					}
 					await getAuthToken(values);
 					onSubmit && onSubmit();
 				} catch (err) {
@@ -67,10 +82,22 @@ const Login = ({ onSubmit }) => {
 									componentType={'text'}
 									componentProps={{
 										name: 'password',
-										type: 'password',
+										type: !showPassword ? 'password' : 'text',
 										value: values.password,
 										onChange: handleChange,
-										onBlur: handleBlur
+										onBlur: handleBlur,
+										inputAdornment: {
+											icon: (
+												<IconButton
+													onClick={() => setShowPassword(!showPassword)}
+												>
+													<VisibilityOffIcon
+														sx={{ color: theme.palette.primary.dark }}
+													/>
+												</IconButton>
+											),
+											position: 'end'
+										}
 									}}
 									label={'Password'}
 									required={true}
