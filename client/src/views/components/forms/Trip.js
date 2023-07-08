@@ -32,10 +32,10 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 		userID: user._id
 	};
 
-	if (formData.startDate) {
+	if (formData?.startDate) {
 		formData = { ...formData, startDate: new Date(+formData.startDate) };
 	}
-	if (formData.endDate) {
+	if (formData?.endDate) {
 		formData = { ...formData, endDate: new Date(+formData.endDate) };
 	}
 

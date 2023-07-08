@@ -32,7 +32,7 @@ const Header = ({ underConstruction }) => {
 			sx={{
 				position: 'sticky',
 				height: `fit-content`,
-				padding: '0.5rem',
+				padding: `${medAndUp ? '0.5rem' : '0'}`,
 				backgroundColor: theme.palette.custom.navBackground
 			}}
 		>
@@ -46,29 +46,26 @@ const Header = ({ underConstruction }) => {
 					alignItems: 'center'
 				}}
 			>
-				<Grid item xs={12} sm={8}>
+				<Grid item xs={10}>
 					<CustomTypography
 						textContent={'Get a GRIP On Your Group Trip!'}
-						variant={medAndUp ? 'h4' : 'subtitle1'}
+						variant={medAndUp ? 'h4' : 'subtitle2'}
 						customStyle={{ color: theme.palette.primary.main }}
 					/>
 				</Grid>
-
-				{medAndUp && (
-					<Grid item>
-						<CollapsedMenu
-							options={
-								underConstruction
-									? headerNav.map(
-											(navOption) => (navOption = { ...navOption, url: '#' })
-									  )
-									: headerNav
-							}
-							textField={'text'}
-							tooltipText={'Menu'}
-						/>
-					</Grid>
-				)}
+				<Grid item xs={2}>
+					<CollapsedMenu
+						options={
+							underConstruction
+								? headerNav.map(
+										(navOption) => (navOption = { ...navOption, url: '#' })
+								  )
+								: headerNav
+						}
+						textField={'text'}
+						tooltipText={'Menu'}
+					/>
+				</Grid>
 			</Grid>
 		</AppBar>
 	);
