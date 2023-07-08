@@ -1,6 +1,14 @@
 import Draggable from 'react-draggable';
 
-import { Dialog, DialogContent, DialogTitle, Grid, Paper, useTheme } from '@mui/material';
+import {
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	Grid,
+	Paper,
+	useTheme,
+	useMediaQuery
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import TripForm from './forms/Trip';
@@ -26,6 +34,7 @@ const DraggableDialog = ({
 	collection
 }) => {
 	const theme = useTheme();
+	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
 
 	const formInfoObj = {
 		edit: edit,
@@ -41,12 +50,15 @@ const DraggableDialog = ({
 		<Dialog
 			open={isOpen}
 			PaperComponent={PaperComponent}
-			aria-labelledby='draggable-dialog-title'
+			aria-labelledby={lgAndUp ? 'draggable-dialog-title' : 'dialog-title'}
 			fullWidth={true}
 		>
 			<Grid container sx={{ flexDirection: 'column' }}>
 				<Grid item xs={12}>
-					<DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+					<DialogTitle
+						style={{ cursor: 'move' }}
+						id={lgAndUp ? 'draggable-dialog-title' : 'dialog-title'}
+					>
 						<Grid
 							container
 							sx={{ justifyContent: 'space-between', alignItems: 'center' }}
