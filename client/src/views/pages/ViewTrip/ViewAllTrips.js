@@ -89,7 +89,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 			{loading && <CircularLoader />}
 
 			<Grid container spacing={theme.spacing()}>
-				<Grid item xs={12} sx={{ margin: '6rem' }}>
+				<Grid item xs={12}>
 					<MainCard
 						title={title}
 						collection={'trip'}
