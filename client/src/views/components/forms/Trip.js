@@ -130,7 +130,6 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									}
 								/>
 							</Grid>
-							<CustomDivider />
 							<Grid item xs={12} md={6}>
 								<FormInput
 									componentType={'date'}
@@ -166,7 +165,9 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									}
 								/>
 							</Grid>
-							<CustomDivider />
+						</Grid>
+						<CustomDivider margin={'1.5rem'} />
+						<Grid container spacing={theme.spacing()}>
 							<Grid item xs={12}>
 								<FormInput
 									componentType={'text'}
