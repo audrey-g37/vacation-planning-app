@@ -51,6 +51,14 @@ const MainCard = forwardRef(
 			};
 		}
 
+		if (!sx.maxWidth) {
+			sx = { ...sx, maxWidth: medAndUp ? '65vw' : '85vw' };
+		}
+
+		if (!sx.margin) {
+			sx = { ...sx, margin: '2rem auto' };
+		}
+
 		return (
 			<Card ref={ref} {...others} sx={sx}>
 				<Grid
