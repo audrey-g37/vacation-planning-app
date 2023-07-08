@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
 
-import {
-	Button,
-	Divider,
-	Link,
-	Menu,
-	MenuItem,
-	MenuList,
-	useTheme,
-	useMediaQuery
-} from '@mui/material';
+import { Button, Link, Menu, MenuItem, MenuList, useTheme, useMediaQuery } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 // project imports
 import CustomTypography from './CustomTypography';
 import CustomTooltip from './CustomTooltip';
+import CustomDivider from './CustomDivider';
 
 const CollapsedMenu = ({
 	options,
@@ -89,15 +81,16 @@ const CollapsedMenu = ({
 										whiteSpace: 'nowrap',
 										borderRadius: '10%',
 										padding: `0 ${medAndUp ? 1 : 0}rem`,
-										margin: `0 ${medAndUp ? 1 : 0.5}rem`
+										margin: `0 ${medAndUp ? 1 : 0.5}rem`,
+										minHeight: '0.5rem'
 									}}
 								>
 									<CustomTypography
 										textContent={option[textField]}
-										tooltipText={tooltipText || option[textField]}
+										customStyle={{ padding: 0 }}
 									/>
 								</MenuItem>
-								{index !== options.length - 1 && <Divider />}
+								{index !== options.length - 1 && <CustomDivider />}
 							</div>
 						);
 					})}
