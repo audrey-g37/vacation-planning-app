@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { forwardRef, useState } from 'react';
 import { Card, CardContent, CardHeader, Grid, useMediaQuery, useTheme } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import EditIcon from '@mui/icons-material/Edit';
 
 import CustomDivider from './CustomDivider';
 import CustomTypography from './CustomTypography';
@@ -15,6 +16,8 @@ const MainCard = forwardRef(
 			title = '',
 			collection = '',
 			newItem = '',
+			editItem = '',
+			formData = {},
 			queryResults,
 			children,
 			actionSection,
@@ -25,7 +28,7 @@ const MainCard = forwardRef(
 		const theme = useTheme();
 		const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-		const [dialogOpen, setDialogOpen] = useState(false);
+		const [dialogOpen, setDialogOpen] = useState({ open: false, formData: formData });
 
 		let cardHeaderProps = {
 			title: (
@@ -44,11 +47,31 @@ const MainCard = forwardRef(
 					<SubmitButton
 						icon={<AddBoxIcon />}
 						tooltipText={`Add ${newItem}`}
-						onClick={() => setDialogOpen(true)}
+						onClick={() => setDialogOpen({ open: true })}
 						customStyle={{ color: theme.palette.primary.main }}
 					/>
 				)
 			};
+		} else if (editItem) {
+			cardHeaderProps = {
+				...cardHeaderProps,
+				action: (
+					<SubmitButton
+						icon={<EditIcon />}
+						tooltipText={`Edit`}
+						onClick={() => setDialogOpen({ open: true, formData: formData })}
+						customStyle={{ color: theme.palette.primary.main }}
+					/>
+				)
+			};
+		}
+
+		if (!sx.maxWidth) {
+			sx = { ...sx, maxWidth: medAndUp ? '65vw' : '85vw' };
+		}
+
+		if (!sx.margin) {
+			sx = { ...sx, margin: '2rem auto' };
 		}
 
 		return (
@@ -72,13 +95,15 @@ const MainCard = forwardRef(
 					)}
 				</Grid>
 				{title && <CustomDivider />}
-				{dialogOpen && (
+				{dialogOpen.open && (
 					<Form
-						isOpen={dialogOpen}
+						isOpen={dialogOpen.open}
 						itemName={newItem}
-						setClosed={() => setDialogOpen(false)}
+						setClosed={() => setDialogOpen({ open: false })}
 						queryResults={queryResults}
 						collection={collection}
+						edit={!!editItem}
+						formData={dialogOpen.formData}
 					/>
 				)}
 				{children && <CardContent>{children}</CardContent>}
@@ -95,6 +120,8 @@ MainCard.propTypes = {
 	title: PropTypes.string,
 	collection: PropTypes.string,
 	newItem: PropTypes.string,
+	editItem: PropTypes.string,
+	formData: PropTypes.object,
 	queryResults: PropTypes.func
 };
 

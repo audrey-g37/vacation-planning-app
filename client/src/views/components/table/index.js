@@ -46,7 +46,7 @@ const TableOfData = ({
 		row: { backgroundColor: theme.palette.secondary.main },
 		typography: {
 			fontWeight: 600,
-			fontSize: theme.typography.h6,
+			fontSize: theme.typography.subtitle1,
 			color: theme.palette.text.secondary
 		}
 	};

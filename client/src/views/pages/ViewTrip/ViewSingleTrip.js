@@ -1,63 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router';
-import { QUERY_USER, QUERY_TRIP } from 'utils/apollo/queries';
-import { Card, Button } from '@mui/material';
+import { Grid } from '@mui/material';
+
+// project imports
+import MainCard from 'views/components/MainCard';
 import useAuth from 'hooks/useAuth';
+import { useEffect, useState } from 'react';
+import TripDetails from './TripDetails';
+import CircularLoader from 'views/components/CircularLoader';
 
-const ViewSingleTrip = () => {
-	const tripId = useParams();
-	const idToUse = tripId.id;
-	// !was storing a tripId locally - can save to context or put in url params
+const ViewSingleTrip = ({ data }) => {
+	const { id } = useParams();
+	const { crudFunctions } = useAuth();
+	const { getSingleTrip } = crudFunctions;
 
-	const { user } = useAuth();
-	const { data: data1 } = useQuery(QUERY_USER, {
-		variables: { username: user }
-	});
-	const userData = data1?.user || [];
+	const [tripData, setTripData] = useState(data || {});
+	const [loading, setLoading] = useState(false);
 
-	const { data } = useQuery(QUERY_TRIP, {
-		variables: { tripId: idToUse, userId: userData._id }
-	});
-	const tripData = data?.trip || [];
+	const getTripData = async () => {
+		setLoading(true);
+		const { data } = await getSingleTrip({ variables: { queryID: id } });
+		setTripData(data.trip);
+		setLoading(false);
+	};
 
-	// console.log(tripData);
+	useEffect(() => {
+		!data && getTripData();
+	}, []);
 
 	return (
-		<main className='single-trip-whole'>
-			<section className='single-trip'>
-				<Card className='text-center'>
-					<h1 className='header'>{tripData.title}</h1>
-					<h5 className='details'>{tripData.description}</h5>
-					<Card.Body>
-						<Card.Title>Location: {tripData.location}</Card.Title>
-						<Card.Text>
-							<li className='details'>Trip starts on: {tripData.startDate}</li>
-							<li className='details'>Trip ends on: {tripData.endDate}</li>
-						</Card.Text>
-						{tripData.tasks ? (
-							<Link className='link' to={`/${tripData._id}/view-tasks`}>
-								<Button variant='dark' className='single-trip-btn button'>
-									Task Items
-								</Button>
-							</Link>
-						) : (
-							<h4>No Tasks have been created for this trip yet!</h4>
-						)}
-						{tripData.budget ? (
-							<Link className='link' to={`/${tripData._id}/view-budget`}>
-								<Button variant='dark' className='single-trip-btn button'>
-									Budget Items
-								</Button>
-							</Link>
-						) : (
-							<h4>No expenditures have been stored for this trip yet!</h4>
-						)}
-					</Card.Body>
-				</Card>
-			</section>
-		</main>
+		<MainCard
+			title={tripData.title}
+			editItem={'trip'}
+			formData={tripData}
+			collection={'trip'}
+			queryResults={getTripData}
+		>
+			{loading && <CircularLoader />}
+			<TripDetails data={tripData} />
+		</MainCard>
 	);
 };
 

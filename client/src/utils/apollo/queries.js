@@ -27,16 +27,17 @@ export const QUERY_TRIP = gql`
 		trip(queryID: $queryID) {
 			_id
 			title
-			location
+			description
+			address {
+				street1
+				street2
+				city
+				state
+				country
+				zipCode
+			}
 			startDate
 			endDate
-			description
-			tasks {
-				_id
-			}
-			budget {
-				_id
-			}
 		}
 	}
 `;

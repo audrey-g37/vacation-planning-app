@@ -7,7 +7,7 @@ import FormInput from './inputs';
 import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
-import { countryOptions } from 'utils/apollo/options';
+import { countryOptions } from 'utils/options';
 
 const TripForm = ({ edit, formData, onSubmit }) => {
 	const { userSessionInfo: user, crudFunctions } = useAuth();
@@ -130,7 +130,6 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									}
 								/>
 							</Grid>
-							<CustomDivider />
 							<Grid item xs={12} md={6}>
 								<FormInput
 									componentType={'date'}
@@ -166,7 +165,9 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									}
 								/>
 							</Grid>
-							<CustomDivider />
+						</Grid>
+						<CustomDivider margin={'1.5rem'} />
+						<Grid container spacing={theme.spacing()}>
 							<Grid item xs={12}>
 								<FormInput
 									componentType={'text'}
@@ -241,19 +242,23 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 									label={'Zip Code'}
 								/>
 							</Grid>
-						</Grid>
-						<Grid
-							container
-							sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
-							spacing={theme.spacing()}
-						>
-							<SubmitButton
-								disableElevation
-								disabled={isSubmitting}
-								title={'Save Changes'}
-								onClick={handleSubmit}
-								placeholder={'Save Changes'}
-							/>
+							<Grid item xs={12}>
+								<Grid
+									container
+									sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
+									spacing={theme.spacing()}
+								>
+									<Grid item>
+										<SubmitButton
+											disableElevation
+											disabled={isSubmitting}
+											title={'Save Changes'}
+											onClick={handleSubmit}
+											placeholder={'Save Changes'}
+										/>
+									</Grid>
+								</Grid>
+							</Grid>
 						</Grid>
 					</form>
 				);
