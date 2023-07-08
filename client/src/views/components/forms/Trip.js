@@ -7,7 +7,7 @@ import FormInput from './inputs';
 import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
-import { countryOptions } from 'utils/apollo/options';
+import { countryOptions } from 'utils/options';
 
 const TripForm = ({ edit, formData, onSubmit }) => {
 	const { userSessionInfo: user, crudFunctions } = useAuth();

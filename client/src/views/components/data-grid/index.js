@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 // project imports
 import Form from '../forms';
 import SubmitButton from '../SubmitButton';
-import { formatValue } from './formatting';
+import { formatValue } from '../../../utils/formatting';
 import useAuth from 'hooks/useAuth';
 
 const DataGrid = ({
@@ -82,12 +82,17 @@ const DataGrid = ({
 			const colMatch = columns.find((col) => col.field === key);
 			if (colMatch?.format || colMatch?.type === 'date') {
 				const { format } = colMatch;
-				value = formatValue({
+				let formatObj = {
+					gridView: true,
 					value: value,
 					type: format?.type || colMatch?.type,
 					subField: format?.subField,
 					getValue: format?.getValue
-				});
+				};
+				if (colMatch?.type === 'date') {
+					formatObj = { ...formatObj, dateObj: true };
+				}
+				value = formatValue(formatObj);
 				row = { ...row, [key]: value };
 			}
 		}
