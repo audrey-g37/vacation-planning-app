@@ -141,13 +141,14 @@ export const AuthProvider = ({ children }) => {
 	// queries
 	const [getUser] = useLazyQuery(queryTypes['user']);
 	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
+	const [getSingleTrip] = useLazyQuery(queryTypes['trip']);
 
 	// mutations
 	const [addUser] = useMutation(mutationTypes['addUser']);
 	const [addTrip] = useMutation(mutationTypes['addTrip']);
 	const [editTrip] = useMutation(mutationTypes['editTrip']);
 
-	const crudFunctions = { getUser, getAllTrips, addUser, addTrip, editTrip };
+	const crudFunctions = { getUser, getAllTrips, getSingleTrip, addUser, addTrip, editTrip };
 
 	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
