@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Grid, IconButton, useTheme } from '@mui/material';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -124,9 +125,19 @@ const Register = ({ onSubmit }) => {
 												<IconButton
 													onClick={() => setShowPassword(!showPassword)}
 												>
-													<VisibilityOffIcon
-														sx={{ color: theme.palette.primary.dark }}
-													/>
+													{showPassword ? (
+														<VisibilityOffIcon
+															sx={{
+																color: theme.palette.primary.dark
+															}}
+														/>
+													) : (
+														<Visibility
+															sx={{
+																color: theme.palette.primary.dark
+															}}
+														/>
+													)}
 												</IconButton>
 											),
 											position: 'end'
