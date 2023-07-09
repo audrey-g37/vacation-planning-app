@@ -58,14 +58,14 @@ export const AuthProvider = ({ children }) => {
 	const url = window.location.pathname;
 
 	useEffect(() => {
-		if (userSessionInfo && authSessionInfo) {
-			if (url.includes('auth') || url === '/') {
-				navigate('dashboard');
-			}
-		} else login();
-	}, [authSessionInfo, userSessionInfo, dispatch, url]);
+		login();
+	}, [dispatch]);
 
 	const login = () => {
+		if (!state.isLoggedIn) {
+			dispatch({ type: LOGOUT });
+			!url.includes('auth') && navigate('auth/login');
+		}
 		if (!authSessionInfo) {
 			applyAuthToken()
 				.then((res) => {
@@ -80,11 +80,6 @@ export const AuthProvider = ({ children }) => {
 					navigate('auth/login');
 					!url.includes('auth') && navigate('auth/login');
 				});
-		}
-		if (!userSessionInfo || !authSessionInfo) {
-			dispatch({
-				type: LOGIN
-			});
 		}
 	};
 
@@ -244,7 +239,7 @@ export const AuthProvider = ({ children }) => {
 
 						runDispatch({
 							...dispatchObj,
-							user: data?.user,
+							user: data.user,
 							authInfo: authResult
 						});
 					});

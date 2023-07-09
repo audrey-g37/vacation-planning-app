@@ -1,4 +1,5 @@
-import { Typography, useTheme, useMediaQuery, Link } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Typography, useTheme, useMediaQuery } from '@mui/material';
 import CustomTooltip from './CustomTooltip';
 
 const CustomTypography = ({
@@ -53,14 +54,14 @@ const CustomTypography = ({
 
 	const WithTooltipAndLink = (
 		<CustomTooltip tooltipText={tooltipText}>
-			<Link href={to} target={!relativePath ? '_blank' : ''}>
+			<Link to={to} target={!relativePath ? '_blank' : ''}>
 				{FormattedTypography}
 			</Link>
 		</CustomTooltip>
 	);
 
 	const WithTooltipOnly = (
-		<Link href={to} target={!relativePath ? '_blank' : ''}>
+		<Link to={to} target={!relativePath ? '_blank' : ''}>
 			{FormattedTypography}
 		</Link>
 	);
