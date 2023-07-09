@@ -7,9 +7,8 @@ import { UnderConstruction } from 'views/pages/index';
 
 const AuthMain = () => {
 	//* using to disable app/features while I refactor and enhance app
-	const underConstruction = false;
-	// process.env.NODE_ENV === 'production';
-	const lastModifiedDate = '06/30/2023';
+	const underConstruction = process.env.NODE_ENV === 'production';
+	const lastModifiedDate = '7/08/2023';
 	return (
 		<>
 			<Header underConstruction={underConstruction} />
