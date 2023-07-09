@@ -62,16 +62,16 @@ export const AuthProvider = ({ children }) => {
 	}, [dispatch]);
 
 	const login = () => {
-		if (!state.isLoggedIn && !authSessionInfo && !state.authInfo) {
-			dispatch({ type: LOGOUT });
-			!url.includes('auth') && navigate('auth/login');
+		if (state.isLoggedIn) {
+			return;
 		}
-		if (!authSessionInfo) {
+		if (!state.authInfo) {
 			applyAuthToken()
 				.then((res) => {
 					if (!res.success) {
 						dispatch({ type: LOGOUT });
 						!url.includes('auth') && navigate('auth/login');
+						return;
 					}
 				})
 				.catch((err) => {
@@ -208,7 +208,6 @@ export const AuthProvider = ({ children }) => {
 			success: false
 		};
 		try {
-			const existingToken = authSessionInfo?.accessToken;
 			const accessToken = window.location.hash;
 			const isLoggedIn = state.isLoggedIn;
 
@@ -221,13 +220,11 @@ export const AuthProvider = ({ children }) => {
 				window.sessionStorage.setItem('userInfo', JSON.stringify(dispatchInfo.user));
 				dispatch({ ...dispatchInfo });
 			};
-			if (!existingToken && !isLoggedIn && !accessToken) {
+			if (!isLoggedIn && !accessToken) {
 				setAlert({ message: 'You need to be logged in to see this page.' });
 				return responseObj;
 			}
-			if (existingToken) {
-				return { ...responseObj, success: true };
-			}
+
 			if (accessToken) {
 				if (!isLoggedIn) {
 					auth0Connection.parseHash(async (err, authResult) => {
@@ -243,6 +240,10 @@ export const AuthProvider = ({ children }) => {
 							authInfo: authResult
 						});
 					});
+					return {
+						...responseObj,
+						success: true
+					};
 				}
 			} else {
 				auth0Connection.authorize(
@@ -258,7 +259,6 @@ export const AuthProvider = ({ children }) => {
 					}
 				);
 			}
-			return { ...responseObj, success: true };
 		} catch (err) {
 			console.error(err);
 		}
@@ -298,8 +298,6 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				...state,
-				authSessionInfo,
-				userSessionInfo,
 				login: () => {},
 				alert,
 				setAlert,
