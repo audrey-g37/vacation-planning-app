@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 	}, [dispatch]);
 
 	const login = () => {
-		if (!state.isLoggedIn) {
+		if (!state.isLoggedIn && !authSessionInfo && !state.authInfo) {
 			dispatch({ type: LOGOUT });
 			!url.includes('auth') && navigate('auth/login');
 		}
