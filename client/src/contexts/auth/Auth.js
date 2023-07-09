@@ -50,16 +50,31 @@ export const AuthProvider = ({ children }) => {
 	// all data stored on auth context
 	const [state, dispatch] = useReducer(accountReducer, initialState);
 
+	const auth0ConnectionObj = {
+		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
+		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
+	};
+	// connection to Auth0 for auth functions
+	const auth0Connection = new auth0.WebAuth(auth0ConnectionObj);
+
 	// using react-router-dom navigation
 	const navigate = useNavigate();
 
-	const authSessionInfo = JSON.parse(window.sessionStorage.getItem('authInfo'));
-	const userSessionInfo = JSON.parse(window.sessionStorage.getItem('userInfo'));
 	const url = window.location.pathname;
 
 	useEffect(() => {
 		login();
 	}, [dispatch]);
+
+	const logoutUser = () => {
+		window.sessionStorage.removeItem('authInfo');
+		window.sessionStorage.removeItem('userInfo');
+		dispatch({
+			type: LOGOUT
+		});
+		auth0Connection.logout({ returnTo: `${window.location.origin}/auth/login` });
+		!url.includes('auth') && navigate('auth/login');
+	};
 
 	const login = () => {
 		if (state.isLoggedIn) {
@@ -69,16 +84,12 @@ export const AuthProvider = ({ children }) => {
 			applyAuthToken()
 				.then((res) => {
 					if (!res.success) {
-						dispatch({ type: LOGOUT });
-						!url.includes('auth') && navigate('auth/login');
+						logoutUser();
 						return;
 					}
 				})
 				.catch((err) => {
-					console.error(err);
-					dispatch({ type: LOGOUT });
-					navigate('auth/login');
-					!url.includes('auth') && navigate('auth/login');
+					logoutUser();
 				});
 		}
 	};
@@ -144,13 +155,6 @@ export const AuthProvider = ({ children }) => {
 	const [editTrip] = useMutation(mutationTypes['editTrip']);
 
 	const crudFunctions = { getUser, getAllTrips, getSingleTrip, addUser, addTrip, editTrip };
-
-	const auth0ConnectionObj = {
-		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
-		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
-	};
-	// connection to Auth0 for auth functions
-	const auth0Connection = new auth0.WebAuth(auth0ConnectionObj);
 
 	let auth0AuthObj = {
 		realm: 'Grip',
@@ -282,16 +286,6 @@ export const AuthProvider = ({ children }) => {
 				message: `There was a problem logging you in and gathering your user data.  Please try again later.`
 			});
 		}
-	};
-
-	const logoutUser = () => {
-		window.sessionStorage.removeItem('authInfo');
-		window.sessionStorage.removeItem('userInfo');
-		dispatch({
-			type: LOGOUT
-		});
-		auth0Connection.logout({ returnTo: `${window.location.origin}/auth/login` });
-		navigate('auth/login');
 	};
 
 	return (
