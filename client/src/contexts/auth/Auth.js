@@ -64,15 +64,15 @@ export const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		login();
-	}, [dispatch]);
+	}, []);
 
 	const logoutUser = () => {
 		window.sessionStorage.removeItem('authInfo');
 		window.sessionStorage.removeItem('userInfo');
+		auth0Connection.logout({ returnTo: `${window.location.origin}/auth/login` });
 		dispatch({
 			type: LOGOUT
 		});
-		auth0Connection.logout({ returnTo: `${window.location.origin}/auth/login` });
 		!url.includes('auth') && navigate('auth/login');
 	};
 
@@ -84,12 +84,12 @@ export const AuthProvider = ({ children }) => {
 			applyAuthToken()
 				.then((res) => {
 					if (!res.success) {
-						logoutUser();
+						!url.includes('auth') && logoutUser();
 						return;
 					}
 				})
 				.catch((err) => {
-					logoutUser();
+					!url.includes('auth') && logoutUser();
 				});
 		}
 	};
