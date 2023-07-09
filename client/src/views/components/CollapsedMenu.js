@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Button, Link, Menu, MenuItem, MenuList, useTheme, useMediaQuery } from '@mui/material';
+import { Button, Menu, MenuItem, MenuList, useTheme, useMediaQuery } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 // project imports
@@ -73,7 +74,7 @@ const CollapsedMenu = ({
 								<MenuItem
 									key={option[textField]}
 									component={Link}
-									href={url ? url : '#'}
+									to={url ? url : '#'}
 									onClick={onClick}
 									target={!relativePath ? '_blank' : ''}
 									sx={{
