@@ -7,12 +7,12 @@ import CustomTypography from '../CustomTypography';
 import useAuth from 'hooks/useAuth';
 
 const Header = ({ underConstruction }) => {
-	const { authSessionInfo, logoutUser } = useAuth();
+	const { authInfo, logoutUser } = useAuth();
 
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-	const withAuth = authSessionInfo;
+	const withAuth = authInfo;
 
 	let headerNav = [
 		{ text: 'Login', url: '/auth/login' },

@@ -10,7 +10,7 @@ import CustomDivider from '../CustomDivider';
 import { countryOptions } from 'utils/options';
 
 const TripForm = ({ edit, formData, onSubmit }) => {
-	const { userSessionInfo: user, crudFunctions } = useAuth();
+	const { user, crudFunctions } = useAuth();
 
 	const { addTrip, editTrip } = crudFunctions;
 

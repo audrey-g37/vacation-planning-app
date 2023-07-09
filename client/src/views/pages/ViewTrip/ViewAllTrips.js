@@ -9,7 +9,7 @@ import MainCard from 'views/components/MainCard';
 
 const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 	const theme = useTheme();
-	const { userSessionInfo: user, crudFunctions } = useAuth();
+	const { user, crudFunctions } = useAuth();
 
 	const { getAllTrips } = crudFunctions;
 
