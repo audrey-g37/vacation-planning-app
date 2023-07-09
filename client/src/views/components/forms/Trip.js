@@ -29,7 +29,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 		},
 		startDate: '',
 		endDate: '',
-		userID: user._id
+		userID: user?._id
 	};
 
 	if (formData?.startDate) {
@@ -224,7 +224,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 										name: 'address.country',
 										onChange: setFieldValue,
 										onBlur: handleBlur,
-										value: values.address.country,
+										value: values.address?.country,
 										options: countryOptions
 									}}
 									label={'Country'}
