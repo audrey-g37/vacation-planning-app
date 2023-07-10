@@ -11,15 +11,19 @@ import {
 	useTheme
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 import Form from '../forms';
 import CustomTypography from '../CustomTypography';
 import SubmitButton from '../SubmitButton';
+import useAuth from 'hooks/useAuth';
+import { formatValue } from 'utils/formatting';
 
 const TableOfData = ({
 	rows,
 	columns,
-	edit,
+	editIcon,
+	viewIcon,
 	collection,
 	queryResults,
 	showPagination = true,
@@ -27,6 +31,8 @@ const TableOfData = ({
 	maxTableHeight = '70vh'
 }) => {
 	const theme = useTheme();
+
+	const { navigate } = useAuth();
 
 	const [dialogOpen, setDialogOpen] = useState({ open: false, formData: {} });
 
@@ -51,25 +57,28 @@ const TableOfData = ({
 		}
 	};
 
+	if (editIcon) {
+		columns.splice(1, 0, {
+			id: 'edit',
+			label: 'Edit',
+			minWidth: 120
+		});
+	}
+
+	if (viewIcon) {
+		columns.splice(1, 0, {
+			id: 'view',
+			label: 'View',
+			minWidth: 120
+		});
+	}
+
 	return (
 		<Paper sx={{ width: '100%', overflow: 'auto' }}>
 			<TableContainer sx={{ maxHeight: maxTableHeight }}>
 				<Table stickyHeader aria-label='sticky table'>
 					<TableHead>
 						<TableRow>
-							{edit && (
-								<TableCell
-									key={'edit'}
-									align={'left'}
-									style={{ minWidth: 50 }}
-									sx={headerStylingObj.row}
-								>
-									<CustomTypography
-										textContent={'Edit'}
-										customStyle={headerStylingObj.typography}
-									/>
-								</TableCell>
-							)}
 							{columns.map((column) => (
 								<TableCell
 									key={column.id}
@@ -86,42 +95,68 @@ const TableOfData = ({
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{edit && (
-							<TableCell>
-								<SubmitButton
-									icon={<EditIcon />}
-									tooltipText={'Edit'}
-									onClick={async () => {
-										setDialogOpen({
-											...dialogOpen,
-											open: true,
-											formData: row
-										});
-									}}
-									customStyle={{
-										color: theme.palette.text.primary
-									}}
-								/>
-							</TableCell>
-						)}
 						{rows
 							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 							.map((row) => {
 								return (
 									<TableRow hover role='checkbox' tabIndex={-1} key={row._id}>
 										{columns.map((column) => {
-											let value = row[column.id];
-											if (column.format) {
-												value = column.format(value);
+											let displayValue = row[column.id];
+											let displayContent;
+											if (column.id === 'edit') {
+												displayContent = (
+													<SubmitButton
+														icon={<EditIcon />}
+														tooltipText={'Edit'}
+														onClick={() => {
+															setDialogOpen({
+																open: true,
+																formData: row
+															});
+														}}
+														customStyle={{
+															color: theme.palette.text.primary
+														}}
+													/>
+												);
+											} else if (column.id === 'view') {
+												displayContent = (
+													<SubmitButton
+														icon={<ListAltIcon />}
+														tooltipText={'View Details'}
+														onClick={async () => {
+															navigate(
+																`/view-${collection}/${row._id}`
+															);
+														}}
+														customStyle={{
+															color: theme.palette.text.primary
+														}}
+													/>
+												);
+											} else {
+												let displayText = displayValue;
+												if (column.format) {
+													console.log({ displayValue });
+													displayText = formatValue({
+														...column.format,
+														value: displayValue
+													});
+													console.log({ displayText });
+												}
+												displayContent = (
+													<CustomTypography
+														textContent={displayText || 'None'}
+													/>
+												);
 											}
+
 											return (
 												<TableCell
 													key={column.id}
 													align={column.align || 'left'}
 												>
-													<CustomTypography
-														textContent={value || 'None'}
-													/>
+													{displayContent}
 												</TableCell>
 											);
 										})}

@@ -33,7 +33,7 @@ const DataGrid = ({
 	};
 
 	if (editIcon) {
-		columns.push({
+		columns.splice(1, 0, {
 			field: 'edit',
 			headerName: 'Edit',
 			width: 120,
@@ -57,7 +57,7 @@ const DataGrid = ({
 	}
 
 	if (viewIcon) {
-		columns.push({
+		columns.splice(1, 0, {
 			field: 'view',
 			headerName: 'View',
 			width: 120,
