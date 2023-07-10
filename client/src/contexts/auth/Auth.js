@@ -168,7 +168,14 @@ export const AuthProvider = ({ children }) => {
 	const [addTrip] = useMutation(mutationTypes['addTrip']);
 	const [editTrip] = useMutation(mutationTypes['editTrip']);
 
-	const crudFunctions = { getUser, getAllTrips, getSingleTrip, addUser, addTrip, editTrip };
+	const crudFunctions = {
+		getUser,
+		getAllTrips,
+		getSingleTrip,
+		addUser,
+		addTrip,
+		editTrip
+	};
 
 	// registering a new user
 	const register = async (authObj) => {
@@ -310,8 +317,7 @@ export const AuthProvider = ({ children }) => {
 				applyAuthToken,
 				register,
 				logoutUser,
-				crudFunctions,
-				editTrip
+				crudFunctions
 			}}
 		>
 			{children}
