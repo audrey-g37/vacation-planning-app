@@ -106,7 +106,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips', dashboardS
 							collection={'trip'}
 							queryResults={queryFunction}
 							hidePagination={dashboardView}
-							maxHeight={!dashboardView ? '75vh' : '60vh'}
+							maxHeight={!dashboardView ? '70vh' : '45vh'}
 						/>
 					</MainCard>
 				</Grid>
