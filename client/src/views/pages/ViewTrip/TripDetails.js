@@ -26,9 +26,9 @@ const TripDetails = ({ data }) => {
 		if (millisecondsUntilTrip <= 0) {
 			return 0;
 		}
-		const { displayString } = calculateAmountOfTime(millisecondsUntilTrip);
+		const { string } = calculateAmountOfTime(millisecondsUntilTrip);
 
-		return displayString;
+		return string;
 	};
 
 	const timeRemaining = tripCountdown();
