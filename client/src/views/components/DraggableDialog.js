@@ -63,7 +63,7 @@ const DraggableDialog = ({
 							container
 							sx={{ justifyContent: 'space-between', alignItems: 'center' }}
 						>
-							<Grid item>
+							<Grid item xs={11}>
 								<CustomTypography
 									textContent={`${edit ? 'Edit' : 'New'} ${itemName}`}
 									customStyle={{
@@ -72,7 +72,7 @@ const DraggableDialog = ({
 									}}
 								/>
 							</Grid>
-							<Grid item>
+							<Grid item xs={1}>
 								<SubmitButton icon={<CloseIcon />} onClick={setClosed} />
 							</Grid>
 						</Grid>

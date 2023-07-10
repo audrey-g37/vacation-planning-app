@@ -6,6 +6,7 @@ import useAuth from 'hooks/useAuth';
 import ViewAllTrips from '../ViewTrip/ViewAllTrips';
 import CustomTypography from 'views/components/CustomTypography';
 import CircularLoader from 'views/components/CircularLoader';
+import { sortTrips } from 'utils/sorting';
 
 const Dashboard = () => {
 	const { user, crudFunctions } = useAuth();
@@ -15,33 +16,17 @@ const Dashboard = () => {
 	const [allTrips, setAllTrips] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	let tripSortingObj = {
+		displayLimitNum: 5,
+		showOldTrips: false,
+		oldToNew: true
+	};
 	const setUserTripData = async () => {
 		!loading && setLoading(true);
 		const { data } = await getAllTrips({ variables: { userID: user._id } });
-		let tripData = data.trips;
-		tripData = tripData.reduce((prev, next) => {
-			let existing = prev;
-			const today = new Date(new Date()).valueOf();
-			const startDate = new Date(+next.startDate).valueOf();
-			if (!(startDate < today)) {
-				existing.push(next);
-			}
-			return existing;
-		}, []);
+		tripSortingObj = { ...tripSortingObj, tripData: data.trips };
+		const tripData = sortTrips(tripSortingObj);
 
-		tripData = tripData.sort((a, b) => {
-			const today = new Date(new Date()).valueOf();
-			const startDateA = new Date(+a.startDate).valueOf();
-			const startDateB = new Date(+b.startDate).valueOf();
-			const closenessA = startDateA - today;
-			const closenessB = startDateB - today;
-
-			return closenessA > closenessB ? 1 : -1;
-		});
-		tripData = tripData.splice(
-			0,
-			tripData.length > 5 ? tripData.length - (tripData.length - 5) : tripData.length
-		);
 		setAllTrips(tripData);
 		setLoading(false);
 	};
@@ -65,6 +50,7 @@ const Dashboard = () => {
 				allTrips={allTrips}
 				actionSection={actionSection}
 				title={'My Next 5 Trips'}
+				dashboardSortingObj={tripSortingObj}
 			/>
 		</>
 	);

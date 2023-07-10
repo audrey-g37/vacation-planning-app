@@ -14,12 +14,20 @@ const httpLink = `${window.location.origin}/graphql`;
 const client = new ApolloClient({
 	uri: `${process.env.NODE_ENV === 'development' ? 'http://localhost:3001/graphql' : httpLink}`,
 	cache: new InMemoryCache(),
+	defaultOptions: {
+		watchQuery: {
+			// re-querying the cache and server with every query to load most up to date data
+			fetchPolicy: 'cache-and-network'
+		}
+	},
 	name: 'GRIP',
 	version: '1.0.0'
 });
 
 function App() {
-	const mode = 'light';
+	const isDarkMode = window.matchMedia('prefers-color-scheme: dark').matches;
+	const mode = isDarkMode ? 'dark' : 'light';
+
 	const styledBackground = {
 		backgroundImage: `url(${
 			process.env.PUBLIC_URL +

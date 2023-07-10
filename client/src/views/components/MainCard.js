@@ -28,7 +28,7 @@ const MainCard = forwardRef(
 		const theme = useTheme();
 		const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-		const [dialogOpen, setDialogOpen] = useState({ open: false, formData: formData });
+		const [dialogOpen, setDialogOpen] = useState({ open: false });
 
 		let cardHeaderProps = {
 			title: (

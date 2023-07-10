@@ -57,19 +57,6 @@ const TableOfData = ({
 				<Table stickyHeader aria-label='sticky table'>
 					<TableHead>
 						<TableRow>
-							{columns.map((column) => (
-								<TableCell
-									key={column.id}
-									align={column.align || 'left'}
-									style={{ minWidth: column.minWidth }}
-									sx={headerStylingObj.row}
-								>
-									<CustomTypography
-										textContent={column.label}
-										customStyle={headerStylingObj.typography}
-									/>
-								</TableCell>
-							))}
 							{edit && (
 								<TableCell
 									key={'edit'}
@@ -83,9 +70,40 @@ const TableOfData = ({
 									/>
 								</TableCell>
 							)}
+							{columns.map((column) => (
+								<TableCell
+									key={column.id}
+									align={column.align || 'left'}
+									style={{ minWidth: column.minWidth }}
+									sx={headerStylingObj.row}
+								>
+									<CustomTypography
+										textContent={column.label}
+										customStyle={headerStylingObj.typography}
+									/>
+								</TableCell>
+							))}
 						</TableRow>
 					</TableHead>
 					<TableBody>
+						{edit && (
+							<TableCell>
+								<SubmitButton
+									icon={<EditIcon />}
+									tooltipText={'Edit'}
+									onClick={async () => {
+										setDialogOpen({
+											...dialogOpen,
+											open: true,
+											formData: row
+										});
+									}}
+									customStyle={{
+										color: theme.palette.text.primary
+									}}
+								/>
+							</TableCell>
+						)}
 						{rows
 							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 							.map((row) => {
@@ -107,24 +125,6 @@ const TableOfData = ({
 												</TableCell>
 											);
 										})}
-										{edit && (
-											<TableCell>
-												<SubmitButton
-													icon={<EditIcon />}
-													tooltipText={'Edit'}
-													onClick={async () => {
-														setDialogOpen({
-															...dialogOpen,
-															open: true,
-															formData: row
-														});
-													}}
-													customStyle={{
-														color: theme.palette.text.primary
-													}}
-												/>
-											</TableCell>
-										)}
 									</TableRow>
 								);
 							})}
