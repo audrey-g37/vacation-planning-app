@@ -15,7 +15,6 @@ const DataGrid = ({
 	columns,
 	viewIcon,
 	editIcon,
-	pageSizeOptions = [10, 25, 50],
 	collection,
 	queryResults,
 	allowSelection = false,
@@ -33,31 +32,11 @@ const DataGrid = ({
 		color: theme.palette.text.secondary
 	};
 
-	if (viewIcon) {
-		columns.push({
-			field: 'view',
-			headerName: 'View',
-			width: 100,
-			editable: false,
-			renderCell: ({ row }) => (
-				<SubmitButton
-					icon={<ListAltIcon />}
-					tooltipText={'View Details'}
-					onClick={async () => {
-						navigate(`/view-${collection}/${row._id}`);
-					}}
-					customStyle={{
-						color: theme.palette.text.primary
-					}}
-				/>
-			)
-		});
-	}
 	if (editIcon) {
-		columns.push({
+		columns.unshift({
 			field: 'edit',
 			headerName: 'Edit',
-			width: 100,
+			width: 120,
 			editable: false,
 			renderCell: ({ row: selectedRow }) => (
 				<SubmitButton
@@ -68,6 +47,27 @@ const DataGrid = ({
 							open: true,
 							formData: rows.find((row) => row._id === selectedRow._id)
 						});
+					}}
+					customStyle={{
+						color: theme.palette.text.primary
+					}}
+				/>
+			)
+		});
+	}
+
+	if (viewIcon) {
+		columns.unshift({
+			field: 'view',
+			headerName: 'View',
+			width: 120,
+			editable: false,
+			renderCell: ({ row }) => (
+				<SubmitButton
+					icon={<ListAltIcon />}
+					tooltipText={'View Details'}
+					onClick={async () => {
+						navigate(`/view-${collection}/${row._id}`);
 					}}
 					customStyle={{
 						color: theme.palette.text.primary
@@ -97,12 +97,12 @@ const DataGrid = ({
 		}
 		return (row = { ...row, id: row._id });
 	});
+
 	return (
-		<Box sx={{ maxHeight: maxHeight, width: '100%' }}>
+		<Box sx={{ height: maxHeight, width: '100%' }}>
 			<DataGridDisplay
 				rows={displayRows}
 				columns={columns}
-				pageSizeOptions={pageSizeOptions}
 				checkboxSelection={allowSelection}
 				disableRowSelectionOnClick
 				hideFooter={hidePagination}
