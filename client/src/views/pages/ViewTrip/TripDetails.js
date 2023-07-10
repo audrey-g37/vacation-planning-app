@@ -2,7 +2,8 @@ import { Grid, useTheme } from '@mui/material';
 
 // project imports
 import CustomTypography from 'views/components/CustomTypography';
-import { calculateAmountOfTime, formatValue } from 'utils/formatting';
+import { formatValue } from 'utils/formatting';
+import { calculateAmountOfTime } from 'utils/dateCalculations';
 
 const TripDetails = ({ data }) => {
 	const theme = useTheme();
