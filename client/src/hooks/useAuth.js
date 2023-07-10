@@ -10,6 +10,13 @@ const useAuth = () => {
 
 	if (!context) throw new Error('context must be used inside provider');
 
+	const { isLoggedIn, navigate } = context;
+	const url = window.location.pathname;
+
+	if (!isLoggedIn && url === '/') {
+		navigate('auth/login');
+	}
+
 	return context;
 };
 

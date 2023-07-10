@@ -50,17 +50,31 @@ export const AuthProvider = ({ children }) => {
 	// all data stored on auth context
 	const [state, dispatch] = useReducer(accountReducer, initialState);
 
+	// AUTH 0
 	const auth0ConnectionObj = {
 		domain: process.env.REACT_APP_AUTH0_CLIENT_DOMAIN,
 		clientID: process.env.REACT_APP_AUTH0_CLIENT_ID
 	};
+
+	let auth0AuthObj = {
+		...auth0ConnectionObj,
+		realm: 'Grip',
+		scope: 'openid',
+		responseType: 'token id_token',
+		redirectUri: `${
+			process.env.NODE_ENV === 'development'
+				? 'http://localhost:3000'
+				: 'http://grip.webappsbyaudreyapi.dev'
+		}/dashboard`
+	};
+
 	// connection to Auth0 for auth functions
 	const auth0Connection = new auth0.WebAuth(auth0ConnectionObj);
 
 	// using react-router-dom navigation
 	const navigate = useNavigate();
 
-	const url = window.location.pathname;
+	const urlPath = window.location.pathname;
 
 	useEffect(() => {
 		login();
@@ -73,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 		dispatch({
 			type: LOGOUT
 		});
-		!url.includes('auth') && navigate('auth/login');
+		!urlPath.includes('auth') && navigate('auth/login');
 	};
 
 	const login = () => {
@@ -84,12 +98,12 @@ export const AuthProvider = ({ children }) => {
 			applyAuthToken()
 				.then((res) => {
 					if (!res.success) {
-						!url.includes('auth') && logoutUser();
+						!urlPath.includes('auth') && logoutUser();
 						return;
 					}
 				})
 				.catch((err) => {
-					!url.includes('auth') && logoutUser();
+					!urlPath.includes('auth') && logoutUser();
 				});
 		}
 	};
@@ -155,13 +169,6 @@ export const AuthProvider = ({ children }) => {
 	const [editTrip] = useMutation(mutationTypes['editTrip']);
 
 	const crudFunctions = { getUser, getAllTrips, getSingleTrip, addUser, addTrip, editTrip };
-
-	let auth0AuthObj = {
-		realm: 'Grip',
-		scope: 'openid',
-		responseType: 'token id_token',
-		redirectUri: `${window.location.origin}/dashboard`
-	};
 
 	// registering a new user
 	const register = async (authObj) => {
@@ -232,17 +239,20 @@ export const AuthProvider = ({ children }) => {
 			if (accessToken) {
 				if (!isLoggedIn) {
 					auth0Connection.parseHash(async (err, authResult) => {
-						if (err) {
+						if (authResult) {
+							const authId = authResult.idTokenPayload.sub?.split('|')[1];
+							const { data } = await getUser({
+								variables: { authId: authId }
+							});
+
+							runDispatch({
+								...dispatchObj,
+								user: data.user,
+								authInfo: authResult
+							});
+						} else {
 							return { ...responseObj, success: false };
 						}
-						const authId = authResult.idTokenPayload.sub.split('|')[1];
-						const { data } = await getUser({ variables: { authId: authId } });
-
-						runDispatch({
-							...dispatchObj,
-							user: data.user,
-							authInfo: authResult
-						});
 					});
 					return {
 						...responseObj,
