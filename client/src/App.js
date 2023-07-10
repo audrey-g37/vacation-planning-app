@@ -19,7 +19,9 @@ const client = new ApolloClient({
 });
 
 function App() {
-	const mode = 'light';
+	const isDarkMode = window.matchMedia('prefers-color-scheme: dark').matches;
+	const mode = isDarkMode ? 'dark' : 'light';
+
 	const styledBackground = {
 		backgroundImage: `url(${
 			process.env.PUBLIC_URL +
