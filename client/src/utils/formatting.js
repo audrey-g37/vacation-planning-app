@@ -1,9 +1,9 @@
 const formatValue = ({ type, value, subField, getValue, dateObj = false }) => {
 	const subFieldTypes = {
 		'trip.address': () =>
-			`${value.city ? value.city + ', ' : ''} ${value.state ? value.state + ', ' : ''} ${
-				value.country ? value.country : ''
-			}`
+			`${value.city ? (value.state || value.country ? value.city + ', ' : value.city) : ''} ${
+				value.state ? (value.country ? value.state + ', ' : value.state) : ''
+			} ${value.country ? value.country : ''}`
 	};
 	const formatTypes = {
 		date: () => {
