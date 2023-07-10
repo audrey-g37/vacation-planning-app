@@ -6,8 +6,9 @@ import DataGrid from 'views/components/data-grid';
 import useAuth from 'hooks/useAuth';
 import CircularLoader from 'views/components/CircularLoader';
 import MainCard from 'views/components/MainCard';
+import { sortTrips } from 'utils/sorting';
 
-const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
+const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips', dashboardSortingObj }) => {
 	const theme = useTheme();
 	const { user, crudFunctions } = useAuth();
 
@@ -20,20 +21,20 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips' }) => {
 
 	const queryFunction = async () => {
 		setLoading(true);
-		await getAllTrips({ variables: { userID: user._id } }).then((res) => {
-			const { data } = res;
-			let tripData = [...data.trips];
-			tripData = tripData.sort((a, b) => {
-				const today = new Date(new Date()).valueOf();
-				const startDateA = new Date(+a.startDate).valueOf();
-				const startDateB = new Date(+b.startDate).valueOf();
-				const closenessA = startDateA - today;
-				const closenessB = startDateB - today;
+		const { data } = await getAllTrips({ variables: { userID: user._id } });
+		let tripSortingObj = {
+			tripData: [...data.trips]
+		};
 
-				return startDateA && startDateB && closenessA > closenessB ? -1 : 1;
-			});
-			setAllExistingTrips(tripData);
-		});
+		if (dashboardView) {
+			tripSortingObj = {
+				...tripSortingObj,
+				...dashboardSortingObj
+			};
+		}
+
+		const tripData = sortTrips(tripSortingObj);
+		setAllExistingTrips(tripData);
 		setLoading(false);
 	};
 
