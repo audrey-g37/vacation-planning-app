@@ -59,15 +59,14 @@ const DataGrid = ({
 			headerName: 'Edit',
 			width: 100,
 			editable: false,
-			renderCell: ({ row }) => (
+			renderCell: ({ row: selectedRow }) => (
 				<SubmitButton
 					icon={<EditIcon />}
 					tooltipText={'Edit'}
-					onClick={async () => {
+					onClick={() => {
 						setDialogOpen({
-							...dialogOpen,
 							open: true,
-							formData: rows.find((row) => row._id === row._id)
+							formData: rows.find((row) => row._id === selectedRow._id)
 						});
 					}}
 					customStyle={{
