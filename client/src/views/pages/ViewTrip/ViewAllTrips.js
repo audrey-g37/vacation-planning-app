@@ -54,7 +54,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips', dashboardS
 		{
 			field: 'title',
 			headerName: 'Title',
-			width: 225,
+			width: 175,
 			editable: false
 		},
 		{
@@ -74,7 +74,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips', dashboardS
 		{
 			field: 'address',
 			headerName: 'Location',
-			width: 250,
+			width: 225,
 			editable: false,
 			format: {
 				type: 'subField',

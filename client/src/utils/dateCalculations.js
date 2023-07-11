@@ -7,8 +7,8 @@ const convertToMilliseconds = (numberType, number) => {
 		hours: Math.floor(number * 3600000),
 		days: Math.floor(number * 86400000),
 		weeks: Math.floor(number * 604800000),
-		months: Math.floor(number * (604800000 * 4.345)),
-		years: Math.floor(number * (604800000 * 4.345 * 12))
+		months: Math.floor(number * (604800000 * 4)),
+		years: Math.floor(number * (604800000 * 4 * 12))
 	};
 	return numberTypes[numberType];
 };
@@ -20,8 +20,8 @@ const convertFromMilliseconds = (returnType, milliseconds) => {
 		hours: Math.floor(milliseconds / 3600000),
 		days: Math.floor(milliseconds / 86400000),
 		weeks: Math.floor(milliseconds / 604800000),
-		months: Math.floor(milliseconds / (604800000 * 4.345)),
-		years: Math.floor(milliseconds / (604800000 * 4.345 * 12))
+		months: Math.floor(milliseconds / (604800000 * 4)),
+		years: Math.floor(milliseconds / (604800000 * 4 * 12))
 	};
 	return returnTypes[returnType];
 };
