@@ -28,13 +28,17 @@ const ViewFriends = () => {
 		};
 		const { data } = await getFriendRequests(dataToSend);
 
-		setAllFriendRequests(data?.friendRequests);
+		const friendRequestsToView = data?.friendRequests.filter(
+			(friend) => friend.status === 'Denied' && friend.pendingApprovalUserID._id === user._id
+		);
+
+		setAllFriendRequests(friendRequestsToView);
 		setLoading(false);
 	};
 
-	const approveRequests = async (selectedIds) => {
+	const approveRequests = async (selectedIds, { buttonOne = true }) => {
 		let approvalObj = {
-			status: 'Approved',
+			status: buttonOne ? 'Approved' : 'Denied',
 			dateReviewed: new Date()
 		};
 		for (const id of selectedIds) {
@@ -101,7 +105,7 @@ const ViewFriends = () => {
 			<Grid container spacing={theme.spacing()}>
 				<Grid item xs={12}>
 					<MainCard
-						title={'Friends'}
+						title={'Friends Requests'}
 						collection={'friendRequest'}
 						newItem='Friend Request'
 						queryResults={setFriendRequestData}
@@ -114,6 +118,7 @@ const ViewFriends = () => {
 							columns={columns}
 							collection={'friendRequest'}
 							selectionButtonTitle={'Approve'}
+							selectionButtonTitleTwo={'Deny'}
 							queryResults={setFriendRequestData}
 						/>
 					</MainCard>
