@@ -13,7 +13,7 @@ const typeDefs = gql`
 		_id: ID!
 		status: String
 		requestedByUserID: ID!
-		pendingApprovalUserID: String
+		pendingApprovalUserID: ID
 		pendingApprovalUserEmail: String
 		dateReviewed: String
 	}
@@ -80,7 +80,7 @@ const typeDefs = gql`
 		addFriendRequest(
 			status: String
 			requestedByUserID: ID!
-			pendingApprovalUserID: String
+			pendingApprovalUserID: ID
 			pendingApprovalUserEmail: String
 			dateReviewed: String
 		): FriendRequest
@@ -119,7 +119,7 @@ const typeDefs = gql`
 		updateFriendRequest(
 			queryID: ID!
 			status: String
-			pendingApprovalUserID: String
+			pendingApprovalUserID: ID
 			pendingApprovalUserEmail: String
 			dateReviewed: String
 		): FriendRequest
