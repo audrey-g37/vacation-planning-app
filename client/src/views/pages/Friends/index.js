@@ -105,7 +105,7 @@ const ViewFriends = () => {
 			<Grid container spacing={theme.spacing()}>
 				<Grid item xs={12}>
 					<MainCard
-						title={'Friends Requests'}
+						title={'Friend Requests'}
 						collection={'friendRequest'}
 						newItem='Friend Request'
 						queryResults={setFriendRequestData}
