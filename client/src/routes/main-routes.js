@@ -1,4 +1,5 @@
 import MainLayout from 'views/layouts/MainLayout';
+import ViewFriends from 'views/pages/Friends';
 import {
 	Dashboard,
 	EditBudget,
@@ -20,6 +21,10 @@ const mainRoutes = {
 		{
 			path: 'view-trips',
 			element: <ViewAllTrips />
+		},
+		{
+			path: 'view-friends',
+			element: <ViewFriends />
 		},
 		{
 			path: 'view-trip/:id',

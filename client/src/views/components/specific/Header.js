@@ -23,6 +23,7 @@ const Header = ({ underConstruction }) => {
 		headerNav = [
 			{ text: 'Dashboard', url: '/dashboard' },
 			{ text: 'View Trips', url: '/view-trips' },
+			{ text: 'Friends', url: '/view-friends' },
 			{ text: 'Logout', onClick: logoutUser }
 		];
 	}
