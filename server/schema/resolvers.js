@@ -1,4 +1,4 @@
-const { Budget, Task, Trip, User } = require('../models');
+const { Budget, Task, Trip, User, FriendRequest } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
@@ -14,6 +14,9 @@ const resolvers = {
 		},
 		users: async (parent, body, context) => {
 			return await User.find({ ...body });
+		},
+		friendRequests: async (parent, body, context) => {
+			return await FriendRequest.find({ ...body });
 		},
 		trip: async (parent, { queryID }, context) => {
 			return await Trip.findById(queryID);
@@ -71,6 +74,14 @@ const resolvers = {
 			let dataToSend = { ...body };
 			const user = await User.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return user;
+		},
+		updateFriendRequest: async (parent, body, context) => {
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			const friendRequest = await FriendRequest.findByIdAndUpdate(queryID, dataToSend, {
+				new: true
+			});
+			return friendRequest;
 		},
 		updateTrip: async (parent, body, context) => {
 			const { queryID } = body;
