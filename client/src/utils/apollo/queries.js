@@ -11,6 +11,18 @@ export const QUERY_USER = gql`
 	}
 `;
 
+export const QUERY_FRIEND_REQUESTS = gql`
+	query {
+		friendRequests {
+			_id
+			requestedByUserID
+			pendingApprovalUserID
+			pendingApprovalUserEmail
+			dateReviewed
+		}
+	}
+`;
+
 export const QUERY_USERS = gql`
 	query {
 		users {

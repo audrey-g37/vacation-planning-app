@@ -16,7 +16,9 @@ const resolvers = {
 			return await User.find({ ...body });
 		},
 		friendRequests: async (parent, body, context) => {
-			return await FriendRequest.find({ ...body });
+			return await FriendRequest.find({ ...body })
+				.populate('requestedByUserID')
+				.populate('pendingApprovalUserID');
 		},
 		trip: async (parent, { queryID }, context) => {
 			return await Trip.findById(queryID);

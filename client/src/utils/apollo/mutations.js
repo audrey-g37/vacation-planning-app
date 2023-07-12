@@ -12,6 +12,29 @@ export const ADD_USER = gql`
 		}
 	}
 `;
+export const ADD_FRIEND_REQUEST = gql`
+	mutation addFriendRequest(
+		$status: String
+		$requestedByUserID: ID!
+		$pendingApprovalUserID: ID
+		$pendingApprovalUserEmail: String
+		$dateReviewed: String
+	) {
+		addFriendRequest(
+			status: $status
+			requestedByUserID: $requestedByUserID
+			pendingApprovalUserID: $pendingApprovalUserID
+			pendingApprovalUserEmail: $pendingApprovalUserEmail
+			dateReviewed: $dateReviewed
+		) {
+			_id
+			requestedByUserID
+			pendingApprovalUserID
+			pendingApprovalUserEmail
+			dateReviewed
+		}
+	}
+`;
 
 export const ADD_TRIP = gql`
 	mutation addTrip(
@@ -124,6 +147,27 @@ export const UPDATE_USER = gql`
 			email
 			firstName
 			lastName
+		}
+	}
+`;
+export const UPDATE_FRIEND_REQUEST = gql`
+	mutation updateFriendRequest(
+		$status: String
+		$pendingApprovalUserID: ID
+		$pendingApprovalUserEmail: String
+		$dateReviewed: String
+	) {
+		updateFriendRequest(
+			status: $status
+			pendingApprovalUserID: $pendingApprovalUserID
+			pendingApprovalUserEmail: $pendingApprovalUserEmail
+			dateReviewed: $dateReviewed
+		) {
+			_id
+			requestedByUserID
+			pendingApprovalUserID
+			pendingApprovalUserEmail
+			dateReviewed
 		}
 	}
 `;
