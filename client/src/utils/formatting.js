@@ -3,7 +3,9 @@ const formatValue = ({ type, value, subField, getValue, dateObj = false }) => {
 		'trip.address': () =>
 			`${value.city ? (value.state || value.country ? value.city + ', ' : value.city) : ''} ${
 				value.state ? (value.country ? value.state + ', ' : value.state) : ''
-			} ${value.country ? value.country : ''}`
+			} ${value.country ? value.country : ''}`,
+		'requestedByUserID': () => `${value.firstName} ${value.lastName}`,
+		'pendingApprovalUserID': () => `${value.firstName} ${value.lastName}`
 	};
 	const formatTypes = {
 		date: () => {

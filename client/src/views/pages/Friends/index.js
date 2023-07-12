@@ -1,57 +1,116 @@
 import React, { useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 
 // project imports
-import ViewAllTrips from '../ViewTrip/ViewAllTrips';
-import CustomTypography from 'views/components/CustomTypography';
+import MainCard from 'views/components/MainCard';
 import CircularLoader from 'views/components/CircularLoader';
-import { sortTrips } from 'utils/sorting';
+import DataGrid from 'views/components/data-grid';
 
 const ViewFriends = () => {
+	const theme = useTheme();
+
 	const { user, crudFunctions } = useAuth();
 
-	const { getAllTrips } = crudFunctions;
+	const { getFriendRequests, editFriendRequest } = crudFunctions;
 
-	const [allTrips, setAllTrips] = useState([]);
+	const [allFriendRequests, setAllFriendRequests] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-	let tripSortingObj = {
-		displayLimitNum: 5,
-		showOldTrips: false,
-		oldToNew: true
-	};
-	const setUserTripData = async () => {
+	const setFriendRequestData = async () => {
 		!loading && setLoading(true);
-		const { data } = await getAllTrips({ variables: { userID: user._id } });
-		tripSortingObj = { ...tripSortingObj, tripData: data.trips };
-		const tripData = sortTrips(tripSortingObj);
+		const dataToSend = {
+			variables: {
+				requestedByUserID: user._id,
+				pendingApprovalUserID: user._id,
+				pendingApprovalUserEmail: user.email
+			}
+		};
+		const { data } = await getFriendRequests(dataToSend);
 
-		setAllTrips(tripData);
+		setAllFriendRequests(data?.friendRequests);
 		setLoading(false);
 	};
 
-	const actionSection = (
-		<Grid container sx={{ justifyContent: 'center', textAlign: 'center' }}>
-			<Grid item xs={12} sx={{ padding: '0.5rem' }}>
-				<CustomTypography textContent={'View All'} to={'/view-trips'} />
-			</Grid>
-		</Grid>
-	);
+	const approveRequests = async (selectedIds) => {
+		let approvalObj = {
+			status: 'Approved',
+			dateReviewed: new Date()
+		};
+		console.log({ selectedIds });
+		// for (const id of selectedIds) {
+		// 	await editFriendRequest({ variables: { ...approvalObj, queryID: id } });
+		// }
+	};
 
 	useEffect(() => {
-		user && setUserTripData();
+		user && setFriendRequestData();
 	}, [user?._id]);
+
+	const columns = [
+		{
+			field: 'status',
+			headerName: 'Status',
+			width: 175,
+			editable: false
+		},
+		{
+			field: 'requestedByUserID',
+			headerName: 'Requested By',
+			width: 200,
+			editable: false,
+			format: {
+				type: 'subField'
+			}
+		},
+		{
+			field: 'pendingApprovalUserID',
+			headerName: 'Waiting For',
+			width: 200,
+			editable: false,
+			format: {
+				type: 'subField'
+			}
+		},
+		{
+			field: 'pendingApprovalUserEmail',
+			headerName: 'Email',
+			width: 250,
+			editable: false
+		},
+		{
+			field: 'dateReviewed',
+			headerName: 'Date Reviewed',
+			width: 225,
+			editable: false,
+			type: 'date'
+		}
+	];
 
 	return (
 		<>
 			{loading && <CircularLoader />}
-			<ViewAllTrips
-				allTrips={allTrips}
-				actionSection={actionSection}
-				title={'My Next 5 Trips'}
-				dashboardSortingObj={tripSortingObj}
-			/>
+
+			<Grid container spacing={theme.spacing()}>
+				<Grid item xs={12}>
+					<MainCard
+						title={'Friends'}
+						collection={'friendRequest'}
+						newItem='Friend Request'
+						queryResults={setFriendRequestData}
+					>
+						<DataGrid
+							rows={allFriendRequests || []}
+							allowSelection={true}
+							onSelectionSave={approveRequests}
+							columns={columns}
+							collection={'friendRequest'}
+							selectionButtonTitle={'Approve'}
+							queryResults={setFriendRequestData}
+						/>
+					</MainCard>
+				</Grid>
+			</Grid>
 		</>
 	);
 };
