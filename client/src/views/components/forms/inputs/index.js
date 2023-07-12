@@ -2,6 +2,7 @@ import { FormControl, FormLabel, FormHelperText, useTheme } from '@mui/material'
 
 import Text from './Text';
 import DateSelection from './DateSelection';
+import DateTime from './DateTime';
 import Autocomplete from './Autocomplete';
 
 const FormInput = ({
@@ -17,6 +18,7 @@ const FormInput = ({
 	const componentTypes = {
 		text: <Text {...componentProps} />,
 		date: <DateSelection {...componentProps} />,
+		dateTime: <DateTime {...componentProps} />,
 		autocomplete: <Autocomplete {...componentProps} />
 	};
 
