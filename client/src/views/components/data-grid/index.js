@@ -18,10 +18,11 @@ const DataGrid = ({
 	collection,
 	queryResults,
 	allowSelection = false,
-	onSelectionSave = 'Update',
-	selectionButtonTitle,
+	onSelectionSave,
+	selectionButtonTitle = 'Update',
 	hidePagination = false,
-	maxHeight = '70vh'
+	maxHeight = '70vh',
+	checkRowSelectable
 }) => {
 	const theme = useTheme();
 	const { navigate } = useAuth();
@@ -109,10 +110,10 @@ const DataGrid = ({
 					rows={displayRows}
 					columns={columns}
 					checkboxSelection={allowSelection}
-					onRowSelectionModelChange={(rowSelection) => {
-						console.log({ rowSelection });
-						setSelectedRowIds(rowSelection);
-					}}
+					onRowSelectionModelChange={(rowSelection) => setSelectedRowIds(rowSelection)}
+					isRowSelectable={
+						checkRowSelectable ? ({ row }) => checkRowSelectable(row) : null
+					}
 					disableRowSelectionOnClick
 					hideFooter={hidePagination}
 					sx={{ '& .MuiDataGrid-columnHeaders': headerStylingObj }}
@@ -132,7 +133,10 @@ const DataGrid = ({
 				<Grid item xs={12}>
 					<SubmitButton
 						title={selectionButtonTitle}
-						onClick={onSelectionSave}
+						onClick={() => {
+							onSelectionSave(selectedRowIds);
+							queryResults && queryResults();
+						}}
 						disabled={selectedRowIds.length === 0}
 					/>
 				</Grid>

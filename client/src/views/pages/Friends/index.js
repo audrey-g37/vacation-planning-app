@@ -37,10 +37,17 @@ const ViewFriends = () => {
 			status: 'Approved',
 			dateReviewed: new Date()
 		};
-		console.log({ selectedIds });
-		// for (const id of selectedIds) {
-		// 	await editFriendRequest({ variables: { ...approvalObj, queryID: id } });
-		// }
+		for (const id of selectedIds) {
+			await editFriendRequest({ variables: { ...approvalObj, queryID: id } });
+		}
+	};
+
+	const checkRowSelectable = (row) => {
+		const matchingData = allFriendRequests.find((friend) => friend._id === row._id);
+		const meets =
+			matchingData.status === 'Pending' &&
+			matchingData.pendingApprovalUserID._id === user._id;
+		return meets;
 	};
 
 	useEffect(() => {
@@ -103,6 +110,7 @@ const ViewFriends = () => {
 							rows={allFriendRequests || []}
 							allowSelection={true}
 							onSelectionSave={approveRequests}
+							checkRowSelectable={checkRowSelectable}
 							columns={columns}
 							collection={'friendRequest'}
 							selectionButtonTitle={'Approve'}
