@@ -60,7 +60,7 @@ const typeDefs = gql`
 	}
 
 	type Query {
-		user(queryID: ID, authId: String): User
+		user(queryID: ID, authId: String, email: String): User
 		trip(queryID: ID!): Trip
 		task(queryID: ID!): Task
 		budget(queryID: ID!): Budget

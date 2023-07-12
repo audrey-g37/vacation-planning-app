@@ -3,12 +3,12 @@ const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
 	Query: {
-		user: async (parent, { queryID, authId }) => {
+		user: async (parent, { queryID, authId, email }) => {
 			let userToReturn;
 			if (queryID) {
 				userToReturn = await User.findById(queryID);
-			} else if (authId) {
-				userToReturn = await User.findOne({ authId: authId });
+			} else {
+				userToReturn = await User.findOne(authId ? { authId: authId } : { email: email });
 			}
 			return userToReturn;
 		},
