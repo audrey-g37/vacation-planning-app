@@ -19,6 +19,7 @@ export const QUERY_FRIEND_REQUESTS = gql`
 			pendingApprovalUserEmail: $pendingApprovalUserEmail
 		) {
 			_id
+			status
 			requestedByUserID {
 				_id
 				email

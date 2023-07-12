@@ -6,8 +6,7 @@ const FriendRequestSchema = new Schema(
 	{
 		// options are: Pending, Approved, Denied
 		status: {
-			type: String,
-			default: 'Pending'
+			type: String
 		},
 		requestedByUserID: {
 			type: Schema.Types.ObjectId,
@@ -25,8 +24,7 @@ const FriendRequestSchema = new Schema(
 			match: [/.+@.+\..+/, 'Must match an email address!']
 		},
 		dateReviewed: {
-			type: Date,
-			default: ''
+			type: Date
 		}
 	},
 	{

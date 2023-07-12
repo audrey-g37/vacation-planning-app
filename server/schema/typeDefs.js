@@ -12,6 +12,15 @@ const typeDefs = gql`
 	type FriendRequest {
 		_id: ID!
 		status: String
+		requestedByUserID: ID!
+		pendingApprovalUserID: ID
+		pendingApprovalUserEmail: String
+		dateReviewed: String
+	}
+
+	type PopulateFriendRequest {
+		_id: ID!
+		status: String
 		requestedByUserID: User!
 		pendingApprovalUserID: User!
 		pendingApprovalUserEmail: String
@@ -69,7 +78,7 @@ const typeDefs = gql`
 			requestedByUserID: ID
 			pendingApprovalUserID: ID
 			pendingApprovalUserEmail: String
-		): [FriendRequest]!
+		): [PopulateFriendRequest]!
 		trips(userID: ID!): [Trip]!
 		tasks: [Task]!
 		budgets: [Budget]!
