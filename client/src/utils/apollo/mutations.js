@@ -152,12 +152,14 @@ export const UPDATE_USER = gql`
 `;
 export const UPDATE_FRIEND_REQUEST = gql`
 	mutation updateFriendRequest(
+		$queryID: ID!
 		$status: String
 		$pendingApprovalUserID: ID
 		$pendingApprovalUserEmail: String
 		$dateReviewed: String
 	) {
 		updateFriendRequest(
+			queryID: $queryID
 			status: $status
 			pendingApprovalUserID: $pendingApprovalUserID
 			pendingApprovalUserEmail: $pendingApprovalUserEmail
