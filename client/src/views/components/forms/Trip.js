@@ -132,7 +132,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 							</Grid>
 							<Grid item xs={12} md={6}>
 								<FormInput
-									componentType={'date'}
+									componentType={'dateTime'}
 									componentProps={{
 										name: 'startDate',
 										value: values.startDate,
@@ -146,7 +146,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 							</Grid>
 							<Grid item xs={12} md={6}>
 								<FormInput
-									componentType={'date'}
+									componentType={'dateTime'}
 									componentProps={{
 										name: 'endDate',
 										value: values.endDate,
