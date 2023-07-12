@@ -12,11 +12,25 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_FRIEND_REQUESTS = gql`
-	query {
-		friendRequests {
+	query ($requestedByUserID: ID, $pendingApprovalUserID: ID, $pendingApprovalUserEmail: String) {
+		friendRequests(
+			requestedByUserID: $requestedByUserID
+			pendingApprovalUserID: $pendingApprovalUserID
+			pendingApprovalUserEmail: $pendingApprovalUserEmail
+		) {
 			_id
-			requestedByUserID
-			pendingApprovalUserID
+			requestedByUserID {
+				_id
+				email
+				firstName
+				lastName
+			}
+			pendingApprovalUserID {
+				_id
+				email
+				firstName
+				lastName
+			}
 			pendingApprovalUserEmail
 			dateReviewed
 		}

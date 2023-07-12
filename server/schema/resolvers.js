@@ -16,7 +16,11 @@ const resolvers = {
 			return await User.find({ ...body });
 		},
 		friendRequests: async (parent, body, context) => {
-			return await FriendRequest.find({ ...body })
+			let possibleMatches = [];
+			for (const [key, value] of Object.entries(body)) {
+				possibleMatches.push({ [key]: value });
+			}
+			return await FriendRequest.find({ $or: possibleMatches })
 				.populate('requestedByUserID')
 				.populate('pendingApprovalUserID');
 		},
@@ -44,6 +48,12 @@ const resolvers = {
 			let dataToSend = { ...body };
 			const user = await User.create(dataToSend);
 			return user;
+		},
+		addFriendRequest: async (parent, body, context) => {
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			const friendRequest = await FriendRequest.create(dataToSend);
+			return friendRequest;
 		},
 		addTrip: async (parent, body, context) => {
 			const { street1, street2, city, state, country, zipCode } = body;

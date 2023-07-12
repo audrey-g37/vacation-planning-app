@@ -12,8 +12,8 @@ const typeDefs = gql`
 	type FriendRequest {
 		_id: ID!
 		status: String
-		requestedByUserID: ID!
-		pendingApprovalUserID: ID
+		requestedByUserID: User!
+		pendingApprovalUserID: User!
 		pendingApprovalUserEmail: String
 		dateReviewed: String
 	}
