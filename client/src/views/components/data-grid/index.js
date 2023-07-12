@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, useTheme } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 import { DataGrid as DataGridDisplay } from '@mui/x-data-grid';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import EditIcon from '@mui/icons-material/Edit';
@@ -18,11 +18,17 @@ const DataGrid = ({
 	collection,
 	queryResults,
 	allowSelection = false,
+	onSelectionSave,
+	selectionButtonTitle = 'Update',
+	selectionButtonTitleTwo,
 	hidePagination = false,
-	maxHeight = '70vh'
+	maxHeight = '70vh',
+	checkRowSelectable
 }) => {
 	const theme = useTheme();
 	const { navigate } = useAuth();
+
+	const [selectedRowIds, setSelectedRowIds] = useState([]);
 	const [dialogOpen, setDialogOpen] = useState({ open: false, formData: {} });
 
 	const headerStylingObj = {
@@ -85,7 +91,7 @@ const DataGrid = ({
 					gridView: true,
 					value: value,
 					type: format?.type || colMatch?.type,
-					subField: format?.subField,
+					subField: format?.subField || colMatch.field,
 					getValue: format?.getValue
 				};
 				if (colMatch?.type === 'date') {
@@ -99,26 +105,62 @@ const DataGrid = ({
 	});
 
 	return (
-		<Box sx={{ height: maxHeight, width: '100%' }}>
-			<DataGridDisplay
-				rows={displayRows}
-				columns={columns}
-				checkboxSelection={allowSelection}
-				disableRowSelectionOnClick
-				hideFooter={hidePagination}
-				sx={{ '& .MuiDataGrid-columnHeaders': headerStylingObj }}
-			/>
-			{dialogOpen && (
-				<Form
-					isOpen={dialogOpen.open}
-					formData={dialogOpen.formData}
-					setClosed={() => setDialogOpen({ ...dialogOpen, open: false })}
-					queryResults={queryResults}
-					collection={collection}
-					edit={true}
+		<Grid container sx={{ width: '100%', height: maxHeight }} spacing={theme.spacing()}>
+			<Grid item xs={12} sx={{ height: '90%' }}>
+				<DataGridDisplay
+					rows={displayRows}
+					columns={columns}
+					checkboxSelection={allowSelection}
+					onRowSelectionModelChange={(rowSelection) => setSelectedRowIds(rowSelection)}
+					isRowSelectable={
+						checkRowSelectable ? ({ row }) => checkRowSelectable(row) : null
+					}
+					disableRowSelectionOnClick
+					hideFooter={hidePagination}
+					sx={{ '& .MuiDataGrid-columnHeaders': headerStylingObj }}
 				/>
+				{dialogOpen && (
+					<Form
+						isOpen={dialogOpen.open}
+						formData={dialogOpen.formData}
+						setClosed={() => setDialogOpen({ ...dialogOpen, open: false })}
+						queryResults={queryResults}
+						collection={collection}
+						edit={true}
+					/>
+				)}
+			</Grid>
+			{allowSelection && (
+				<Grid item xs={12}>
+					<Grid container sx={{ flexDirection: 'row' }}>
+						<Grid item xs={5} sm={3} md={2} xl={1}>
+							<SubmitButton
+								title={selectionButtonTitle}
+								onClick={() => {
+									onSelectionSave(selectedRowIds);
+									setSelectedRowIds([]);
+									queryResults && queryResults();
+								}}
+								disabled={selectedRowIds.length === 0}
+							/>
+						</Grid>
+						{selectionButtonTitleTwo && (
+							<Grid item xs={5} sm={3} md={2} xl={1}>
+								<SubmitButton
+									title={selectionButtonTitleTwo}
+									onClick={() => {
+										onSelectionSave(selectedRowIds, { buttonOne: false });
+										setSelectedRowIds([]);
+										queryResults && queryResults();
+									}}
+									disabled={selectedRowIds.length === 0}
+								/>
+							</Grid>
+						)}
+					</Grid>
+				</Grid>
 			)}
-		</Box>
+		</Grid>
 	);
 };
 

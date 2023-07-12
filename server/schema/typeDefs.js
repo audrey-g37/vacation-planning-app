@@ -9,6 +9,24 @@ const typeDefs = gql`
 		authId: String!
 	}
 
+	type FriendRequest {
+		_id: ID!
+		status: String
+		requestedByUserID: ID!
+		pendingApprovalUserID: ID
+		pendingApprovalUserEmail: String
+		dateReviewed: String
+	}
+
+	type PopulateFriendRequest {
+		_id: ID!
+		status: String
+		requestedByUserID: User!
+		pendingApprovalUserID: User!
+		pendingApprovalUserEmail: String
+		dateReviewed: String
+	}
+
 	type Address {
 		street1: String
 		street2: String
@@ -51,11 +69,16 @@ const typeDefs = gql`
 	}
 
 	type Query {
-		user(queryID: ID, authId: String): User
+		user(queryID: ID, authId: String, email: String): User
 		trip(queryID: ID!): Trip
 		task(queryID: ID!): Task
 		budget(queryID: ID!): Budget
 		users: [User]!
+		friendRequests(
+			requestedByUserID: ID
+			pendingApprovalUserID: ID
+			pendingApprovalUserEmail: String
+		): [PopulateFriendRequest]!
 		trips(userID: ID!): [Trip]!
 		tasks: [Task]!
 		budgets: [Budget]!
@@ -63,6 +86,13 @@ const typeDefs = gql`
 
 	type Mutation {
 		addUser(firstName: String!, lastName: String!, email: String!, authId: String!): User
+		addFriendRequest(
+			status: String
+			requestedByUserID: ID!
+			pendingApprovalUserID: ID
+			pendingApprovalUserEmail: String
+			dateReviewed: String
+		): FriendRequest
 		addTrip(
 			title: String!
 			description: String
@@ -95,6 +125,13 @@ const typeDefs = gql`
 			taskID: ID
 		): Budget
 		updateUser(queryID: ID!, email: String, firstName: String, lastName: String): User
+		updateFriendRequest(
+			queryID: ID!
+			status: String
+			pendingApprovalUserID: ID
+			pendingApprovalUserEmail: String
+			dateReviewed: String
+		): FriendRequest
 		updateTrip(
 			queryID: ID!
 			title: String

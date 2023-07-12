@@ -20,20 +20,23 @@ import {
 	QUERY_TRIP,
 	QUERY_TRIPS,
 	QUERY_USER,
-	QUERY_USERS
+	QUERY_USERS,
+	QUERY_FRIEND_REQUESTS
 } from 'utils/apollo/queries';
 import {
 	ADD_BUDGET,
 	ADD_TASK,
 	ADD_TRIP,
 	ADD_USER,
+	ADD_FRIEND_REQUEST,
 	REMOVE_BUDGET,
 	REMOVE_TASK,
 	REMOVE_TRIP,
 	UPDATE_BUDGET,
 	UPDATE_TASK,
 	UPDATE_TRIP,
-	UPDATE_USER
+	UPDATE_USER,
+	UPDATE_FRIEND_REQUEST
 } from 'utils/apollo/mutations';
 
 // const for state of dispatch
@@ -135,6 +138,7 @@ export const AuthProvider = ({ children }) => {
 		budget: QUERY_BUDGET,
 		// multiple results
 		users: QUERY_USERS,
+		friendRequests: QUERY_FRIEND_REQUESTS,
 		trips: QUERY_TRIPS,
 		tasks: QUERY_TASKS,
 		budgets: QUERY_BUDGETS
@@ -144,11 +148,13 @@ export const AuthProvider = ({ children }) => {
 	const mutationTypes = {
 		// create
 		addUser: ADD_USER,
+		addFriendRequest: ADD_FRIEND_REQUEST,
 		addTrip: ADD_TRIP,
 		addTask: ADD_TASK,
 		addBudget: ADD_BUDGET,
 		// update
 		editUser: UPDATE_USER,
+		editFriendRequest: UPDATE_FRIEND_REQUEST,
 		editTrip: UPDATE_TRIP,
 		editTask: UPDATE_TASK,
 		editBudget: UPDATE_BUDGET,
@@ -160,20 +166,26 @@ export const AuthProvider = ({ children }) => {
 
 	// queries
 	const [getUser] = useLazyQuery(queryTypes['user']);
+	const [getFriendRequests] = useLazyQuery(queryTypes['friendRequests']);
 	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
 	const [getSingleTrip] = useLazyQuery(queryTypes['trip']);
 
 	// mutations
 	const [addUser] = useMutation(mutationTypes['addUser']);
+	const [addFriendRequest] = useMutation(mutationTypes['addFriendRequest']);
 	const [addTrip] = useMutation(mutationTypes['addTrip']);
+	const [editFriendRequest] = useMutation(mutationTypes['editFriendRequest']);
 	const [editTrip] = useMutation(mutationTypes['editTrip']);
 
 	const crudFunctions = {
 		getUser,
+		getFriendRequests,
 		getAllTrips,
 		getSingleTrip,
 		addUser,
+		addFriendRequest,
 		addTrip,
+		editFriendRequest,
 		editTrip
 	};
 

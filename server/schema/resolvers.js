@@ -1,19 +1,28 @@
-const { Budget, Task, Trip, User } = require('../models');
+const { Budget, Task, Trip, User, FriendRequest } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
 	Query: {
-		user: async (parent, { queryID, authId }) => {
+		user: async (parent, { queryID, authId, email }) => {
 			let userToReturn;
 			if (queryID) {
 				userToReturn = await User.findById(queryID);
-			} else if (authId) {
-				userToReturn = await User.findOne({ authId: authId });
+			} else {
+				userToReturn = await User.findOne(authId ? { authId: authId } : { email: email });
 			}
 			return userToReturn;
 		},
 		users: async (parent, body, context) => {
 			return await User.find({ ...body });
+		},
+		friendRequests: async (parent, body, context) => {
+			let possibleMatches = [];
+			for (const [key, value] of Object.entries(body)) {
+				possibleMatches.push({ [key]: value });
+			}
+			return await FriendRequest.find({ $or: possibleMatches })
+				.populate('requestedByUserID')
+				.populate('pendingApprovalUserID');
 		},
 		trip: async (parent, { queryID }, context) => {
 			return await Trip.findById(queryID);
@@ -39,6 +48,12 @@ const resolvers = {
 			let dataToSend = { ...body };
 			const user = await User.create(dataToSend);
 			return user;
+		},
+		addFriendRequest: async (parent, body, context) => {
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			const friendRequest = await FriendRequest.create(dataToSend);
+			return friendRequest;
 		},
 		addTrip: async (parent, body, context) => {
 			const { street1, street2, city, state, country, zipCode } = body;
@@ -71,6 +86,14 @@ const resolvers = {
 			let dataToSend = { ...body };
 			const user = await User.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return user;
+		},
+		updateFriendRequest: async (parent, body, context) => {
+			const { queryID } = body;
+			let dataToSend = { ...body };
+			const friendRequest = await FriendRequest.findByIdAndUpdate(queryID, dataToSend, {
+				new: true
+			});
+			return friendRequest;
 		},
 		updateTrip: async (parent, body, context) => {
 			const { queryID } = body;

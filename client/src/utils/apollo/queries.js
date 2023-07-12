@@ -1,12 +1,39 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-	query ($queryID: ID, $authId: String) {
-		user(queryID: $queryID, authId: $authId) {
+	query ($queryID: ID, $authId: String, $email: String) {
+		user(queryID: $queryID, authId: $authId, email: $email) {
 			_id
 			email
 			firstName
 			lastName
+		}
+	}
+`;
+
+export const QUERY_FRIEND_REQUESTS = gql`
+	query ($requestedByUserID: ID, $pendingApprovalUserID: ID, $pendingApprovalUserEmail: String) {
+		friendRequests(
+			requestedByUserID: $requestedByUserID
+			pendingApprovalUserID: $pendingApprovalUserID
+			pendingApprovalUserEmail: $pendingApprovalUserEmail
+		) {
+			_id
+			status
+			requestedByUserID {
+				_id
+				email
+				firstName
+				lastName
+			}
+			pendingApprovalUserID {
+				_id
+				email
+				firstName
+				lastName
+			}
+			pendingApprovalUserEmail
+			dateReviewed
 		}
 	}
 `;
