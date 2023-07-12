@@ -20,6 +20,7 @@ const DataGrid = ({
 	allowSelection = false,
 	onSelectionSave,
 	selectionButtonTitle = 'Update',
+	selectionButtonTitleTwo,
 	hidePagination = false,
 	maxHeight = '70vh',
 	checkRowSelectable
@@ -131,14 +132,32 @@ const DataGrid = ({
 			</Grid>
 			{allowSelection && (
 				<Grid item xs={12}>
-					<SubmitButton
-						title={selectionButtonTitle}
-						onClick={() => {
-							onSelectionSave(selectedRowIds);
-							queryResults && queryResults();
-						}}
-						disabled={selectedRowIds.length === 0}
-					/>
+					<Grid container sx={{ flexDirection: 'row' }}>
+						<Grid item xs={5} sm={3} md={2} xl={1}>
+							<SubmitButton
+								title={selectionButtonTitle}
+								onClick={() => {
+									onSelectionSave(selectedRowIds);
+									setSelectedRowIds([]);
+									queryResults && queryResults();
+								}}
+								disabled={selectedRowIds.length === 0}
+							/>
+						</Grid>
+						{selectionButtonTitleTwo && (
+							<Grid item xs={5} sm={3} md={2} xl={1}>
+								<SubmitButton
+									title={selectionButtonTitleTwo}
+									onClick={() => {
+										onSelectionSave(selectedRowIds, { buttonOne: false });
+										setSelectedRowIds([]);
+										queryResults && queryResults();
+									}}
+									disabled={selectedRowIds.length === 0}
+								/>
+							</Grid>
+						)}
+					</Grid>
 				</Grid>
 			)}
 		</Grid>
