@@ -33,6 +33,7 @@ const Login = ({ onSubmit }) => {
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
+					values = { ...values, email: values.email.toLowerCase() };
 					if (
 						values.email === 'testuser@test-grip.org' &&
 						values.password === 'testing123'
