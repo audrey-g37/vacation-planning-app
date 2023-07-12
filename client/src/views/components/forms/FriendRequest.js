@@ -40,6 +40,7 @@ const FriendRequestForm = ({ onSubmit }) => {
 						variables: { email: dataToSend.variables.pendingApprovalUserEmail }
 					});
 					if (data?.user) {
+						// todo search for an existing request with the user IDs so we can't request multiple times
 						dataToSend = {
 							...dataToSend,
 							variables: {

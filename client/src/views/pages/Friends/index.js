@@ -29,7 +29,9 @@ const ViewFriends = () => {
 		const { data } = await getFriendRequests(dataToSend);
 
 		const friendRequestsToView = data?.friendRequests.filter(
-			(friend) => friend.status === 'Denied' && friend.pendingApprovalUserID._id === user._id
+			(friend) =>
+				friend.status !== 'Approved' &&
+				!(friend.status === 'Denied' && friend.pendingApprovalUserID._id === user._id)
 		);
 
 		setAllFriendRequests(friendRequestsToView);

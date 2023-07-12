@@ -23,7 +23,7 @@ const mainRoutes = {
 			element: <ViewAllTrips />
 		},
 		{
-			path: 'view-friends',
+			path: 'view-friends/requests',
 			element: <ViewFriends />
 		},
 		{
