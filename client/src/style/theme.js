@@ -56,6 +56,7 @@ const theme = (mode) => {
 		}
 	};
 	const typography = {
+		fontFamily: ['PT Sans', 'sans-serif'].join(','),
 		subtitle1: { fontSize: 18 }
 	};
 	let palette = {
