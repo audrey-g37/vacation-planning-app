@@ -9,6 +9,7 @@ import {
 	useTheme
 } from '@mui/material';
 import SubmitButton from './SubmitButton';
+import CustomTypography from './CustomTypography';
 
 const Transition = forwardRef(function Transition(props, ref) {
 	return <Slide direction='up' ref={ref} {...props} />;
@@ -34,10 +35,10 @@ const ConfirmationDialog = ({
 				onClose={setClosed}
 				aria-describedby='alert-dialog-slide-description'
 			>
-				<DialogTitle>{title}</DialogTitle>
+				<DialogTitle sx={{ color: theme.palette.text.secondary }}>{title}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id='alert-dialog-slide-description'>
-						{textContent}
+						<CustomTypography textContent={textContent} />
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
