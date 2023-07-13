@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
+import { Grid, useTheme, useMediaQuery, AppBar, Avatar } from '@mui/material';
 
 // project imports
 import CollapsedMenu from 'views/components/CollapsedMenu';
@@ -33,7 +33,7 @@ const Header = ({ underConstruction }) => {
 			sx={{
 				position: 'sticky',
 				height: `fit-content`,
-				padding: `${medAndUp ? '0.5rem' : '0'}`,
+				padding: `${medAndUp ? '0.25rem' : '0'}`,
 				backgroundColor: theme.palette.custom.navBackground
 			}}
 		>
@@ -47,7 +47,16 @@ const Header = ({ underConstruction }) => {
 					alignItems: 'center'
 				}}
 			>
-				<Grid item xs={10}>
+				<Grid item xs={2}>
+					<img
+						border='0'
+						width='50'
+						height='50'
+						alt='GRIP logo'
+						src='/images/logos/logo-no-background-no-slogan.png'
+					/>
+				</Grid>
+				<Grid item xs={8}>
 					<CustomTypography
 						textContent={'Get a GRIP On Your Group Trip!'}
 						variant={medAndUp ? 'h4' : 'subtitle2'}
