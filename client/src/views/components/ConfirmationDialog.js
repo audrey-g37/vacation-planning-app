@@ -37,9 +37,7 @@ const ConfirmationDialog = ({
 			>
 				<DialogTitle sx={{ color: theme.palette.text.secondary }}>{title}</DialogTitle>
 				<DialogContent>
-					<DialogContentText id='alert-dialog-slide-description'>
-						<CustomTypography textContent={textContent} />
-					</DialogContentText>
+					<CustomTypography textContent={textContent} />
 				</DialogContent>
 				<DialogActions>
 					<SubmitButton
