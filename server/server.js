@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 require('dotenv').config();
 
+const mainRoutes = require('./routes');
 const { typeDefs, resolvers } = require('./schema');
 
 const db = require('./config/connection');
@@ -24,6 +25,8 @@ if (process.env.NODE_ENV === 'production') {
 	const buildPath = path.join(__dirname, '../client/build');
 	app.use(express.static(buildPath));
 }
+
+app.use('/api', mainRoutes);
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../client/build/index.html'));
