@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, useTheme, useMediaQuery, AppBar, Avatar } from '@mui/material';
+import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 
 // project imports
 import CollapsedMenu from 'views/components/CollapsedMenu';
