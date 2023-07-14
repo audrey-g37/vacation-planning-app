@@ -1,5 +1,6 @@
 const createLog = require('../middleware/logging');
 const sgMailer = require('@sendgrid/mail');
+require('dotenv').config();
 
 sgMailer.setApiKey(process.env.SENDGRID_API_KEY);
 
