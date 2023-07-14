@@ -8,6 +8,7 @@ import FormInput from './inputs';
 import ConfirmationDialog from '../ConfirmationDialog';
 import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
+import { sendEmailMessage } from 'utils/sendgrid';
 
 const FriendRequestForm = ({ onSubmit }) => {
 	const { user, crudFunctions } = useAuth();
@@ -29,20 +30,33 @@ const FriendRequestForm = ({ onSubmit }) => {
 		newUser: false
 	});
 
+	let emailInfo = {
+		emailGroup: [],
+		templateData: { user: { firstName: user.firstName, lastName: user.lastName } }
+	};
+
 	const confirmAddFriend = async () => {
 		await addFriendRequest(confirmation.data);
+		if (confirmation.newUser) {
+			emailInfo = {
+				...emailInfo,
+				emailGroup: [
+					...emailInfo.emailGroup,
+					...[{ toEmails: [confirmation.data?.variables?.pendingApprovalUserEmail] }]
+				]
+			};
+			await sendEmailMessage('join-grip-friend-request', emailInfo);
+		}
 		setConfirmation({
 			...confirmation,
 			open: false,
 			data: blankInfo
 		});
-		if (confirmation.newUser) {
-			// todo email the user and invite them to join
-		}
 		onSubmit && (await onSubmit());
 	};
 
 	const checkForExistingRequestMatches = async () => {
+		let existingRequest;
 		// checking for requests that the user has already made to this person
 		const ourDataToSend = {
 			variables: {
@@ -57,14 +71,24 @@ const FriendRequestForm = ({ onSubmit }) => {
 				pendingApprovalUserID: user._id
 			}
 		};
-		const { data: existingRequest1 } = await getFriendRequests(ourDataToSend);
-		const { data: existingRequest2 } = await getFriendRequests(theirDataToSend);
 		if (
-			existingRequest1?.friendRequests?.length > 0 ||
-			existingRequest2?.friendRequests?.length > 0
+			theirDataToSend.variables.requestedByUserID &&
+			theirDataToSend.variables.pendingApprovalUserID
 		) {
-			return existingRequest1?.friendRequests?.[0] || existingRequest2?.friendRequests?.[0];
+			const { data } = await getFriendRequests(theirDataToSend);
+			if (data.length > 0) {
+				existingRequest = data[0];
+			}
+		} else if (
+			ourDataToSend.variables.requestedByUserID &&
+			ourDataToSend.variables.pendingApprovalUserID
+		) {
+			const { data } = await getFriendRequests(ourDataToSend);
+			if (data.length > 0) {
+				ourDataToSend = data[0];
+			}
 		}
+		return existingRequest;
 	};
 
 	return (
@@ -112,7 +136,10 @@ const FriendRequestForm = ({ onSubmit }) => {
 						setConfirmation({
 							...confirmation,
 							open: true,
-							data: dataToSend,
+							data: {
+								...dataToSend,
+								variables: { ...dataToSend.variables, pendingApprovalUserID: null }
+							},
 							newUser: true
 						});
 					}
