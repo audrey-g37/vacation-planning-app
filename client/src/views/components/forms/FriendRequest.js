@@ -130,7 +130,7 @@ const FriendRequestForm = ({ onSubmit }) => {
 						} else {
 							// todo set an alert and show message to user with request status and who request is pending
 							console.log('A request has already been created', { existingRequest });
-							onSubmit && onSubmit();
+							onSubmit && (await onSubmit());
 						}
 					} else {
 						setConfirmation({
