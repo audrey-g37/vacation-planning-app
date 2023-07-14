@@ -24,11 +24,13 @@ const FriendRequestForm = ({ onSubmit }) => {
 		pendingApprovalUserEmail: ''
 	};
 
-	const [confirmation, setConfirmation] = useState({
+	const initialConfirmationState = {
 		open: false,
 		data: blankInfo,
 		newUser: false
-	});
+	};
+
+	const [confirmation, setConfirmation] = useState(initialConfirmationState);
 
 	let emailInfo = {
 		emailGroup: [],
@@ -47,11 +49,6 @@ const FriendRequestForm = ({ onSubmit }) => {
 			};
 			await sendEmailMessage('join-grip-friend-request', emailInfo);
 		}
-		setConfirmation({
-			...confirmation,
-			open: false,
-			data: blankInfo
-		});
 		onSubmit && (await onSubmit());
 	};
 
@@ -129,7 +126,6 @@ const FriendRequestForm = ({ onSubmit }) => {
 						const existingRequest = await checkForExistingRequestMatches(dataObj);
 						if (!existingRequest) {
 							setConfirmation({
-								...confirmation,
 								open: true,
 								newUser: false,
 								data: dataObj
@@ -137,7 +133,7 @@ const FriendRequestForm = ({ onSubmit }) => {
 						} else {
 							// todo set an alert and show message to user with request status and who request is pending
 							console.log('A request has already been created', { existingRequest });
-							setConfirmation({ ...confirmation, data: blankInfo });
+							setConfirmation(initialConfirmationState);
 							onSubmit && (await onSubmit());
 						}
 					} else {
@@ -213,21 +209,9 @@ const FriendRequestForm = ({ onSubmit }) => {
 						{confirmation.open && (
 							<ConfirmationDialog
 								open={confirmation.open}
-								setClosed={() =>
-									setConfirmation({
-										...confirmation,
-										open: false,
-										data: blankInfo
-									})
-								}
-								onCancel={() =>
-									setConfirmation({
-										...confirmation,
-										open: false,
-										data: blankInfo
-									})
-								}
-								onConfirm={confirmAddFriend}
+								setClosed={() => setConfirmation(initialConfirmationState)}
+								onCancel={() => setConfirmation(initialConfirmationState)}
+								onConfirm={async () => await confirmAddFriend()}
 								textContent={
 									confirmation.newUser
 										? `There is no user with the email ${values.pendingApprovalUserEmail}.  Send an email inviting them to create a GRIP account?`

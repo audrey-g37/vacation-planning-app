@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, useTheme, useMediaQuery, AppBar, Avatar } from '@mui/material';
+import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 
 // project imports
 import CollapsedMenu from 'views/components/CollapsedMenu';
@@ -23,7 +23,7 @@ const Header = ({ underConstruction }) => {
 		headerNav = [
 			{ text: 'Dashboard', url: '/dashboard' },
 			{ text: 'View Trips', url: '/view-trips' },
-			// { text: 'Friends', url: '/view-friends/requests' },
+			{ text: 'Friends', url: '/view-friends/requests' },
 			{ text: 'Logout', onClick: logoutUser }
 		];
 	}
