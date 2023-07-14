@@ -208,7 +208,13 @@ const FriendRequestForm = ({ onSubmit }) => {
 						{confirmation.open && (
 							<ConfirmationDialog
 								open={confirmation.open}
-								setClosed={() => setConfirmation({ ...confirmation, open: false })}
+								setClosed={() =>
+									setConfirmation({
+										...confirmation,
+										open: false,
+										data: blankInfo
+									})
+								}
 								onCancel={() =>
 									setConfirmation({
 										...confirmation,
