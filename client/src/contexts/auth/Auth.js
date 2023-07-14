@@ -21,7 +21,8 @@ import {
 	QUERY_TRIPS,
 	QUERY_USER,
 	QUERY_USERS,
-	QUERY_FRIEND_REQUESTS
+	QUERY_FRIEND_REQUESTS,
+	QUERY_FRIEND_REQUESTS_MATCH
 } from 'utils/apollo/queries';
 import {
 	ADD_BUDGET,
@@ -139,6 +140,7 @@ export const AuthProvider = ({ children }) => {
 		// multiple results
 		users: QUERY_USERS,
 		friendRequests: QUERY_FRIEND_REQUESTS,
+		friendRequestsMatch: QUERY_FRIEND_REQUESTS_MATCH,
 		trips: QUERY_TRIPS,
 		tasks: QUERY_TASKS,
 		budgets: QUERY_BUDGETS
@@ -167,6 +169,7 @@ export const AuthProvider = ({ children }) => {
 	// queries
 	const [getUser] = useLazyQuery(queryTypes['user']);
 	const [getFriendRequests] = useLazyQuery(queryTypes['friendRequests']);
+	const [getFriendRequestsMatch] = useLazyQuery(queryTypes['friendRequestsMatch']);
 	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
 	const [getSingleTrip] = useLazyQuery(queryTypes['trip']);
 
@@ -180,6 +183,7 @@ export const AuthProvider = ({ children }) => {
 	const crudFunctions = {
 		getUser,
 		getFriendRequests,
+		getFriendRequestsMatch,
 		getAllTrips,
 		getSingleTrip,
 		addUser,

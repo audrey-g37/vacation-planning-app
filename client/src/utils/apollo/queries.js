@@ -37,6 +37,32 @@ export const QUERY_FRIEND_REQUESTS = gql`
 		}
 	}
 `;
+export const QUERY_FRIEND_REQUESTS_MATCH = gql`
+	query ($requestedByUserID: ID, $pendingApprovalUserID: ID, $pendingApprovalUserEmail: String) {
+		friendRequestsMatch(
+			requestedByUserID: $requestedByUserID
+			pendingApprovalUserID: $pendingApprovalUserID
+			pendingApprovalUserEmail: $pendingApprovalUserEmail
+		) {
+			_id
+			status
+			requestedByUserID {
+				_id
+				email
+				firstName
+				lastName
+			}
+			pendingApprovalUserID {
+				_id
+				email
+				firstName
+				lastName
+			}
+			pendingApprovalUserEmail
+			dateReviewed
+		}
+	}
+`;
 
 export const QUERY_USERS = gql`
 	query {

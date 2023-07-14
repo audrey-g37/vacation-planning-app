@@ -13,7 +13,7 @@ import { sendEmailMessage } from 'utils/sendgrid';
 const FriendRequestForm = ({ onSubmit }) => {
 	const { user, crudFunctions } = useAuth();
 
-	const { getUser, addFriendRequest, getFriendRequests } = crudFunctions;
+	const { getUser, addFriendRequest, getFriendRequestsMatch } = crudFunctions;
 
 	const theme = useTheme();
 
@@ -36,13 +36,13 @@ const FriendRequestForm = ({ onSubmit }) => {
 	};
 
 	const confirmAddFriend = async () => {
-		await addFriendRequest(confirmation.data);
+		await addFriendRequest({ variables: confirmation.data });
 		if (confirmation.newUser) {
 			emailInfo = {
 				...emailInfo,
 				emailGroup: [
 					...emailInfo.emailGroup,
-					...[{ toEmails: [confirmation.data?.variables?.pendingApprovalUserEmail] }]
+					...[{ toEmails: [confirmation.data?.pendingApprovalUserEmail] }]
 				]
 			};
 			await sendEmailMessage('join-grip-friend-request', emailInfo);
@@ -55,39 +55,48 @@ const FriendRequestForm = ({ onSubmit }) => {
 		onSubmit && (await onSubmit());
 	};
 
-	const checkForExistingRequestMatches = async () => {
+	const checkForExistingRequestMatches = async (dataObj) => {
 		let existingRequest;
+		// used to check for requests that exist for user to review (made by the friend the user is requesting)
+		const theirDataToSend = {
+			variables: {
+				requestedByUserID: dataObj.pendingApprovalUserID,
+				pendingApprovalUserID: user._id
+			}
+		};
 		// checking for requests that the user has already made to this person
 		const ourDataToSend = {
 			variables: {
 				requestedByUserID: user._id,
-				pendingApprovalUserID: confirmation.pendingApprovalUserID
+				pendingApprovalUserID: dataObj.pendingApprovalUserID
 			}
 		};
-		// used to check for requests that exist for user to review (made by who user is requesting)
-		const theirDataToSend = {
+		// checking for requests that the user has already made to this person
+		const ourDataToSendEmail = {
 			variables: {
-				requestedByUserID: confirmation.pendingApprovalUserID,
-				pendingApprovalUserID: user._id
+				requestedByUserID: user._id,
+				pendingApprovalUserEmail: dataObj.pendingApprovalUserEmail
 			}
 		};
-		if (
-			theirDataToSend.variables.requestedByUserID &&
-			theirDataToSend.variables.pendingApprovalUserID
-		) {
-			const { data } = await getFriendRequests(theirDataToSend);
-			if (data.length > 0) {
-				existingRequest = data[0];
-			}
-		} else if (
-			ourDataToSend.variables.requestedByUserID &&
-			ourDataToSend.variables.pendingApprovalUserID
-		) {
-			const { data } = await getFriendRequests(ourDataToSend);
-			if (data.length > 0) {
-				ourDataToSend = data[0];
+
+		if (theirDataToSend.variables.requestedByUserID) {
+			const { data } = await getFriendRequestsMatch(theirDataToSend);
+			if (data?.friendRequestsMatch?.length > 0) {
+				existingRequest = data?.friendRequestsMatch[0];
 			}
 		}
+		if (ourDataToSend.variables.pendingApprovalUserID) {
+			const { data } = await getFriendRequestsMatch(ourDataToSend);
+			if (data?.friendRequestsMatch?.length > 0) {
+				existingRequest = data?.friendRequestsMatch[0];
+			}
+		} else if (ourDataToSendEmail.variables.pendingApprovalUserEmail) {
+			const { data } = await getFriendRequestsMatch(ourDataToSendEmail);
+			if (data?.friendRequestsMatch?.length > 0) {
+				existingRequest = data?.friendRequestsMatch[0];
+			}
+		}
+
 		return existingRequest;
 	};
 
@@ -103,43 +112,39 @@ const FriendRequestForm = ({ onSubmit }) => {
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
-					let dataToSend = {
-						variables: values
-					};
+					let dataObj = values;
+
 					const { data } = await getUser({
 						variables: {
-							email: dataToSend.variables.pendingApprovalUserEmail.toLowerCase()
+							email: dataObj.pendingApprovalUserEmail.toLowerCase()
 						}
 					});
 					if (data?.user) {
-						dataToSend = {
-							...dataToSend,
-							variables: {
-								...dataToSend.variables,
-								pendingApprovalUserID: data.user._id
-							}
+						const idToUse = data.user._id;
+						dataObj = {
+							...dataObj,
+							pendingApprovalUserID: idToUse
 						};
-						const existingRequest = await checkForExistingRequestMatches();
+
+						const existingRequest = await checkForExistingRequestMatches(dataObj);
 						if (!existingRequest) {
 							setConfirmation({
 								...confirmation,
 								open: true,
-								data: dataToSend,
-								newUser: false
+								newUser: false,
+								data: dataObj
 							});
 						} else {
 							// todo set an alert and show message to user with request status and who request is pending
 							console.log('A request has already been created', { existingRequest });
+							setConfirmation({ ...confirmation, data: blankInfo });
 							onSubmit && (await onSubmit());
 						}
 					} else {
 						setConfirmation({
 							...confirmation,
 							open: true,
-							data: {
-								...dataToSend,
-								variables: { ...dataToSend.variables, pendingApprovalUserID: null }
-							},
+							data: dataObj,
 							newUser: true
 						});
 					}
