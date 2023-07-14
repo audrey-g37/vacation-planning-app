@@ -15,6 +15,15 @@ const resolvers = {
 		users: async (parent, body, context) => {
 			return await User.find({ ...body });
 		},
+		friendRequestsMatch: async (parent, body, context) => {
+			let possibleMatches = [];
+			for (const [key, value] of Object.entries(body)) {
+				possibleMatches.push({ [key]: value });
+			}
+			return await FriendRequest.find({ $and: possibleMatches })
+				.populate('requestedByUserID')
+				.populate('pendingApprovalUserID');
+		},
 		friendRequests: async (parent, body, context) => {
 			let possibleMatches = [];
 			for (const [key, value] of Object.entries(body)) {

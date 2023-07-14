@@ -64,28 +64,34 @@ const FriendRequestForm = ({ onSubmit }) => {
 				pendingApprovalUserID: confirmation.pendingApprovalUserID
 			}
 		};
-		// used to check for requests that exist for user to review (made by who user is requesting)
+		// checking for requests that the user has already made to this person
+		const ourDataToSendEmail = {
+			variables: {
+				requestedByUserID: user._id,
+				pendingApprovalUserEmail: confirmation.pendingApprovalUserEmail
+			}
+		};
+		// used to check for requests that exist for user to review (made by the friend the user is requesting)
 		const theirDataToSend = {
 			variables: {
 				requestedByUserID: confirmation.pendingApprovalUserID,
 				pendingApprovalUserID: user._id
 			}
 		};
-		if (
-			theirDataToSend.variables.requestedByUserID &&
-			theirDataToSend.variables.pendingApprovalUserID
-		) {
+		if (theirDataToSend.variables.requestedByUserID) {
 			const { data } = await getFriendRequests(theirDataToSend);
 			if (data.length > 0) {
 				existingRequest = data[0];
 			}
-		} else if (
-			ourDataToSend.variables.requestedByUserID &&
-			ourDataToSend.variables.pendingApprovalUserID
-		) {
+		} else if (ourDataToSend.variables.pendingApprovalUserID) {
 			const { data } = await getFriendRequests(ourDataToSend);
 			if (data.length > 0) {
 				ourDataToSend = data[0];
+			}
+		} else if (ourDataToSendEmail.variables.pendingApprovalUserEmail) {
+			const { data } = await getFriendRequests(ourDataToSendEmail);
+			if (data.length > 0) {
+				ourDataToSendEmail = data[0];
 			}
 		}
 		return existingRequest;
@@ -119,6 +125,10 @@ const FriendRequestForm = ({ onSubmit }) => {
 								pendingApprovalUserID: data.user._id
 							}
 						};
+						setConfirmation({
+							...confirmation,
+							data: dataToSend
+						});
 						const existingRequest = await checkForExistingRequestMatches();
 						if (!existingRequest) {
 							setConfirmation({
