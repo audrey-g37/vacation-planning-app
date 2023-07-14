@@ -1,18 +1,27 @@
 import axios from 'axios';
 
-const templateIDs = {
-	'join-grip-friend-request': 'd-cb9ce5e879584331aeca8106338b10a2'
+const emailProps = {
+	'join-grip-friend-request': {
+		templateID: 'd-cb9ce5e879584331aeca8106338b10a2',
+		urlParams: '/send'
+	}
 };
 
 const sendEmailMessage = async (idType, data) => {
-	if (templateIDs[idType]) {
-		data = { ...data, templateID: templateIDs[idType] };
+	if (emailProps[idType]?.templateID) {
+		data = { ...data, templateID: templateIDs[idType].templateID };
 	}
 	let axiosObj = {
 		method: 'post',
-		baseURL: 'https://grip.webappsbyaudreyapi.dev/api/sendgrid/send',
-		data: data
+		baseUrl: `https://grip.webappsbyaudreyapi.dev/sendgrid`,
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		timeout: 2000
 	};
+	if (emailProps[idType]?.urlParams) {
+		axiosObj = { ...axiosObj, url: emailProps[idType].urlParams };
+	}
 
 	await axios(axiosObj);
 };
