@@ -10,7 +10,7 @@ const sendEmailMessage = async (idType, data) => {
 	}
 	let axiosObj = {
 		method: 'post',
-		baseURL: 'https://localhost:3001/api/sendgrid/send',
+		baseURL: 'https://grip.webappsbyaudreyapi.dev/api/sendgrid/send',
 		data: data
 	};
 
