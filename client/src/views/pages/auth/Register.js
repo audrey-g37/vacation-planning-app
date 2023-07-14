@@ -40,6 +40,7 @@ const Register = ({ onSubmit }) => {
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
+					values = { ...values, email: values.email.toLowerCase() };
 					await register(values);
 					onSubmit && onSubmit();
 				} catch (err) {

@@ -10,7 +10,6 @@
 		"start": "node server/server.js",
 		"deploy": "NODE_ENV=production node server/server.js",
 		"client": "cd client && npm start",
-		"develop": "NODE_ENV=development concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
 		"install": "cd server && npm i && cd ../client && npm i",
 		"build": "cd client && npm run build",
 		"seed": "node server/seeders/seed.js",
@@ -26,9 +25,5 @@
 	"bugs": {
 		"url": "https://github.com/Korbin-Sargent/vacation-planning-app/issues"
 	},
-	"homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme",
-	"dependencies": {
-		"concurrently": "^6.3.0",
-		"moment": "^2.29.1"
-	}
+	"homepage": "https://github.com/Korbin-Sargent/vacation-planning-app#readme"
 }
