@@ -137,7 +137,7 @@ const DataGrid = ({
 							<SubmitButton
 								title={selectionButtonTitle}
 								onClick={async () => {
-									onSelectionSave(selectedRowIds);
+									await onSelectionSave(selectedRowIds);
 									setSelectedRowIds([]);
 									queryResults && (await queryResults());
 								}}
@@ -149,7 +149,7 @@ const DataGrid = ({
 								<SubmitButton
 									title={selectionButtonTitleTwo}
 									onClick={async () => {
-										onSelectionSave(selectedRowIds, { buttonOne: false });
+										await onSelectionSave(selectedRowIds, { buttonOne: false });
 										setSelectedRowIds([]);
 										queryResults && (await queryResults());
 									}}
