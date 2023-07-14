@@ -9,7 +9,7 @@ const emailProps = {
 
 const sendEmailMessage = async (idType, data) => {
 	if (emailProps[idType]?.templateID) {
-		data = { ...data, templateID: templateIDs[idType].templateID };
+		data = { ...data, templateID: emailProps[idType].templateID };
 	}
 	let axiosObj = {
 		method: 'post',
