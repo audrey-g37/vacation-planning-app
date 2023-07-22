@@ -101,7 +101,7 @@ const sendEmailMessage = async (req, res) => {
 				err ? errorResponse(err) : successResponse(res)
 			);
 		}
-		return res.status(200);
+		return res.sendStatus(200);
 	} catch (err) {
 		errorResponse(err);
 		return res.sendStatus(500);
