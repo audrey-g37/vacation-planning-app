@@ -38,12 +38,14 @@ const FriendRequestForm = ({ onSubmit }) => {
 	};
 
 	const searchForUser = async (email) => {
-		const { data, loading, refetch } = await getUser({
+		const { refetch } = await getUser({
 			variables: {
 				email: email
 			}
 		});
-		return await refetch({ email: email }).then((res) => res.data.user);
+		return await refetch({ email: email })
+			.then((res) => res.data.user)
+			.catch((err) => console.error(err));
 	};
 
 	const confirmAddFriend = async () => {
@@ -108,7 +110,7 @@ const FriendRequestForm = ({ onSubmit }) => {
 
 	const alertOfExistingRequest = async (existingRequest) => {
 		// todo set an alert and show message to user with request status and who request is pending
-		console.log('A request has already been created', { existingRequest });
+		// console.log('A request has already been created', { existingRequest });
 		setConfirmation(initialConfirmationState);
 		onSubmit && (await onSubmit());
 	};
