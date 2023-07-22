@@ -5,7 +5,7 @@ const formatValue = ({ type, value, subField, getValue, dateObj = false }) => {
 				value.state ? (value.country ? value.state + ', ' : value.state) : ''
 			} ${value.country ? value.country : ''}`,
 		'requestedByUserID': () => `${value.firstName} ${value.lastName}`,
-		'pendingApprovalUserID': () => `${value.firstName} ${value.lastName}`
+		'pendingApprovalUserID': () => (value ? `${value.firstName} ${value.lastName}` : '')
 	};
 	const formatTypes = {
 		date: () => {
