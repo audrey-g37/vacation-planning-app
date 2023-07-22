@@ -37,6 +37,15 @@ const FriendRequestForm = ({ onSubmit }) => {
 		templateData: { user: { firstName: user.firstName, lastName: user.lastName } }
 	};
 
+	const searchForUser = async (email) => {
+		const { data, loading, refetch } = await getUser({
+			variables: {
+				email: email
+			}
+		});
+		return await refetch({ email: email }).then((res) => res.data.user);
+	};
+
 	const confirmAddFriend = async () => {
 		await addFriendRequest({ variables: confirmation.data });
 		if (confirmation.newUser) {
@@ -97,6 +106,13 @@ const FriendRequestForm = ({ onSubmit }) => {
 		return existingRequest;
 	};
 
+	const alertOfExistingRequest = async (existingRequest) => {
+		// todo set an alert and show message to user with request status and who request is pending
+		console.log('A request has already been created', { existingRequest });
+		setConfirmation(initialConfirmationState);
+		onSubmit && (await onSubmit());
+	};
+
 	return (
 		<Formik
 			initialValues={blankInfo}
@@ -109,15 +125,15 @@ const FriendRequestForm = ({ onSubmit }) => {
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
-					let dataObj = values;
+					let dataObj = {
+						...values,
+						pendingApprovalUserEmail: values.pendingApprovalUserEmail.toLowerCase()
+					};
 
-					const { data } = await getUser({
-						variables: {
-							email: dataObj.pendingApprovalUserEmail.toLowerCase()
-						}
-					});
-					if (data?.user) {
-						const idToUse = data.user._id;
+					const userMatch = await searchForUser(dataObj.pendingApprovalUserEmail);
+
+					if (userMatch) {
+						const idToUse = userMatch._id;
 						dataObj = {
 							...dataObj,
 							pendingApprovalUserID: idToUse
@@ -131,18 +147,18 @@ const FriendRequestForm = ({ onSubmit }) => {
 								data: dataObj
 							});
 						} else {
-							// todo set an alert and show message to user with request status and who request is pending
-							console.log('A request has already been created', { existingRequest });
-							setConfirmation(initialConfirmationState);
-							onSubmit && (await onSubmit());
+							await alertOfExistingRequest(existingRequest);
 						}
 					} else {
-						setConfirmation({
-							...confirmation,
-							open: true,
-							data: dataObj,
-							newUser: true
-						});
+						const existingRequest = await checkForExistingRequestMatches(dataObj);
+						!existingRequest
+							? setConfirmation({
+									...confirmation,
+									open: true,
+									data: { ...dataObj, pendingApprovalUserID: null },
+									newUser: existingRequest ? false : true
+							  })
+							: await alertOfExistingRequest(existingRequest);
 					}
 				} catch (err) {
 					console.error(err);
@@ -152,9 +168,7 @@ const FriendRequestForm = ({ onSubmit }) => {
 			{({
 				handleChange,
 				handleBlur,
-				setTouched,
 				handleSubmit,
-				setFieldValue,
 				isSubmitting,
 				touched,
 				errors,
