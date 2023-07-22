@@ -4,9 +4,10 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	DialogContentText,
 	Slide,
-	useTheme
+	Paper,
+	useTheme,
+	useMediaQuery
 } from '@mui/material';
 import SubmitButton from './SubmitButton';
 import CustomTypography from './CustomTypography';
@@ -26,11 +27,14 @@ const ConfirmationDialog = ({
 	cancelButtonTitle = 'Cancel'
 }) => {
 	const theme = useTheme();
+	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
+
 	return (
 		<div>
 			<Dialog
 				open={open}
-				TransitionComponent={Transition}
+				TransitionComponent={lgAndUp ? Transition : undefined}
+				PaperComponent={lgAndUp ? undefined : Paper}
 				keepMounted
 				onClose={setClosed}
 				aria-describedby='alert-dialog-slide-description'
