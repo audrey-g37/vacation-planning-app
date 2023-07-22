@@ -19,7 +19,7 @@ const sendEmailMessage = async (idType, data) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		timeout: 2000,
+		timeout: 5000,
 		data: data
 	};
 	if (emailProps[idType]?.urlParams) {
