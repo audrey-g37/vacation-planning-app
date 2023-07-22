@@ -91,7 +91,6 @@ export const AuthProvider = ({ children }) => {
 		dispatch({
 			type: LOGOUT
 		});
-		!urlPath.includes('auth') && navigate('auth/login');
 	};
 
 	const login = () => {

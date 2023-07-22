@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseServerUrl = 'https://grip.webappsbyaudreyapi.dev/api';
+
 const emailProps = {
 	'join-grip-friend-request': {
 		templateID: 'd-cb9ce5e879584331aeca8106338b10a2',
@@ -13,11 +15,12 @@ const sendEmailMessage = async (idType, data) => {
 	}
 	let axiosObj = {
 		method: 'post',
-		baseUrl: `https://grip.webappsbyaudreyapi.dev/sendgrid`,
+		baseURL: `${baseServerUrl}/sendgrid`,
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		timeout: 2000
+		timeout: 2000,
+		data: data
 	};
 	if (emailProps[idType]?.urlParams) {
 		axiosObj = { ...axiosObj, url: emailProps[idType].urlParams };

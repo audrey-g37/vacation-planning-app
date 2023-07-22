@@ -52,7 +52,7 @@ const ViewFriends = () => {
 		const matchingData = allFriendRequests.find((friend) => friend._id === row._id);
 		const meets =
 			matchingData.status === 'Pending' &&
-			matchingData.pendingApprovalUserID._id === user._id;
+			matchingData.pendingApprovalUserID?._id === user._id;
 		return meets;
 	};
 

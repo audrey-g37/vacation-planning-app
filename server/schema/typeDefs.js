@@ -22,7 +22,7 @@ const typeDefs = gql`
 		_id: ID!
 		status: String
 		requestedByUserID: User!
-		pendingApprovalUserID: User!
+		pendingApprovalUserID: User
 		pendingApprovalUserEmail: String
 		dateReviewed: String
 	}
