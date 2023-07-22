@@ -8,7 +8,7 @@ import FormInput from './inputs';
 import ConfirmationDialog from '../ConfirmationDialog';
 import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
-import { sendEmailMessage } from 'utils/sendgrid';
+import { sendEmailMessage } from 'utils/server-api';
 
 const FriendRequestForm = ({ onSubmit }) => {
 	const { user, crudFunctions } = useAuth();
