@@ -49,7 +49,7 @@ const FriendRequestForm = ({ onSubmit }) => {
 	};
 
 	const confirmAddFriend = async () => {
-		await addFriendRequest({ variables: confirmation.data });
+		const addRequest = async () => await addFriendRequest({ variables: confirmation.data });
 		if (confirmation.newUser) {
 			emailInfo = {
 				...emailInfo,
@@ -58,7 +58,14 @@ const FriendRequestForm = ({ onSubmit }) => {
 					...[{ toEmails: [confirmation.data?.pendingApprovalUserEmail] }]
 				]
 			};
-			await sendEmailMessage('join-grip-friend-request', emailInfo);
+			await sendEmailMessage('join-grip-friend-request', emailInfo)
+				.then(async () => await addRequest())
+				.catch((err) => {
+					// todo alert error
+					console.error(err);
+				});
+		} else {
+			await addRequest();
 		}
 		onSubmit && (await onSubmit());
 	};
