@@ -12,6 +12,48 @@ export const ADD_USER = gql`
 		}
 	}
 `;
+
+export const ADD_TRIP_ATTENDEE = gql`
+	mutation addTripAttendee(
+		$status: String
+		$attendeeUserID: ID!
+		$tripID: ID!
+		$editTripDetails: Boolean
+		$addTask: String
+		$editTask: String
+		$addBudget: String
+		$editBudget: String
+		$addAttendee: String
+		$editAttendee: String
+	) {
+		addTripAttendee(
+			status: $status
+			attendeeUserID: $attendeeUserID
+			tripID: $tripID
+			editTripDetails: $editTripDetails
+			addTask: $addTask
+			editTask: $editTask
+			addBudget: $addBudget
+			editBudget: $editBudget
+			addAttendee: $addAttendee
+			editAttendee: $editAttendee
+		) {
+			status
+			attendeeUserID
+			tripID
+			tripPermissions {
+				editTripDetails
+				addTask
+				editTask
+				addBudget
+				editBudget
+				addAttendee
+				editAttendee
+			}
+		}
+	}
+`;
+
 export const ADD_FRIEND_REQUEST = gql`
 	mutation addFriendRequest(
 		$status: String
@@ -150,6 +192,46 @@ export const UPDATE_USER = gql`
 		}
 	}
 `;
+
+export const UPDATE_TRIP_ATTENDEE = gql`
+	mutation updateTripAttendee(
+		$queryID: ID!
+		$status: String
+		$editTripDetails: Boolean
+		$addTask: String
+		$editTask: String
+		$addBudget: String
+		$editBudget: String
+		$addAttendee: String
+		$editAttendee: String
+	) {
+		updateTripAttendee(
+			queryID: $queryID
+			status: $status
+			editTripDetails: $editTripDetails
+			addTask: $addTask
+			editTask: $editTask
+			addBudget: $addBudget
+			editBudget: $editBudget
+			addAttendee: $addAttendee
+			editAttendee: $editAttendee
+		) {
+			status
+			attendeeUserID
+			tripID
+			tripPermissions {
+				editTripDetails
+				addTask
+				editTask
+				addBudget
+				editBudget
+				addAttendee
+				editAttendee
+			}
+		}
+	}
+`;
+
 export const UPDATE_FRIEND_REQUEST = gql`
 	mutation updateFriendRequest(
 		$queryID: ID!
