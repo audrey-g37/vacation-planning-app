@@ -1,13 +1,5 @@
 import { forwardRef } from 'react';
-import {
-	Grid,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-	Slide,
-	useTheme
-} from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Slide, useTheme } from '@mui/material';
 import SubmitButton from './SubmitButton';
 import CustomTypography from './CustomTypography';
 
@@ -32,38 +24,16 @@ const ConfirmationDialog = ({
 			TransitionComponent={Transition}
 			keepMounted
 			onClose={setClosed}
-			aria-describedby='alert-dialog-slide-description'
+			aria-labelledby='alert-dialog-slide-description'
 		>
-			<Grid container spacing={theme.spacing()} sx={{ flexDirection: 'column' }}>
-				<Grid item>
-					<DialogTitle sx={{ color: theme.palette.text.secondary }}>{title}</DialogTitle>
-				</Grid>
-				<Grid item>
-					<DialogContent>
-						<CustomTypography textContent={textContent} />
-					</DialogContent>
-				</Grid>
-				<Grid item>
-					<DialogActions>
-						<Grid
-							container
-							spacing={theme.spacing()}
-							sx={{ justifyContent: 'flex-end' }}
-						>
-							<Grid item>
-								<SubmitButton
-									onClick={onCancel}
-									title={cancelButtonTitle}
-									useErrorButton={true}
-								/>
-							</Grid>
-							<Grid item>
-								<SubmitButton onClick={onConfirm} title={confirmButtonTitle} />
-							</Grid>
-						</Grid>
-					</DialogActions>
-				</Grid>
-			</Grid>
+			<DialogTitle sx={{ color: theme.palette.text.secondary }}>{title}</DialogTitle>
+			<DialogContent>
+				<CustomTypography textContent={textContent} />
+			</DialogContent>
+			<DialogActions>
+				<SubmitButton onClick={onCancel} title={cancelButtonTitle} useErrorButton={true} />
+				<SubmitButton onClick={onConfirm} title={confirmButtonTitle} />
+			</DialogActions>
 		</Dialog>
 	);
 };
