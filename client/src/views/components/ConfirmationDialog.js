@@ -54,12 +54,7 @@ const ConfirmationDialog = ({
 								<SubmitButton
 									onClick={onCancel}
 									title={cancelButtonTitle}
-									customButtonStyle={{
-										'backgroundColor': theme.palette.error.main,
-										':hover': {
-											backgroundColor: theme.palette.error.dark
-										}
-									}}
+									useErrorButton={true}
 								/>
 							</Grid>
 							<Grid item>

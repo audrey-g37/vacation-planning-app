@@ -12,6 +12,7 @@ const SubmitButton = ({
 	icon,
 	type = 'submit',
 	loading = false,
+	useErrorButton = false,
 	customTypographyStyle = {},
 	customButtonStyle = {}
 }) => {
@@ -37,9 +38,13 @@ const SubmitButton = ({
 		if (!customButtonStyle.backgroundColor) {
 			customButtonStyle = {
 				...customButtonStyle,
-				'backgroundColor': theme.palette.text.secondary,
+				'backgroundColor': useErrorButton
+					? theme.palette.error.main
+					: theme.palette.text.secondary,
 				':hover': {
-					backgroundColor: theme.palette.text.primary
+					backgroundColor: useErrorButton
+						? theme.palette.error.dark
+						: theme.palette.text.primary
 				}
 			};
 		}

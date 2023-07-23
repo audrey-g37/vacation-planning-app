@@ -21,6 +21,7 @@ const DataGrid = ({
 	onSelectionSave,
 	selectionButtonTitle = 'Update',
 	selectionButtonTitleTwo,
+	useErrorButtonTwo = false,
 	hidePagination = false,
 	maxHeight = '70vh',
 	checkRowSelectable
@@ -155,11 +156,12 @@ const DataGrid = ({
 								<SubmitButton
 									title={selectionButtonTitleTwo}
 									onClick={async () => {
-										await onSelectionSave(selectedRowIds, { buttonOne: false });
+										await onSelectionSave(selectedRowIds, false);
 										setSelectedRowIds([]);
 										queryResults && (await queryResults());
 									}}
 									disabled={selectedRowIds.length === 0}
+									useErrorButton={useErrorButtonTwo}
 								/>
 							</Grid>
 						)}
