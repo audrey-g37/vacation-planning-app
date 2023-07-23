@@ -9,6 +9,40 @@ const typeDefs = gql`
 		authId: String!
 	}
 
+	type AttendeePermissions {
+		editTripDetails: Boolean
+		addTask: String
+		editTask: String
+		addBudget: String
+		editBudget: String
+		addAttendee: String
+		editAttendee: String
+	}
+
+	type TripAttendee {
+		_id: ID!
+		status: String
+		tripPermissions: AttendeePermissions
+		attendeeUserID: ID!
+		tripID: ID!
+	}
+
+	type PopulateTripOnTripAttendee {
+		_id: ID!
+		status: String
+		tripPermissions: AttendeePermissions
+		attendeeUserID: ID!
+		tripID: Trip!
+	}
+
+	type PopulateAttendeeOnTripAttendee {
+		_id: ID!
+		status: String
+		tripPermissions: AttendeePermissions
+		attendeeUserID: User!
+		tripID: ID!
+	}
+
 	type FriendRequest {
 		_id: ID!
 		status: String
@@ -70,6 +104,9 @@ const typeDefs = gql`
 
 	type Query {
 		user(queryID: ID, authId: String, email: String): User
+		tripAttendees(attendeeUserID: ID, tripID: ID): [TripAttendee]
+		tripAttendeesByTripID(tripID: ID): [PopulateAttendeeOnTripAttendee]
+		tripAttendeesByAttendeeID(attendeeUserID: ID): [PopulateTripOnTripAttendee]
 		trip(queryID: ID!): Trip
 		task(queryID: ID!): Task
 		budget(queryID: ID!): Budget
@@ -91,6 +128,18 @@ const typeDefs = gql`
 
 	type Mutation {
 		addUser(firstName: String!, lastName: String!, email: String!, authId: String!): User
+		addTripAttendee(
+			status: String
+			attendeeUserID: ID!
+			tripID: ID!
+			editTripDetails: Boolean
+			addTask: String
+			editTask: String
+			addBudget: String
+			editBudget: String
+			addAttendee: String
+			editAttendee: String
+		): TripAttendee
 		addFriendRequest(
 			status: String
 			requestedByUserID: ID!
@@ -130,6 +179,17 @@ const typeDefs = gql`
 			taskID: ID
 		): Budget
 		updateUser(queryID: ID!, email: String, firstName: String, lastName: String): User
+		updateTripAttendee(
+			queryID: ID!
+			status: String
+			editTripDetails: Boolean
+			addTask: String
+			editTask: String
+			addBudget: String
+			editBudget: String
+			addAttendee: String
+			editAttendee: String
+		): TripAttendee
 		updateFriendRequest(
 			queryID: ID!
 			status: String

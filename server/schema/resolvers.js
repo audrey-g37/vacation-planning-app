@@ -1,5 +1,4 @@
-const { Budget, Task, Trip, User, FriendRequest } = require('../models');
-const { AuthenticationError } = require('apollo-server-express');
+const { User, TripAttendee, Trip, FriendRequest, Budget, Task } = require('../models');
 
 const resolvers = {
 	Query: {
@@ -14,6 +13,19 @@ const resolvers = {
 		},
 		users: async (parent, body, context) => {
 			return await User.find({ ...body });
+		},
+		tripAttendees: async (parent, { attendeeUserID, tripID }, context) => {
+			if (attendeeUserID) {
+				return TripAttendee.find({ attendeeUserID: attendeeUserID });
+			} else if (tripID) {
+				return TripAttendee.find({ tripID: tripID });
+			}
+		},
+		tripAttendeesByTripID: async (parent, { tripID }, context) => {
+			return TripAttendee.find({ tripID: tripID }).populate('attendeeUserID');
+		},
+		tripAttendeesByAttendeeID: async (parent, { attendeeUserID }, context) => {
+			return TripAttendee.find({ attendeeUserID: attendeeUserID }).populate('tripID');
 		},
 		friendRequestsMatch: async (parent, body, context) => {
 			let possibleMatches = [];
@@ -58,8 +70,32 @@ const resolvers = {
 			const user = await User.create(dataToSend);
 			return user;
 		},
+		addTripAttendee: async (parent, body, context) => {
+			const {
+				editTripDetails,
+				addTask,
+				editTask,
+				addBudget,
+				editBudget,
+				addAttendee,
+				editAttendee
+			} = body;
+			let dataToSend = {
+				...body,
+				tripPermissions: {
+					editTripDetails: editTripDetails,
+					addTask: addTask,
+					editTask: editTask,
+					addBudget: addBudget,
+					editBudget: editBudget,
+					addAttendee: addAttendee,
+					editAttendee: editAttendee
+				}
+			};
+			const tripAttendee = await TripAttendee.create(dataToSend);
+			return tripAttendee;
+		},
 		addFriendRequest: async (parent, body, context) => {
-			const { queryID } = body;
 			let dataToSend = { ...body };
 			const friendRequest = await FriendRequest.create(dataToSend);
 			return friendRequest;
@@ -95,6 +131,34 @@ const resolvers = {
 			let dataToSend = { ...body };
 			const user = await User.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return user;
+		},
+		updateTripAttendee: async (parent, body, context) => {
+			const { queryID } = body;
+			const {
+				editTripDetails,
+				addTask,
+				editTask,
+				addBudget,
+				editBudget,
+				addAttendee,
+				editAttendee
+			} = body;
+			let dataToSend = {
+				...body,
+				tripPermissions: {
+					editTripDetails: editTripDetails,
+					addTask: addTask,
+					editTask: editTask,
+					addBudget: addBudget,
+					editBudget: editBudget,
+					addAttendee: addAttendee,
+					editAttendee: editAttendee
+				}
+			};
+			const tripAttendee = await TripAttendee.findByIdAndUpdate(queryID, dataToSend, {
+				new: true
+			});
+			return tripAttendee;
 		},
 		updateFriendRequest: async (parent, body, context) => {
 			const { queryID } = body;
