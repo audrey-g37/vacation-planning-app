@@ -290,7 +290,12 @@ export const AuthProvider = ({ children }) => {
 				);
 			}
 		} catch (err) {
-			console.error(err);
+			setAlert({
+				...alert,
+				open: true,
+				severity: 'error',
+				message: `There was a problem accessing your account information.  Please try again later.`
+			});
 		}
 	};
 
@@ -307,16 +312,15 @@ export const AuthProvider = ({ children }) => {
 						message: `There was a problem logging you in.  Please check the email and password are entered correctly.`
 					});
 				}
-				return console.error({ err });
+				return;
 			});
 		} catch (err) {
-			setAlert({
+			return setAlert({
 				...alert,
 				open: true,
 				severity: 'error',
 				message: `There was a problem logging you in and gathering your user data.  Please try again later.`
 			});
-			return console.error({ err });
 		}
 	};
 

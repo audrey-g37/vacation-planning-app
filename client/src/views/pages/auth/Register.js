@@ -43,9 +43,7 @@ const Register = ({ onSubmit }) => {
 					values = { ...values, email: values.email.toLowerCase() };
 					await register(values);
 					onSubmit && (await onSubmit());
-				} catch (err) {
-					console.error(err);
-				}
+				} catch (err) {}
 			}}
 		>
 			{({
