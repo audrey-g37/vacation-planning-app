@@ -42,7 +42,7 @@ const Register = ({ onSubmit }) => {
 				try {
 					values = { ...values, email: values.email.toLowerCase() };
 					await register(values);
-					onSubmit && onSubmit();
+					onSubmit && (await onSubmit());
 				} catch (err) {
 					console.error(err);
 				}
