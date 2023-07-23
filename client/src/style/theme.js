@@ -14,6 +14,10 @@ const theme = (mode) => {
 			// background color of the table header
 			main: '#393635'
 		},
+		error: {
+			dark: '#FDC4AC',
+			main: '#FFA27A'
+		},
 		text: {
 			// custom typography default (table row text color), background color of submit button on hover
 			primary: '#FDFDFD',
@@ -27,10 +31,10 @@ const theme = (mode) => {
 			error: '#EEFF00'
 		},
 		background: {
-			paper: blueGrey[800]
+			paper: grey[800]
 		},
 		custom: {
-			navBackground: blueGrey[700]
+			navBackground: grey[900]
 		}
 	};
 	const lightMode = {
@@ -40,6 +44,10 @@ const theme = (mode) => {
 		},
 		secondary: {
 			main: '#E1E1E1'
+		},
+		error: {
+			main: '#D32F2F',
+			dark: '#871E1E'
 		},
 		text: {
 			primary: '#000000',
