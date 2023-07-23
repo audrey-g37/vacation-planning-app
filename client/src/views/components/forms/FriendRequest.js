@@ -184,51 +184,49 @@ const FriendRequestForm = ({ onSubmit }) => {
 				values
 			}) => {
 				return (
-					<>
-						<form noValidate>
-							<Grid container spacing={theme.spacing()}>
-								<Grid item xs={12}>
-									<FormInput
-										componentType={'text'}
-										componentProps={{
-											name: 'pendingApprovalUserEmail',
-											type: 'email',
-											value: values.pendingApprovalUserEmail,
-											onChange: handleChange,
-											onBlur: handleBlur
-										}}
-										label={'Email'}
-										required={true}
-										error={Boolean(
-											touched.pendingApprovalUserEmail &&
-												errors.pendingApprovalUserEmail
-										)}
-										helperText={
-											touched.pendingApprovalUserEmail &&
-											errors.pendingApprovalUserEmail &&
-											`${errors.pendingApprovalUserEmail}`
-										}
-									/>
-								</Grid>
-								<Grid item xs={12}>
-									<Grid
-										container
-										sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
-										spacing={theme.spacing()}
-									>
-										<Grid item>
-											<SubmitButton
-												disableElevation
-												disabled={isSubmitting}
-												title={'Add Friend'}
-												onClick={handleSubmit}
-												placeholder={'Request'}
-											/>
-										</Grid>
+					<form noValidate>
+						<Grid container spacing={theme.spacing()}>
+							<Grid item xs={12}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'pendingApprovalUserEmail',
+										type: 'email',
+										value: values.pendingApprovalUserEmail,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									label={'Email'}
+									required={true}
+									error={Boolean(
+										touched.pendingApprovalUserEmail &&
+											errors.pendingApprovalUserEmail
+									)}
+									helperText={
+										touched.pendingApprovalUserEmail &&
+										errors.pendingApprovalUserEmail &&
+										`${errors.pendingApprovalUserEmail}`
+									}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<Grid
+									container
+									sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
+									spacing={theme.spacing()}
+								>
+									<Grid item>
+										<SubmitButton
+											disableElevation
+											disabled={isSubmitting}
+											title={'Add Friend'}
+											onClick={handleSubmit}
+											placeholder={'Request'}
+										/>
 									</Grid>
 								</Grid>
 							</Grid>
-						</form>
+						</Grid>
 						{confirmation.open && (
 							<ConfirmationDialog
 								open={confirmation.open}
@@ -242,7 +240,7 @@ const FriendRequestForm = ({ onSubmit }) => {
 								}
 							/>
 						)}
-					</>
+					</form>
 				);
 			}}
 		</Formik>
