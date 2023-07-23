@@ -4,10 +4,11 @@ import { Grid, useTheme, useMediaQuery, AppBar } from '@mui/material';
 // project imports
 import CollapsedMenu from 'views/components/CollapsedMenu';
 import CustomTypography from '../CustomTypography';
+import Alert from '../Alert';
 import useAuth from 'hooks/useAuth';
 
 const Header = ({ underConstruction }) => {
-	const { authInfo, logoutUser } = useAuth();
+	const { authInfo, logoutUser, alert } = useAuth();
 
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
@@ -39,6 +40,7 @@ const Header = ({ underConstruction }) => {
 				backgroundColor: theme.palette.custom.navBackground
 			}}
 		>
+			{alert.open && <Alert />}
 			<Grid
 				container
 				spacing={theme.spacing()}

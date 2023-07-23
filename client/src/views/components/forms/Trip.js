@@ -10,7 +10,7 @@ import CustomDivider from '../CustomDivider';
 import { countryOptions } from 'utils/options';
 
 const TripForm = ({ edit, formData, onSubmit }) => {
-	const { user, crudFunctions } = useAuth();
+	const { user, crudFunctions, alert, setAlert } = useAuth();
 
 	const { addTrip, editTrip } = crudFunctions;
 
@@ -75,9 +75,20 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 					} else {
 						await addTrip(dataToSend);
 					}
+					setAlert({
+						...alert,
+						open: true,
+						severity: 'success',
+						message: `Trip successfully saved!`
+					});
 					onSubmit && (await onSubmit());
 				} catch (err) {
-					console.error(err);
+					setAlert({
+						...alert,
+						open: true,
+						severity: 'error',
+						message: `There was a problem trying to save the trip.  Please try again later.`
+					});
 				}
 			}}
 		>
@@ -252,7 +263,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 										<SubmitButton
 											disableElevation
 											disabled={isSubmitting}
-											title={'Save Changes'}
+											title={`Save ${edit ? ' Changes' : ''}`}
 											onClick={handleSubmit}
 											placeholder={'Save Changes'}
 										/>

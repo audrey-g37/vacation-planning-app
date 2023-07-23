@@ -11,7 +11,7 @@ import useAuth from 'hooks/useAuth';
 import { sendEmailMessage } from 'utils/server-api';
 
 const FriendRequestForm = ({ onSubmit }) => {
-	const { user, crudFunctions } = useAuth();
+	const { user, crudFunctions, alert, setAlert } = useAuth();
 
 	const { getUser, addFriendRequest, getFriendRequestsMatch } = crudFunctions;
 
@@ -45,7 +45,14 @@ const FriendRequestForm = ({ onSubmit }) => {
 		});
 		return await refetch({ email: email })
 			.then((res) => res.data.user)
-			.catch((err) => console.error(err));
+			.catch((err) =>
+				setAlert({
+					...alert,
+					open: true,
+					severity: 'error',
+					message: `There was a problem trying to look for an existing GRIP account for ${email}.  Please try again later.`
+				})
+			);
 	};
 
 	const confirmAddFriend = async () => {
@@ -61,12 +68,17 @@ const FriendRequestForm = ({ onSubmit }) => {
 			await sendEmailMessage('join-grip-friend-request', emailInfo)
 				.then(async () => await addRequest())
 				.catch((err) => {
-					// todo alert error
-					console.error(err);
+					return setAlert({
+						...alert,
+						open: true,
+						severity: 'error',
+						message: `There was a problem sending an email to ${confirmation.data.pendingApprovalUserEmail}.  Please try again later.`
+					});
 				});
 		} else {
 			await addRequest();
 		}
+		setAlert({ ...alert, open: true, severity: 'success', message: `Friend request sent!` });
 		onSubmit && (await onSubmit());
 	};
 
@@ -116,8 +128,17 @@ const FriendRequestForm = ({ onSubmit }) => {
 	};
 
 	const alertOfExistingRequest = async (existingRequest) => {
-		// todo set an alert and show message to user with request status and who request is pending
-		// console.log('A request has already been created', { existingRequest });
+		setAlert({
+			...alert,
+			open: true,
+			severity: 'info',
+			message: `A request is already pending.  Waiting for ${
+				existingRequest.pendingApprovalUserID?._id === user._id
+					? 'you'
+					: existingRequest.pendingApprovalUserID?.firstName ||
+					  existingRequest.pendingApprovalUserEmail
+			} to approve.`
+		});
 		setConfirmation(initialConfirmationState);
 		onSubmit && (await onSubmit());
 	};
@@ -170,7 +191,12 @@ const FriendRequestForm = ({ onSubmit }) => {
 							: await alertOfExistingRequest(existingRequest);
 					}
 				} catch (err) {
-					console.error(err);
+					setAlert({
+						...alert,
+						open: true,
+						severity: 'error',
+						message: `There was a problem trying to submit the friend request.  Please try again later.`
+					});
 				}
 			}}
 		>
