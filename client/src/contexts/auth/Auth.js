@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const login = () => {
-		if (state.isLoggedIn) {
+		if (state.isLoggedIn || urlPath.includes('auth')) {
 			return;
 		}
 		if (!state.authInfo) {
@@ -112,22 +112,18 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	// alerts that are displayed throughout app
-	const [alert, setAlert] = useState({
-		action: false,
+	const initialAlertState = {
 		open: false,
 		message: '',
-		messages: [],
 		anchorOrigin: {
 			vertical: 'top',
 			horizontal: 'right'
 		},
-		variant: 'alert',
-		alertSeverity: 'success',
-		transition: 'SlideUp',
-		close: false,
-		actionButton: false,
-		autoHideDuration: 6000
-	});
+		severity: 'success',
+		allowClose: true,
+		autoHideDuration: 4000
+	};
+	const [alert, setAlert] = useState(initialAlertState);
 
 	// apollo queries
 	const queryTypes = {
@@ -216,23 +212,21 @@ export const AuthProvider = ({ children }) => {
 						}
 					});
 					userData = data.addUser;
+					setAlert({
+						...alert,
+						severity: 'success',
+						message: 'Account was successfully created! Login to start using GRIP.'
+					});
+					navigate('login');
 				}
 			});
 		} catch (err) {
-			console.error(err);
+			setAlert({
+				...alert,
+				severity: 'error',
+				message: 'There was a problem creating the account.  Please try again later.'
+			});
 		}
-		userData
-			? setAlert({
-					...alert,
-					alertSeverity: 'success',
-					message: 'User successfully created!'
-			  })
-			: setAlert({
-					...alert,
-					alertSeverity: 'error',
-					message: 'There was a problem creating the user.'
-			  });
-		navigate('login');
 	};
 
 	// using accessToken to get user info and replacing the token in the url
@@ -254,7 +248,7 @@ export const AuthProvider = ({ children }) => {
 				dispatch({ ...dispatchInfo });
 			};
 			if (!isLoggedIn && !accessToken) {
-				setAlert({ message: 'You need to be logged in to see this page.' });
+				setAlert({ ...alert, message: 'You need to be logged in to see this page.' });
 				return responseObj;
 			}
 
@@ -301,22 +295,28 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	// authorizing an existing user based on email and password
-	const getAuthToken = async (authObj = {}) => {
+	const getAuthToken = (authObj = {}) => {
 		try {
 			const authToSend = { ...auth0AuthObj, ...authObj };
-			auth0Connection.login(authToSend, async (err) => {
-				if (err) {
-					return console.error({ err });
+			auth0Connection.login(authToSend, (err) => {
+				if (err.code === 'access_denied') {
+					setAlert({
+						...alert,
+						open: true,
+						severity: 'error',
+						message: `There was a problem logging you in.  Please check the email and password are entered correctly.`
+					});
 				}
+				return console.error({ err });
 			});
 		} catch (err) {
-			console.error({ err });
 			setAlert({
 				...alert,
 				open: true,
-				alertSeverity: 'error',
+				severity: 'error',
 				message: `There was a problem logging you in and gathering your user data.  Please try again later.`
 			});
+			return console.error({ err });
 		}
 	};
 
@@ -326,6 +326,7 @@ export const AuthProvider = ({ children }) => {
 				...state,
 				login: () => {},
 				alert,
+				initialAlertState,
 				setAlert,
 				navigate,
 				getAuthToken,
