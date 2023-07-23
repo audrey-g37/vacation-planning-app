@@ -12,45 +12,48 @@ const SubmitButton = ({
 	icon,
 	type = 'submit',
 	loading = false,
-	customStyle = {}
+	useErrorButton = false,
+	customTypographyStyle = {},
+	customButtonStyle = {}
 }) => {
 	const theme = useTheme();
 
-	if (!customStyle.color) {
-		customStyle.color = theme.palette.text.secondary;
-	}
-
-	let typographyCustomStyle = {
-		...customStyle,
+	customTypographyStyle = {
+		...customTypographyStyle,
 		color: disabled ? theme.palette.text.disabled : theme.palette.text.dark
 	};
 
-	let buttonStyle = {
-		...customStyle,
-		padding: 0,
-		backgroundColor: theme.palette.text.secondary
+	customButtonStyle = {
+		...customButtonStyle,
+		padding: 0
 	};
 
 	if (icon) {
-		buttonStyle = {
-			...buttonStyle,
+		customButtonStyle = {
+			...customButtonStyle,
 			padding: '0.5rem',
 			backgroundColor: 'none'
 		};
 	} else {
-		buttonStyle = {
-			...buttonStyle,
-			'backgroundColor': theme.palette.text.secondary,
-			':hover': {
-				backgroundColor: theme.palette.text.primary
-			}
-		};
+		if (!customButtonStyle.backgroundColor) {
+			customButtonStyle = {
+				...customButtonStyle,
+				'backgroundColor': useErrorButton
+					? theme.palette.error.main
+					: theme.palette.text.secondary,
+				':hover': {
+					backgroundColor: useErrorButton
+						? theme.palette.error.dark
+						: theme.palette.text.primary
+				}
+			};
+		}
 	}
 
 	const FormattedIconButton = (
 		<span>
 			<CustomTooltip tooltipText={tooltipText}>
-				<IconButton sx={buttonStyle} onClick={onClick} disabled={disabled}>
+				<IconButton sx={customButtonStyle} onClick={onClick} disabled={disabled}>
 					{icon}
 				</IconButton>
 			</CustomTooltip>
@@ -63,11 +66,11 @@ const SubmitButton = ({
 				disabled={disabled}
 				variant={variant}
 				type={type}
-				sx={buttonStyle}
+				sx={customButtonStyle}
 			>
 				<CustomTypography
 					textContent={title}
-					customStyle={typographyCustomStyle}
+					customStyle={customTypographyStyle}
 					button={true}
 				/>
 			</Button>

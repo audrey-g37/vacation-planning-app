@@ -12,6 +12,8 @@ const Header = ({ underConstruction }) => {
 	const theme = useTheme();
 	const medAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
+	const isDarkMode = theme.palette.mode === 'dark';
+
 	const withAuth = authInfo;
 
 	let headerNav = [
@@ -53,7 +55,9 @@ const Header = ({ underConstruction }) => {
 						width='50'
 						height='50'
 						alt='GRIP logo'
-						src='/images/logos/logo-no-background-no-slogan.png'
+						src={`/images/logos/${
+							isDarkMode ? 'logo-white' : 'logo'
+						}-no-background-no-slogan.png`}
 					/>
 				</Grid>
 				<Grid item xs={8}>

@@ -1,13 +1,12 @@
 import { forwardRef } from 'react';
 import {
+	Grid,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
 	Slide,
-	Paper,
-	useTheme,
-	useMediaQuery
+	useTheme
 } from '@mui/material';
 import SubmitButton from './SubmitButton';
 import CustomTypography from './CustomTypography';
@@ -27,32 +26,45 @@ const ConfirmationDialog = ({
 	cancelButtonTitle = 'Cancel'
 }) => {
 	const theme = useTheme();
-	const lgAndUp = useMediaQuery(theme.breakpoints.up('md'));
-
 	return (
-		<div>
-			<Dialog
-				open={open}
-				TransitionComponent={lgAndUp ? Transition : undefined}
-				PaperComponent={lgAndUp ? undefined : Paper}
-				keepMounted
-				onClose={setClosed}
-				aria-describedby='alert-dialog-slide-description'
-			>
-				<DialogTitle sx={{ color: theme.palette.text.secondary }}>{title}</DialogTitle>
-				<DialogContent>
-					<CustomTypography textContent={textContent} />
-				</DialogContent>
-				<DialogActions>
-					<SubmitButton
-						onClick={onCancel}
-						title={cancelButtonTitle}
-						customStyle={{ backgroundColor: theme.palette.error.main }}
-					/>
-					<SubmitButton onClick={onConfirm} title={confirmButtonTitle} />
-				</DialogActions>
-			</Dialog>
-		</div>
+		<Dialog
+			open={open}
+			TransitionComponent={Transition}
+			keepMounted
+			onClose={setClosed}
+			aria-describedby='alert-dialog-slide-description'
+		>
+			<Grid container spacing={theme.spacing()} sx={{ flexDirection: 'column' }}>
+				<Grid item>
+					<DialogTitle sx={{ color: theme.palette.text.secondary }}>{title}</DialogTitle>
+				</Grid>
+				<Grid item>
+					<DialogContent>
+						<CustomTypography textContent={textContent} />
+					</DialogContent>
+				</Grid>
+				<Grid item>
+					<DialogActions>
+						<Grid
+							container
+							spacing={theme.spacing()}
+							sx={{ justifyContent: 'flex-end' }}
+						>
+							<Grid item>
+								<SubmitButton
+									onClick={onCancel}
+									title={cancelButtonTitle}
+									useErrorButton={true}
+								/>
+							</Grid>
+							<Grid item>
+								<SubmitButton onClick={onConfirm} title={confirmButtonTitle} />
+							</Grid>
+						</Grid>
+					</DialogActions>
+				</Grid>
+			</Grid>
+		</Dialog>
 	);
 };
 

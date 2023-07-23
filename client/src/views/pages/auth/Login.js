@@ -45,7 +45,7 @@ const Login = ({ onSubmit }) => {
 						};
 					}
 					await getAuthToken(values);
-					onSubmit && onSubmit();
+					onSubmit && (await onSubmit());
 				} catch (err) {
 					console.error(err);
 				}

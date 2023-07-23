@@ -21,6 +21,7 @@ const DataGrid = ({
 	onSelectionSave,
 	selectionButtonTitle = 'Update',
 	selectionButtonTitleTwo,
+	useErrorButtonTwo = false,
 	hidePagination = false,
 	maxHeight = '70vh',
 	checkRowSelectable
@@ -54,8 +55,8 @@ const DataGrid = ({
 							formData: rows.find((row) => row._id === selectedRow._id)
 						});
 					}}
-					customStyle={{
-						color: theme.palette.text.primary
+					customButtonStyle={{
+						color: theme.palette.primary.main
 					}}
 				/>
 			)
@@ -75,8 +76,8 @@ const DataGrid = ({
 					onClick={async () => {
 						navigate(`/view-${collection}/${row._id}`);
 					}}
-					customStyle={{
-						color: theme.palette.text.primary
+					customButtonStyle={{
+						color: theme.palette.primary.main
 					}}
 				/>
 			)
@@ -117,7 +118,13 @@ const DataGrid = ({
 					}
 					disableRowSelectionOnClick
 					hideFooter={hidePagination}
-					sx={{ '& .MuiDataGrid-columnHeaders': headerStylingObj }}
+					sx={{
+						'& .MuiDataGrid-columnHeaders': headerStylingObj,
+						'& .MuiDataGrid-withBorderColor': {
+							borderColor: theme.palette.secondary.main
+						},
+						'borderColor': theme.palette.secondary.main
+					}}
 				/>
 				{dialogOpen && (
 					<Form
@@ -149,11 +156,12 @@ const DataGrid = ({
 								<SubmitButton
 									title={selectionButtonTitleTwo}
 									onClick={async () => {
-										await onSelectionSave(selectedRowIds, { buttonOne: false });
+										await onSelectionSave(selectedRowIds, false);
 										setSelectedRowIds([]);
 										queryResults && (await queryResults());
 									}}
 									disabled={selectedRowIds.length === 0}
+									useErrorButton={useErrorButtonTwo}
 								/>
 							</Grid>
 						)}

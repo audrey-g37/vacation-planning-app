@@ -114,8 +114,8 @@ const TableOfData = ({
 																formData: row
 															});
 														}}
-														customStyle={{
-															color: theme.palette.text.primary
+														customButtonStyle={{
+															color: theme.palette.primary.main
 														}}
 													/>
 												);
@@ -129,8 +129,8 @@ const TableOfData = ({
 																`/view-${collection}/${row._id}`
 															);
 														}}
-														customStyle={{
-															color: theme.palette.text.primary
+														customButtonStyle={{
+															color: theme.palette.primary.main
 														}}
 													/>
 												);

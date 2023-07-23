@@ -29,16 +29,19 @@ const ViewFriends = () => {
 		const { data } = await getFriendRequests(dataToSend);
 
 		const friendRequestsToView = data?.friendRequests.filter(
-			(friend) =>
-				friend.status !== 'Approved' &&
-				!(friend.status === 'Denied' && friend.pendingApprovalUserID._id === user._id)
+			(friendReq) =>
+				friendReq.status !== 'Approved' &&
+				!(
+					friendReq.status === 'Denied' &&
+					friendReq.pendingApprovalUserID?._id === user._id
+				)
 		);
 
 		setAllFriendRequests(friendRequestsToView);
 		setLoading(false);
 	};
 
-	const approveRequests = async (selectedIds, { buttonOne = true }) => {
+	const approveRequests = async (selectedIds, buttonOne = true) => {
 		let approvalObj = {
 			status: buttonOne ? 'Approved' : 'Denied',
 			dateReviewed: new Date()
@@ -50,10 +53,12 @@ const ViewFriends = () => {
 
 	const checkRowSelectable = (row) => {
 		const matchingData = allFriendRequests.find((friend) => friend._id === row._id);
-		const meets =
-			matchingData.status === 'Pending' &&
-			matchingData.pendingApprovalUserID?._id === user._id;
-		return meets;
+		if (matchingData) {
+			const meets =
+				matchingData.status === 'Pending' &&
+				matchingData.pendingApprovalUserID?._id === user._id;
+			return meets;
+		}
 	};
 
 	useEffect(() => {
@@ -68,8 +73,8 @@ const ViewFriends = () => {
 			editable: false
 		},
 		{
-			field: 'requestedByUserID',
-			headerName: 'Requested By',
+			field: 'pendingApprovalUserID',
+			headerName: 'Waiting For',
 			width: 200,
 			editable: false,
 			format: {
@@ -77,8 +82,8 @@ const ViewFriends = () => {
 			}
 		},
 		{
-			field: 'pendingApprovalUserID',
-			headerName: 'Waiting For',
+			field: 'requestedByUserID',
+			headerName: 'Requested By',
 			width: 200,
 			editable: false,
 			format: {
@@ -122,6 +127,7 @@ const ViewFriends = () => {
 							selectionButtonTitle={'Approve'}
 							selectionButtonTitleTwo={'Deny'}
 							queryResults={setFriendRequestData}
+							useErrorButtonTwo={true}
 						/>
 					</MainCard>
 				</Grid>

@@ -75,7 +75,7 @@ const TripForm = ({ edit, formData, onSubmit }) => {
 					} else {
 						await addTrip(dataToSend);
 					}
-					onSubmit && onSubmit();
+					onSubmit && (await onSubmit());
 				} catch (err) {
 					console.error(err);
 				}

@@ -48,7 +48,7 @@ const MainCard = forwardRef(
 						icon={<AddBoxIcon />}
 						tooltipText={`Add ${newItem}`}
 						onClick={() => setDialogOpen({ open: true })}
-						customStyle={{ color: theme.palette.primary.main }}
+						customButtonStyle={{ color: theme.palette.primary.main }}
 					/>
 				)
 			};
@@ -60,7 +60,7 @@ const MainCard = forwardRef(
 						icon={<EditIcon />}
 						tooltipText={`Edit`}
 						onClick={() => setDialogOpen({ open: true, formData: formData })}
-						customStyle={{ color: theme.palette.primary.main }}
+						customButtonStyle={{ color: theme.palette.primary.main }}
 					/>
 				)
 			};
