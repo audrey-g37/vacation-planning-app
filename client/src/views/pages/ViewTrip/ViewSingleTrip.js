@@ -32,7 +32,7 @@ const ViewSingleTrip = () => {
 
 	const setAllTripData = async (trip = true, attendees = true) => {
 		setLoading(true);
-		let tripDataObj = {};
+		let tripDataObj = tripData;
 		if (trip) {
 			const tripDetails = await getTripData();
 			tripDataObj = { ...tripDataObj, tripDetails: tripDetails };
@@ -58,7 +58,7 @@ const ViewSingleTrip = () => {
 					editItem={'trip'}
 					formData={tripData.tripDetails}
 					collection={'trip'}
-					queryResults={() => setAllTripData(true, false)}
+					queryResults={async () => await setAllTripData(true, false)}
 				>
 					<TripDetails data={tripData.tripDetails} />
 				</MainCard>
@@ -68,7 +68,7 @@ const ViewSingleTrip = () => {
 					title={'Attendees'}
 					collection={'tripAttendee'}
 					newItem='Trip Attendee'
-					queryResults={() => setAllTripData(false, true)}
+					queryResults={async () => await setAllTripData(false, true)}
 					sx={{ margin: '0 1rem' }}
 				>
 					{!loading && <ViewAttendeesForTrip data={tripData.tripAttendees} />}
