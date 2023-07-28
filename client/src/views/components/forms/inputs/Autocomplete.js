@@ -1,7 +1,15 @@
 import { Autocomplete as AutocompleteInput, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
-const Autocomplete = ({ options = [], label = '', onChange, onBlur, value, name }) => {
+const Autocomplete = ({
+	options = [],
+	label = '',
+	onChange,
+	onBlur,
+	value,
+	name,
+	group = true
+}) => {
 	const GroupHeader = styled('div')(({ theme }) => ({
 		position: 'sticky',
 		top: '-8px',
@@ -15,32 +23,40 @@ const Autocomplete = ({ options = [], label = '', onChange, onBlur, value, name 
 	});
 
 	const sortedOptions = options.map((option) => {
-		const firstLetter = option.label[0].toUpperCase();
-		return {
-			firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-			...option
+		const firstLetter = option.label?.[0]?.toUpperCase() || option[0].toUpperCase();
+		let toReturn = {
+			firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter
 		};
+		toReturn = option.label ? { ...toReturn, ...option } : { ...toReturn, label: option };
+		return toReturn;
 	});
 
 	const valueToShow =
-		sortedOptions.find((option) => option.value === value || option.label === value)?.label ||
-		'';
+		sortedOptions.find(
+			(option) => option.value === value || option.label === value || option === value
+		)?.label || '';
 
 	return (
 		<AutocompleteInput
 			id={name}
-			options={sortedOptions.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+			options={
+				group
+					? sortedOptions.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))
+					: sortedOptions
+			}
 			groupBy={(option) => option.firstLetter}
 			getOptionLabel={(option) => option.label || option}
 			sx={{ '& .MuiInputBase-root': { padding: '1.5px' } }}
 			onBlur={onBlur}
 			value={valueToShow}
-			isOptionEqualToValue={(option, value) => option.label === value}
+			isOptionEqualToValue={(option, value) => option.label === value || option === value}
 			onChange={(event) => {
 				const { textContent } = event.target;
 				if (textContent) {
-					const selectedOption = options.find((option) => option.label === textContent);
-					onChange(name, selectedOption.value || selectedOption.label);
+					const selectedOption = options.find(
+						(option) => option.label === textContent || option === textContent
+					);
+					onChange(name, selectedOption.value || selectedOption.label || selectedOption);
 				} else {
 					onChange(name, '');
 				}
@@ -49,7 +65,7 @@ const Autocomplete = ({ options = [], label = '', onChange, onBlur, value, name 
 			renderGroup={(params) => {
 				return (
 					<li key={params.key}>
-						<GroupHeader>{params.group}</GroupHeader>
+						{group && <GroupHeader>{params.group}</GroupHeader>}
 						<GroupItems>{params.children}</GroupItems>
 					</li>
 				);

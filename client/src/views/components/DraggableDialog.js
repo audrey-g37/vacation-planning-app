@@ -16,6 +16,7 @@ import CustomTypography from './CustomTypography';
 import SubmitButton from './SubmitButton';
 import CustomDivider from './CustomDivider';
 import FriendRequestForm from './forms/FriendRequest';
+import TripAttendeeForm from './forms/TripAttendee';
 
 function PaperComponent(props) {
 	return (
@@ -45,7 +46,8 @@ const DraggableDialog = ({
 
 	const collectionTypes = {
 		trip: <TripForm {...formInfoObj} />,
-		friendRequest: <FriendRequestForm {...formInfoObj} />
+		friendRequest: <FriendRequestForm {...formInfoObj} />,
+		tripAttendee: <TripAttendeeForm {...formInfoObj} />
 	};
 
 	return (

@@ -250,6 +250,12 @@ export const countryOptions = [
 	{ code: 'ZW', label: 'Zimbabwe', phone: '263' }
 ];
 
+// trip attendee options
+export const tripAttendeeOptions = {
+	status: ['Invited', 'Attending', 'Not Attending', 'Maybe', 'Removed'],
+	permissions: ['None', 'Any', { value: 'Own', label: 'Specific to Attendee' }]
+};
+
 // rating
 export const ratingArray = ['1', '2', '3', '4', '5'];
 
