@@ -4,6 +4,7 @@ import Text from './Text';
 import DateSelection from './DateSelection';
 import DateTime from './DateTime';
 import Autocomplete from './Autocomplete';
+import Switch from './Switch';
 
 const FormInput = ({
 	componentType,
@@ -17,6 +18,7 @@ const FormInput = ({
 	const theme = useTheme();
 	const componentTypes = {
 		text: <Text {...componentProps} />,
+		switch: <Switch {...componentProps} />,
 		date: <DateSelection {...componentProps} />,
 		dateTime: <DateTime {...componentProps} />,
 		autocomplete: <Autocomplete {...componentProps} />
