@@ -1,4 +1,5 @@
 import { Grid, useTheme } from '@mui/material';
+import { useParams } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -8,13 +9,18 @@ import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
 import { tripAttendeeOptions } from 'utils/options';
+import { useEffect, useState } from 'react';
 
 const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
-	const { crudFunctions, alert, setAlert } = useAuth();
+	const { user, crudFunctions, alert, setAlert } = useAuth();
 
-	const { addTripAttendee, editTripAttendee } = crudFunctions;
+	const { getFriendRequests, addTripAttendee, editTripAttendee } = crudFunctions;
+
+	const { id: tripID } = useParams();
 
 	const theme = useTheme();
+
+	const [existingFriends, setExistingFriends] = useState([]);
 
 	const blankInfo = {
 		status: 'Invited',
@@ -28,8 +34,41 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 			editAttendee: 'None'
 		},
 		attendeeUserID: null,
-		tripID: null
+		tripID: tripID
 	};
+
+	useEffect(() => {
+		async function getExistingFriends() {
+			const dataToSend = {
+				variables: {
+					requestedByUserID: user._id,
+					pendingApprovalUserID: user._id,
+					pendingApprovalUserEmail: user.email
+				}
+			};
+			const { data } = await getFriendRequests(dataToSend);
+			const friends = data.friendRequests.reduce((prev, next) => {
+				let existing = prev;
+				const { pendingApprovalUserID, requestedByUserID, status } = next;
+				if (status === 'Approved') {
+					const useRequestedByUserDetails = pendingApprovalUserID._id === user._id;
+					let dataForFriend = {
+						value: useRequestedByUserDetails
+							? requestedByUserID._id
+							: pendingApprovalUserID._id,
+						label: useRequestedByUserDetails
+							? `${requestedByUserID.firstName} ${requestedByUserID.lastName}`
+							: `${pendingApprovalUserID.firstName} ${pendingApprovalUserID.lastName}`
+					};
+					existing.push(dataForFriend);
+				}
+				return existing;
+			}, []);
+
+			setExistingFriends(friends);
+		}
+		getExistingFriends();
+	}, []);
 
 	return (
 		<Formik
@@ -41,7 +80,9 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 					let dataToSend = {
 						variables: values
 					};
-					for (const [key, value] of Object.entries(dataToSend.variables?.address)) {
+					for (const [key, value] of Object.entries(
+						dataToSend.variables?.tripPermissions
+					)) {
 						if (key !== '_id' && key !== '__typename' && value) {
 							dataToSend = {
 								...dataToSend,
@@ -90,11 +131,23 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 				errors,
 				values
 			}) => {
-				console.log({ values });
 				return (
 					<form noValidate>
 						<Grid container spacing={theme.spacing()}>
-							{/* // todo add the autocomplete of current friends */}
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'autocomplete'}
+									componentProps={{
+										name: 'attendeeUserID',
+										options: existingFriends,
+										useIDValue: true,
+										onChange: setFieldValue,
+										onBlur: handleBlur,
+										value: values.attendeeUserID
+									}}
+									label={'Name:'}
+								/>
+							</Grid>
 							<Grid item xs={12} md={6}>
 								<FormInput
 									componentType={'switch'}
@@ -104,7 +157,9 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 										onBlur: handleBlur,
 										value: values.tripPermissions?.editTripDetails
 									}}
-									label={'Edit Trip Information (location, dates, etc.)?'}
+									label={
+										'Edit Trip Information (e.g. title, description, dates, etc.)?'
+									}
 								/>
 							</Grid>
 						</Grid>
