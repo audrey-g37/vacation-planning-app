@@ -46,6 +46,7 @@ export const QUERY_TRIP_ATTENDEES_BY_TRIP_ID = gql`
 				editAttendee
 			}
 			attendeeUserID {
+				_id
 				email
 				firstName
 				lastName

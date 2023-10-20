@@ -67,7 +67,8 @@ const ViewSingleTrip = () => {
 				<MainCard
 					title={'Attendees'}
 					collection={'tripAttendee'}
-					newItem='Trip Attendee'
+					newItem={'Trip Attendee'}
+					formData={tripData}
 					queryResults={async () => await setAllTripData(false, true)}
 					sx={{ margin: '0 1rem' }}
 				>

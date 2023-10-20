@@ -8,7 +8,7 @@ const Form = ({
 	queryResults,
 	itemName,
 	collection,
-	formData
+	formData = {}
 }) => {
 	if (edit) {
 		itemName = formData.title;
@@ -17,6 +17,7 @@ const Form = ({
 		setClosed && setClosed();
 		queryResults && (await queryResults());
 	};
+
 	return (
 		<DraggableDialog
 			edit={edit}
@@ -25,7 +26,7 @@ const Form = ({
 			setClosed={setClosed}
 			itemName={itemName}
 			collection={collection}
-			formData={edit ? formData : {}}
+			formData={formData}
 		/>
 	);
 };

@@ -47,7 +47,9 @@ const MainCard = forwardRef(
 					<SubmitButton
 						icon={<AddBoxIcon />}
 						tooltipText={`Add ${newItem}`}
-						onClick={() => setDialogOpen({ open: true })}
+						onClick={() =>
+							setDialogOpen({ ...dialogOpen, open: true, formData: formData })
+						}
 						customButtonStyle={{ color: theme.palette.primary.main }}
 					/>
 				)
@@ -59,7 +61,9 @@ const MainCard = forwardRef(
 					<SubmitButton
 						icon={<EditIcon />}
 						tooltipText={`Edit`}
-						onClick={() => setDialogOpen({ open: true, formData: formData })}
+						onClick={() =>
+							setDialogOpen({ ...dialogOpen, open: true, formData: formData })
+						}
 						customButtonStyle={{ color: theme.palette.primary.main }}
 					/>
 				)

@@ -9,18 +9,17 @@ import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
 import { tripAttendeeOptions } from 'utils/options';
-import { useEffect, useState } from 'react';
 
 const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
-	const { user, crudFunctions, alert, setAlert } = useAuth();
+	const theme = useTheme();
 
-	const { getFriendRequests, addTripAttendee, editTripAttendee } = crudFunctions;
+	const { crudFunctions, alert, setAlert } = useAuth();
+
+	const { addTripAttendee, editTripAttendee, getTripAttendees } = crudFunctions;
 
 	const { id: tripID } = useParams();
 
-	const theme = useTheme();
-
-	const [existingFriends, setExistingFriends] = useState([]);
+	const { existingFriends } = formData;
 
 	const blankInfo = {
 		status: 'Invited',
@@ -33,42 +32,9 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 			addAttendee: 'None',
 			editAttendee: 'None'
 		},
-		attendeeUserID: null,
+		attendeeUserID: [],
 		tripID: tripID
 	};
-
-	useEffect(() => {
-		async function getExistingFriends() {
-			const dataToSend = {
-				variables: {
-					requestedByUserID: user._id,
-					pendingApprovalUserID: user._id,
-					pendingApprovalUserEmail: user.email
-				}
-			};
-			const { data } = await getFriendRequests(dataToSend);
-			const friends = data.friendRequests.reduce((prev, next) => {
-				let existing = prev;
-				const { pendingApprovalUserID, requestedByUserID, status } = next;
-				if (status === 'Approved') {
-					const useRequestedByUserDetails = pendingApprovalUserID._id === user._id;
-					let dataForFriend = {
-						value: useRequestedByUserDetails
-							? requestedByUserID._id
-							: pendingApprovalUserID._id,
-						label: useRequestedByUserDetails
-							? `${requestedByUserID.firstName} ${requestedByUserID.lastName}`
-							: `${pendingApprovalUserID.firstName} ${pendingApprovalUserID.lastName}`
-					};
-					existing.push(dataForFriend);
-				}
-				return existing;
-			}, []);
-
-			setExistingFriends(friends);
-		}
-		getExistingFriends();
-	}, []);
 
 	return (
 		<Formik
@@ -77,6 +43,12 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 			validationSchema={Yup.object().shape({})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
+					if (!values.attendeeUserID || values.attendeeUserID.length === 0) {
+						return setAlert({
+							...alert,
+							message: 'At least one friend must be selected.'
+						});
+					}
 					let dataToSend = {
 						variables: values
 					};
@@ -94,14 +66,26 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 						}
 					}
 					delete dataToSend.variables.tripPermissions;
-					if (edit) {
-						dataToSend = {
-							...dataToSend,
-							variables: { ...dataToSend.variables, queryID: values._id }
-						};
-						await editTripAttendee(dataToSend);
-					} else {
-						await addTripAttendee(dataToSend);
+					for (const tripAttendeeID of values.attendeeUserID) {
+						if (edit) {
+							dataToSend = {
+								...dataToSend,
+								variables: {
+									...dataToSend.variables,
+									queryID: values._id,
+									attendeeUserID: tripAttendeeID
+								}
+							};
+							await editTripAttendee(dataToSend);
+						} else {
+							await addTripAttendee({
+								...dataToSend,
+								variables: {
+									...dataToSend.variables,
+									attendeeUserID: tripAttendeeID
+								}
+							});
+						}
 					}
 					setAlert({
 						...alert,
@@ -140,7 +124,7 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 									componentProps={{
 										name: 'attendeeUserID',
 										options: existingFriends,
-										useIDValue: true,
+										multiple: true,
 										onChange: setFieldValue,
 										onBlur: handleBlur,
 										value: values.attendeeUserID
@@ -252,7 +236,10 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 							<Grid item xs={12}>
 								<Grid
 									container
-									sx={{ justifyContent: 'flex-end', alignItems: 'center' }}
+									sx={{
+										justifyContent: 'flex-end',
+										alignItems: 'center'
+									}}
 									spacing={theme.spacing()}
 								>
 									<Grid item>
