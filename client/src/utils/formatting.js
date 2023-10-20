@@ -4,8 +4,7 @@ const formatValue = ({ type, value, subField, getValue, dateObj = false }) => {
 			`${value.city ? (value.state || value.country ? value.city + ', ' : value.city) : ''} ${
 				value.state ? (value.country ? value.state + ', ' : value.state) : ''
 			} ${value.country ? value.country : ''}`,
-		'requestedByUserID': () => `${value.firstName} ${value.lastName}`,
-		'pendingApprovalUserID': () => (value ? `${value.firstName} ${value.lastName}` : '')
+		'user': () => (value ? `${value.firstName} ${value.lastName}` : '')
 	};
 	const formatTypes = {
 		date: () => {
@@ -18,7 +17,12 @@ const formatValue = ({ type, value, subField, getValue, dateObj = false }) => {
 				? new Date(+value).toLocaleString(undefined, options)
 				: '';
 		},
-		subField: () => (subFieldTypes[subField] ? subFieldTypes[subField]() : getValue(value))
+		subField: () =>
+			subField.toLowerCase().includes('user')
+				? subFieldTypes['user']()
+				: subFieldTypes[subField]
+				? subFieldTypes[subField]()
+				: getValue(value)
 	};
 	return formatTypes[type] && formatTypes[type]();
 };

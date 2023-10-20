@@ -137,12 +137,10 @@ const TableOfData = ({
 											} else {
 												let displayText = displayValue;
 												if (column.format) {
-													console.log({ displayValue });
 													displayText = formatValue({
 														...column.format,
 														value: displayValue
 													});
-													console.log({ displayText });
 												}
 												displayContent = (
 													<CustomTypography

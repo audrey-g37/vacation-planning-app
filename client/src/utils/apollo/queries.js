@@ -11,6 +11,84 @@ export const QUERY_USER = gql`
 	}
 `;
 
+export const QUERY_TRIP_ATTENDEES = gql`
+	query ($attendeeUserID: ID, $tripID: ID) {
+		tripAttendees(attendeeUserID: $attendeeUserID, tripID: $tripID) {
+			_id
+			status
+			tripPermissions {
+				editTripDetails
+				addTask
+				editTask
+				addBudget
+				editBudget
+				addAttendee
+				editAttendee
+			}
+			attendeeUserID
+			tripID
+		}
+	}
+`;
+
+export const QUERY_TRIP_ATTENDEES_BY_TRIP_ID = gql`
+	query ($tripID: ID) {
+		tripAttendeesByTripID(tripID: $tripID) {
+			_id
+			status
+			tripPermissions {
+				editTripDetails
+				addTask
+				editTask
+				addBudget
+				editBudget
+				addAttendee
+				editAttendee
+			}
+			attendeeUserID {
+				_id
+				email
+				firstName
+				lastName
+			}
+			tripID
+		}
+	}
+`;
+export const QUERY_TRIP_ATTENDEES_BY_ATTENDEE_ID = gql`
+	query ($attendeeUserID: ID) {
+		tripAttendeesByAttendeeID(attendeeUserID: $attendeeUserID) {
+			_id
+			status
+			tripPermissions {
+				editTripDetails
+				addTask
+				editTask
+				addBudget
+				editBudget
+				addAttendee
+				editAttendee
+			}
+			attendeeUserID
+			tripID {
+				_id
+				title
+				description
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+			}
+		}
+	}
+`;
+
 export const QUERY_FRIEND_REQUESTS = gql`
 	query ($requestedByUserID: ID, $pendingApprovalUserID: ID, $pendingApprovalUserEmail: String) {
 		friendRequests(
