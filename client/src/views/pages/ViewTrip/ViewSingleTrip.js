@@ -1,10 +1,11 @@
 import { useParams } from 'react-router';
+import { useEffect, useState } from 'react';
 import { Grid, useTheme } from '@mui/material';
 
 // project imports
 import MainCard from 'views/components/MainCard';
 import useAuth from 'hooks/useAuth';
-import { useEffect, useState } from 'react';
+import { sortFriends } from 'utils/sorting';
 import TripDetails from './TripDetails';
 import CircularLoader from 'views/components/CircularLoader';
 import ViewAttendeesForTrip from './TripAttendeeGrid';
@@ -27,7 +28,14 @@ const ViewSingleTrip = () => {
 		const { data } = await getTripAttendeesByTripID({
 			variables: { tripID: id }
 		});
-		return data.tripAttendeesByTripID;
+		const attendees = data.tripAttendeesByTripID.map((attendee) => {
+			attendee = {
+				...attendee,
+				name: `${attendee.attendeeUserID.firstName} ${attendee.attendeeUserID.lastName}`
+			};
+			return attendee;
+		});
+		return attendees;
 	};
 
 	const setAllTripData = async (trip = true, attendees = true) => {
@@ -39,7 +47,10 @@ const ViewSingleTrip = () => {
 		}
 		if (attendees) {
 			const attendees = await getAttendeeData();
-			tripDataObj = { ...tripDataObj, tripAttendees: attendees };
+			tripDataObj = {
+				...tripDataObj,
+				tripAttendees: sortFriends({ data: attendees, fieldName: 'name' })
+			};
 		}
 		setTripData(tripDataObj);
 		setLoading(false);
