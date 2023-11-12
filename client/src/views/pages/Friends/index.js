@@ -54,52 +54,15 @@ const ViewFriends = () => {
 		user && setFriendData();
 	}, [user?._id]);
 
-	const columns = [
-		{
-			field: 'status',
-			headerName: 'Status',
-			width: 175,
-			editable: false
-		},
-		{
-			field: 'pendingApprovalUserID',
-			headerName: 'Waiting For',
-			width: 200,
-			editable: false,
-			format: {
-				type: 'subField'
-			}
-		},
-		{
-			field: 'requestedByUserID',
-			headerName: 'Requested By',
-			width: 200,
-			editable: false,
-			format: {
-				type: 'subField'
-			}
-		},
-		{
-			field: 'pendingApprovalUserEmail',
-			headerName: 'Email',
-			width: 250,
-			editable: false
-		},
-		{
-			field: 'dateReviewed',
-			headerName: 'Date Reviewed',
-			width: 225,
-			editable: false,
-			type: 'date'
-		}
-	];
-
 	return (
 		<>
 			{loading && <CircularLoader />}
 
-			<Grid container spacing={theme.spacing()}>
-				<Grid item xs={12}>
+			<Grid container spacing={theme.spacing()} sx={{ justifyContent: 'space-around' }}>
+				<Grid item xs={12} md={5}>
+					<ViewFriendList allFriends={allFriends?.approved || []} />
+				</Grid>
+				<Grid item xs={12} md={6}>
 					<ViewFriendRequests
 						allFriendRequests={allFriends?.pending || []}
 						setFriendRequestData={setFriendData}
