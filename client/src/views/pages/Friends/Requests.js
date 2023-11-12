@@ -23,6 +23,13 @@ const ViewFriendRequests = ({ allFriendRequests = [], setFriendRequestData }) =>
 		}
 	};
 
+	// if even one request exists, use to show the buttons & checkboxes
+	const requestToConsiderExists = allFriendRequests.find(
+		(req) => req.status === 'Pending' && req.pendingApprovalUserID?._id === user._id
+	)
+		? true
+		: false;
+
 	const checkRowSelectable = (row) => {
 		const matchingData = allFriendRequests.find((friend) => friend._id === row._id);
 		if (matchingData) {
@@ -85,7 +92,7 @@ const ViewFriendRequests = ({ allFriendRequests = [], setFriendRequestData }) =>
 					>
 						<DataGrid
 							rows={allFriendRequests}
-							allowSelection={true}
+							allowSelection={requestToConsiderExists}
 							onSelectionSave={approveRequests}
 							checkRowSelectable={checkRowSelectable}
 							columns={columns}
@@ -93,7 +100,7 @@ const ViewFriendRequests = ({ allFriendRequests = [], setFriendRequestData }) =>
 							selectionButtonTitle={'Approve'}
 							selectionButtonTitleTwo={'Deny'}
 							queryResults={setFriendRequestData}
-							useErrorButtonTwo={true}
+							useErrorButtonTwo={requestToConsiderExists}
 						/>
 					</MainCard>
 				</Grid>
