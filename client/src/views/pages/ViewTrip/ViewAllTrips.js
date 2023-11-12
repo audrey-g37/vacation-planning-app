@@ -23,7 +23,7 @@ const ViewAllTrips = ({ allTrips, actionSection, title = 'All Trips', dashboardS
 		setLoading(true);
 		const { data } = await getAllTrips({ variables: { userID: user._id } });
 		let tripSortingObj = {
-			tripData: [...data.trips]
+			data: [...data.trips]
 		};
 
 		if (dashboardView) {

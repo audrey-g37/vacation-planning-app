@@ -82,8 +82,8 @@ const TripAttendee = ({ formData, onSubmit, edit }) => {
 					</Grid>
 					<Grid item xs={12}>
 						<CustomTypography
-							textContent={`View pending friend requests to request a new friend.`}
-							to={`/view-friends/requests`}
+							textContent={`View the friends page to request a new friend.`}
+							to={`/friends`}
 						/>
 					</Grid>
 				</Grid>

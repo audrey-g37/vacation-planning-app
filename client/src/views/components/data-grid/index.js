@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Grid, useTheme } from '@mui/material';
-import { DataGrid as DataGridDisplay } from '@mui/x-data-grid';
+import { DataGrid as DataGridDisplay, GridToolbar } from '@mui/x-data-grid';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -17,6 +17,7 @@ const DataGrid = ({
 	editIcon,
 	collection,
 	queryResults,
+	showQuickFilter = true,
 	allowSelection = false,
 	onSelectionSave,
 	selectionButtonTitle = 'Update',
@@ -118,6 +119,10 @@ const DataGrid = ({
 					}
 					disableRowSelectionOnClick
 					hideFooter={hidePagination}
+					slots={{ toolbar: GridToolbar }}
+					slotProps={{
+						toolbar: { showQuickFilter: showQuickFilter }
+					}}
 					sx={{
 						'& .MuiDataGrid-columnHeaders': headerStylingObj,
 						'& .MuiDataGrid-withBorderColor': {
