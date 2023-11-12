@@ -3,10 +3,9 @@ import { Grid, useTheme } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 
 // project imports
-import MainCard from 'views/components/MainCard';
 import CircularLoader from 'views/components/CircularLoader';
-import DataGrid from 'views/components/data-grid';
 import ViewFriendRequests from './Requests';
+import ViewFriendList from './ExistingFriends';
 
 const ViewFriends = () => {
 	const theme = useTheme();
@@ -15,10 +14,13 @@ const ViewFriends = () => {
 
 	const { getFriendRequests } = crudFunctions;
 
-	const [allFriendRequests, setAllFriendRequests] = useState([]);
+	const [allFriends, setAllFriends] = useState({
+		approved: [],
+		pending: []
+	});
 	const [loading, setLoading] = useState(true);
 
-	const setFriendRequestData = async () => {
+	const setFriendData = async () => {
 		!loading && setLoading(true);
 		const dataToSend = {
 			variables: {
@@ -29,21 +31,27 @@ const ViewFriends = () => {
 		};
 		const { data } = await getFriendRequests(dataToSend);
 
-		const friendRequestsToView = data?.friendRequests.filter(
-			(friendReq) =>
-				friendReq.status !== 'Approved' &&
-				!(
-					friendReq.status === 'Denied' &&
-					friendReq.pendingApprovalUserID?._id === user._id
-				)
+		const sortedFriends = data?.friendRequests.reduce(
+			(prev, next) => {
+				if (next.status === 'Approved') {
+					prev.approved.push(next);
+				} else if (
+					next.status !== 'Approved' &&
+					!(next.status === 'Denied' && next.pendingApprovalUserID?._id === user._id)
+				) {
+					prev.pending.push(next);
+				}
+				return prev;
+			},
+			{ pending: [], approved: [] }
 		);
 
-		setAllFriendRequests(friendRequestsToView);
+		setAllFriends(sortedFriends);
 		setLoading(false);
 	};
 
 	useEffect(() => {
-		user && setFriendRequestData();
+		user && setFriendData();
 	}, [user?._id]);
 
 	const columns = [
@@ -93,8 +101,8 @@ const ViewFriends = () => {
 			<Grid container spacing={theme.spacing()}>
 				<Grid item xs={12}>
 					<ViewFriendRequests
-						allFriendRequests={allFriendRequests}
-						setFriendRequestData={setFriendRequestData}
+						allFriendRequests={allFriends?.pending || []}
+						setFriendRequestData={setFriendData}
 					/>
 				</Grid>
 			</Grid>
