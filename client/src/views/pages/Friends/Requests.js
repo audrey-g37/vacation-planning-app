@@ -42,12 +42,6 @@ const ViewFriendRequests = ({ allFriendRequests = [], setFriendRequestData }) =>
 
 	const columns = [
 		{
-			field: 'status',
-			headerName: 'Status',
-			width: 175,
-			editable: false
-		},
-		{
 			field: 'pendingApprovalUserID',
 			headerName: 'Waiting For',
 			width: 200,
@@ -67,16 +61,9 @@ const ViewFriendRequests = ({ allFriendRequests = [], setFriendRequestData }) =>
 		},
 		{
 			field: 'pendingApprovalUserEmail',
-			headerName: 'Email',
+			headerName: 'Requested Email',
 			width: 250,
 			editable: false
-		},
-		{
-			field: 'dateReviewed',
-			headerName: 'Date Reviewed',
-			width: 225,
-			editable: false,
-			type: 'date'
 		}
 	];
 
