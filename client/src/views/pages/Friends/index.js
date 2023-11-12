@@ -6,13 +6,14 @@ import useAuth from 'hooks/useAuth';
 import MainCard from 'views/components/MainCard';
 import CircularLoader from 'views/components/CircularLoader';
 import DataGrid from 'views/components/data-grid';
+import ViewFriendRequests from './Requests';
 
 const ViewFriends = () => {
 	const theme = useTheme();
 
 	const { user, crudFunctions } = useAuth();
 
-	const { getFriendRequests, editFriendRequest } = crudFunctions;
+	const { getFriendRequests } = crudFunctions;
 
 	const [allFriendRequests, setAllFriendRequests] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -39,26 +40,6 @@ const ViewFriends = () => {
 
 		setAllFriendRequests(friendRequestsToView);
 		setLoading(false);
-	};
-
-	const approveRequests = async (selectedIds, buttonOne = true) => {
-		let approvalObj = {
-			status: buttonOne ? 'Approved' : 'Denied',
-			dateReviewed: new Date()
-		};
-		for (const id of selectedIds) {
-			await editFriendRequest({ variables: { ...approvalObj, queryID: id } });
-		}
-	};
-
-	const checkRowSelectable = (row) => {
-		const matchingData = allFriendRequests.find((friend) => friend._id === row._id);
-		if (matchingData) {
-			const meets =
-				matchingData.status === 'Pending' &&
-				matchingData.pendingApprovalUserID?._id === user._id;
-			return meets;
-		}
 	};
 
 	useEffect(() => {
@@ -111,25 +92,10 @@ const ViewFriends = () => {
 
 			<Grid container spacing={theme.spacing()}>
 				<Grid item xs={12}>
-					<MainCard
-						title={'Friend Requests'}
-						collection={'friendRequest'}
-						newItem='Friend Request'
-						queryResults={setFriendRequestData}
-					>
-						<DataGrid
-							rows={allFriendRequests || []}
-							allowSelection={true}
-							onSelectionSave={approveRequests}
-							checkRowSelectable={checkRowSelectable}
-							columns={columns}
-							collection={'friendRequest'}
-							selectionButtonTitle={'Approve'}
-							selectionButtonTitleTwo={'Deny'}
-							queryResults={setFriendRequestData}
-							useErrorButtonTwo={true}
-						/>
-					</MainCard>
+					<ViewFriendRequests
+						allFriendRequests={allFriendRequests}
+						setFriendRequestData={setFriendRequestData}
+					/>
 				</Grid>
 			</Grid>
 		</>
