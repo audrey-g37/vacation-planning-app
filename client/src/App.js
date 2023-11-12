@@ -29,13 +29,14 @@ function App() {
 	const mode = isDarkMode ? 'dark' : 'light';
 
 	const styledBackground = {
-		backgroundImage: `url(${
-			process.env.PUBLIC_URL +
-			`/images/hawaii-beach-${mode === 'dark' ? 'black-and-white' : 'rainbow'}.jpeg`
-		})`,
-		backgroundPosition: 'center',
-		backgroundRepeat: 'no-repeat',
-		backgroundSize: 'cover',
+		// backgroundImage: `url(${
+		// 	process.env.PUBLIC_URL +
+		// 	`/images/hawaii-beach-${mode === 'dark' ? 'black-and-white' : 'rainbow'}.jpeg`
+		// })`,
+		backgroundColor: '#BDADAC',
+		// backgroundPosition: 'center',
+		// backgroundRepeat: 'no-repeat',
+		// backgroundSize: 'cover',
 		minHeight: '100vh'
 	};
 
