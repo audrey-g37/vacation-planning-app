@@ -1,6 +1,6 @@
-const sortTrips = ({ tripData, displayLimitNum, showOldTrips = true, oldToNew = false }) => {
+const sortTrips = ({ data, displayLimitNum, showOldTrips = true, oldToNew = false }) => {
 	if (!showOldTrips) {
-		tripData = tripData.reduce((prev, next) => {
+		data = data.reduce((prev, next) => {
 			let existing = prev;
 			const today = new Date(new Date()).valueOf();
 			const startDate = new Date(+next.startDate).valueOf();
@@ -11,7 +11,7 @@ const sortTrips = ({ tripData, displayLimitNum, showOldTrips = true, oldToNew = 
 		}, []);
 	}
 
-	tripData = tripData.sort((a, b) => {
+	data = data.sort((a, b) => {
 		const today = new Date(new Date()).valueOf();
 		const startDateA = new Date(+a.startDate).valueOf();
 		const startDateB = new Date(+b.startDate).valueOf();
@@ -21,14 +21,28 @@ const sortTrips = ({ tripData, displayLimitNum, showOldTrips = true, oldToNew = 
 		return oldToNew ? (closenessA > closenessB ? 1 : -1) : closenessA < closenessB ? 1 : -1;
 	});
 	if (displayLimitNum) {
-		tripData = tripData.splice(
+		data = data.splice(
 			0,
-			tripData.length > displayLimitNum
-				? tripData.length - (tripData.length - displayLimitNum)
-				: tripData.length
+			data.length > displayLimitNum
+				? data.length - (data.length - displayLimitNum)
+				: data.length
 		);
 	}
-	return tripData;
+	return data;
 };
 
-export { sortTrips };
+//* sortingBy = firstName, lastName, email
+const sortFriends = ({ data, displayLimitNum, fieldName }) => {
+	data = data.sort((a, b) => a[fieldName].localeCompare(b[fieldName]));
+	if (displayLimitNum) {
+		data = data.splice(
+			0,
+			data.length > displayLimitNum
+				? data.length - (data.length - displayLimitNum)
+				: data.length
+		);
+	}
+	return data;
+};
+
+export { sortTrips, sortFriends };

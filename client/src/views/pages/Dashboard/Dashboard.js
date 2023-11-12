@@ -24,7 +24,7 @@ const Dashboard = () => {
 	const setUserTripData = async () => {
 		!loading && setLoading(true);
 		const { data } = await getAllTrips({ variables: { userID: user._id } });
-		tripSortingObj = { ...tripSortingObj, tripData: data.trips };
+		tripSortingObj = { ...tripSortingObj, data: data.trips };
 		const tripData = sortTrips(tripSortingObj);
 
 		setAllTrips(tripData);
