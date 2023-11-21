@@ -3,10 +3,9 @@ const AddressSchema = require('./Address');
 
 const TaskSubFields = new Schema(
 	{
-		title: {
+		name: {
 			// e.g. hotel name or restaurant name
-			type: String,
-			required: true
+			type: String
 		},
 		address: AddressSchema,
 		startDate: {

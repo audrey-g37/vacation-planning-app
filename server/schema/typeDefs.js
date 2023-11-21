@@ -82,7 +82,7 @@ const typeDefs = gql`
 
 	type TaskSubFields {
 		_id: ID!
-		title: String!
+		name: String
 		address: Address
 		startDate: String
 		endDate: String
@@ -177,11 +177,27 @@ const typeDefs = gql`
 			userID: ID!
 		): Trip
 		addTask(
+			name: String
+			street1: String
+			street2: String
+			city: String
+			state: String
+			country: String
+			zipCode: String
+			startDate: String
+			endDate: String
+			confirmationNumber: String
+			contactPhoneNumber: String
+			contactEmailAddress: String
+			additionalDetails: String
 			title: String!
-			details: String
+			textDetails: String
+			adultQuantity: Int
+			childrenQuantity: Int
+			completionOrder: Int
 			dueDate: String
 			status: String
-			assignee: String
+			assignedToAttendeeID: ID
 			tripID: ID!
 		): Task
 		addBudget(
@@ -228,11 +244,28 @@ const typeDefs = gql`
 		): Trip
 		updateTask(
 			queryID: ID!
+			name: String
+			street1: String
+			street2: String
+			city: String
+			state: String
+			country: String
+			zipCode: String
+			startDate: String
+			endDate: String
+			confirmationNumber: String
+			contactPhoneNumber: String
+			contactEmailAddress: String
+			additionalDetails: String
 			title: String
-			details: String
+			textDetails: String
+			adultQuantity: Int
+			childrenQuantity: Int
+			completionOrder: Int
 			dueDate: String
 			status: String
-			assignee: String
+			assignedToAttendeeID: ID
+			tripID: ID
 		): Task
 		updateBudget(
 			queryID: ID!

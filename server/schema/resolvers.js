@@ -117,7 +117,41 @@ const resolvers = {
 			return newData;
 		},
 		addTask: async (parent, body, context) => {
-			let dataToSend = { ...body };
+			const {
+				street1,
+				street2,
+				city,
+				state,
+				country,
+				zipCode,
+				name,
+				startDate,
+				endDate,
+				confirmationNumber,
+				contactPhoneNumber,
+				contactEmailAddress,
+				additionalDetails
+			} = body;
+			let dataToSend = {
+				...body,
+				details: {
+					name: name,
+					address: {
+						street1: street1,
+						street2: street2,
+						city: city,
+						state: state,
+						country: country,
+						zipCode: zipCode
+					},
+					startDate: startDate,
+					endDate: endDate,
+					confirmationNumber: confirmationNumber,
+					contactPhoneNumber: contactPhoneNumber,
+					contactEmailAddress: contactEmailAddress,
+					additionalDetails: additionalDetails
+				}
+			};
 			const newData = await Task.create(dataToSend);
 			return newData;
 		},
@@ -187,17 +221,47 @@ const resolvers = {
 		},
 		updateTask: async (parent, body, context) => {
 			const { queryID } = body;
-			let dataToSend = { ...body };
+			const {
+				street1,
+				street2,
+				city,
+				state,
+				country,
+				zipCode,
+				name,
+				startDate,
+				endDate,
+				confirmationNumber,
+				contactPhoneNumber,
+				contactEmailAddress,
+				additionalDetails
+			} = body;
+			let dataToSend = {
+				...body,
+				details: {
+					name: name,
+					address: {
+						street1: street1,
+						street2: street2,
+						city: city,
+						state: state,
+						country: country,
+						zipCode: zipCode
+					},
+					startDate: startDate,
+					endDate: endDate,
+					confirmationNumber: confirmationNumber,
+					contactPhoneNumber: contactPhoneNumber,
+					contactEmailAddress: contactEmailAddress,
+					additionalDetails: additionalDetails
+				}
+			};
 			const updatedData = await Task.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
 		updateBudget: async (parent, body, context) => {
 			const { queryID } = body;
 			let dataToSend = { ...body };
-			delete dataToSend.taskID;
-			if (body.taskID) {
-				dataToSend = { ...dataToSend, $addToSet: { taskID: body.taskID } };
-			}
 			const updatedData = await Budget.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
