@@ -124,27 +124,80 @@ export const ADD_TRIP = gql`
 
 export const ADD_TASK = gql`
 	mutation addTask(
+		$name: String
+		$street1: String
+		$street2: String
+		$city: String
+		$state: String
+		$country: String
+		$zipCode: String
+		$startDate: String
+		$endDate: String
+		$confirmationNumber: String
+		$contactPhoneNumber: String
+		$contactEmailAddress: String
+		$additionalDetails: String
 		$title: String!
-		$details: String
+		$textDetails: String
+		$adultQuantity: Int
+		$childrenQuantity: Int
+		$completionOrder: Int
 		$dueDate: String
 		$status: String
-		$assignee: String
+		$assignedToAttendeeID: ID
 		$tripID: ID!
 	) {
 		addTask(
+			name: $name
+			street1: $street1
+			street2: $street2
+			city: $city
+			state: $state
+			country: $country
+			zipCode: $zipCode
+			startDate: $startDate
+			endDate: $endDate
+			confirmationNumber: $confirmationNumber
+			contactPhoneNumber: $contactPhoneNumber
+			contactEmailAddress: $contactEmailAddress
+			additionalDetails: $additionalDetails
 			title: $title
-			details: $details
+			textDetails: $textDetails
+			adultQuantity: $adultQuantity
+			childrenQuantity: $childrenQuantity
+			completionOrder: $completionOrder
 			dueDate: $dueDate
 			status: $status
-			assignee: $assignee
+			assignedToAttendeeID: $assignedToAttendeeID
 			tripID: $tripID
 		) {
 			_id
 			title
-			details
+			textDetails
+			adultQuantity
+			childrenQuantity
+			details {
+				name
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+				confirmationNumber
+				contactPhoneNumber
+				contactEmailAddress
+				additionalDetails
+			}
+			completionOrder
 			dueDate
 			status
-			assignee
+			assignedToAttendeeID
+			tripID
 		}
 	}
 `;
@@ -303,26 +356,81 @@ export const UPDATE_TRIP = gql`
 export const UPDATE_TASK = gql`
 	mutation updateTask(
 		$queryID: ID!
+		$name: String
+		$street1: String
+		$street2: String
+		$city: String
+		$state: String
+		$country: String
+		$zipCode: String
+		$startDate: String
+		$endDate: String
+		$confirmationNumber: String
+		$contactPhoneNumber: String
+		$contactEmailAddress: String
+		$additionalDetails: String
 		$title: String
-		$details: String
+		$textDetails: String
+		$adultQuantity: Int
+		$childrenQuantity: Int
+		$completionOrder: Int
 		$dueDate: String
 		$status: String
-		$assignee: String
+		$assignedToAttendeeID: ID
+		$tripID: ID
 	) {
 		updateTask(
 			queryID: $queryID
+			name: $name
+			street1: $street1
+			street2: $street2
+			city: $city
+			state: $state
+			country: $country
+			zipCode: $zipCode
+			startDate: $startDate
+			endDate: $endDate
+			confirmationNumber: $confirmationNumber
+			contactPhoneNumber: $contactPhoneNumber
+			contactEmailAddress: $contactEmailAddress
+			additionalDetails: $additionalDetails
 			title: $title
-			details: $details
+			textDetails: $textDetails
+			adultQuantity: $adultQuantity
+			childrenQuantity: $childrenQuantity
+			completionOrder: $completionOrder
 			dueDate: $dueDate
 			status: $status
-			assignee: $assignee
+			assignedToAttendeeID: $assignedToAttendeeID
+			tripID: $tripID
 		) {
 			_id
 			title
-			details
+			textDetails
+			adultQuantity
+			childrenQuantity
+			details {
+				name
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+				confirmationNumber
+				contactPhoneNumber
+				contactEmailAddress
+				additionalDetails
+			}
+			completionOrder
 			dueDate
 			status
-			assignee
+			assignedToAttendeeID
+			tripID
 		}
 	}
 `;
