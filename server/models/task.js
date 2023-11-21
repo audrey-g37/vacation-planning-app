@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Address = require('./Address');
+const AddressSchema = require('./Address');
 
 const TaskSubFields = new Schema(
 	{
@@ -8,9 +8,7 @@ const TaskSubFields = new Schema(
 			type: String,
 			required: true
 		},
-		address: {
-			type: Address
-		},
+		address: AddressSchema,
 		startDate: {
 			type: Date
 		},

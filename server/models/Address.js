@@ -1,5 +1,5 @@
 //! SUB SCHEMA USE ONLY
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 const AddressSchema = new Schema({
 	street1: {
 		type: String
@@ -21,6 +21,4 @@ const AddressSchema = new Schema({
 	}
 });
 
-const Address = model('Address', AddressSchema);
-
-module.exports = Address;
+module.exports = AddressSchema;

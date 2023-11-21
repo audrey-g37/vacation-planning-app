@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const Address = require('./Address');
+const AddressSchema = require('./Address');
 
 const TripSchema = new Schema(
 	{
@@ -11,7 +11,7 @@ const TripSchema = new Schema(
 		description: {
 			type: String
 		},
-		address: Address,
+		address: AddressSchema,
 		startDate: {
 			type: Date
 		},
