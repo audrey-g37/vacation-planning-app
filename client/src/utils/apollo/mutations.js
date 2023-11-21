@@ -144,7 +144,7 @@ export const ADD_TASK = gql`
 		$completionOrder: Int
 		$dueDate: String
 		$status: String
-		$assignedToAttendeeID: ID
+		$assignedToUserID: ID
 		$tripID: ID!
 	) {
 		addTask(
@@ -168,7 +168,7 @@ export const ADD_TASK = gql`
 			completionOrder: $completionOrder
 			dueDate: $dueDate
 			status: $status
-			assignedToAttendeeID: $assignedToAttendeeID
+			assignedToUserID: $assignedToUserID
 			tripID: $tripID
 		) {
 			_id
@@ -196,7 +196,7 @@ export const ADD_TASK = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToAttendeeID
+			assignedToUserID
 			tripID
 		}
 	}
@@ -208,8 +208,8 @@ export const ADD_BUDGET = gql`
 		$maxAmount: Int
 		$actualAmount: Int
 		$purchaseDate: String
-		$purchasedByAttendeeID: ID!
-		$splitByAttendeeIDs: [ID]
+		$purchasedByUserID: ID!
+		$splitByUserIDs: [ID]
 		$tripID: ID!
 		$taskID: ID
 	) {
@@ -218,8 +218,8 @@ export const ADD_BUDGET = gql`
 			maxAmount: $maxAmount
 			actualAmount: $actualAmount
 			purchaseDate: $purchaseDate
-			purchasedByAttendeeID: $purchasedByAttendeeID
-			splitByAttendeeIDs: $splitByAttendeeIDs
+			purchasedByUserID: $purchasedByUserID
+			splitByUserIDs: $splitByUserIDs
 			tripID: $tripID
 			taskID: $taskID
 		) {
@@ -228,8 +228,8 @@ export const ADD_BUDGET = gql`
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByAttendeeID
-			splitByAttendeeIDs
+			purchasedByUserID
+			splitByUserIDs
 			tripID
 			taskID
 		}
@@ -377,7 +377,7 @@ export const UPDATE_TASK = gql`
 		$completionOrder: Int
 		$dueDate: String
 		$status: String
-		$assignedToAttendeeID: ID
+		$assignedToUserID: ID
 		$tripID: ID
 	) {
 		updateTask(
@@ -402,7 +402,7 @@ export const UPDATE_TASK = gql`
 			completionOrder: $completionOrder
 			dueDate: $dueDate
 			status: $status
-			assignedToAttendeeID: $assignedToAttendeeID
+			assignedToUserID: $assignedToUserID
 			tripID: $tripID
 		) {
 			_id
@@ -430,7 +430,7 @@ export const UPDATE_TASK = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToAttendeeID
+			assignedToUserID
 			tripID
 		}
 	}
@@ -443,8 +443,8 @@ export const UPDATE_BUDGET = gql`
 		$maxAmount: Int
 		$actualAmount: Int
 		$purchaseDate: String
-		$purchasedByAttendeeID: ID
-		$splitByAttendeeIDs: [ID]
+		$purchasedByUserID: ID
+		$splitByUserIDs: [ID]
 		$tripID: ID
 		$taskID: ID
 	) {
@@ -454,8 +454,8 @@ export const UPDATE_BUDGET = gql`
 			maxAmount: $maxAmount
 			actualAmount: $actualAmount
 			purchaseDate: $purchaseDate
-			purchasedByAttendeeID: $purchasedByAttendeeID
-			splitByAttendeeIDs: $splitByAttendeeIDs
+			purchasedByUserID: $purchasedByUserID
+			splitByUserIDs: $splitByUserIDs
 			tripID: $tripID
 			taskID: $taskID
 		) {
@@ -464,8 +464,8 @@ export const UPDATE_BUDGET = gql`
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByAttendeeID
-			splitByAttendeeIDs
+			purchasedByUserID
+			splitByUserIDs
 			tripID
 			taskID
 		}

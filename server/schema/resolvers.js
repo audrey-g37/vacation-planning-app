@@ -260,14 +260,14 @@ const resolvers = {
 			return updatedData;
 		},
 		updateBudget: async (parent, body, context) => {
-			const { queryID, splitByAttendeeIDs } = body;
-			delete body.splitByAttendeeIDs;
+			const { queryID, splitByUserIDs } = body;
+			delete body.splitByUserIDs;
 			let dataToSend = { ...body };
 			const updatedData = await Budget.findByIdAndUpdate(
 				queryID,
 				{
 					...dataToSend,
-					$addToSet: { splitByAttendeeIDs: { $each: [...splitByAttendeeIDs] } }
+					$addToSet: { splitByUserIDs: { $each: [...splitByUserIDs] } }
 				},
 				{ new: true }
 			);

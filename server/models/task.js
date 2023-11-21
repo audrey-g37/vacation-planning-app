@@ -64,9 +64,9 @@ const TaskSchema = new Schema(
 			type: String,
 			default: 'Not Started'
 		},
-		assignedToAttendeeID: {
+		assignedToUserID: {
 			type: Schema.Types.ObjectId,
-			ref: 'TripAttendee'
+			ref: 'User'
 		},
 		tripID: {
 			type: Schema.Types.ObjectId,

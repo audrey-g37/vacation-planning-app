@@ -15,15 +15,15 @@ const BudgetSchema = new Schema(
 		purchaseDate: {
 			type: Date
 		},
-		purchasedByAttendeeID: {
+		purchasedByUserID: {
 			type: Schema.Types.ObjectId,
-			ref: 'TripAttendee',
+			ref: 'User',
 			required: true
 		},
-		splitByAttendeeIDs: [
+		splitByUserIDs: [
 			{
 				type: Schema.Types.ObjectId,
-				ref: 'TripAttendee'
+				ref: 'User'
 			}
 		],
 		tripID: {

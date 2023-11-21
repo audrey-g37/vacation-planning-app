@@ -102,7 +102,7 @@ const typeDefs = gql`
 		completionOrder: Int
 		dueDate: String
 		status: String
-		assignedToAttendeeID: ID
+		assignedToUserID: ID
 		tripID: ID!
 	}
 
@@ -112,8 +112,8 @@ const typeDefs = gql`
 		maxAmount: Int
 		actualAmount: Int
 		purchaseDate: String
-		purchasedByAttendeeID: ID!
-		splitByAttendeeIDs: [ID]
+		purchasedByUserID: ID!
+		splitByUserIDs: [ID]
 		tripID: ID!
 		taskID: ID
 	}
@@ -197,7 +197,7 @@ const typeDefs = gql`
 			completionOrder: Int
 			dueDate: String
 			status: String
-			assignedToAttendeeID: ID
+			assignedToUserID: ID
 			tripID: ID!
 		): Task
 		addBudget(
@@ -205,8 +205,8 @@ const typeDefs = gql`
 			maxAmount: Int
 			actualAmount: Int
 			purchaseDate: String
-			purchasedByAttendeeID: ID!
-			splitByAttendeeIDs: [ID]
+			purchasedByUserID: ID!
+			splitByUserIDs: [ID]
 			tripID: ID!
 			taskID: ID
 		): Budget
@@ -264,7 +264,7 @@ const typeDefs = gql`
 			completionOrder: Int
 			dueDate: String
 			status: String
-			assignedToAttendeeID: ID
+			assignedToUserID: ID
 			tripID: ID
 		): Task
 		updateBudget(
@@ -273,8 +273,8 @@ const typeDefs = gql`
 			maxAmount: Int
 			actualAmount: Int
 			purchaseDate: String
-			purchasedByAttendeeID: ID
-			splitByAttendeeIDs: [ID]
+			purchasedByUserID: ID
+			splitByUserIDs: [ID]
 			tripID: ID
 			taskID: ID
 		): Budget

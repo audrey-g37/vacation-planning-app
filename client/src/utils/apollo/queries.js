@@ -221,7 +221,7 @@ export const QUERY_TASK = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToAttendeeID
+			assignedToUserID
 			tripID
 		}
 	}
@@ -255,7 +255,7 @@ export const QUERY_TASKS = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToAttendeeID
+			assignedToUserID
 			tripID
 		}
 	}
@@ -269,8 +269,8 @@ export const QUERY_BUDGET = gql`
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByAttendeeID
-			splitByAttendeeIDs
+			purchasedByUserID
+			splitByUserIDs
 			tripID
 			taskID
 		}
@@ -285,8 +285,8 @@ export const QUERY_BUDGETS = gql`
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByAttendeeID
-			splitByAttendeeIDs
+			purchasedByUserID
+			splitByUserIDs
 			tripID
 			taskID
 		}
