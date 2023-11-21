@@ -80,26 +80,42 @@ const typeDefs = gql`
 		userID: ID!
 	}
 
+	type TaskSubFields {
+		_id: ID!
+		name: String
+		address: Address
+		startDate: String
+		endDate: String
+		confirmationNumber: String
+		contactPhoneNumber: String
+		contactEmailAddress: String
+		additionalDetails: String
+	}
+
 	type Task {
 		_id: ID!
 		title: String!
-		details: String
+		textDetails: String
+		adultQuantity: Int
+		childrenQuantity: Int
+		details: TaskSubFields
+		completionOrder: Int
 		dueDate: String
 		status: String
-		assignee: String
-		tripID: ID!
+		assignedToUserID: User
+		tripID: Trip
 	}
 
 	type Budget {
 		_id: ID!
 		title: String!
-		minAmount: Int
 		maxAmount: Int
 		actualAmount: Int
 		purchaseDate: String
-		purchasedBy: String
-		tripID: ID!
-		taskID: [ID]
+		purchasedByUserID: User
+		splitByUserIDs: [ID]
+		tripID: Trip
+		taskID: Task
 	}
 
 	type Query {
@@ -122,8 +138,8 @@ const typeDefs = gql`
 			pendingApprovalUserEmail: String
 		): [PopulateFriendRequest]!
 		trips(userID: ID!): [Trip]!
-		tasks: [Task]!
-		budgets: [Budget]!
+		tasks(tripID: ID, userID: ID): [Task]!
+		budgets(tripID: ID, userID: ID): [Budget]!
 	}
 
 	type Mutation {
@@ -161,20 +177,36 @@ const typeDefs = gql`
 			userID: ID!
 		): Trip
 		addTask(
+			name: String
+			street1: String
+			street2: String
+			city: String
+			state: String
+			country: String
+			zipCode: String
+			startDate: String
+			endDate: String
+			confirmationNumber: String
+			contactPhoneNumber: String
+			contactEmailAddress: String
+			additionalDetails: String
 			title: String!
-			details: String
+			textDetails: String
+			adultQuantity: Int
+			childrenQuantity: Int
+			completionOrder: Int
 			dueDate: String
 			status: String
-			assignee: String
+			assignedToUserID: ID
 			tripID: ID!
 		): Task
 		addBudget(
 			title: String!
-			minAmount: Int
 			maxAmount: Int
 			actualAmount: Int
 			purchaseDate: String
-			purchasedBy: String
+			purchasedByUserID: ID!
+			splitByUserIDs: [ID]
 			tripID: ID!
 			taskID: ID
 		): Budget
@@ -212,20 +244,38 @@ const typeDefs = gql`
 		): Trip
 		updateTask(
 			queryID: ID!
+			name: String
+			street1: String
+			street2: String
+			city: String
+			state: String
+			country: String
+			zipCode: String
+			startDate: String
+			endDate: String
+			confirmationNumber: String
+			contactPhoneNumber: String
+			contactEmailAddress: String
+			additionalDetails: String
 			title: String
-			details: String
+			textDetails: String
+			adultQuantity: Int
+			childrenQuantity: Int
+			completionOrder: Int
 			dueDate: String
 			status: String
-			assignee: String
+			assignedToUserID: ID
+			tripID: ID
 		): Task
 		updateBudget(
 			queryID: ID!
 			title: String
-			minAmount: Int
 			maxAmount: Int
 			actualAmount: Int
 			purchaseDate: String
-			purchasedBy: String
+			purchasedByUserID: ID
+			splitByUserIDs: [ID]
+			tripID: ID
 			taskID: ID
 		): Budget
 		removeTrip(queryID: ID!): Trip

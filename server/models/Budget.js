@@ -1,13 +1,10 @@
 const { Schema, model } = require('mongoose');
 
-const budgetSchema = new Schema(
+const BudgetSchema = new Schema(
 	{
 		title: {
 			type: String,
 			required: true
-		},
-		minAmount: {
-			type: Number
 		},
 		maxAmount: {
 			type: Number
@@ -18,20 +15,26 @@ const budgetSchema = new Schema(
 		purchaseDate: {
 			type: Date
 		},
-		purchasedBy: {
-			type: String
+		purchasedByUserID: {
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+			required: true
 		},
+		splitByUserIDs: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'User'
+			}
+		],
 		tripID: {
 			type: Schema.Types.ObjectId,
 			ref: 'Trip',
 			required: true
 		},
-		taskID: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: 'Task'
-			}
-		]
+		taskID: {
+			type: Schema.Types.ObjectId,
+			ref: 'Task'
+		}
 	},
 	{
 		toJSON: {
@@ -41,6 +44,6 @@ const budgetSchema = new Schema(
 	}
 );
 
-const Budget = model('Budget', budgetSchema);
+const Budget = model('Budget', BudgetSchema);
 
 module.exports = Budget;

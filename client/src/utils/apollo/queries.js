@@ -198,23 +198,99 @@ export const QUERY_TASK = gql`
 		task(queryID: $queryID) {
 			_id
 			title
-			details
+			textDetails
+			adultQuantity
+			childrenQuantity
+			details {
+				name
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+				confirmationNumber
+				contactPhoneNumber
+				contactEmailAddress
+				additionalDetails
+			}
+			completionOrder
 			dueDate
 			status
-			assignee
+			assignedToUserID {
+				firstName
+				lastName
+				email
+			}
+			tripID {
+				title
+				description
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+			}
 		}
 	}
 `;
 
 export const QUERY_TASKS = gql`
-	query {
-		tasks {
+	query tasks($tripID: ID, $userID: ID) {
+		tasks(tripID: $tripID, userID: $userID) {
 			_id
 			title
-			details
+			textDetails
+			adultQuantity
+			childrenQuantity
+			details {
+				name
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+				confirmationNumber
+				contactPhoneNumber
+				contactEmailAddress
+				additionalDetails
+			}
+			completionOrder
 			dueDate
 			status
-			assignee
+			assignedToUserID {
+				firstName
+				lastName
+				email
+			}
+			tripID {
+				title
+				description
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+			}
 		}
 	}
 `;
@@ -224,21 +300,76 @@ export const QUERY_BUDGET = gql`
 		budget(queryID: $queryID) {
 			_id
 			title
-			value
+			maxAmount
+			actualAmount
 			purchaseDate
-			purchasedBy
+			purchasedByUserID {
+				firstName
+				lastName
+				email
+			}
+			splitByUserIDs
+			tripID
+			taskID
 		}
 	}
 `;
 
 export const QUERY_BUDGETS = gql`
-	query {
-		budgets {
+	query budgets($tripID: ID, $userID: ID) {
+		budgets(tripID: $tripID, userID: $userID) {
 			_id
 			title
-			value
+			maxAmount
+			actualAmount
 			purchaseDate
-			purchasedBy
+			purchasedByUserID {
+				firstName
+				lastName
+				email
+			}
+			tripID {
+				title
+				description
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+			}
+			splitByUserIDs
+			taskID {
+				_id
+				title
+				textDetails
+				adultQuantity
+				childrenQuantity
+				details {
+					name
+					address {
+						street1
+						street2
+						city
+						state
+						country
+						zipCode
+					}
+					startDate
+					endDate
+					confirmationNumber
+					contactPhoneNumber
+					contactEmailAddress
+					additionalDetails
+				}
+				completionOrder
+				dueDate
+				status
+			}
 		}
 	}
 `;

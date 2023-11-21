@@ -52,16 +52,31 @@ const resolvers = {
 			return await Trip.find({ ...body });
 		},
 		task: async (parent, { queryID }, context) => {
-			return await Task.findById(queryID);
+			return await Task.findById(queryID).populate('assignedToUserID').populate('tripID');
 		},
-		tasks: async (parent, body, context) => {
-			return await Task.find({ ...body });
+		tasks: async (parent, { tripID, userID }, context) => {
+			let dataToSend;
+			if (tripID) dataToSend = { ...dataToSend, tripID: tripID };
+			if (userID) dataToSend = { ...dataToSend, assignedToUserID: userID };
+			const response = dataToSend
+				? await Task.find(dataToSend).populate('assignedToUserID').populate('tripID')
+				: new Error('UserID or TripID required for query.');
+			return response;
 		},
 		budget: async (parent, { queryID }, context) => {
-			return await Budget.findById(queryID);
+			return await Budget.findById(queryID).populate('purchasedByUserID');
 		},
-		budgets: async (parent, body, context) => {
-			return await Budget.find({ ...body });
+		budgets: async (parent, { tripID, userID }, context) => {
+			let dataToSend;
+			if (tripID) dataToSend = { ...dataToSend, tripID: tripID };
+			if (userID) dataToSend = { ...dataToSend, purchasedByUserID: userID };
+			const response = dataToSend
+				? await Budget.find(dataToSend)
+						.populate('purchasedByUserID')
+						.populate('tripID')
+						.populate('taskID')
+				: new Error('UserID or TripID required for query.');
+			return response;
 		}
 	},
 	Mutation: {
@@ -117,7 +132,41 @@ const resolvers = {
 			return newData;
 		},
 		addTask: async (parent, body, context) => {
-			let dataToSend = { ...body };
+			const {
+				street1,
+				street2,
+				city,
+				state,
+				country,
+				zipCode,
+				name,
+				startDate,
+				endDate,
+				confirmationNumber,
+				contactPhoneNumber,
+				contactEmailAddress,
+				additionalDetails
+			} = body;
+			let dataToSend = {
+				...body,
+				details: {
+					name: name,
+					address: {
+						street1: street1,
+						street2: street2,
+						city: city,
+						state: state,
+						country: country,
+						zipCode: zipCode
+					},
+					startDate: startDate,
+					endDate: endDate,
+					confirmationNumber: confirmationNumber,
+					contactPhoneNumber: contactPhoneNumber,
+					contactEmailAddress: contactEmailAddress,
+					additionalDetails: additionalDetails
+				}
+			};
 			const newData = await Task.create(dataToSend);
 			return newData;
 		},
@@ -187,18 +236,56 @@ const resolvers = {
 		},
 		updateTask: async (parent, body, context) => {
 			const { queryID } = body;
-			let dataToSend = { ...body };
+			const {
+				street1,
+				street2,
+				city,
+				state,
+				country,
+				zipCode,
+				name,
+				startDate,
+				endDate,
+				confirmationNumber,
+				contactPhoneNumber,
+				contactEmailAddress,
+				additionalDetails
+			} = body;
+			let dataToSend = {
+				...body,
+				details: {
+					name: name,
+					address: {
+						street1: street1,
+						street2: street2,
+						city: city,
+						state: state,
+						country: country,
+						zipCode: zipCode
+					},
+					startDate: startDate,
+					endDate: endDate,
+					confirmationNumber: confirmationNumber,
+					contactPhoneNumber: contactPhoneNumber,
+					contactEmailAddress: contactEmailAddress,
+					additionalDetails: additionalDetails
+				}
+			};
 			const updatedData = await Task.findByIdAndUpdate(queryID, dataToSend, { new: true });
 			return updatedData;
 		},
 		updateBudget: async (parent, body, context) => {
-			const { queryID } = body;
+			const { queryID, splitByUserIDs } = body;
+			delete body.splitByUserIDs;
 			let dataToSend = { ...body };
-			delete dataToSend.taskID;
-			if (body.taskID) {
-				dataToSend = { ...dataToSend, $addToSet: { taskID: body.taskID } };
-			}
-			const updatedData = await Budget.findByIdAndUpdate(queryID, dataToSend, { new: true });
+			const updatedData = await Budget.findByIdAndUpdate(
+				queryID,
+				{
+					...dataToSend,
+					$addToSet: { splitByUserIDs: { $each: [...splitByUserIDs] } }
+				},
+				{ new: true }
+			);
 			return updatedData;
 		},
 		removeTrip: async (parent, { queryID }, context) => {
