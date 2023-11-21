@@ -52,16 +52,18 @@ const resolvers = {
 			return await Trip.find({ ...body });
 		},
 		task: async (parent, { queryID }, context) => {
-			return await Task.findById(queryID);
+			return await Task.findById(queryID).populate('assignedToUserID').populate('tripID');
 		},
 		tasks: async (parent, body, context) => {
-			return await Task.find({ ...body });
+			return await Task.find({ ...body })
+				.populate('assignedToUserID')
+				.populate('tripID');
 		},
 		budget: async (parent, { queryID }, context) => {
-			return await Budget.findById(queryID);
+			return await Budget.findById(queryID).populate('purchasedByUserID');
 		},
 		budgets: async (parent, body, context) => {
-			return await Budget.find({ ...body });
+			return await Budget.find({ ...body }).populate('purchasedByUserID');
 		}
 	},
 	Mutation: {
