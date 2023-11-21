@@ -266,9 +266,13 @@ export const QUERY_BUDGET = gql`
 		budget(queryID: $queryID) {
 			_id
 			title
-			value
+			maxAmount
+			actualAmount
 			purchaseDate
-			purchasedBy
+			purchasedByAttendeeID
+			splitByAttendeeIDs
+			tripID
+			taskID
 		}
 	}
 `;
@@ -278,9 +282,13 @@ export const QUERY_BUDGETS = gql`
 		budgets {
 			_id
 			title
-			value
+			maxAmount
+			actualAmount
 			purchaseDate
-			purchasedBy
+			purchasedByAttendeeID
+			splitByAttendeeIDs
+			tripID
+			taskID
 		}
 	}
 `;

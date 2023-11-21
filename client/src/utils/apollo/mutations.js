@@ -205,31 +205,32 @@ export const ADD_TASK = gql`
 export const ADD_BUDGET = gql`
 	mutation addBudget(
 		$title: String!
-		$minAmount: Int
 		$maxAmount: Int
 		$actualAmount: Int
 		$purchaseDate: String
-		$purchasedBy: String
+		$purchasedByAttendeeID: ID!
+		$splitByAttendeeIDs: [ID]
 		$tripID: ID!
 		$taskID: ID
 	) {
 		addBudget(
 			title: $title
-			minAmount: $minAmount
 			maxAmount: $maxAmount
 			actualAmount: $actualAmount
 			purchaseDate: $purchaseDate
-			purchasedBy: $purchasedBy
+			purchasedByAttendeeID: $purchasedByAttendeeID
+			splitByAttendeeIDs: $splitByAttendeeIDs
 			tripID: $tripID
 			taskID: $taskID
 		) {
 			_id
 			title
-			minAmount
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedBy
+			purchasedByAttendeeID
+			splitByAttendeeIDs
+			tripID
 			taskID
 		}
 	}
@@ -439,30 +440,33 @@ export const UPDATE_BUDGET = gql`
 	mutation updateBudget(
 		$queryID: ID!
 		$title: String
-		$minAmount: Int
 		$maxAmount: Int
 		$actualAmount: Int
 		$purchaseDate: String
-		$purchasedBy: String
+		$purchasedByAttendeeID: ID
+		$splitByAttendeeIDs: [ID]
+		$tripID: ID
 		$taskID: ID
 	) {
 		updateBudget(
 			queryID: $queryID
 			title: $title
-			minAmount: $minAmount
 			maxAmount: $maxAmount
 			actualAmount: $actualAmount
 			purchaseDate: $purchaseDate
-			purchasedBy: $purchasedBy
+			purchasedByAttendeeID: $purchasedByAttendeeID
+			splitByAttendeeIDs: $splitByAttendeeIDs
+			tripID: $tripID
 			taskID: $taskID
 		) {
 			_id
 			title
-			minAmount
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedBy
+			purchasedByAttendeeID
+			splitByAttendeeIDs
+			tripID
 			taskID
 		}
 	}
