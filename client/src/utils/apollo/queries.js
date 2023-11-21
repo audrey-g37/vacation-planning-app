@@ -198,10 +198,31 @@ export const QUERY_TASK = gql`
 		task(queryID: $queryID) {
 			_id
 			title
-			details
+			textDetails
+			adultQuantity
+			childrenQuantity
+			details {
+				name
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+				confirmationNumber
+				contactPhoneNumber
+				contactEmailAddress
+				additionalDetails
+			}
+			completionOrder
 			dueDate
 			status
-			assignee
+			assignedToAttendeeID
+			tripID
 		}
 	}
 `;
@@ -211,10 +232,31 @@ export const QUERY_TASKS = gql`
 		tasks {
 			_id
 			title
-			details
+			textDetails
+			adultQuantity
+			childrenQuantity
+			details {
+				name
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+				confirmationNumber
+				contactPhoneNumber
+				contactEmailAddress
+				additionalDetails
+			}
+			completionOrder
 			dueDate
 			status
-			assignee
+			assignedToAttendeeID
+			tripID
 		}
 	}
 `;
