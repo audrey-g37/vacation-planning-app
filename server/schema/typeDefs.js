@@ -202,11 +202,11 @@ const typeDefs = gql`
 		): Task
 		addBudget(
 			title: String!
-			minAmount: Int
 			maxAmount: Int
 			actualAmount: Int
 			purchaseDate: String
-			purchasedBy: String
+			purchasedByAttendeeID: ID!
+			splitByAttendeeIDs: [ID]
 			tripID: ID!
 			taskID: ID
 		): Budget
@@ -270,11 +270,12 @@ const typeDefs = gql`
 		updateBudget(
 			queryID: ID!
 			title: String
-			minAmount: Int
 			maxAmount: Int
 			actualAmount: Int
 			purchaseDate: String
-			purchasedBy: String
+			purchasedByAttendeeID: ID
+			splitByAttendeeIDs: [ID]
+			tripID: ID
 			taskID: ID
 		): Budget
 		removeTrip(queryID: ID!): Trip

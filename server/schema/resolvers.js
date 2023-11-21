@@ -260,9 +260,17 @@ const resolvers = {
 			return updatedData;
 		},
 		updateBudget: async (parent, body, context) => {
-			const { queryID } = body;
+			const { queryID, splitByAttendeeIDs } = body;
+			delete body.splitByAttendeeIDs;
 			let dataToSend = { ...body };
-			const updatedData = await Budget.findByIdAndUpdate(queryID, dataToSend, { new: true });
+			const updatedData = await Budget.findByIdAndUpdate(
+				queryID,
+				{
+					...dataToSend,
+					$addToSet: { splitByAttendeeIDs: { $each: [...splitByAttendeeIDs] } }
+				},
+				{ new: true }
+			);
 			return updatedData;
 		},
 		removeTrip: async (parent, { queryID }, context) => {
