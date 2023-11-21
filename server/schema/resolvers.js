@@ -54,16 +54,29 @@ const resolvers = {
 		task: async (parent, { queryID }, context) => {
 			return await Task.findById(queryID).populate('assignedToUserID').populate('tripID');
 		},
-		tasks: async (parent, body, context) => {
-			return await Task.find({ ...body })
-				.populate('assignedToUserID')
-				.populate('tripID');
+		tasks: async (parent, { tripID, userID }, context) => {
+			let dataToSend;
+			if (tripID) dataToSend = { ...dataToSend, tripID: tripID };
+			if (userID) dataToSend = { ...dataToSend, assignedToUserID: userID };
+			const response = dataToSend
+				? await Task.find(dataToSend).populate('assignedToUserID').populate('tripID')
+				: new Error('UserID or TripID required for query.');
+			return response;
 		},
 		budget: async (parent, { queryID }, context) => {
 			return await Budget.findById(queryID).populate('purchasedByUserID');
 		},
-		budgets: async (parent, body, context) => {
-			return await Budget.find({ ...body }).populate('purchasedByUserID');
+		budgets: async (parent, { tripID, userID }, context) => {
+			let dataToSend;
+			if (tripID) dataToSend = { ...dataToSend, tripID: tripID };
+			if (userID) dataToSend = { ...dataToSend, purchasedByUserID: userID };
+			const response = dataToSend
+				? await Budget.find(dataToSend)
+						.populate('purchasedByUserID')
+						.populate('tripID')
+						.populate('taskID')
+				: new Error('UserID or TripID required for query.');
+			return response;
 		}
 	},
 	Mutation: {

@@ -196,8 +196,12 @@ export const ADD_TASK = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToUserID
-			tripID
+			assignedToUserID {
+				_id
+			}
+			tripID {
+				_id
+			}
 		}
 	}
 `;
@@ -377,8 +381,12 @@ export const UPDATE_TASK = gql`
 		$completionOrder: Int
 		$dueDate: String
 		$status: String
-		$assignedToUserID: ID
-		$tripID: ID
+		$assignedToUserID: {
+            _id
+        }
+		$tripID: {
+            _id
+        }
 	) {
 		updateTask(
 			queryID: $queryID

@@ -221,15 +221,32 @@ export const QUERY_TASK = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToUserID
-			tripID
+			assignedToUserID {
+				firstName
+				lastName
+				email
+			}
+			tripID {
+				title
+				description
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+			}
 		}
 	}
 `;
 
 export const QUERY_TASKS = gql`
-	query {
-		tasks {
+	query tasks($tripID: ID, $userID: ID) {
+		tasks(tripID: $tripID, userID: $userID) {
 			_id
 			title
 			textDetails
@@ -255,8 +272,25 @@ export const QUERY_TASKS = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToUserID
-			tripID
+			assignedToUserID {
+				firstName
+				lastName
+				email
+			}
+			tripID {
+				title
+				description
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+			}
 		}
 	}
 `;
@@ -269,7 +303,11 @@ export const QUERY_BUDGET = gql`
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByUserID
+			purchasedByUserID {
+				firstName
+				lastName
+				email
+			}
 			splitByUserIDs
 			tripID
 			taskID
@@ -278,17 +316,60 @@ export const QUERY_BUDGET = gql`
 `;
 
 export const QUERY_BUDGETS = gql`
-	query {
-		budgets {
+	query budgets($tripID: ID, $userID: ID) {
+		budgets(tripID: $tripID, userID: $userID) {
 			_id
 			title
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByUserID
+			purchasedByUserID {
+				firstName
+				lastName
+				email
+			}
+			tripID {
+				title
+				description
+				address {
+					street1
+					street2
+					city
+					state
+					country
+					zipCode
+				}
+				startDate
+				endDate
+			}
 			splitByUserIDs
-			tripID
-			taskID
+			taskID {
+				_id
+				title
+				textDetails
+				adultQuantity
+				childrenQuantity
+				details {
+					name
+					address {
+						street1
+						street2
+						city
+						state
+						country
+						zipCode
+					}
+					startDate
+					endDate
+					confirmationNumber
+					contactPhoneNumber
+					contactEmailAddress
+					additionalDetails
+				}
+				completionOrder
+				dueDate
+				status
+			}
 		}
 	}
 `;

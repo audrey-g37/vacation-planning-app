@@ -102,8 +102,8 @@ const typeDefs = gql`
 		completionOrder: Int
 		dueDate: String
 		status: String
-		assignedToUserID: ID
-		tripID: ID!
+		assignedToUserID: User
+		tripID: Trip
 	}
 
 	type Budget {
@@ -112,10 +112,10 @@ const typeDefs = gql`
 		maxAmount: Int
 		actualAmount: Int
 		purchaseDate: String
-		purchasedByUserID: ID!
+		purchasedByUserID: User
 		splitByUserIDs: [ID]
-		tripID: ID!
-		taskID: ID
+		tripID: Trip
+		taskID: Task
 	}
 
 	type Query {
@@ -138,8 +138,8 @@ const typeDefs = gql`
 			pendingApprovalUserEmail: String
 		): [PopulateFriendRequest]!
 		trips(userID: ID!): [Trip]!
-		tasks: [Task]!
-		budgets: [Budget]!
+		tasks(tripID: ID, userID: ID): [Task]!
+		budgets(tripID: ID, userID: ID): [Budget]!
 	}
 
 	type Mutation {
