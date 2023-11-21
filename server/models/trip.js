@@ -1,27 +1,8 @@
 const { Schema, model } = require('mongoose');
 
-const addressSchema = new Schema({
-	street1: {
-		type: String
-	},
-	street2: {
-		type: String
-	},
-	city: {
-		type: String
-	},
-	state: {
-		type: String
-	},
-	country: {
-		type: String
-	},
-	zipCode: {
-		type: String
-	}
-});
+const Address = require('./Address');
 
-const tripSchema = new Schema(
+const TripSchema = new Schema(
 	{
 		title: {
 			type: String,
@@ -30,7 +11,7 @@ const tripSchema = new Schema(
 		description: {
 			type: String
 		},
-		address: addressSchema,
+		address: Address,
 		startDate: {
 			type: Date
 		},
@@ -51,6 +32,6 @@ const tripSchema = new Schema(
 	}
 );
 
-const Trip = model('Trip', tripSchema);
+const Trip = model('Trip', TripSchema);
 
 module.exports = Trip;

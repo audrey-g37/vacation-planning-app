@@ -1,13 +1,64 @@
 const { Schema, model } = require('mongoose');
+const Address = require('./Address');
 
-const taskSchema = new Schema(
+const TaskSubFields = new Schema(
+	{
+		title: {
+			// e.g. hotel name or restaurant name
+			type: String,
+			required: true
+		},
+		address: {
+			type: Address
+		},
+		startDate: {
+			type: Date
+		},
+		endDate: {
+			type: Date
+		},
+		confirmationNumber: {
+			type: String
+		},
+		contactPhoneNumber: {
+			type: String
+		},
+		contactEmailAddress: {
+			type: String
+		},
+		additionalDetails: {
+			type: String
+		}
+	},
+	{
+		toJSON: {
+			virtuals: true
+		},
+		timestamps: true
+	}
+);
+
+const TaskSchema = new Schema(
 	{
 		title: {
 			type: String,
 			required: true
 		},
-		details: {
+		textDetails: {
 			type: String
+		},
+		// 18 and up
+		adultQuantity: {
+			type: Number
+		},
+		// under age 18
+		childrenQuantity: {
+			type: Number,
+			default: 0
+		},
+		details: TaskSubFields,
+		orderNumber: {
+			type: Number
 		},
 		dueDate: {
 			type: Date
@@ -16,8 +67,10 @@ const taskSchema = new Schema(
 			type: String,
 			default: 'Not Started'
 		},
-		assignee: {
-			type: String
+		assignedToAttendeeID: {
+			type: Schema.Types.ObjectId,
+			ref: 'TripAttendee',
+			required: true
 		},
 		tripID: {
 			type: Schema.Types.ObjectId,
@@ -33,6 +86,6 @@ const taskSchema = new Schema(
 	}
 );
 
-const Task = model('Task', taskSchema);
+const Task = model('Task', TaskSchema);
 
 module.exports = Task;
