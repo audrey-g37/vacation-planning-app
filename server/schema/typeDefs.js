@@ -80,26 +80,42 @@ const typeDefs = gql`
 		userID: ID!
 	}
 
+	type TaskSubFields {
+		_id: ID!
+		title: String!
+		address: Address
+		startDate: String
+		endDate: String
+		confirmationNumber: String
+		contactPhoneNumber: String
+		contactEmailAddress: String
+		additionalDetails: String
+	}
+
 	type Task {
 		_id: ID!
 		title: String!
-		details: String
+		textDetails: String
+		adultQuantity: Int
+		childrenQuantity: Int
+		details: TaskSubFields
+		completionOrder: Int
 		dueDate: String
 		status: String
-		assignee: String
+		assignedToAttendeeID: ID
 		tripID: ID!
 	}
 
 	type Budget {
 		_id: ID!
 		title: String!
-		minAmount: Int
 		maxAmount: Int
 		actualAmount: Int
 		purchaseDate: String
-		purchasedBy: String
+		purchasedByAttendeeID: ID!
+		splitByAttendeeIDs: [ID]
 		tripID: ID!
-		taskID: [ID]
+		taskID: ID
 	}
 
 	type Query {

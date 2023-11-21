@@ -23,8 +23,7 @@ const BudgetSchema = new Schema(
 		splitByAttendeeIDs: [
 			{
 				type: Schema.Types.ObjectId,
-				ref: 'TripAttendee',
-				required: true
+				ref: 'TripAttendee'
 			}
 		],
 		tripID: {

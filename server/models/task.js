@@ -55,7 +55,7 @@ const TaskSchema = new Schema(
 			default: 0
 		},
 		details: TaskSubFields,
-		orderNumber: {
+		completionOrder: {
 			type: Number
 		},
 		dueDate: {
@@ -67,8 +67,7 @@ const TaskSchema = new Schema(
 		},
 		assignedToAttendeeID: {
 			type: Schema.Types.ObjectId,
-			ref: 'TripAttendee',
-			required: true
+			ref: 'TripAttendee'
 		},
 		tripID: {
 			type: Schema.Types.ObjectId,
