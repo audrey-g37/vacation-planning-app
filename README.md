@@ -4,7 +4,6 @@ Get a GRIP on your next group trip!
 
 [See GRIP In Action](https://grip.webappsbyaudreyapi.dev/)
 
-<!-- PROJECT LOGO -->
 <br />
 <box style="display: flex; justify-content: space-between; align-items: center">
 <!-- TABLE OF CONTENTS -->
@@ -34,7 +33,7 @@ Get a GRIP on your next group trip!
 ## About The Project
 
 <div align="center" >
-<img src="client/public/images/grip-screenshot.png" alt="viewing current tasks for the Lobster Fest trip" width="500px" />
+    <img src="client/public/images/grip-screenshot.png" alt="viewing current tasks for the Lobster Fest trip" width="500px" />
 </div>
 
 Get a GRIP on your next group trip!
@@ -45,7 +44,7 @@ GRIP runs on React and uses Material UI components. All login information is sto
 
 \*Note: This version of code was forked from the original at [Korbin-Sargent/vacation-planning-app](https://github.com/Korbin-Sargent/vacation-planning-app). As an original contributor, [Audrey Gillies](https://github.com/audrey-g37) refactored the first version and hosted it on a different server post employment experience.
 
-### Built/Refactored With
+## Built/Refactored With
 
 This section lists all major frameworks that was used to build GRIP.
 
@@ -87,7 +86,7 @@ Distributed under the MIT License.
 
 [audrey.gillies@gmail.com](mailto:audrey.gillies@gmail.com)
 
-#### Original Contributors
+### Original Contributors
 
 -   [Audrey Gillies](https://github.com/audrey-g37)
 -   [Gina Im](https://github.com/gim928)
