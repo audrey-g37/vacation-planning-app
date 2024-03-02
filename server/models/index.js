@@ -5,4 +5,4 @@ const Task = require('./Task');
 const Budget = require('./Budget');
 const FriendRequest = require('./FriendRequest');
 
-module.exports = { User, TripAttendee, Trip, Task, Budget, FriendRequest };
+module.exports = [User, TripAttendee, Trip, Task, Budget, FriendRequest];
