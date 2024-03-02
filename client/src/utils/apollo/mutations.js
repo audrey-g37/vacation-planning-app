@@ -232,10 +232,16 @@ export const ADD_BUDGET = gql`
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByUserID
+			purchasedByUserID {
+				_id
+			}
 			splitByUserIDs
-			tripID
-			taskID
+			tripID {
+				_id
+			}
+			taskID {
+				_id
+			}
 		}
 	}
 `;
@@ -381,12 +387,8 @@ export const UPDATE_TASK = gql`
 		$completionOrder: Int
 		$dueDate: String
 		$status: String
-		$assignedToUserID: {
-            _id
-        }
-		$tripID: {
-            _id
-        }
+		$assignedToUserID: ID
+		$tripID: ID
 	) {
 		updateTask(
 			queryID: $queryID
@@ -438,8 +440,12 @@ export const UPDATE_TASK = gql`
 			completionOrder
 			dueDate
 			status
-			assignedToUserID
-			tripID
+			assignedToUserID {
+				_id
+			}
+			tripID {
+				_id
+			}
 		}
 	}
 `;
@@ -472,10 +478,16 @@ export const UPDATE_BUDGET = gql`
 			maxAmount
 			actualAmount
 			purchaseDate
-			purchasedByUserID
+			purchasedByUserID {
+				_id
+			}
 			splitByUserIDs
-			tripID
-			taskID
+			tripID {
+				_id
+			}
+			taskID {
+				_id
+			}
 		}
 	}
 `;

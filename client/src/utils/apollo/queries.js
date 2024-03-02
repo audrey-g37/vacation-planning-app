@@ -309,8 +309,12 @@ export const QUERY_BUDGET = gql`
 				email
 			}
 			splitByUserIDs
-			tripID
-			taskID
+			tripID {
+				_id
+			}
+			taskID {
+				_id
+			}
 		}
 	}
 `;
