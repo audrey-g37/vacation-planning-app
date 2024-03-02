@@ -6,23 +6,28 @@ Get a GRIP on your next group trip!
 
 <!-- PROJECT LOGO -->
 <br />
-<p align="center">
-  <a href="https://github.com/Korbin-Sargent/vacation-planning-app">
-    <img src="client/public/images/logo.png" alt="Logo">
-  </a>
-  </p>
+<box style="display: flex; justify-content: space-between; align-items: center">
 <!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#builtrefactored-with">Built With</a></li>
-    <li><a href="#getting-started">Getting Started</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+    <div>
+        <details open="open">
+        <summary>Table of Contents</summary>
+        <ol>
+            <li><a href="#about-the-project">About The Project</a></li>
+            <li><a href="#builtrefactored-with">Built With</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#license">License</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ol>
+        </details>
+    </div>
+<!-- Logo -->
+    <div>
+        <a href="https://github.com/Korbin-Sargent/vacation-planning-app">
+            <img src="./client/public/images/logos/logo-color.png" alt="Logo" width="125px">
+        </a>
+    </div>
+</box>
 
 <!-- ABOUT THE PROJECT -->
 
