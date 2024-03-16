@@ -180,15 +180,19 @@ export const AuthProvider = ({ children }) => {
 	const [getFriendRequestsMatch] = useLazyQuery(queryTypes['friendRequestsMatch']);
 	const [getAllTrips] = useLazyQuery(queryTypes['trips']);
 	const [getSingleTrip] = useLazyQuery(queryTypes['trip']);
+	const [getTripBudget] = useLazyQuery(queryTypes['budgets']);
+	const [getSingleBudget] = useLazyQuery(queryTypes['budget']);
 
 	// mutations
 	const [addUser] = useMutation(mutationTypes['addUser']);
 	const [addFriendRequest] = useMutation(mutationTypes['addFriendRequest']);
 	const [addTrip] = useMutation(mutationTypes['addTrip']);
 	const [addTripAttendee] = useMutation(mutationTypes['addTripAttendee']);
+	const [addBudget] = useMutation(mutationTypes['addBudget']);
 	const [editFriendRequest] = useMutation(mutationTypes['editFriendRequest']);
 	const [editTrip] = useMutation(mutationTypes['editTrip']);
 	const [editTripAttendee] = useMutation(mutationTypes['editTripAttendee']);
+	const [editBudget] = useMutation(mutationTypes['editBudget']);
 
 	const crudFunctions = {
 		getUser,
@@ -199,13 +203,17 @@ export const AuthProvider = ({ children }) => {
 		getFriendRequestsMatch,
 		getAllTrips,
 		getSingleTrip,
+		getTripBudget,
+		getSingleBudget,
 		addUser,
 		addFriendRequest,
 		addTrip,
 		addTripAttendee,
+		addBudget,
 		editFriendRequest,
 		editTrip,
-		editTripAttendee
+		editTripAttendee,
+		editBudget
 	};
 
 	// registering a new user
