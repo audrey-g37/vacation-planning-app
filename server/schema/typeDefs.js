@@ -109,8 +109,8 @@ const typeDefs = gql`
 	type Budget {
 		_id: ID!
 		title: String!
-		maxAmount: Int
-		actualAmount: Int
+		maxAmount: Float
+		actualAmount: Float
 		purchaseDate: String
 		purchasedByUserID: User
 		splitByUserIDs: [ID]
@@ -202,8 +202,8 @@ const typeDefs = gql`
 		): Task
 		addBudget(
 			title: String!
-			maxAmount: Int
-			actualAmount: Int
+			maxAmount: Float
+			actualAmount: Float
 			purchaseDate: String
 			purchasedByUserID: ID
 			splitByUserIDs: [ID]
@@ -270,8 +270,8 @@ const typeDefs = gql`
 		updateBudget(
 			queryID: ID!
 			title: String
-			maxAmount: Int
-			actualAmount: Int
+			maxAmount: Float
+			actualAmount: Float
 			purchaseDate: String
 			purchasedByUserID: ID
 			splitByUserIDs: [ID]

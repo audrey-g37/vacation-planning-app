@@ -90,7 +90,6 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 				errors,
 				values
 			}) => {
-				console.log({ values });
 				return (
 					<form noValidate>
 						<Grid container spacing={theme.spacing()}>
