@@ -28,7 +28,7 @@ const TripAttendee = ({ formData, onSubmit, edit }) => {
 				}
 			};
 			const { data } = await getFriendRequests(dataToSend);
-			const friends = data.friendRequests.reduce((prev, next) => {
+			const friends = data.friendRequests?.reduce((prev, next) => {
 				let existing = prev;
 				const { pendingApprovalUserID, requestedByUserID, status } = next;
 				if (status === 'Approved') {
