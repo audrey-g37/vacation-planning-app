@@ -46,14 +46,7 @@ const ViewSingleTrip = () => {
 		const { data } = await getTripBudget({
 			variables: { tripID: id }
 		});
-		const budgetItems = data.budgets.map((budgetItem) => {
-			budgetItem = {
-				...budgetItem,
-				name: `${budgetItem.purchasedByUserID.firstName} ${budgetItem.purchasedByUserID.lastName}`
-			};
-			return budgetItem;
-		});
-		return budgetItems;
+		return data.budgets;
 	};
 
 	const setAllTripData = async (trip = true, attendees = true, budget = true) => {

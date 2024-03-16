@@ -4,18 +4,21 @@ import DataGrid from 'views/components/data-grid';
 const ViewBudgetGrid = ({ data, queryResults }) => {
 	const columns = [
 		{
-			field: 'purchasedByUserID',
-			headerName: 'Name',
-			width: 200,
-			editable: false,
-			format: {
-				type: 'subField'
-			}
+			field: 'title',
+			headerName: 'Title',
+			width: 175,
+			editable: false
 		},
 		{
 			field: 'actualAmount',
-			headerName: 'Cost',
-			width: 175,
+			headerName: 'Spent',
+			width: 125,
+			editable: false
+		},
+		{
+			field: 'maxAmount',
+			headerName: 'Budget',
+			width: 125,
 			editable: false
 		}
 	];
