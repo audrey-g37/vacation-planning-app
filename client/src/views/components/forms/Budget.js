@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Grid, useTheme } from '@mui/material';
 import { useParams } from 'react-router';
 import { Formik } from 'formik';
@@ -18,6 +19,8 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 
 	const { id: tripID } = useParams();
 
+	const [dropdownOfAttendees, setDropdownOfAttendees] = useState([]);
+
 	const blankInfo = {
 		title: '',
 		maxAmount: 0,
@@ -28,6 +31,20 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 		tripID: tripID,
 		taskID: null
 	};
+
+	const createDropdownOfAttendees = () => {
+		const attendees = formData.tripAttendees.map((attendee) => {
+			return {
+				value: attendee.attendeeUserID._id,
+				label: `${attendee.attendeeUserID.firstName} ${attendee.attendeeUserID.lastName}`
+			};
+		});
+		setDropdownOfAttendees(attendees);
+	};
+
+	useEffect(() => {
+		createDropdownOfAttendees();
+	}, []);
 
 	return (
 		<Formik
@@ -168,8 +185,7 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 									componentType={'autocomplete'}
 									componentProps={{
 										name: 'purchasedByUserID',
-										// * trip attendees
-										// options: existingFriends,
+										options: dropdownOfAttendees,
 										multiple: false,
 										onChange: setFieldValue,
 										onBlur: handleBlur,
@@ -179,20 +195,21 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 								/>
 							</Grid>
 							<Grid item xs={12} md={6}>
-								{/* <FormInput
+								<FormInput
 									componentType={'autocomplete'}
 									componentProps={{
 										name: 'splitByUserIDs',
-										// * trip attendees
-										// options: existingFriends,
+										options: dropdownOfAttendees,
 										multiple: true,
 										onChange: setFieldValue,
 										onBlur: handleBlur,
 										value: values.splitByUserIDs
 									}}
 									label={'Splitting Cost'}
-                                    helperText={'Who will be splitting the cost for this purchase. Used to calculate individual spending.'}
-								/> */}
+									helperText={
+										'Who will be splitting the cost for this purchase. Used to calculate individual spending.'
+									}
+								/>
 							</Grid>
 							<Grid item xs={12}>
 								<Grid
