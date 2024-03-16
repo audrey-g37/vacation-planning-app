@@ -22,11 +22,11 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 		title: '',
 		maxAmount: 0,
 		actualAmount: 0,
-		purchaseDate: null,
-		purchasedByUserID: '',
+		purchaseDate: '',
+		purchasedByUserID: null,
 		splitByUserIDs: [],
 		tripID: tripID,
-		taskID: ''
+		taskID: null
 	};
 
 	return (
@@ -56,23 +56,6 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 				try {
 					let dataToSend = {
 						variables: values
-					};
-					for (const [key, value] of Object.entries(
-						dataToSend.variables?.tripPermissions
-					)) {
-						if (key !== '_id' && key !== '__typename' && value) {
-							dataToSend = {
-								...dataToSend,
-								variables: {
-									...dataToSend.variables,
-									[key]: value
-								}
-							};
-						}
-					}
-					dataToSend = {
-						...dataToSend,
-						variables: dataToSend.variables
 					};
 					if (edit) {
 						await editBudget(dataToSend);
@@ -107,6 +90,7 @@ const BudgetForm = ({ edit, formData, onSubmit }) => {
 				errors,
 				values
 			}) => {
+				console.log({ values });
 				return (
 					<form noValidate>
 						<Grid container spacing={theme.spacing()}>
