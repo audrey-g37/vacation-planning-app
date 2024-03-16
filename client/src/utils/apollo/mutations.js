@@ -212,7 +212,7 @@ export const ADD_BUDGET = gql`
 		$maxAmount: Int
 		$actualAmount: Int
 		$purchaseDate: String
-		$purchasedByUserID: ID!
+		$purchasedByUserID: ID
 		$splitByUserIDs: [ID]
 		$tripID: ID!
 		$taskID: ID

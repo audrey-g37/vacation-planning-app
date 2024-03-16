@@ -17,8 +17,7 @@ const BudgetSchema = new Schema(
 		},
 		purchasedByUserID: {
 			type: Schema.Types.ObjectId,
-			ref: 'User',
-			required: true
+			ref: 'User'
 		},
 		splitByUserIDs: [
 			{
