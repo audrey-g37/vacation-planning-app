@@ -93,30 +93,29 @@ const Autocomplete = ({
 						classListArray.includes('MuiChip-deleteIcon') ||
 						parentClassListArray.includes('MuiChip-deleteIcon')
 					) {
-						const { outerText } = parentElement;
-						const updatedValue = value.reduce((prev, next) => {
-							let matchingValue = options.find(
-								(option) =>
-									option?.value === outerText ||
-									option?.label === outerText ||
-									option === outerText
-							);
-							matchingValue =
-								matchingValue?.value || matchingValue?.label || matchingValue;
-							if (
-								next?.value !== matchingValue &&
-								next?.label !== matchingValue &&
-								next !== matchingValue
-							) {
-								prev.push(matchingValue);
-							}
-							return prev;
-						}, []);
+						const outerText =
+							parentElement.outerText || parentElement.parentElement.outerText;
+
+						let matchingValue = options.find(
+							(option) =>
+								option?.value === outerText ||
+								option?.label === outerText ||
+								option === outerText
+						);
+						matchingValue =
+							matchingValue?.value || matchingValue?.label || matchingValue;
+						const updatedValue = value.filter(
+							(valueToTest) => valueToTest !== matchingValue
+						);
+
 						onChange(name, multiple ? [...updatedValue] || [] : '');
 					}
 
 					// whole selection clear button is clicked
-					else if (parentClassListArray.includes('MuiAutocomplete-clearIndicator')) {
+					else if (
+						parentClassListArray.includes('MuiAutocomplete-clearIndicator') ||
+						classListArray.includes('MuiAutocomplete-clearIndicator')
+					) {
 						onChange(name, multiple ? [] : '');
 					} else {
 						onChange(name, multiple ? [...value] : '');
