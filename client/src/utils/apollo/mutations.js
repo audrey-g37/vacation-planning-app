@@ -209,10 +209,10 @@ export const ADD_TASK = gql`
 export const ADD_BUDGET = gql`
 	mutation addBudget(
 		$title: String!
-		$maxAmount: Int
-		$actualAmount: Int
+		$maxAmount: Float
+		$actualAmount: Float
 		$purchaseDate: String
-		$purchasedByUserID: ID!
+		$purchasedByUserID: ID
 		$splitByUserIDs: [ID]
 		$tripID: ID!
 		$taskID: ID
@@ -454,8 +454,8 @@ export const UPDATE_BUDGET = gql`
 	mutation updateBudget(
 		$queryID: ID!
 		$title: String
-		$maxAmount: Int
-		$actualAmount: Int
+		$maxAmount: Float
+		$actualAmount: Float
 		$purchaseDate: String
 		$purchasedByUserID: ID
 		$splitByUserIDs: [ID]

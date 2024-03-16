@@ -17,6 +17,7 @@ import SubmitButton from './SubmitButton';
 import CustomDivider from './CustomDivider';
 import FriendRequestForm from './forms/FriendRequest';
 import TripAttendee from './forms/TripAttendeeMain';
+import BudgetForm from './forms/Budget';
 
 function PaperComponent(props) {
 	return (
@@ -47,7 +48,8 @@ const DraggableDialog = ({
 	const collectionTypes = {
 		trip: <TripForm {...formInfoObj} />,
 		friendRequest: <FriendRequestForm {...formInfoObj} />,
-		tripAttendee: <TripAttendee {...formInfoObj} />
+		tripAttendee: <TripAttendee {...formInfoObj} />,
+		budget: <BudgetForm {...formInfoObj} />
 	};
 
 	return (

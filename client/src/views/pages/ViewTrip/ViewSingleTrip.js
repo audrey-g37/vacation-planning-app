@@ -9,14 +9,19 @@ import { sortFriends } from 'utils/sorting';
 import TripDetails from './TripDetails';
 import CircularLoader from 'views/components/CircularLoader';
 import ViewAttendeesForTrip from './TripAttendeeGrid';
+import ViewBudgetGrid from './BudgetGrid';
 
 const ViewSingleTrip = () => {
 	const theme = useTheme();
 	const { id } = useParams();
 	const { crudFunctions } = useAuth();
-	const { getSingleTrip, getTripAttendeesByTripID } = crudFunctions;
+	const { getSingleTrip, getTripAttendeesByTripID, getTripBudget } = crudFunctions;
 
-	const [tripData, setTripData] = useState({ tripDetails: {}, tripAttendees: [] });
+	const [tripData, setTripData] = useState({
+		tripDetails: {},
+		tripAttendees: [],
+		budgetItems: []
+	});
 	const [loading, setLoading] = useState(false);
 
 	const getTripData = async () => {
@@ -37,8 +42,14 @@ const ViewSingleTrip = () => {
 		});
 		return attendees;
 	};
+	const getTripBudgetData = async () => {
+		const { data } = await getTripBudget({
+			variables: { tripID: id }
+		});
+		return data.budgets;
+	};
 
-	const setAllTripData = async (trip = true, attendees = true) => {
+	const setAllTripData = async (trip = true, attendees = true, budget = true) => {
 		setLoading(true);
 		let tripDataObj = tripData;
 		if (trip) {
@@ -51,6 +62,10 @@ const ViewSingleTrip = () => {
 				...tripDataObj,
 				tripAttendees: sortFriends({ data: attendees, fieldName: 'name' })
 			};
+		}
+		if (budget) {
+			const tripBudget = await getTripBudgetData();
+			tripDataObj = { ...tripDataObj, budgetItems: tripBudget };
 		}
 		setTripData(tripDataObj);
 		setLoading(false);
@@ -84,6 +99,18 @@ const ViewSingleTrip = () => {
 					sx={{ margin: '0 1rem' }}
 				>
 					{!loading && <ViewAttendeesForTrip data={tripData.tripAttendees} />}
+				</MainCard>
+			</Grid>
+			<Grid item xs={12} md={4}>
+				<MainCard
+					title={'Expenses'}
+					collection={'budget'}
+					newItem={'Budget'}
+					formData={tripData}
+					queryResults={async () => await setAllTripData(false, true)}
+					sx={{ margin: '0 1rem' }}
+				>
+					{!loading && <ViewBudgetGrid data={tripData.budgetItems} />}
 				</MainCard>
 			</Grid>
 		</Grid>

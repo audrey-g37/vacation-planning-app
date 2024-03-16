@@ -40,15 +40,11 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 		<Formik
 			initialValues={edit ? formData : blankInfo}
 			enableReinitialize
-			validationSchema={Yup.object().shape({})}
+			validationSchema={Yup.object().shape({
+				attendeeUserID: Yup.array().min(1, 'At least one friend must be selected.')
+			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
-					if (!values.attendeeUserID || values.attendeeUserID.length === 0) {
-						return setAlert({
-							...alert,
-							message: 'At least one friend must be selected.'
-						});
-					}
 					let dataToSend = {
 						variables: values
 					};
@@ -130,6 +126,13 @@ const TripAttendeeForm = ({ edit, formData, onSubmit }) => {
 										value: values.attendeeUserID
 									}}
 									label={'Name:'}
+									required={true}
+									error={Boolean(touched.attendeeUserID && errors.attendeeUserID)}
+									helperText={
+										touched.attendeeUserID &&
+										errors.attendeeUserID &&
+										`${errors.attendeeUserID}`
+									}
 								/>
 							</Grid>
 							<Grid item xs={12} md={6}>
