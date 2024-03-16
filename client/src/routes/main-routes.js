@@ -1,14 +1,6 @@
 import MainLayout from 'views/layouts/MainLayout';
 import ViewFriends from 'views/pages/Friends';
-import {
-	Dashboard,
-	EditBudget,
-	EditTask,
-	ViewAllTrips,
-	ViewBudget,
-	ViewSingleTrip,
-	ViewTask
-} from 'views/pages/index';
+import { Dashboard, EditTask, ViewAllTrips, ViewSingleTrip, ViewTask } from 'views/pages/index';
 
 const mainRoutes = {
 	path: '/',
@@ -37,14 +29,6 @@ const mainRoutes = {
 				{
 					path: 'view-trip/:id/view-tasks/:id',
 					element: <EditTask />
-				},
-				{
-					path: 'view-trip/:id/view-budget',
-					element: <ViewBudget />
-				},
-				{
-					path: 'view-trip/:id/view-budgets/:id',
-					element: <EditBudget />
 				}
 			]
 		}
