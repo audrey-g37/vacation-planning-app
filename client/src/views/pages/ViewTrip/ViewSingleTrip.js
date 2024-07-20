@@ -21,8 +21,8 @@ const ViewSingleTrip = () => {
 	const [tripData, setTripData] = useState({
 		tripDetails: {},
 		tripAttendees: [],
-		budgetItems: [],
-		taskItems: []
+		taskItems: [],
+		budgetItems: []
 	});
 	const [loading, setLoading] = useState(false);
 
@@ -44,17 +44,17 @@ const ViewSingleTrip = () => {
 		});
 		return attendees;
 	};
-	const getTripBudgetData = async () => {
-		const { data } = await getTripBudget({
-			variables: { tripID: id }
-		});
-		return data.budgets;
-	};
 	const getTripTaskData = async () => {
 		const { data } = await getTripTask({
 			variables: { tripID: id }
 		});
 		return data.tasks;
+	};
+	const getTripBudgetData = async () => {
+		const { data } = await getTripBudget({
+			variables: { tripID: id }
+		});
+		return data.budgets;
 	};
 
 	const setAllTripData = async (trip = true, attendees = true, budget = true, task = true) => {
@@ -71,13 +71,13 @@ const ViewSingleTrip = () => {
 				tripAttendees: sortFriends({ data: attendees, fieldName: 'name' })
 			};
 		}
-		if (budget) {
-			const tripBudget = await getTripBudgetData();
-			tripDataObj = { ...tripDataObj, budgetItems: tripBudget };
-		}
 		if (task) {
 			const tripTask = await getTripTaskData();
 			tripDataObj = { ...tripDataObj, taskItems: tripTask };
+		}
+		if (budget) {
+			const tripBudget = await getTripBudgetData();
+			tripDataObj = { ...tripDataObj, budgetItems: tripBudget };
 		}
 		setTripData(tripDataObj);
 		setLoading(false);
@@ -115,18 +115,6 @@ const ViewSingleTrip = () => {
 			</Grid>
 			<Grid item xs={12} md={4}>
 				<MainCard
-					title={'Expenses'}
-					collection={'budget'}
-					newItem={'Budget'}
-					formData={tripData}
-					queryResults={async () => await setAllTripData(false, true)}
-					sx={{ margin: '0 1rem' }}
-				>
-					{!loading && <ViewBudgetGrid data={tripData.budgetItems} />}
-				</MainCard>
-			</Grid>
-			<Grid item xs={12} md={4}>
-				<MainCard
 					title={'Tasks'}
 					collection={'task'}
 					newItem={'Task'}
@@ -135,6 +123,18 @@ const ViewSingleTrip = () => {
 					sx={{ margin: '0 1rem' }}
 				>
 					{!loading && <ViewTaskGrid data={tripData.taskItems} />}
+				</MainCard>
+			</Grid>
+			<Grid item xs={12} md={4}>
+				<MainCard
+					title={'Expenses'}
+					collection={'budget'}
+					newItem={'Budget'}
+					formData={tripData}
+					queryResults={async () => await setAllTripData(false, true)}
+					sx={{ margin: '0 1rem' }}
+				>
+					{!loading && <ViewBudgetGrid data={tripData.budgetItems} />}
 				</MainCard>
 			</Grid>
 		</Grid>
