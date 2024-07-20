@@ -11,16 +11,25 @@ const ViewTaskGrid = ({ data, queryResults }) => {
 			editable: false
 		},
 		{
-			field: 'actualAmount',
-			headerName: 'Spent',
+			field: 'textDetails',
+			headerName: 'Details',
 			width: 125,
 			editable: false
 		},
 		{
-			field: 'maxAmount',
-			headerName: 'Budget',
+			field: 'status',
+			headerName: 'Status',
 			width: 125,
 			editable: false
+		},
+		{
+			field: 'assignedToUserID',
+			headerName: 'Assigned To',
+			width: 125,
+			editable: false,
+			format: {
+				type: 'subField'
+			}
 		}
 	];
 

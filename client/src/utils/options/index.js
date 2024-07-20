@@ -256,6 +256,9 @@ export const tripAttendeeOptions = {
 	permissions: ['None', 'Any', { value: 'Own', label: 'Specific to Attendee' }]
 };
 
+// task completion status
+export const taskCompletionStatus = ['Not Started', 'In Progress', 'Complete'];
+
 // rating
 export const ratingArray = ['1', '2', '3', '4', '5'];
 

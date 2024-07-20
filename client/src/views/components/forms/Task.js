@@ -9,6 +9,8 @@ import FormInput from './inputs';
 import SubmitButton from '../SubmitButton';
 import useAuth from 'hooks/useAuth';
 import CustomDivider from '../CustomDivider';
+import { taskCompletionStatus } from 'utils/options';
+import CustomTypography from '../CustomTypography';
 
 const TaskForm = ({ edit, formData, onSubmit }) => {
 	const theme = useTheme();
@@ -21,16 +23,18 @@ const TaskForm = ({ edit, formData, onSubmit }) => {
 
 	const [dropdownOfAttendees, setDropdownOfAttendees] = useState([]);
 
-	// todo: update with task fields
 	const blankInfo = {
 		title: '',
-		maxAmount: 0,
-		actualAmount: 0,
-		purchaseDate: '',
-		purchasedByUserID: null,
-		splitByUserIDs: [],
-		tripID: tripID,
-		taskID: null
+		textDetails: '',
+		adultQuantity: 0,
+		childrenQuantity: 0,
+		// todo: update details with task sub fields
+		// details: {},
+		completionOrder: 1,
+		dueDate: '',
+		status: 'Not Started',
+		assignedToUserID: null,
+		tripID: tripID
 	};
 
 	const createDropdownOfAttendees = () => {
@@ -51,25 +55,14 @@ const TaskForm = ({ edit, formData, onSubmit }) => {
 		<Formik
 			initialValues={edit ? formData : blankInfo}
 			enableReinitialize
-			// todo: update with task fields
 			validationSchema={Yup.object().shape({
 				title: Yup.string().trim().required('Title is required.'),
-				maxAmount: Yup.number().test({
-					name: 'hundredths-place',
-					test: (num) =>
-						(String(num).includes('.')
-							? String(num).split('.')[1]?.length <= 2
-							: String(num)) && num >= 0,
-					message: 'Must be a valid dollar amount.'
-				}),
-				actualAmount: Yup.number().test({
-					name: 'hundredths-place',
-					test: (num) =>
-						(String(num).includes('.')
-							? String(num).split('.')[1]?.length <= 2
-							: String(num)) && num >= 0,
-					message: 'Must be a valid dollar amount.'
-				})
+				adultQuantity: Yup.number()
+					.min(0, 'Must be a positive number.')
+					.integer('Must be a whole number.'),
+				childrenQuantity: Yup.number()
+					.min(0, 'Must be a positive number.')
+					.integer('Must be a whole number.')
 			})}
 			onSubmit={async (values, { setStatus, setSubmitting }) => {
 				try {
@@ -109,7 +102,6 @@ const TaskForm = ({ edit, formData, onSubmit }) => {
 				errors,
 				values
 			}) => {
-				// todo: update with task fields
 				return (
 					<form noValidate>
 						<Grid container spacing={theme.spacing()}>
@@ -132,52 +124,13 @@ const TaskForm = ({ edit, formData, onSubmit }) => {
 								<FormInput
 									componentType={'text'}
 									componentProps={{
-										name: 'maxAmount',
+										name: 'textDetails',
 										onChange: handleChange,
 										onBlur: handleBlur,
-										type: 'number',
-										value: values.maxAmount
+										value: values.textDetails
 									}}
-									label={'Maximum Amount'}
-									error={Boolean(touched.maxAmount && errors.maxAmount)}
-									helperText={
-										touched.maxAmount &&
-										errors.maxAmount &&
-										`${errors.maxAmount}`
-									}
-								/>
-							</Grid>
-							<Grid item xs={12} md={6}>
-								<FormInput
-									componentType={'text'}
-									componentProps={{
-										name: 'actualAmount',
-										onChange: handleChange,
-										onBlur: handleBlur,
-										type: 'number',
-										value: values.actualAmount
-									}}
-									label={'Amount Spent'}
-									error={Boolean(touched.actualAmount && errors.actualAmount)}
-									helperText={
-										touched.actualAmount &&
-										errors.actualAmount &&
-										`${errors.actualAmount}`
-									}
-								/>
-							</Grid>
-							<Grid item xs={12} md={6}>
-								<FormInput
-									componentType={'dateTime'}
-									componentProps={{
-										name: 'purchaseDate',
-										value: values.purchaseDate,
-										multiline: true,
-										minRows: 3,
-										onChange: setFieldValue,
-										onBlur: setTouched
-									}}
-									label={'Purchase Date'}
+									label={'Details'}
+									required={false}
 								/>
 							</Grid>
 						</Grid>
@@ -185,33 +138,100 @@ const TaskForm = ({ edit, formData, onSubmit }) => {
 						<Grid container spacing={theme.spacing()}>
 							<Grid item xs={12} md={6}>
 								<FormInput
-									componentType={'autocomplete'}
+									componentType={'text'}
 									componentProps={{
-										name: 'purchasedByUserID',
-										options: dropdownOfAttendees,
-										multiple: false,
-										onChange: setFieldValue,
+										name: 'adultQuantity',
+										onChange: handleChange,
 										onBlur: handleBlur,
-										value: values.purchasedByUserID
+										type: 'number',
+										value: values.adultQuantity
 									}}
-									label={'Purchased By'}
+									label={'Number of Adults'}
+									error={Boolean(touched.adultQuantity && errors.adultQuantity)}
+									helperText={
+										(touched.adultQuantity &&
+											errors.adultQuantity &&
+											`${errors.adultQuantity}`) ||
+										`How many people age 18 and older?`
+									}
+								/>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'text'}
+									componentProps={{
+										name: 'childrenQuantity',
+										onChange: handleChange,
+										onBlur: handleBlur,
+										type: 'number',
+										value: values.childrenQuantity
+									}}
+									label={'Number of Children'}
+									error={Boolean(
+										touched.childrenQuantity && errors.childrenQuantity
+									)}
+									helperText={
+										(touched.childrenQuantity &&
+											errors.childrenQuantity &&
+											`${errors.childrenQuantity}`) ||
+										`How many people under age 18?`
+									}
+								/>
+							</Grid>
+							<Grid item xs={12} textAlign={'right'}>
+								<CustomTypography
+									customStyle={{
+										color: theme.palette.text.secondary
+									}}
+									textContent={`Total Number of People: ${
+										Number(values.adultQuantity) +
+										Number(values.childrenQuantity)
+									}`}
+								/>
+							</Grid>
+						</Grid>
+						<CustomDivider margin='0.5rem' />
+						<Grid container spacing={theme.spacing()}>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'dateTime'}
+									componentProps={{
+										name: 'dueDate',
+										value: values.dueDate,
+										multiline: true,
+										minRows: 3,
+										onChange: setFieldValue,
+										onBlur: setTouched
+									}}
+									label={'Due Date'}
 								/>
 							</Grid>
 							<Grid item xs={12} md={6}>
 								<FormInput
 									componentType={'autocomplete'}
 									componentProps={{
-										name: 'splitByUserIDs',
+										name: 'status',
+										value: values.status,
+										multiple: false,
+										options: taskCompletionStatus,
+										onChange: setFieldValue,
+										onBlur: setTouched
+									}}
+									label={'Completion Status'}
+								/>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<FormInput
+									componentType={'autocomplete'}
+									componentProps={{
+										name: 'assignedToUserID',
 										options: dropdownOfAttendees,
-										multiple: true,
+										multiple: false,
 										onChange: setFieldValue,
 										onBlur: handleBlur,
-										value: values.splitByUserIDs
+										value: values.assignedToUserID
 									}}
-									label={'Splitting Cost'}
-									helperText={
-										'Who will be splitting the cost for this purchase. Used to calculate individual spending.'
-									}
+									label={'Assigned To'}
 								/>
 							</Grid>
 							<Grid item xs={12}>
