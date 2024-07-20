@@ -1,6 +1,6 @@
 import MainLayout from 'views/layouts/MainLayout';
 import ViewFriends from 'views/pages/Friends';
-import { Dashboard, EditTask, ViewAllTrips, ViewSingleTrip, ViewTask } from 'views/pages/index';
+import { Dashboard, ViewAllTrips, ViewSingleTrip } from 'views/pages/index';
 
 const mainRoutes = {
 	path: '/',
@@ -20,17 +20,7 @@ const mainRoutes = {
 		},
 		{
 			path: 'view-trip/:id',
-			element: <ViewSingleTrip />,
-			children: [
-				{
-					path: 'view-trip/:id/view-tasks',
-					element: <ViewTask />
-				},
-				{
-					path: 'view-trip/:id/view-tasks/:id',
-					element: <EditTask />
-				}
-			]
+			element: <ViewSingleTrip />
 		}
 	]
 };
