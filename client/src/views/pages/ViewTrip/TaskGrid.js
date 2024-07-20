@@ -2,7 +2,6 @@
 import DataGrid from 'views/components/data-grid';
 
 const ViewTaskGrid = ({ data, queryResults }) => {
-	// todo: update with task fields
 	const columns = [
 		{
 			field: 'title',
