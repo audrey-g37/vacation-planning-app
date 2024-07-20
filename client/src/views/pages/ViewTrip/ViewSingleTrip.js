@@ -10,17 +10,19 @@ import TripDetails from './TripDetails';
 import CircularLoader from 'views/components/CircularLoader';
 import ViewAttendeesForTrip from './TripAttendeeGrid';
 import ViewBudgetGrid from './BudgetGrid';
+import ViewTaskGrid from './TaskGrid';
 
 const ViewSingleTrip = () => {
 	const theme = useTheme();
 	const { id } = useParams();
 	const { crudFunctions } = useAuth();
-	const { getSingleTrip, getTripAttendeesByTripID, getTripBudget } = crudFunctions;
+	const { getSingleTrip, getTripAttendeesByTripID, getTripBudget, getTripTask } = crudFunctions;
 
 	const [tripData, setTripData] = useState({
 		tripDetails: {},
 		tripAttendees: [],
-		budgetItems: []
+		budgetItems: [],
+		taskItems: []
 	});
 	const [loading, setLoading] = useState(false);
 
@@ -48,8 +50,14 @@ const ViewSingleTrip = () => {
 		});
 		return data.budgets;
 	};
+	const getTripTaskData = async () => {
+		const { data } = await getTripTask({
+			variables: { tripID: id }
+		});
+		return data.tasks;
+	};
 
-	const setAllTripData = async (trip = true, attendees = true, budget = true) => {
+	const setAllTripData = async (trip = true, attendees = true, budget = true, task = true) => {
 		setLoading(true);
 		let tripDataObj = tripData;
 		if (trip) {
@@ -66,6 +74,10 @@ const ViewSingleTrip = () => {
 		if (budget) {
 			const tripBudget = await getTripBudgetData();
 			tripDataObj = { ...tripDataObj, budgetItems: tripBudget };
+		}
+		if (task) {
+			const tripTask = await getTripTaskData();
+			tripDataObj = { ...tripDataObj, taskItems: tripTask };
 		}
 		setTripData(tripDataObj);
 		setLoading(false);
@@ -111,6 +123,18 @@ const ViewSingleTrip = () => {
 					sx={{ margin: '0 1rem' }}
 				>
 					{!loading && <ViewBudgetGrid data={tripData.budgetItems} />}
+				</MainCard>
+			</Grid>
+			<Grid item xs={12} md={4}>
+				<MainCard
+					title={'Tasks'}
+					collection={'task'}
+					newItem={'Task'}
+					formData={tripData}
+					queryResults={async () => await setAllTripData(false, true)}
+					sx={{ margin: '0 1rem' }}
+				>
+					{!loading && <ViewTaskGrid data={tripData.taskItems} />}
 				</MainCard>
 			</Grid>
 		</Grid>

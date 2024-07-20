@@ -182,6 +182,8 @@ export const AuthProvider = ({ children }) => {
 	const [getSingleTrip] = useLazyQuery(queryTypes['trip']);
 	const [getTripBudget] = useLazyQuery(queryTypes['budgets']);
 	const [getSingleBudget] = useLazyQuery(queryTypes['budget']);
+	const [getTripTask] = useLazyQuery(queryTypes['tasks']);
+	const [getSingleTask] = useLazyQuery(queryTypes['task']);
 
 	// mutations
 	const [addUser] = useMutation(mutationTypes['addUser']);
@@ -205,6 +207,8 @@ export const AuthProvider = ({ children }) => {
 		getSingleTrip,
 		getTripBudget,
 		getSingleBudget,
+		getTripTask,
+		getSingleTask,
 		addUser,
 		addFriendRequest,
 		addTrip,
